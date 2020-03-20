@@ -2,7 +2,7 @@
   "name": "myApp",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "基于taro的服务o2o线下开锁业务小程序",
   "templateInfo": {
     "name": "mobx",
     "typescript": true,

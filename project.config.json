@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "./dist",
   "projectname": "myApp",
-  "description": "",
+  "description": "基于taro的服务o2o线下开锁业务小程序",
   "appid": "touristappid",
   "setting": {
     "urlCheck": true,

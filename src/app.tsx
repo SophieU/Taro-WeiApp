@@ -27,12 +27,15 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/index/more-service',
+      'pages/search/search-index',
+      'pages/order/order-submit',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '速达优服',
       navigationBarTextStyle: 'black'
     }
   }

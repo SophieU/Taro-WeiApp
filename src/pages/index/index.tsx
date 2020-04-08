@@ -1,8 +1,9 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Image, Text, Navigator, Block, Icon} from '@tarojs/components'
+import { View, Image, Text, Navigator} from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import './index.less'
+import CustomerService from '../../components/customer-service'
+import './index.scss'
 
 type PageStateProps = {
   counterStore: {
@@ -18,78 +19,7 @@ type PageState = {
 interface Index {
   props: PageStateProps;
 }
-/*
-const iconLists=[
-  {
-    title:'家电维修',
-    moreUrl:'http://www.baidu.com',
-    lists:[
-      {
-        iconUrl:require('../../assets/imgs/icon_conditioner.png'),
-        iconTitle:'空调',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_washer.png'),
-        iconTitle:'洗衣机',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_tv.png'),
-        iconTitle:'电视',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_fridge.png'),
-        iconTitle:'冰箱',
-        navUrl:'http://www.baidu.com'
-      },
-    ]
-  },{
-    title:'上门维修',
-    moreUrl:'http://www.baidu.com',
-    lists:[
-      {
-        iconUrl:require('../../assets/imgs/icon_conditioner.png'),
-        iconTitle:'空调',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_washer.png'),
-        iconTitle:'洗衣机',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_tv.png'),
-        iconTitle:'电视',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_fridge.png'),
-        iconTitle:'冰箱',
-        navUrl:'http://www.baidu.com'
-      },
-    ]
-  },{
-    title:'开锁',
-    moreUrl:'http://www.baidu.com',
-    lists:[
-      {
-        iconUrl:require('../../assets/imgs/icon_conditioner.png'),
-        iconTitle:'空调',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_washer.png'),
-        iconTitle:'洗衣机',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_tv.png'),
-        iconTitle:'电视',
-        navUrl:'http://www.baidu.com'
-      }, {
-        iconUrl:require('../../assets/imgs/icon_fridge.png'),
-        iconTitle:'冰箱',
-        navUrl:'http://www.baidu.com'
-      },
-    ]
-  },
-]
 
- */
 const iconArr = [
   {
   imgSrc:require('../../assets/imgs/icon_appliance.png'),
@@ -261,28 +191,7 @@ class Index extends Component<{}, PageState> {
           </View>
         </View>
         {/*客服悬浮*/}
-        <View className={this.state.hideService?'customer-service':'customer-service expand'}>
-          {
-            this.state.hideService?
-              ( <Block>
-                <Image onClick={this.toggleService} className='cus-ser' src={require('../../assets/imgs/tmp/cus-ser.png')}></Image>
-                <Text>客服</Text>
-              </Block>)
-              :(<Block>
-                <View className='expand-service'>
-                  <View className='expand-button'>
-                    <View><Image className='custom-ico'  src={require('../../assets/imgs/tmp/im.png')}></Image>在线咨询</View>
-                    <Text>（8:30-20:00）</Text>
-                  </View>
-                  <View className='expand-button'>
-                    <View><Image className='custom-ico' src={require('../../assets/imgs/tmp/call.png')}></Image>热线电话</View>
-                    <Text>（8:30-20:00）</Text>
-                  </View>
-                  <Icon onClick={this.toggleService} size='18' type='clear' color='#EA7744'/>
-                </View>
-              </Block>)
-          }
-        </View>
+        <CustomerService></CustomerService>
       </View>
     )
   }

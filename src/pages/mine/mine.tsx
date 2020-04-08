@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Text, Navigator} from '@tarojs/components'
-import './mine.less'
+import './mine.scss'
 
 class Mine extends  Component{
   config: Config={
@@ -34,6 +34,10 @@ class Mine extends  Component{
             </View>
             <View className='control-item'>
               <View className='control-title'>在线客服</View>
+              <View className='control-desc'></View>
+            </View>
+            <View className='control-item'>
+              <View className='control-title'>我的邀请码</View>
               <View className='control-desc'></View>
             </View>
             {/*服务师傅*/}

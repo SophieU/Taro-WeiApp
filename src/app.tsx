@@ -3,8 +3,8 @@ import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
 import counterStore from './store/counter'
-import './custom-taro.scss'
-import './app.less'
+import './styles/custom-taro.scss'
+import './styles/base.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -29,12 +29,16 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/index/more-service',
+      'pages/login/login',
+      'pages/login/toggle-login',
       'pages/order/order-submit',
       'pages/address/order-add',
       'pages/address/add-edit',
       'pages/address/address',
       'pages/mine/mine',
       'pages/mine/pocket',
+      'pages/mine/qr-code',
+      'pages/mine/invite-history',
       'pages/mall/mall',
       'pages/mall/goods-detail',
       'pages/mall/order-now',
@@ -56,6 +60,7 @@ class App extends Component {
       navigationBarTextStyle: 'black'
     },
     tabBar: {
+      borderStyle: 'white',
       selectedColor: '#F9834E',
       color: '#DADADA',
       list:[

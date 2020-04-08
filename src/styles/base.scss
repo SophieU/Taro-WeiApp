@@ -1,5 +1,6 @@
+@import "mixin";
 .page{
-  background: #f2f2f2;
+  background: $bg-color-light;
 }
 /*
 right: http://qiniu.kingdou.fun/right.png
@@ -35,12 +36,12 @@ right: http://qiniu.kingdou.fun/right.png
   display: inline-block;
 }
 .primary-btn{
-  background: #EA7744;
+  background: $color;
   color: #fff;
-  border-color: #EA7744;
+  border-color: $color;
 }
 .text-warm{
-  color: #EA7744;
+  color: $color;
 }
 .text-grey{
   color: #999;

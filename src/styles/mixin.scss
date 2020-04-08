@@ -1,0 +1,27 @@
+/* colors
+-------------------------- */
+$color: #EA7744 !default;
+$color-blue:#216EC6;
+$color-dark: #333 !default;
+$color-dark2: #666 !default;
+$color-light: #888 !default;
+$color-red: #ac1f38;
+$color-green: #8ccea3;
+$color-grey:#999;
+
+/* background-colors
+-------------------------- */
+$bg-color-base: #fff !default;
+$bg-color-grey:#f5f5f5 !default;
+$bg-color-light: #f9f9f9 !default; //页面浅灰背景&图片浅灰背景
+$bg-color-danger: #f9efef !default; //页面浅红背景&按钮边框
+$bg-color-panel: #ec5d75 !default;
+
+/* methods
+-------------------------- */
+// 背景图片地址和大小
+@mixin bg($url){
+  background-image:url($url);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}

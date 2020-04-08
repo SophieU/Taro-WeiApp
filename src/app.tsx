@@ -3,7 +3,7 @@ import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
 import counterStore from './store/counter'
-
+import './custom-taro.scss'
 import './app.less'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -29,14 +29,39 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/index/more-service',
-      'pages/search/search-index',
       'pages/order/order-submit',
+      'pages/address/order-add',
+      'pages/address/add-edit',
+      'pages/address/address',
+      'pages/mine/mine',
+      'pages/mine/pocket',
+      'pages/mall/mall',
+      'pages/mall/goods-detail',
+      'pages/mall/order-now',
+      'pages/mall/order-lists-custom',
+      'pages/mall/order-lists-staff',
+      'pages/custom-order/lists',
+      'pages/custom-order/detail',
+      'pages/admin/admin',
+      'pages/admin/staffs',
+      'pages/staff-order/order',
+      'pages/staff-order/quote',
+      'pages/staff-order/order-deal',
+      'pages/staff-order/pay',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '速达优服',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      selectedColor: '#F9834E',
+      color: '#DADADA',
+      list:[
+        {pagePath: 'pages/index/index', text:'首页', iconPath:'assets/imgs/tmp/index.png', selectedIconPath: 'assets/imgs/tmp/index-active.png'},
+        {pagePath: 'pages/mine/mine', text:'我的', iconPath:'assets/imgs/tmp/mine.png', selectedIconPath: 'assets/imgs/tmp/mine-active.png'}
+      ]
     }
   }
 

@@ -1,0 +1,64 @@
+.top-location{
+  height: 44px;
+  display: flex;
+  padding: 2px 10px;
+  align-items: center;
+  border-bottom: 1px solid #efefef;
+  .city{
+    position: relative;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 10px;
+    .locatin-ico{
+      display: block;
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  .search-input{
+    flex: 1 0 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    .search-control{
+      flex:1 0 0;
+      width: 100%;
+    }
+    .search-btn{
+      color: #EA7744;
+      flex: 30px 0 0;
+    }
+  }
+}
+.address-lists{
+  .list-item{
+    border-bottom: 1px solid #efefef;
+    display:flex;
+    padding:6px 10px;
+    .item-left{
+      flex: 1 0 0;
+    }
+    .item-right{
+      flex:80px 0 0;
+      font-size: 14px;
+      color: #808080;
+      text-align: right;
+    }
+    .add-title{
+      color: #333;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .detail-add{
+      font-size: 14px;
+      color: #808080;
+      white-space: nowrap;
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+    }
+  }
+}

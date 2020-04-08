@@ -1,0 +1,109 @@
+.page{
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.no-address{
+  padding-top: 94px;
+  .no-address-img{
+    display: block;
+    width: 212px;
+    height: 132px;
+    margin: 0 auto;
+    margin-bottom: 35px;
+  }
+  .no-address-text{
+    font-size: 15px;
+    color: #9B9B9B;
+    text-align: center;
+  }
+}
+
+.add-address{
+  width: 352px;
+  height: 44px;
+  background: #216EC6;
+  border-radius: 2px;
+  font-size: 18px;
+  color: #FFFFFF;
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.add-lists{
+  padding-top:10px ;
+}
+.add-item{
+  display: flex;
+  background: #FFFFFF;
+  height: 60px;
+  padding: 15px;
+  font-size: 15px;
+  color: #3C3C3C;
+  box-sizing: border-box;
+  align-items: center;
+  border-bottom: 1px solid #DFE4E6;
+  .item-info{
+    flex: 1 0 0;
+    display: flex;
+  }
+  .item-tag{
+    display: block;
+    width: 30px;
+    height: 15px;
+    border: 1px solid #216EC6;
+    color: #216EC6;
+    font-size: 10px;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 2px;
+    margin-left: 15px;
+    position: relative;
+    top: 2px;
+  }
+  .edit-btn{
+    flex: 24px 0 0;
+    display: block;
+    width: 18px;
+    height: 20px;
+  }
+}
+
+/* add-edit */
+.form-page{
+  padding: 0 15px;
+  background: #fff;
+  .form-item{
+    display: flex;
+    height: 50px;
+    align-items: center;
+    border-bottom: 1px solid #DFE4E6;
+    font-size: 15px;
+    .form-label{
+      color: #808080;
+      flex: 75px 0 0;
+    }
+    .form-control{
+      color: #333333;
+      flex: 1 0 0;
+    }
+    .picker{
+      display: flex;
+      align-items: center;
+      .picker-input{
+        flex: 1 0 0;
+      }
+      .picker-ico{
+        flex:20px 0 0;
+      }
+    }
+  }
+  .btn-wrap{
+    margin-top: 15px;
+    .save-btn{
+      margin-bottom: 10px;
+    }
+  }
+}

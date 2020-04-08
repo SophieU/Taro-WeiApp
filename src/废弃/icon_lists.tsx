@@ -4,11 +4,17 @@ import { View, Text, Image, Navigator} from '@tarojs/components'
 import './icon_lists.less'
 
 interface Props {
-  data:object,
+  data:DataProp,
   nomore:boolean,
   idTag:string
 }
-
+interface DataProp {
+  title:string,
+  lists:Array<{
+    iconUrl:string,
+    iconTitle:string
+  }>,
+}
 function IconLists(props:Props){
   let data = props.data
   let noMore = props.nomore

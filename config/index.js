@@ -1,5 +1,5 @@
 const config = {
-  projectName: 'myApp',
+  projectName: 'Taro-WeiApp',
   date: '2020-3-20',
   designWidth: 375,
   deviceRatio: {

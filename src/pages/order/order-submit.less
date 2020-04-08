@@ -1,0 +1,126 @@
+
+.order-banner{
+  width: 100%;
+  height: 101px;
+}
+.service-info{
+  margin: 10px;
+  background: #fff;
+  border-radius: 4px;
+  padding:0 15px;
+  .info-item{
+    display: flex;
+    height: 60px;
+    padding: 13px 0;
+    box-sizing: border-box;
+    align-items: center;
+    border-bottom: 1px solid #E6E8EB;
+    &:last-child{
+      border-bottom: none;
+    }
+    .info-ico{
+      flex: 24px 0 0;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      display: block;
+    }
+    .info-title{
+      font-size: 15px;
+      color: #808080;
+      flex: 60px 0 0;
+      margin-right: 10px;
+    }
+  }
+}
+
+.service-form{
+  margin: 10px;
+  background: #fff;
+  border-radius: 4px;
+  padding:0 15px;
+  .form-item{
+    display: flex;
+    height: 60px;
+    padding: 13px 0;
+    box-sizing: border-box;
+    align-items: center;
+    border-bottom: 1px solid #E6E8EB;
+    &:last-child{
+      border-bottom: none;
+    }
+    .form-ico{
+      flex: 24px 0 0;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      display: block;
+    }
+    .form-label{
+      font-size: 15px;
+      color: #808080;
+      flex: 60px 0 0;
+      margin-right: 10px;
+    }
+  }
+}
+
+.service-desc{
+  background: #fff;
+  margin: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 #E4E8EB;
+  .desc-tab{
+    display: flex;
+    height: 40px;
+    border-bottom: 1px solid #E6E8EB;
+    .desc-tab-item{
+      line-height: 40px;
+      flex: 1 0 0;
+      font-size: 14px;
+      color: #999999;
+      text-align: center;
+      &.active{
+        color: #216EC6;
+        position: relative;
+        &:after{
+          content: "";
+          height: 2px;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -1px;
+          background: #216EC6;
+        }
+      }
+    }
+  }
+}
+
+.submit-bar{
+  display: flex;
+  height: 60px;
+  background: #fff;
+  align-items: center;
+  .protocal{
+    flex: 1 0 0;
+    font-size: 14px;
+    text-align: center;
+    .outlink{
+      color: #216EC6;
+      display: inline;
+    }
+  }
+  .btn-wrap{
+    flex: 1 0 0;
+    .btn-form{
+      color: #fff;
+      font-size: 18px;
+      line-height: 44px;
+      width: 160px;
+      height: 44px;
+      background: #216EC6;
+      border-radius: 2px;
+    }
+  }
+}

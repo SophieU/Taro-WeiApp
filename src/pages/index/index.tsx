@@ -1,8 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Image, Text, Input, Navigator} from '@tarojs/components'
+import { View, Image, Text, Navigator, Block, Icon} from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import IconLists from './icon_lists'
 import './index.less'
 
 type PageStateProps = {
@@ -13,11 +12,13 @@ type PageStateProps = {
     incrementAsync: Function
   }
 }
-
+type PageState = {
+  hideService: boolean
+}
 interface Index {
   props: PageStateProps;
 }
-
+/*
 const iconLists=[
   {
     title:'家电维修',
@@ -87,7 +88,10 @@ const iconLists=[
     ]
   },
 ]
-const iconArr = [{
+
+ */
+const iconArr = [
+  {
   imgSrc:require('../../assets/imgs/icon_appliance.png'),
   iconText:'家电维修'
 },{
@@ -105,7 +109,7 @@ const iconArr = [{
 },]
 @inject('counterStore')
 @observer
-class Index extends Component {
+class Index extends Component<{}, PageState> {
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -129,7 +133,13 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state={
+      hideService:true
     }
+  }
+  toggleService=()=>{
+    this.setState({
+      hideService:!this.state.hideService
+    })
   }
   render () {
     // const { counterStore: { counter } } = this.props
@@ -141,12 +151,6 @@ class Index extends Component {
             style='width:100%'
             src='../../assets/imgs/tmp/4.png'
           />
-        </View>
-        {/*搜索*/}
-        <View className='search-bar'>
-          <Image className='search-ico' src={require('../../assets/imgs/img_search.png')}></Image>
-          <Input className='search-input' type='text' placeholder='将会获取焦点' />
-          <Text className='search-text'>搜索</Text>
         </View>
         {/*icon列表*/}
         <View className='service-type'>
@@ -161,26 +165,126 @@ class Index extends Component {
         <View className='ad-wrap'>
           <View className='left-ad'>
             <Image className='ad-img' src='../../assets/imgs/tmp/1.png'/>
-            <Text className='ad-tag'>热卖</Text>
           </View>
           <View className='right-ad'>
             <View className="right-ad-item">
               <Image className='ad-img' src='../../assets/imgs/tmp/2.png'/>
-              <Text className='ad-tag'>特价</Text>
             </View>
             <View className="right-ad-item">
               <Image className='ad-img' src='../../assets/imgs/tmp/3.png'/>
-              <Text className='ad-tag'>热卖</Text>
             </View>
           </View>
         </View>
-        {/*  icon列表区*/}
-       {iconLists.map((item,index)=>{
-         return <IconLists data={item} key={index}/>
-       })}
+        {/*报修分类*/}
+        <View className='function-block'>
+          <View className="left-block">
+            <Image className='left-bg' src='../../assets/imgs/tmp/5.png'></Image>
+            <Text className='bock-title'>大家电维修</Text>
+            <Navigator className='bock-more' url='/pages/index/more-service'>
+              查看全部
+              <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
+            </Navigator>
+          </View>
+          <View className="right-block">
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+           <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+           <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+           <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+          </View>
+        </View>
+        <View className='function-block'>
+          <View className="left-block">
+            <Image className='left-bg' src={require('../../assets/imgs/tmp/6.png')}></Image>
+            <Text className='bock-title'>厨卫维修</Text>
+            <Navigator className='bock-more' url='pages/index/more-service'>
+              查看全部
+              <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
+            </Navigator>
+          </View>
+          <View className="right-block">
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+          </View>
+        </View>
+        <View className='function-block'>
+          <View className="left-block">
+            <Image className='left-bg' src='../../assets/imgs/tmp/7.png'></Image>
+            <Text className='bock-title'>房屋维修</Text>
+            <Navigator className='bock-more' url='pages/index/more-service'>
+              查看全部
+              <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
+            </Navigator>
+          </View>
+          <View className="right-block">
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+            <View className='func-item'>
+              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
+              <Text className='item-text'>洗衣机维修</Text>
+            </View>
+          </View>
+        </View>
+        {/*客服悬浮*/}
+        <View className={this.state.hideService?'customer-service':'customer-service expand'}>
+          {
+            this.state.hideService?
+              ( <Block>
+                <Image onClick={this.toggleService} className='cus-ser' src={require('../../assets/imgs/tmp/cus-ser.png')}></Image>
+                <Text>客服</Text>
+              </Block>)
+              :(<Block>
+                <View className='expand-service'>
+                  <View className='expand-button'>
+                    <View><Image className='custom-ico'  src={require('../../assets/imgs/tmp/im.png')}></Image>在线咨询</View>
+                    <Text>（8:30-20:00）</Text>
+                  </View>
+                  <View className='expand-button'>
+                    <View><Image className='custom-ico' src={require('../../assets/imgs/tmp/call.png')}></Image>热线电话</View>
+                    <Text>（8:30-20:00）</Text>
+                  </View>
+                  <Icon onClick={this.toggleService} size='18' type='clear' color='#EA7744'/>
+                </View>
+              </Block>)
+          }
+        </View>
       </View>
     )
-
   }
 }
 

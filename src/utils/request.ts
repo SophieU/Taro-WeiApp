@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {baseUrl} from "../config";
+import {baseUrl,securitySign} from "../config";
 import {HTTP_STATUS} from './status'
 
 const token=''
@@ -25,11 +25,20 @@ export default {
     let { url, data } = params
     let contentType = 'application/x-www-form-urlencoded'
     contentType = params.contentType || contentType
-    const option = {
+    type OptionType = {
+      url: string,
+      data?: object | string,
+      method?: any,
+      header: object,
+      // mode: string,
+      success: any,
+      error: any,
+    }
+    const option:OptionType = {
       url: baseUrl + url,
       data: data,
       method: methods,
-      header: { 'content-type': contentType, 'token':token},
+      header: { 'content-type': contentType, 'securitySign':securitySign},
       success(res){
         if(res.statusCode === HTTP_STATUS.NOT_FOUND){
           return logError('api','请求资源不存在')
@@ -47,13 +56,21 @@ export default {
     }
     return Taro.request(option)
   },
-  get(url,data=''){
+  get(url,data?:object){
     let option = {url, data}
     return this.baseRequest(option)
   },
-  post(url,data,contentType){
+  post(url,data?:object,contentType?: string){
     let params = {url,data,contentType}
     return this.baseRequest(params,'POST')
+  },
+  put(url, data?: object) {
+    let option = { url, data }
+    return this.baseOptions(option, 'PUT')
+  },
+  delete(url, data?: object) {
+    let option = { url, data }
+    return this.baseOptions(option, 'DELETE')
   }
 }
 

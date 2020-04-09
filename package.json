@@ -1,12 +1,12 @@
 {
-  "name": "myApp",
+  "name": "sdyf",
   "version": "1.0.0",
   "private": true,
   "description": "基于taro的服务o2o线下开锁业务小程序",
   "templateInfo": {
     "name": "mobx",
     "typescript": true,
-    "css": "less"
+    "css": "scss"
   },
   "scripts": {
     "build:weapp": "taro build --type weapp",
@@ -26,7 +26,7 @@
     "dev:qq": "npm run build:qq -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch"
   },
-  "author": "",
+  "author": "sophieU",
   "license": "MIT",
   "dependencies": {
     "@tarojs/components": "2.0.6",

@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "myApp",
   "description": "基于taro的服务o2o线下开锁业务小程序",
-  "appid": "wx1f27ec1f76f4262a",
+  "appid": "wx786f809a2d6aca15",
   "setting": {
     "urlCheck": true,
     "es6": false,

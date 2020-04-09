@@ -1,6 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image,Button, Navigator} from '@tarojs/components'
+import {loginApp} from './service'
 import './toggleLogin.scss'
 
 interface State {
@@ -15,18 +16,14 @@ class Login extends Component{
     openId:'',
     readed:false,
   }
-  wxAutoLogin= (e)=>{
-    var iv = e.detail.iv
-    var encryptedData = e.detail.encryptedData
-    var param = {
-      iv,
-      encryptedData,
-      openId:this.state.openId
-    }
-    Taro.showLoading({
-      title:'一键登录中'
-    })
-console.log(param)
+  wxAutoLogin= ()=>{
+
+    loginApp()
+    // loginApp()
+    // Taro.showLoading({
+    //   title:'一键登录中'
+    // })
+// console.log(param)
     // authBindPhone(param).then(res=>{
     //   Taro.hideLoading()
     //   if(res.code===0){
@@ -53,8 +50,8 @@ console.log(param)
         <View className="icon-title">欢迎，速达优服</View>
       </View>
         <View className='btn-wrap'>
-          <Button open-type="getPhoneNumber" className='wx-login' onGetPhoneNumber={this.wxAutoLogin}>微信用户一键登录</Button>
-          <Navigator className='to-login' url='/pages/login/login'>手机号验证注册/登录</Navigator>
+          <Button open-type="getUserInfo" className='wx-login' onGetUserInfo={this.wxAutoLogin}>微信用户一键登录</Button>
+          {/*<Navigator className='to-login' url='/pages/login/login'>手机号验证注册/登录</Navigator>*/}
         </View>
         <View className='protocal-wrap'>
           <View className='read-proto' onClick={this.toggleReaded}>

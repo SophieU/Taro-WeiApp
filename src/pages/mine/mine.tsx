@@ -1,20 +1,87 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Text, Navigator} from '@tarojs/components'
+import {View, Image, Text, Navigator, Button} from '@tarojs/components'
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from "taro-ui"
+import { observer, inject } from '@tarojs/mobx'
+import { setInvitePhone } from './services'
+import {validateTel} from '../../utils/regexpValidate'
+// import { getUserBaseInfo } from './services'
 import './mine.scss'
 
-class Mine extends  Component{
+
+type PageStateProps = {
+  userStore: {
+    wxUserInfo: object,
+    apiUserInfo: object,
+    setWXUserInfo: Function
+  }
+}
+interface Mine {
+  props: PageStateProps;
+}
+type State = {
+  userInfo: object,
+  apiUserInfo: object,
+  inviteUserPhone:string,
+  showInvitePhoneModal:boolean
+}
+@inject('userStore')
+@observer
+class Mine extends  Component<{}, State>{
   config: Config={
     navigationBarTitleText:'我的'
+  }
+  state = {
+    userInfo: {},
+    apiUserInfo: {},
+    inviteUserPhone:'',
+    showInvitePhoneModal:true
+  }
+  componentWillMount(){
+    const { userStore } = this.props
+    this.setState({
+      userInfo: userStore.wxUserInfo,
+      apiUserInfo: userStore.apiUserInfo
+    })
+  }
+  toggleInvitePhoneModal= ()=>{
+    this.setState((prevState:State)=>{
+      let showStatus = !prevState.showInvitePhoneModal
+     return {
+       showInvitePhoneModal: showStatus,
+       inviteUserPhone: ''
+     }
+
+    })
+  }
+  setInviteUser= ()=>{
+    if(!validateTel(this.state.inviteUserPhone)){
+      Taro.showToast({title:'填写的手机号格式不正确',icon:'none'})
+      return
+    }
+    setInvitePhone({phone:this.state.inviteUserPhone}).then(res=>{
+      if(res.data.code===0){
+        Taro.showModal({title:'提交成功',content:`邀请人电话：${this.state.inviteUserPhone}`})
+      }else{
+        Taro.showToast({title: res.data.msg,icon:'none', duration:2000})
+      }
+      // 关闭弹窗
+      this.toggleInvitePhoneModal()
+    })
+  }
+  handleInviteUserPhoneChange = (val) => {
+    this.setState({
+      inviteUserPhone:val
+    })
   }
   render(){
     return (
       <View className='mine page'>
         <View className='user-info'>
-          <Image className='user-avatar' src={require('../../assets/imgs/tmp/cus-ser.png')}></Image>
+          <Image className='user-avatar' src={this.state.userInfo.avatarUrl}></Image>
           <View className='user-block'>
-            <View className='name'>郑先生</View>
-            <View className='tel'>18112341234</View>
+            <View className='name'>{this.state.userInfo.nickName}</View>
+            <View className='tel'>{this.state.apiUserInfo.userPhone}</View>
           </View>
           <Navigator url='/pages/mine/pocket' className='my-pocket'>
             <Image className='pocket-ico' src={require('../../assets/imgs/tmp/pocket.png')}></Image>
@@ -36,8 +103,12 @@ class Mine extends  Component{
               <View className='control-title'>在线客服</View>
               <View className='control-desc'></View>
             </View>
-            <View className='control-item'>
+            <Navigator url='/pages/mine/qr-code' className='control-item'>
               <View className='control-title'>我的邀请码</View>
+              <View className='control-desc'></View>
+            </Navigator>
+            <View onClick={this.toggleInvitePhoneModal} className='control-item'>
+              <View className='control-title'>设置邀请人</View>
               <View className='control-desc'></View>
             </View>
             {/*服务师傅*/}
@@ -56,6 +127,26 @@ class Mine extends  Component{
             </View>
           </View>
         </View>
+      {/*  邀请人电话弹窗  */}
+        <AtModal className='invite-modal' isOpened={this.state.showInvitePhoneModal}>
+          <AtModalHeader>设置邀请人</AtModalHeader>
+          <AtModalContent>
+            <AtInput
+              className='invite-input'
+              name='inviteUserPhone'
+              border={false}
+              type='phone'
+              placeholder='请填写手机号码'
+              value={this.state.inviteUserPhone}
+              onChange={this.handleInviteUserPhoneChange}
+            />
+            <View className='tips'>新用户注册成功7天内，可填写邀请人信息</View>
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.toggleInvitePhoneModal}>取消</Button>
+            <Button onClick={this.setInviteUser}>确定</Button>
+          </AtModalAction>
+        </AtModal>
       </View>
     )
   }

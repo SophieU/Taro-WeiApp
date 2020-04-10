@@ -3,6 +3,7 @@ import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
 import counterStore from './store/counter'
+import userStore from './store/user'
 import './styles/custom-taro.scss'
 import './styles/base.scss'
 
@@ -13,7 +14,8 @@ import './styles/base.scss'
 // }
 
 const store = {
-  counterStore
+  counterStore,
+  userStore
 }
 
 class App extends Component {

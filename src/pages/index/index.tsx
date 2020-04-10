@@ -3,6 +3,8 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image, Text, Navigator} from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import CustomerService from '../../components/customer-service'
+import {decodeQueryString, getUserInfo} from '../../utils/common'
+import {loginApp} from '../login/service'
 import './index.scss'
 
 type PageStateProps = {
@@ -11,6 +13,10 @@ type PageStateProps = {
     increment: Function,
     decrement: Function,
     incrementAsync: Function
+  },
+  userStore: {
+    wxUserInfo: object,
+    setWXUserInfo: Function
   }
 }
 type PageState = {
@@ -37,7 +43,7 @@ const iconArr = [
   imgSrc:require('../../assets/imgs/icon_clean.png'),
   iconText:'清洁服务'
 },]
-@inject('counterStore')
+@inject('userStore')
 @observer
 class Index extends Component<{}, PageState> {
 
@@ -52,12 +58,40 @@ class Index extends Component<{}, PageState> {
     navigationBarTitleText: '首页',
     navigationStyle:'custom'
   }
-  componentWillMount () { }
+  // 对应小程序 onLoad
+  componentWillMount () {
+
+    /*
+    *   判断用户进入小程序场景，如是邀请进入，则存入邀请人电话
+    * */
+    let sceneFrom = Taro.getLaunchOptionsSync().scene
+    let pageParams: any= this.$router.params
+    if(sceneFrom===1011) {
+      // 扫描二维码进入
+      let sence = decodeURIComponent(pageParams.scene)
+      type ParseSence = {
+        ivphone?: string
+      }
+      let parseSence: ParseSence = decodeQueryString(sence, ';')
+      if (parseSence.ivphone) {
+        Taro.setStorageSync('invitePhone', parseSence.ivphone)
+      }
+    }
+    /*登录小程序*/
+    if(!Taro.getStorageSync('loginStatus')){
+      loginApp()
+    }
+    /* 获取用户信息 */
+    getUserInfo((userInfo)=>{
+      const { userStore } = this.props
+      userStore.setWXUserInfo(userInfo)
+    })
+  }
   componentWillReact () {
     console.log('componentWillReact')
   }
   componentDidMount () { }
-  componentWillUnmount () { }
+  componentWillUnmount () {}
   componentDidShow () { }
   componentDidHide () { }
   constructor(props) {

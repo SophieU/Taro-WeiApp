@@ -1,48 +1,76 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View,  Image, Button} from '@tarojs/components'
+import {View,  Image, Button, Navigator} from '@tarojs/components'
+import { createQRCode } from './services'
 import './qr-code.scss'
 
 interface State {
-  withdrawMoney:string,
-  showModal:boolean
+  qrCodeUrl:string
 }
 class Mine extends  Component{
   state:State = {
-    withdrawMoney:'',
-    showModal:false,
+    qrCodeUrl:''
   }
   config: Config={
     navigationBarTitleText:'邀请二维码'
   }
-  toggleModalStatus = ()=>{
-    this.setState((prevState:State)=>{
-      if(prevState.showModal){
-        return {
-          showModal: !prevState.showModal,
-          withdrawMoney:'',
-        }
-      }else{
-        return {
-          showModal:!prevState.showModal
-        }
+  componentWillMount(){
+    createQRCode().then(res=>{
+      let data= res.data
+      if(data.code===0){
+        this.setState({
+          qrCodeUrl:data.data.inviteQrImgUrl
+        })
       }
     })
   }
-  handleWithdrawChange = (val)=>{
-    this.setState({
-      withdrawMoney:val
+  saveImageLocal(filePath){
+    Taro.saveImageToPhotosAlbum({
+      filePath:filePath,
+      success(res) {
+        Taro.showToast({title:'二维码保存成功'})
+        console.log(res)
+      },
+      fail(err){
+        console.log(err)
+      }
     })
   }
-  handleWithdraw = (val)=>{
-    console.log(val)
+  saveCodeImg = ()=>{
+    let url = this.state.qrCodeUrl
+    let _this = this
+    Taro.downloadFile({
+      url: url,
+      success(res){
+        let filePath = res.tempFilePath
+
+        Taro.getSetting({
+          success: function(res){
+            // 已授权访问相册
+            if(res.authSetting['scope.writePhotosAlbum']){
+              _this.saveImageLocal(filePath)
+            }else{
+              Taro.authorize({
+                scope: 'scope.writePhotosAlbum',
+                success () {
+                  _this.saveImageLocal(filePath)
+                }
+              })
+
+            }
+          }
+        })
+      }
+    })
+
   }
   render(){
     return (
       <View className='qr-code-page'>
-        <Image className='qr-code' src={require('../../assets/imgs/tmp/qrcode.png')} />
+        <Image className='qr-code' src={this.state.qrCodeUrl} />
         <View className='text'>扫一扫加入速达优服</View>
-        <Button className='save-btn'>保存图片</Button>
+        <Navigator url='/pages/mine/invite-history' className='invite-link'>我的邀请记录</Navigator>
+        <Button onClick={this.saveCodeImg} className='save-btn'>保存图片</Button>
       </View>
     )
   }

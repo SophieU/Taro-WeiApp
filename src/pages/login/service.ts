@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import request from "../../utils/request";
-import {authNow} from "../../utils/common"
+// import {authNow} from "../../utils/common"
+import userStore from '../../store/user'
 /*
 *  user login action
 * */
@@ -9,18 +10,31 @@ export const loginApp = ()=>{
     success (res) {
       if (res.code) {
         //发起网络请求
-        console.log(res.code)
         request.post(`/api/v1/user/xcx/login?code=${res.code}`).then(res=>{
           let data = res.data
+
+          // 新用户，未注册
           if(data.code===1049){
-            // not register,need to register
             let openId:string = data.data.openId
-            registerPhone(openId)
-          }else if(data.code===200){
-            // normal login
-            registerPhone()
+            Taro.setStorageSync("wxOpenId",openId)
+            Taro.setStorageSync("loginStatus",'new')
+          }else if(data.code===0){
+            // 正常登录
+            let dataBody = data.data
+            Taro.setStorageSync("loginStatus",'success')
+            Taro.setStorageSync("userId",dataBody.userId)
+            Taro.setStorageSync("userType",dataBody.userType)
+            let apiUserInfo = {
+              userPhone: dataBody.username,
+              userType: dataBody.userType,
+              userId: dataBody.userId
+            }
+            request.setAccessToken(dataBody.accessToken)
+            userStore.setAPIUserInfo(apiUserInfo)
+            userStore.setUserAccount(dataBody.userAccount)
           }else{
             console.log(data)
+            Taro.setStorageSync("loginStatus",'fail')
           }
         })
       } else {
@@ -31,7 +45,19 @@ export const loginApp = ()=>{
 
 }
 
-export const registerPhone = (openId:string)=>{
-  // get user phone and register
-  request.post(`/api/v1/user/xcx/authBindPhone?openId=${openId}&encryptedData=xxxx&iv=xxx&inviteUserPhone=邀请人手机号码（允许为空）&isInvite=Y（允许为空）`)
+/*
+* new user to register and mark invite user phone
+* */
+export const registerPhone = (params)=>{
+  let openId = Taro.getStorageSync('wxOpenId')
+  let inviteUserPhone = Taro.getStorageSync('invitePhone')
+  params.openId = openId
+  let queryString = `openId=${openId}
+   $encryptedData=${params.encryptedData}
+   &iv=${params.iv}
+   `
+  if(inviteUserPhone){
+    queryString+=`inviteUserPhone=${inviteUserPhone}&isInvite=Y`
+  }
+  return request.post(`/api/v1/user/xcx/authBindPhone?${queryString}`)
 }

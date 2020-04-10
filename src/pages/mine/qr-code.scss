@@ -1,6 +1,6 @@
 @import "../../styles/mixin";
 .qr-code-page{
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
  position: relative;
   display: flex;
@@ -21,14 +21,20 @@
     background:$color;
     color: #fff;
     width: 250px;
-    position: absolute;
+    position: fixed;
     bottom: 100px;
+  }
+  .invite-link{
+    color: $color;
+    font-size: 12px;
+    margin-top: 15px;
   }
 }
 
 /*  invite-history
 ----------------------*/
 .invite-history-page{
+  height: 100vh;
   .page-title{
     color: $color-grey;
     background:$bg-color-grey;

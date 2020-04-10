@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import {baseUrl,securitySign} from "../config";
 import {HTTP_STATUS} from './status'
 
-const token=''
+let accessToken = ''
 export const logError = (name,action,info?:any)=>{
   if(!info){
     info='empty'
@@ -38,7 +38,7 @@ export default {
       url: baseUrl + url,
       data: data,
       method: methods,
-      header: { 'content-type': contentType, 'securitySign':securitySign},
+      header: { 'content-type': contentType, 'securitySign':securitySign, 'accessToken':accessToken},
       success(res){
         if(res.statusCode === HTTP_STATUS.NOT_FOUND){
           return logError('api','请求资源不存在')
@@ -55,6 +55,9 @@ export default {
       }
     }
     return Taro.request(option)
+  },
+  setAccessToken(accessToken){
+    accessToken = accessToken
   },
   get(url,data?:object){
     let option = {url, data}

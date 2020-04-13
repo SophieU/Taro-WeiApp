@@ -35,7 +35,7 @@ class Mine extends  Component<{}, State>{
     userInfo: {},
     apiUserInfo: {},
     inviteUserPhone:'',
-    showInvitePhoneModal:true
+    showInvitePhoneModal:false
   }
   componentWillMount(){
     const { userStore } = this.props
@@ -99,6 +99,10 @@ class Mine extends  Component<{}, State>{
               <View className='control-title'>预约订单</View>
               <View className='control-desc'></View>
             </View>
+            <Navigator url='/pages/address/order-add'  className='control-item'>
+              <View className='control-title'>我的地址</View>
+              <View className='control-desc'></View>
+            </Navigator>
             <View className='control-item'>
               <View className='control-title'>在线客服</View>
               <View className='control-desc'></View>

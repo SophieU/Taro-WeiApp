@@ -1,6 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button} from '@tarojs/components'
+import { getAddLists } from './service'
 import './order-add.less'
 
 type addLists = {
@@ -18,10 +19,26 @@ class OrderAdd extends Component<{},AddState>{
   constructor() {
     super();
     this.state={
-      addressLists:[
-        {address:'力宝大夏北区（东北门）', order:'15楼1507', tag:'默认'}
-      ]
+      addressLists:[ ]
     }
+  }
+  componentWillMount(){
+    this.getOrderLists()
+  }
+  goEdit=()=>{
+    Taro.navigateTo({
+      url:'/pages/address/add-edit'
+    })
+  }
+  getOrderLists = ()=>{
+    getAddLists().then(res=>{
+      console.log(res.data)
+      if(res.data.code===0){
+        this.setState({
+          addressLists:res.data.data
+        })
+      }
+    })
   }
   render(){
     return (<View className='page'>
@@ -33,7 +50,7 @@ class OrderAdd extends Component<{},AddState>{
                 <View className='item-text'>{item.address} {item.order}</View>
                 {item.tag?<View className='item-tag'>{item.tag}</View>:null}
               </View>
-              <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')}></Image>
+              <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')} onClick={this.goEdit}></Image>
             </View>)
           })}
         </View>
@@ -42,7 +59,7 @@ class OrderAdd extends Component<{},AddState>{
         <View className='no-address-text'>还未添加地址~</View>
       </View>)
       }
-      <Button className='add-address'>添加地址</Button>
+      <Button onClick={this.goEdit} className='add-address'>添加地址</Button>
     </View>)
   }
 }

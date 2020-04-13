@@ -1,6 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View,  Icon, Button, Input} from '@tarojs/components'
+import { AtCheckbox } from 'taro-ui'
 import './order-add.less'
 
 class AddEdit extends Component<{},{}>{
@@ -10,12 +11,17 @@ class AddEdit extends Component<{},{}>{
   constructor() {
     super();
     this.state={
-
+      setDefault:[]
     }
   }
   goAddress=()=>{
     Taro.navigateTo({
       url:'/pages/address/address'
+    })
+  }
+  handleRadioChange(value){
+    this.setState({
+      setDefault: value
     })
   }
   render(){
@@ -45,7 +51,15 @@ class AddEdit extends Component<{},{}>{
             <Input placeholder='请填写联系人手机号'></Input>
           </View>
         </View>
-
+      <View className='form-item'>
+        <View className='form-control '>
+          <AtCheckbox
+            selectedList={this.state.setDefault}
+            options={[{label:'设为默认', value: 'default',}]}
+            onChange={this.handleRadioChange.bind(this)}
+          ></AtCheckbox>
+        </View>
+      </View>
         <View className='btn-wrap'>
           <Button className='lang-btn blue-btn save-btn'>保存</Button>
           <Button className='lang-btn'>删除</Button>

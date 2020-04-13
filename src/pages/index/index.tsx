@@ -1,10 +1,12 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Image, Text, Navigator} from '@tarojs/components'
+import { View, Image, Text, Navigator, Swiper, SwiperItem} from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import CustomerService from '../../components/customer-service'
+import RecommendAd from '../../components/recommend-ad'
 import {decodeQueryString, getUserInfo} from '../../utils/common'
 import {loginApp} from '../login/service'
+import { getBannerLists, getServiceLists } from './servics'
 import './index.scss'
 
 type PageStateProps = {
@@ -20,29 +22,16 @@ type PageStateProps = {
   }
 }
 type PageState = {
-  hideService: boolean
+  hideService: boolean,
+  configApiVoList:Array<object>,
+  serviceList:Array<object>,
+  adBannerList:Array<object>,
+  serviceBlockLists:Array<object>,
 }
 interface Index {
   props: PageStateProps;
 }
 
-const iconArr = [
-  {
-  imgSrc:require('../../assets/imgs/icon_appliance.png'),
-  iconText:'家电维修'
-},{
-  imgSrc:require('../../assets/imgs/icon_house.png'),
-  iconText:'家庭维修'
-},{
-  imgSrc:require('../../assets/imgs/icon_lock.png'),
-  iconText:'开换锁'
-},{
-  imgSrc:require('../../assets/imgs/icon_setup.png'),
-  iconText:'上门安装'
-},{
-  imgSrc:require('../../assets/imgs/icon_clean.png'),
-  iconText:'清洁服务'
-},]
 @inject('userStore')
 @observer
 class Index extends Component<{}, PageState> {
@@ -86,6 +75,9 @@ class Index extends Component<{}, PageState> {
       const { userStore } = this.props
       userStore.setWXUserInfo(userInfo)
     })
+    /*界面信息数据*/
+    this.getBanner()
+    this.getService()
   }
   componentWillReact () {
     console.log('componentWillReact')
@@ -97,7 +89,11 @@ class Index extends Component<{}, PageState> {
   constructor(props) {
     super(props);
     this.state={
-      hideService:true
+      hideService:true,
+      configApiVoList:[],
+      serviceList:[],
+      adBannerList:[],
+      serviceBlockLists:[],
     }
   }
   toggleService=()=>{
@@ -105,40 +101,80 @@ class Index extends Component<{}, PageState> {
       hideService:!this.state.hideService
     })
   }
+  /* 获取banner信息 */
+  getBanner= ()=>{
+    getBannerLists().then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+          this.setState({
+            adBannerList:data.adBannerList,
+            configApiVoList:data.configApiVoList,
+            serviceList:data.serviceList
+          })
+      }
+    })
+  }
+  /* 获取服务栏目 */
+  getService = ()=>{
+    let params = {
+      pageNo:1,
+      pageSize:10
+    }
+    getServiceLists(params).then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        this.setState({
+          serviceBlockLists:data
+        })
+        console.log(data)
+      }
+    })
+  }
+  /* 判断跳转到哪儿 */
+  jumpTo = (info)=>{
+    console.log(info)
+  }
   render () {
     // const { counterStore: { counter } } = this.props
     return (
-      <View className='index'>
-        <View className='banner-wrap'>
-          <Image
-            className='banner-img'
-            style='width:100%'
-            src='../../assets/imgs/tmp/4.png'
-          />
-        </View>
+      <View className={this.state.adBannerList.length>0?'index':'index no-banner'}>
+        {this.state.adBannerList.length<=0?
+          <View className='header-index'>首页</View>
+          :
+          <Swiper
+            className='banner-wrap'
+            indicatorColor='#fff'
+            indicatorActiveColor='#EA7744'
+            indicatorDots
+          >
+            {this.state.adBannerList.map((item,index)=>{
+              return <SwiperItem onClick={()=>this.jumpTo(item)}  key={index}>
+                <Image
+                  className='banner-img'
+                  style='width:100%'
+                  src={item.imgName}
+                />
+              </SwiperItem>
+            })}
+          </Swiper>
+
+        }
+
         {/*icon列表*/}
         <View className='service-type'>
-          {iconArr.map(item=>{
-            return (<View className='service-type-item' key={item.iconText}>
-              <Image className='item-icon' src={item.imgSrc}/>
-              <Text className='item-text'>{item.iconText}</Text>
+          {this.state.serviceList.map(item=>{
+            return (<View className='service-type-item' key={item.serviceId}>
+              <Image className='item-icon' src={item.iconUrl}/>
+              <Text className='item-text'>{item.title}</Text>
             </View>)
           })}
         </View>
-        {/*  广告区*/}
-        <View className='ad-wrap'>
-          <View className='left-ad'>
-            <Image className='ad-img' src='../../assets/imgs/tmp/1.png'/>
-          </View>
-          <View className='right-ad'>
-            <View className="right-ad-item">
-              <Image className='ad-img' src='../../assets/imgs/tmp/2.png'/>
-            </View>
-            <View className="right-ad-item">
-              <Image className='ad-img' src='../../assets/imgs/tmp/3.png'/>
-            </View>
-          </View>
-        </View>
+        {/* 广告区 */}
+        {
+          this.state.configApiVoList.map(item=>{
+            return (<RecommendAd key={item.id} source={item}></RecommendAd>)
+          })
+        }
         {/*报修分类*/}
         <View className='function-block'>
           <View className="left-block">

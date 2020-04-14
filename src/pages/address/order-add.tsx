@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button} from '@tarojs/components'
 import { getAddLists } from './service'
-import './order-add.less'
+import './order-add.scss'
 
 type addLists = {
   address:string,
@@ -15,6 +15,7 @@ interface AddState {
 class OrderAdd extends Component<{},AddState>{
   config: Config = {
     navigationBarTitleText: '选择地址',
+    navigationStyle: 'default'
   }
   constructor() {
     super();

@@ -1,6 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component} from '@tarojs/taro'
 import { View, Image, Text, Navigator} from '@tarojs/components'
+import {loginStatusFilter} from '../utils/common'
 import './recommend-ad.scss'
 
 /*
@@ -20,29 +21,61 @@ class RecommendAd extends Component{
   constructor(props) {
     super(props);
   }
+  /* 判断跳转到哪儿 */
+  jumpTo = (info,otherType?:string)=>{
+    let needLogin = info.needLogin
+    let type = info.recommendCategoryCode
+    if(needLogin==='Y'){
+      loginStatusFilter(()=>{
+        if(type==='E_SERVICE_CATEGORY'||type==='E_SERVICE'||otherType==='E_SERVICE_CATEGORY'){
+          // 跳转订单确认
+          Taro.navigateTo({
+            url:`/pages/order/order-submit?id=${info.target||info.id}`
+          })
+        }else if(type==='E_PROJECT'){
+          // 跳转更多服务
+          Taro.navigateTo({
+            url:`/pages/index/more-service?id=${info.target}`
+          })
+        }else if(type==='APP_JUMP'){
+          // 中转APP内页
+          Taro.navigateTo({
+            url:info.target
+          })
+        }else if(type==='H5'){
+          // 打开H5
+          if(!info.target) return;
+          Taro.navigateTo({
+            url:`/pages/index/web-view?target=${info.target}`
+          })
+        }
+      })
+    }
+
+  }
   renderCode1(data,key){
     return (<View className='ad-wrap type-1' key={key}>
-      <Image className='ad-img' src={data[0].targetImage}/>
+      <Image onClick={()=>{this.jumpTo(data[0])}} className='ad-img' src={data[0].targetImage}/>
     </View>)
   }
   renderCode2(data,key){
     return (<View className='ad-wrap type-2' key={key}>
       {data.map(item=>{
-        return  <Image key={item.configId} className='ad-img' src={item.targetImage} />
+        return  <Image onClick={()=>{this.jumpTo(item)}} key={item.configId} className='ad-img' src={item.targetImage} />
       })}
     </View>)
   }
   renderCode3(data,key){
    return (<View className='ad-wrap' key={key}>
       <View className='left-ad'>
-        <Image className='ad-img' src={data[0].targetImage}/>
+        <Image onClick={()=>{this.jumpTo(data[0])}} className='ad-img' src={data[0].targetImage}/>
       </View>
       <View className='right-ad'>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[1].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[1])}} className='ad-img' src={data[1].targetImage}/>
         </View>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[2].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[2])}} className='ad-img' src={data[2].targetImage}/>
         </View>
       </View>
     </View>)
@@ -51,14 +84,14 @@ class RecommendAd extends Component{
     return (<View className='ad-wrap' key={key}>
       <View className='right-ad'>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[1].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[0])}} className='ad-img' src={data[1].targetImage}/>
         </View>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[2].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[1])}} className='ad-img' src={data[2].targetImage}/>
         </View>
       </View>
       <View className='left-ad'>
-        <Image className='ad-img' src={data[0].targetImage}/>
+        <Image onClick={()=>{this.jumpTo(data[2])}} className='ad-img' src={data[0].targetImage}/>
       </View>
     </View>)
   }
@@ -66,18 +99,18 @@ class RecommendAd extends Component{
     return (<View className='ad-wrap' key={key}>
       <View className='right-ad'>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[0].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[0])}} className='ad-img' src={data[0].targetImage}/>
         </View>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[1].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[1])}} className='ad-img' src={data[1].targetImage}/>
         </View>
       </View>
       <View className='right-ad'>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[2].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[2])}} className='ad-img' src={data[2].targetImage}/>
         </View>
         <View className="right-ad-item">
-          <Image className='ad-img' src={data[2].targetImage}/>
+          <Image onClick={()=>{this.jumpTo(data[3])}} className='ad-img' src={data[3].targetImage}/>
         </View>
       </View>
     </View>)
@@ -86,7 +119,7 @@ class RecommendAd extends Component{
   renderCode7=(data,key)=>{
     return (<View className='ad-wrap type-7' key={key}>
       {data.map(item=>{
-        return  <Image key={item.configId} className='ad-img' src={item.targetImage} />
+        return  <Image onClick={()=>{this.jumpTo(item)}} key={item.configId} className='ad-img' src={item.targetImage} />
       })}
     </View>)
   }

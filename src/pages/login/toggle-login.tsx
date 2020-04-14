@@ -30,7 +30,9 @@ class Login extends Component{
     })
     registerPhone(params).then(res=>{
       Taro.hideLoading()
-      console.log(res.data)
+      Taro.reLaunch({
+        url: '/pages/index/index'
+      })
     })
   }
   toggleReaded = ()=>{

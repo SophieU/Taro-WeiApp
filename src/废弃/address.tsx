@@ -1,11 +1,22 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Text, Input} from '@tarojs/components'
-import './address.less'
+import '../pages/address/address.less'
 
 class Address extends Component {
-  config:Config = {
-    navigationBarTitleText: '选择地址',
+  localRoutePlan(){
+    const chooseLocation = Taro.requirePlugin('chooseLocation');
+    const key = 'E4EBZ-Z7QRF-BREJT-JZGXD-2DDE6-6XB6T';  //使用在腾讯位置服务申请的key
+    const referer = '天富一生约'; //调用插件的app的名称
+    const location = JSON.stringify({
+      latitude: 39.89631551,
+      longitude: 116.323459711
+    });
+    const category = '生活服务,娱乐休闲';
+
+    Taro.navigateTo({
+      url: `plugin://chooseLocation/index?key=${key}&referer=${referer}&location=${location}&category=${category}`
+    });
   }
   render(){
     return (<View>
@@ -16,7 +27,7 @@ class Address extends Component {
             <Text className='search-btn'>搜索</Text>
           </View>
         </View>
-      <View className='address-lists'>
+      <View className='address-lists' onClick={this.localRoutePlan}>
         <View className='list-item'>
           <View className="item-left">
             <View className='add-title'>力宝大夏停车场</View>

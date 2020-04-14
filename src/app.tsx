@@ -31,12 +31,12 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/index/more-service',
+      'pages/index/web-view',
       'pages/login/login',
       'pages/login/toggle-login',
       'pages/order/order-submit',
       'pages/address/order-add',
       'pages/address/add-edit',
-      'pages/address/address',
       'pages/mine/mine',
       'pages/mine/pocket',
       'pages/mine/qr-code',
@@ -59,7 +59,8 @@ class App extends Component {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '速达优服',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'black',
+      navigationStyle:'custom'
     },
     tabBar: {
       borderStyle: 'white',
@@ -69,6 +70,17 @@ class App extends Component {
         {pagePath: 'pages/index/index', text:'首页', iconPath:'assets/imgs/tmp/index.png', selectedIconPath: 'assets/imgs/tmp/index-active.png'},
         {pagePath: 'pages/mine/mine', text:'我的', iconPath:'assets/imgs/tmp/mine.png', selectedIconPath: 'assets/imgs/tmp/mine-active.png'}
       ]
+    },
+    plugins: {
+      "chooseLocation": {
+        "version": "1.0.2",
+        "provider": "wx76a9a06e5b4e693e"
+      }
+    },
+    permission: {
+      "scope.userLocation": {
+        "desc": "你的位置信息将用于小程序定位"
+      }
     }
   }
 

@@ -24,6 +24,12 @@ export const getUserInfo  = (callback:(userInfo)=>void)=>{
                 console.log(res.userInfo)
               }
             })
+          },
+          fail(err){
+            console.log(err)
+            // Taro.showModal({
+            //
+            // })
           }
         })
       }
@@ -31,6 +37,25 @@ export const getUserInfo  = (callback:(userInfo)=>void)=>{
   })
 }
 
+/*
+* @description 地理位置授权
+* */
+export const getLocationAuth = (cb:Function)=>{
+  Taro.getSetting({
+    success(res) {
+      if (!res.authSetting['scope.userLocation']) {
+        Taro.authorize({
+          scope: 'scope.userLocation',
+          success () {
+            cb()
+          }
+        })
+      }else{
+        cb()
+      }
+    }
+  })
+}
 /*
 *  @description  解析字符串为json格式
 *  @params {string}  query  待解析字符串

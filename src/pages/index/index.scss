@@ -1,5 +1,7 @@
 .index{
   background: #F2F2F2;
+  height: 100vh;
+  box-sizing: border-box;
   padding-bottom: 15px;
   -webkit-overflow-scrolling: touch;
   &.no-banner{
@@ -88,6 +90,11 @@
     .item-text{
       font-size: 10px;
       color: #808080;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      max-width: 100%;
+      text-overflow: ellipsis;
     }
   }
 }
@@ -151,6 +158,7 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     overflow: hidden;
+    background:#fff;
     .func-item{
       flex: 50% 0 0;
       height: 55px;
@@ -160,14 +168,14 @@
       padding: 5px;
       box-sizing: border-box;
       background: #fff;
-        &:first-child{
-          border-right: 1px solid #efefef;
-          border-bottom: 1px solid #efefef;
-        }
-        &:last-child{
-          border-top: 1px solid #efefef;
-          border-left: 1px solid #efefef;
-        }
+        //&:first-child{
+        //  border-right: 1px solid #efefef;
+        //  border-bottom: 1px solid #efefef;
+        //}
+        //&:last-child{
+        //  border-top: 1px solid #efefef;
+        //  border-left: 1px solid #efefef;
+        //}
       .item-img{
         width: 32px;
         height: 32px;

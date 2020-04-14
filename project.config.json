@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "myApp",
+  "projectname": "sdyf",
   "description": "基于taro的服务o2o线下开锁业务小程序",
   "appid": "wx786f809a2d6aca15",
   "setting": {
@@ -10,4 +10,5 @@
     "minified": false
   },
   "compileType": "miniprogram"
+
 }

@@ -1,6 +1,6 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Text, Navigator, Button} from '@tarojs/components'
+import {View, Image, Text, Navigator, Button, OpenData } from '@tarojs/components'
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from "taro-ui"
 import { observer, inject } from '@tarojs/mobx'
 import { setInvitePhone } from './services'
@@ -29,7 +29,8 @@ type State = {
 @observer
 class Mine extends  Component<{}, State>{
   config: Config={
-    navigationBarTitleText:'我的'
+    navigationBarTitleText:'我的',
+    navigationStyle:'default'
   }
   state = {
     userInfo: {},
@@ -78,9 +79,11 @@ class Mine extends  Component<{}, State>{
     return (
       <View className='mine page'>
         <View className='user-info'>
-          <Image className='user-avatar' src={this.state.userInfo.avatarUrl}></Image>
+          <OpenData className='user-avatar' type="userAvatarUrl"></OpenData>
+          {/*<Image className='user-avatar' src={this.state.userInfo.avatarUrl}></Image>*/}
           <View className='user-block'>
-            <View className='name'>{this.state.userInfo.nickName}</View>
+            {/*<View className='name'>{this.state.userInfo.nickName}</View>*/}
+            <OpenData className='name' type="userNickName"></OpenData>
             <View className='tel'>{this.state.apiUserInfo.userPhone}</View>
           </View>
           <Navigator url='/pages/mine/pocket' className='my-pocket'>

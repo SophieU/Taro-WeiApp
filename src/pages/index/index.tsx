@@ -1,10 +1,10 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Image, Text, Navigator, Swiper, SwiperItem} from '@tarojs/components'
+import { ScrollView, View, Image, Text, Navigator, Swiper, SwiperItem, Button} from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import CustomerService from '../../components/customer-service'
 import RecommendAd from '../../components/recommend-ad'
-import {decodeQueryString, getUserInfo} from '../../utils/common'
+import {decodeQueryString} from '../../utils/common'
 import {loginApp} from '../login/service'
 import { getBannerLists, getServiceLists } from './servics'
 import './index.scss'
@@ -27,6 +27,9 @@ type PageState = {
   serviceList:Array<object>,
   adBannerList:Array<object>,
   serviceBlockLists:Array<object>,
+  pageNo:number,
+  pageSize:number,
+  hasNextPage:boolean
 }
 interface Index {
   props: PageStateProps;
@@ -70,11 +73,7 @@ class Index extends Component<{}, PageState> {
     if(!Taro.getStorageSync('loginStatus')){
       loginApp()
     }
-    /* 获取用户信息 */
-    getUserInfo((userInfo)=>{
-      const { userStore } = this.props
-      userStore.setWXUserInfo(userInfo)
-    })
+
     /*界面信息数据*/
     this.getBanner()
     this.getService()
@@ -94,6 +93,9 @@ class Index extends Component<{}, PageState> {
       serviceList:[],
       adBannerList:[],
       serviceBlockLists:[],
+      pageNo:1,
+      pageSize:10,
+      hasNextPage:true
     }
   }
   toggleService=()=>{
@@ -116,54 +118,95 @@ class Index extends Component<{}, PageState> {
   }
   /* 获取服务栏目 */
   getService = ()=>{
+    if(!this.state.hasNextPage){
+      return
+    }
     let params = {
-      pageNo:1,
-      pageSize:10
+      pageNo:this.state.pageNo,
+      pageSize:this.state.pageSize
     }
     getServiceLists(params).then(res=>{
       if(res.data.code===0){
         let data = res.data.data
         this.setState({
-          serviceBlockLists:data
+          serviceBlockLists:data.list,
+          hasNextPage:data.hasNextPage,
+          pageNo:data.hasNextPage?data.nextPage:data.pageNo
         })
         console.log(data)
       }
     })
   }
   /* 判断跳转到哪儿 */
-  jumpTo = (info)=>{
-    console.log(info)
+  jumpTo = (info,otherType?:string)=>{
+    let needLogin = info.needLogin
+    let type = info.serviceCategoryCode
+    if(needLogin==='Y'){
+      Taro.showModal({
+        title:'温馨提醒',
+        content:'请先登录再操作',
+      }).then(res =>{
+        if(res.confirm){
+          Taro.navigateTo({
+            url:'/pages/login/toggle-login'
+          })
+        }
+      })
+      return
+    }
+    if(type==='E_SERVICE_CATEGORY'||type==='E_SERVICE'||otherType==='E_SERVICE_CATEGORY'){
+      // 跳转订单确认
+      Taro.navigateTo({
+        url:`/pages/order/order-submit?id=${info.target||info.id}`
+      })
+    }else if(type==='E_PROJECT'){
+      // 跳转更多服务
+      Taro.navigateTo({
+        url:`/pages/index/more-service?id=${info.target}`
+      })
+    }else if(type==='APP_JUMP'){
+      // 中转APP内页
+      Taro.navigateTo({
+        url:info.target
+      })
+    }else if(type==='H5'){
+      // 打开H5
+      if(!info.target) return;
+      Taro.navigateTo({
+        url:`/pages/index/web-view?target=${info.target}`
+      })
+    }
   }
   render () {
     // const { counterStore: { counter } } = this.props
     return (
-      <View className={this.state.adBannerList.length>0?'index':'index no-banner'}>
-        {this.state.adBannerList.length<=0?
-          <View className='header-index'>首页</View>
-          :
-          <Swiper
-            className='banner-wrap'
-            indicatorColor='#fff'
-            indicatorActiveColor='#EA7744'
-            indicatorDots
-          >
-            {this.state.adBannerList.map((item,index)=>{
-              return <SwiperItem onClick={()=>this.jumpTo(item)}  key={index}>
-                <Image
-                  className='banner-img'
-                  style='width:100%'
-                  src={item.imgName}
-                />
-              </SwiperItem>
-            })}
-          </Swiper>
-
-        }
-
+      <ScrollView
+        className={this.state.adBannerList.length>0?'index':'index no-banner'}
+        scrollY
+        onScrollToLower={this.getService}
+      >
+        <View className='header-index'>速达优服</View>
+        <Swiper
+          className='banner-wrap'
+          indicatorColor='#fff'
+          indicatorActiveColor='#EA7744'
+          indicatorDots
+        >
+          {this.state.adBannerList.map((item,index)=>{
+            return <SwiperItem  key={index}>
+              <Image
+                onClick={()=>this.jumpTo(item)}
+                className='banner-img'
+                style='width:100%'
+                src={item.imgName}
+              />
+            </SwiperItem>
+          })}
+        </Swiper>
         {/*icon列表*/}
         <View className='service-type'>
           {this.state.serviceList.map(item=>{
-            return (<View className='service-type-item' key={item.serviceId}>
+            return (<View className='service-type-item' key={item.serviceId} onClick={()=>this.jumpTo(item)}>
               <Image className='item-icon' src={item.iconUrl}/>
               <Text className='item-text'>{item.title}</Text>
             </View>)
@@ -176,93 +219,35 @@ class Index extends Component<{}, PageState> {
           })
         }
         {/*报修分类*/}
-        <View className='function-block'>
-          <View className="left-block">
-            <Image className='left-bg' src='../../assets/imgs/tmp/5.png'></Image>
-            <Text className='bock-title'>大家电维修</Text>
-            <Navigator className='bock-more' url='/pages/index/more-service'>
-              查看全部
-              <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
-            </Navigator>
-          </View>
-          <View className="right-block">
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-           <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-           <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-           <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-          </View>
-        </View>
-        <View className='function-block'>
-          <View className="left-block">
-            <Image className='left-bg' src={require('../../assets/imgs/tmp/6.png')}></Image>
-            <Text className='bock-title'>厨卫维修</Text>
-            <Navigator className='bock-more' url='pages/index/more-service'>
-              查看全部
-              <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
-            </Navigator>
-          </View>
-          <View className="right-block">
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-          </View>
-        </View>
-        <View className='function-block'>
-          <View className="left-block">
-            <Image className='left-bg' src='../../assets/imgs/tmp/7.png'></Image>
-            <Text className='bock-title'>房屋维修</Text>
-            <Navigator className='bock-more' url='pages/index/more-service'>
-              查看全部
-              <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
-            </Navigator>
-          </View>
-          <View className="right-block">
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-            <View className='func-item'>
-              <Image className='item-img' src={require('../../assets/imgs/icon_repair_tab_n.png')}></Image>
-              <Text className='item-text'>洗衣机维修</Text>
-            </View>
-          </View>
-        </View>
+        {
+          this.state.serviceBlockLists.map((item,index)=>{
+            return (<View className='function-block' key={item.id}>
+              <View className="left-block">
+                <Image className='left-bg' src={item.iconUrlOne}></Image>
+                <Text className='bock-title'>{item.name}</Text>
+                <Navigator className='bock-more' url={'/pages/index/more-service?id='+item.id}>
+                  查看全部
+                  <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
+                </Navigator>
+              </View>
+              <View className="right-block">
+                {
+                  item.categoryList.map(child=>{
+                    return ( <View className='func-item' key={child.id} onClick={()=>{this.jumpTo(child,'E_SERVICE_CATEGORY')}}>
+                      <Image className='item-img' src={child.iconUrlOne}></Image>
+                      <Text className='item-text'>{child.name}</Text>
+                    </View>)
+                  })
+                }
+              </View>
+            </View>)
+          })
+        }
         {/*客服悬浮*/}
         <CustomerService></CustomerService>
-      </View>
+         {/* 授权信息*/}
+
+      </ScrollView>
     )
   }
 }

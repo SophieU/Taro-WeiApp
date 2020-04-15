@@ -11,6 +11,7 @@ class NewPage extends Component<Prop,{}>{
   }
   config: Config ={
     navigationBarTitleText: this.props.title,
+    navigationStyle:'default'
   }
   render(){
     let target = this.$router.params.target

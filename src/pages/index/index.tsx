@@ -4,7 +4,7 @@ import { ScrollView, View, Image, Text, Navigator, Swiper, SwiperItem, Button} f
 import { observer, inject } from '@tarojs/mobx'
 import CustomerService from '../../components/customer-service'
 import RecommendAd from '../../components/recommend-ad'
-import {decodeQueryString} from '../../utils/common'
+import {decodeQueryString, jumpTo as jumpToUtil} from '../../utils/common'
 import {loginApp} from '../login/service'
 import { getBannerLists, getServiceLists } from './servics'
 import './index.scss'
@@ -139,43 +139,7 @@ class Index extends Component<{}, PageState> {
   }
   /* 判断跳转到哪儿 */
   jumpTo = (info,otherType?:string)=>{
-    let needLogin = info.needLogin
-    let type = info.serviceCategoryCode
-    if(needLogin==='Y'){
-      Taro.showModal({
-        title:'温馨提醒',
-        content:'请先登录再操作',
-      }).then(res =>{
-        if(res.confirm){
-          Taro.navigateTo({
-            url:'/pages/login/toggle-login'
-          })
-        }
-      })
-      return
-    }
-    if(type==='E_SERVICE_CATEGORY'||type==='E_SERVICE'||otherType==='E_SERVICE_CATEGORY'){
-      // 跳转订单确认
-      Taro.navigateTo({
-        url:`/pages/order/order-submit?id=${info.target||info.id}`
-      })
-    }else if(type==='E_PROJECT'){
-      // 跳转更多服务
-      Taro.navigateTo({
-        url:`/pages/index/more-service?id=${info.target}`
-      })
-    }else if(type==='APP_JUMP'){
-      // 中转APP内页
-      Taro.navigateTo({
-        url:info.target
-      })
-    }else if(type==='H5'){
-      // 打开H5
-      if(!info.target) return;
-      Taro.navigateTo({
-        url:`/pages/index/web-view?target=${info.target}`
-      })
-    }
+    jumpToUtil(info,otherType)
   }
   render () {
     // const { counterStore: { counter } } = this.props

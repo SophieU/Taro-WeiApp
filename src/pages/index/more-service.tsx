@@ -44,7 +44,8 @@ class More extends Component<{}, State>{
 
   }
   config: Config = {
-    navigationBarTitleText: '更多服务',
+    navigationBarTitleText: '服务分类',
+    navigationStyle:'default'
   }
   getAll = ()=>{
     getServiceAll().then(res=>{

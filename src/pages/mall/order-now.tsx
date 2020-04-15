@@ -6,7 +6,8 @@ import './order-now.less'
 class GoodsDetail extends  Component{
 
   config: Config={
-    navigationBarTitleText:'预约提交'
+    navigationBarTitleText:'预约提交',
+    navigationStyle:'default'
   }
   constructor() {
     super();

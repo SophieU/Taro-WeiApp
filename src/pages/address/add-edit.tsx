@@ -3,13 +3,15 @@ import Taro, {Component, Config} from '@tarojs/taro'
 import {View,  Icon, Button, Input} from '@tarojs/components'
 import { AtCheckbox } from 'taro-ui'
 import {getLocationAuth} from '../../utils/common'
-import {validateTel} from '../../utils/regexpValidate'
-import {saveAdd} from './service'
+import {validateTel, validateEmpty} from '../../utils/regexpValidate'
+import {saveAdd, defaultSet} from './service'
 import './order-add.scss'
 
 type State = {
   setDefault:Array<any>
+  pageType:string
   chooseLocation:object|null,
+  id:string,
   areaInfo:string
   latitude:string
   longitude:string
@@ -26,6 +28,7 @@ class AddEdit extends Component<{},State>{
   constructor() {
     super();
     this.state={
+      pageType:'add', // 页面类型 add-新增，edit-编辑
       setDefault:[],
       chooseLocation:null,
       id:'',
@@ -36,6 +39,16 @@ class AddEdit extends Component<{},State>{
       userName:'',
       userMobile:'',
       isDefault:'N'
+    }
+  }
+  componentWillMount(){
+    let id = this.$router.params.id
+    if(id!=='undefined'){
+      this.getEditAddInfo(id)
+      this.setState({
+        pageType:'edit',
+        id:id,
+      })
     }
   }
   componentDidShow(){
@@ -49,7 +62,26 @@ class AddEdit extends Component<{},State>{
         latitude,
         longitude
       })
-      console.log(location)
+    }
+  }
+  getEditAddInfo=(id)=>{
+    let addLists = Taro.getStorageSync('addressLists')
+    let target = addLists.filter(item=>{
+      return item.id===id
+    })
+    if(target.length>0){
+      let res = target[0]
+      this.setState({
+        id:id,
+        areaInfo:res.areaInfo,
+        latitude:res.latitude,
+        longitude:res.longitude,
+        address:res.address,
+        userName:res.userName,
+        userMobile:res.userMobile,
+        isDefault:res.isDefault,
+        setDefault:[res.isDefault]
+      })
     }
   }
   goAddress=()=>{
@@ -77,10 +109,14 @@ class AddEdit extends Component<{},State>{
     })
 
   }
-  handleRadioChange(value){
+  handleRadioChange = (value)=>{
     this.setState({
-      setDefault: value
+      setDefault: value,
+      isDefault:value.length>0?'Y':'N'
     })
+    if(this.state.pageType==='edit'&&value.length>0){
+      defaultSet(this.state.id)
+    }
   }
   setValue(e,key){
     const value = e.detail.value
@@ -97,21 +133,38 @@ class AddEdit extends Component<{},State>{
       "latitude":"",
       "isDefault":""
     }
+    let validator = {
+      userName:{message:'请输入联系人名称'},
+      userMobile:{message:'请输入联系电话'},
+      areaInfo:{message:'请选择收货地址'},
+      address:{message:'请填写详细地址'},
+    }
+
     if(this.state.setDefault.length>0){
       params.isDefault=this.state.setDefault[0]
     }
     for(let key in params){
       params[key]=this.state[key]
     }
-    if(validateTel(params.userMobile)){
+    if(!validateEmpty(params,validator)){
+      return
+    }
+    if(!validateTel(params.userMobile)){
       Taro.showToast({
-        title:'请输入正确的手机号码'
+        title:'请输入正确的手机号码',
+        icon:'none'
       })
       return
     }
+    Taro.showLoading({title:'提交中'})
     saveAdd(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
+        Taro.showToast({title:'保存成功'})
+        Taro.navigateBack()
         console.log(res)
+      }else{
+        Taro.showToast({title:'提交失败：'+res.data.msg})
       }
     })
   }
@@ -147,7 +200,7 @@ class AddEdit extends Component<{},State>{
           <AtCheckbox
             selectedList={this.state.setDefault}
             options={[{label:'设为默认', value: 'Y'}]}
-            onChange={this.handleRadioChange.bind(this)}
+            onChange={this.handleRadioChange}
           ></AtCheckbox>
         </View>
       </View>

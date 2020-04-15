@@ -5,7 +5,8 @@ import './mall.less'
 
 class Mall extends  Component{
   config: Config={
-    navigationBarTitleText:'预约商城'
+    navigationBarTitleText:'预约商城',
+    navigationStyle:'default'
   }
   render(){
     return (

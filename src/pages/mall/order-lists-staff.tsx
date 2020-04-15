@@ -6,7 +6,8 @@ import './order-lists.less'
 
 class OrderListsStaff extends  Component{
   config: Config={
-    navigationBarTitleText:'订单列表'
+    navigationBarTitleText:'订单列表',
+    navigationStyle:'default'
   }
   constructor() {
     super();

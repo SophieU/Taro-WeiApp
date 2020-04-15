@@ -108,3 +108,47 @@ export const objToQuery= (source:object):string => {
   }
   return res
 }
+
+/*
+*   @description 全局跳转处理，根据不同service-code对应跳转
+* */
+export const jumpTo = (info,otherType?:string)=>{
+  let needLogin = info.needLogin
+  let type = info.serviceCategoryCode
+  let userId = Taro.getStorageSync('userId')
+  if(needLogin==='Y'&&!userId){
+    Taro.showModal({
+      title:'温馨提醒',
+      content:'请先登录再操作',
+    }).then(res =>{
+      if(res.confirm){
+        Taro.navigateTo({
+          url:'/pages/login/toggle-login'
+        })
+      }
+    })
+    return
+  }
+  if(type==='E_SERVICE_CATEGORY'||type==='E_SERVICE'||otherType==='E_SERVICE_CATEGORY'){
+    // 跳转订单确认
+    Taro.navigateTo({
+      url:`/pages/order/order-submit?id=${info.target||info.id}`
+    })
+  }else if(type==='E_PROJECT'){
+    // 跳转更多服务
+    Taro.navigateTo({
+      url:`/pages/index/more-service?id=${info.target}`
+    })
+  }else if(type==='APP_JUMP'){
+    // 中转APP内页
+    Taro.navigateTo({
+      url:info.target
+    })
+  }else if(type==='H5'){
+    // 打开H5
+    if(!info.target) return;
+    Taro.navigateTo({
+      url:`/pages/index/web-view?target=${info.target}`
+    })
+  }
+}

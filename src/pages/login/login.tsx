@@ -6,7 +6,8 @@ import './login.scss'
 
 class Login extends Component{
   config: Config = {
-    navigationBarTitleText: '登录'
+    navigationBarTitleText: '登录',
+    navigationStyle:'default'
   }
   state = {
     loginTel:'',

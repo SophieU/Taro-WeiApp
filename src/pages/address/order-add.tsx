@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button} from '@tarojs/components'
-import { getAddLists } from './service'
+import { getAddLists, deleteAdd, getDefaultAdd } from './service'
 import './order-add.scss'
 
 type addLists = {
@@ -10,7 +10,8 @@ type addLists = {
   tag:string
 }
 interface AddState {
-  addressLists:Array<addLists>
+  addressLists:Array<addLists>,
+  defaultId:string
 }
 class OrderAdd extends Component<{},AddState>{
   config: Config = {
@@ -20,24 +21,48 @@ class OrderAdd extends Component<{},AddState>{
   constructor() {
     super();
     this.state={
-      addressLists:[ ]
+      addressLists:[ ],
+      defaultId:'',
     }
   }
-  componentWillMount(){
+  componentWillMount(){}
+  componentDidShow(){
+    let params = this.$router.params
     this.getOrderLists()
+    this.getDefault()
   }
-  goEdit=()=>{
+  goEdit=(id?:string)=>{
     Taro.navigateTo({
-      url:'/pages/address/add-edit'
+      url:`/pages/address/add-edit?id=${id}`
+    })
+  }
+  deleteHandler=(id)=>{
+    deleteAdd(id).then(res=>{
+      if(res.data.code===0){
+        Taro.showToast({title:'删除成功',icon:'none'})
+        this.getOrderLists()
+      }
+    })
+  }
+  getDefault= ()=>{
+    getDefaultAdd().then(res=>{
+      if(res.data.code===0){
+        if(res.data.data){
+          this.setState({
+            defaultId:res.data.data.id
+          })
+        }
+      }
     })
   }
   getOrderLists = ()=>{
     getAddLists().then(res=>{
-      console.log(res.data)
       if(res.data.code===0){
         this.setState({
           addressLists:res.data.data
         })
+        Taro.setStorageSync('addressLists',res.data.data)
+
       }
     })
   }
@@ -48,10 +73,11 @@ class OrderAdd extends Component<{},AddState>{
           {this.state.addressLists.map((item,index)=>{
             return ( <View className='add-item' key={index}>
               <View className="item-info">
-                <View className='item-text'>{item.address} {item.order}</View>
-                {item.tag?<View className='item-tag'>{item.tag}</View>:null}
+                <View className='item-text'>{item.areaInfo} {item.address}</View>
+                {item.id===this.state.defaultId?<View className='item-tag'>默认</View>:null}
               </View>
-              <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')} onClick={this.goEdit}></Image>
+              <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')} onClick={()=>this.goEdit(item.id)}></Image>
+              <Image className='edit-btn' src={require('../../assets/imgs/tmp/delete.png')} onClick={()=>this.deleteHandler(item.id)}></Image>
             </View>)
           })}
         </View>
@@ -60,7 +86,7 @@ class OrderAdd extends Component<{},AddState>{
         <View className='no-address-text'>还未添加地址~</View>
       </View>)
       }
-      <Button onClick={this.goEdit} className='add-address'>添加地址</Button>
+      <Button onClick={()=>this.goEdit()} className='add-address'>添加地址</Button>
     </View>)
   }
 }

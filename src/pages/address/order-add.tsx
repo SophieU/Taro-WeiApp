@@ -1,8 +1,10 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
+import {inject, observer } from '@tarojs/mobx'
 import {View, Image, Button} from '@tarojs/components'
 import { getAddLists, deleteAdd, getDefaultAdd } from './service'
 import './order-add.scss'
+
 
 type addLists = {
   address:string,
@@ -12,22 +14,32 @@ type addLists = {
 interface AddState {
   addressLists:Array<addLists>,
   defaultId:string
+  fromPage:string
 }
-class OrderAdd extends Component<{},AddState>{
+interface AddProp {
+  appStore:object
+}
+@inject('appStore')
+@observer
+class OrderAdd extends Component<AddProp,AddState>{
   config: Config = {
-    navigationBarTitleText: '选择地址',
+    navigationBarTitleText: '地址列表',
     navigationStyle: 'default'
   }
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state={
       addressLists:[ ],
       defaultId:'',
+      fromPage:'',
     }
   }
   componentWillMount(){}
   componentDidShow(){
-    let params = this.$router.params
+    let from = this.$router.params.from
+    this.setState({
+      fromPage:from
+    })
     this.getOrderLists()
     this.getDefault()
   }
@@ -62,18 +74,28 @@ class OrderAdd extends Component<{},AddState>{
           addressLists:res.data.data
         })
         Taro.setStorageSync('addressLists',res.data.data)
-
       }
     })
+  }
+  handleClickAdd=(data)=>{
+    const { appStore } = this.props
+    // 来自订单跳转
+    if(this.state.fromPage==='orderSubmit'){
+      appStore.setOrderForm({
+        address:data.areaInfo+data.address,
+        addressObj:data
+      })
+      Taro.navigateBack({delta:-1})
+    }
   }
   render(){
     return (<View className='page'>
       {this.state.addressLists.length>0?(<View className='add-lists-wrap'>
         <View className='add-lists'>
           {this.state.addressLists.map((item,index)=>{
-            return ( <View className='add-item' key={index}>
+            return ( <View className='add-item' key={index} >
               <View className="item-info">
-                <View className='item-text'>{item.areaInfo} {item.address}</View>
+                <View className='item-text' onClick={()=>this.handleClickAdd(item)}>{item.areaInfo} {item.address}</View>
                 {item.id===this.state.defaultId?<View className='item-tag'>默认</View>:null}
               </View>
               <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')} onClick={()=>this.goEdit(item.id)}></Image>

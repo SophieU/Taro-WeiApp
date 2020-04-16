@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button} from '@tarojs/components'
 import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction  } from 'taro-ui'
-import './detail.less'
+import './detail.scss'
 
 
 interface Lists{
@@ -19,7 +19,8 @@ interface State {
 }
 class Lists extends Component<{},State>{
   config:Config = {
-    navigationBarTitleText:'报修详情'
+    navigationBarTitleText:'报修详情',
+    navigationStyle:'default'
   }
   constructor() {
     super();

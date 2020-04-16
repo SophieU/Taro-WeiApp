@@ -1,4 +1,4 @@
-
+@import "../../styles/mixin";
 .order-banner{
   width: 100%;
   height: 101px;
@@ -8,6 +8,7 @@
   background: #fff;
   border-radius: 4px;
   padding:0 15px;
+  @include card();
   .info-item{
     display: flex;
     height: 60px;
@@ -31,21 +32,26 @@
       flex: 60px 0 0;
       margin-right: 10px;
     }
+    .little-tips{
+      color: #999;
+      font-size: 10px;
+    }
   }
 }
 
 .service-form{
   margin: 10px;
   background: #fff;
-  border-radius: 4px;
-  padding:0 15px;
+
+  @include card();
   .form-item{
     display: flex;
-    height: 60px;
+    min-height: 60px;
     padding: 13px 0;
     box-sizing: border-box;
     align-items: center;
     border-bottom: 1px solid #E6E8EB;
+
     &:last-child{
       border-bottom: none;
     }
@@ -66,41 +72,26 @@
       display: block;
       flex: 1 0 0;
     }
-  }
-}
 
-.service-desc{
-  background: #fff;
-  margin: 10px;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px 0 #E4E8EB;
-  .desc-tab{
-    display: flex;
-    height: 40px;
-    border-bottom: 1px solid #E6E8EB;
-    .desc-tab-item{
-      line-height: 40px;
-      flex: 1 0 0;
-      font-size: 14px;
-      color: #999999;
-      text-align: center;
-      &.active{
-        color: #216EC6;
-        position: relative;
-        &:after{
-          content: "";
-          height: 2px;
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: -1px;
-          background: #216EC6;
-        }
+    &.form-item-textarea{
+      .form-ico,  .form-label{
+        align-self: flex-start;
+      }
+      .form-textarea{
+        height: 100px;
       }
     }
   }
 }
 
+
+.other-tips{
+  padding: 10px;
+  .other-tips-tab{
+    @include card();
+    padding: 0;
+  }
+}
 .submit-bar{
   display: flex;
   height: 60px;

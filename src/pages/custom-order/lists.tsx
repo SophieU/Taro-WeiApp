@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Text, Navigator} from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import './lists.less'
+import './lists.scss'
 
 
 interface Lists{
@@ -16,7 +16,8 @@ interface State {
 }
 class Lists extends Component<{},State>{
   config:Config = {
-    navigationBarTitleText:'报修记录'
+    navigationBarTitleText:'报修记录',
+    navigationStyle:'default'
   }
   constructor() {
     super();

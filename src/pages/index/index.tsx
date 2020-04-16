@@ -70,9 +70,10 @@ class Index extends Component<{}, PageState> {
       }
     }
     /*登录小程序*/
-    if(!Taro.getStorageSync('loginStatus')){
-      loginApp()
-    }
+    loginApp()
+    // if(!Taro.getStorageSync('loginStatus')){
+    //   loginApp()
+    // }
 
     /*界面信息数据*/
     this.getBanner()
@@ -133,7 +134,6 @@ class Index extends Component<{}, PageState> {
           hasNextPage:data.hasNextPage,
           pageNo:data.hasNextPage?data.nextPage:data.pageNo
         })
-        console.log(data)
       }
     })
   }
@@ -171,7 +171,7 @@ class Index extends Component<{}, PageState> {
         <View className='service-type'>
           {this.state.serviceList.map(item=>{
             return (<View className='service-type-item' key={item.serviceId} onClick={()=>this.jumpTo(item)}>
-              <Image className='item-icon' src={item.iconUrl}/>
+              <Image className='item-icon' src={item.iconName}/>
               <Text className='item-text'>{item.title}</Text>
             </View>)
           })}

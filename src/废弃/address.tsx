@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Text, Input} from '@tarojs/components'
-import '../pages/address/address.less'
+import '../pages/address/address.scss'
 
 class Address extends Component {
   localRoutePlan(){

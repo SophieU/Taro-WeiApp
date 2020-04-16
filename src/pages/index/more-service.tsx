@@ -28,7 +28,6 @@ class More extends Component<{}, State>{
       scrollNavIntoView:'nav'+id,
       scrollIntoView:'content' + id,
     })
-    console.log(this.$router.params)
   }
   constructor(){
     super()
@@ -69,6 +68,11 @@ class More extends Component<{}, State>{
       scrollPadding:scrollTop>40?'40px':'0px'
     })
   }
+  jumpToControl=(info)=>{
+    Taro.navigateTo({
+      url:`/pages/order/order-submit?id=${info.id}`
+    })
+  }
   render(){
     return (
       <ScrollView
@@ -99,10 +103,10 @@ class More extends Component<{}, State>{
                 </View>
                 <View className='lists'>
                   {
-                    item.categoryList.map((item)=>{
-                      return ( <View className='lists-item' key={item.id}>
-                        <Image className='list-img' src={item.iconUrlOne}/>
-                        <Text className='list-text'>{item.name}</Text>
+                    item.categoryList.map((child)=>{
+                      return ( <View className='lists-item' key={child.id} onClick={()=>this.jumpToControl(child)}>
+                        <Image className='list-img' src={child.iconUrlOne}/>
+                        <Text className='list-text'>{child.name}</Text>
                       </View>)
                     })
                   }

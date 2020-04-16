@@ -1,11 +1,14 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Text, Navigator, Input, Swiper, SwiperItem, RichText, Radio, Button, Swiper, SwiperItem } from '@tarojs/components'
+import {inject, observer } from '@tarojs/mobx'
+import {View, Image, Text, Navigator, Input, Textarea , Swiper, SwiperItem, RichText, Radio, Button, Swiper, SwiperItem } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import { getTopBanner, getOrderContent, getOrderContenNo, getTipsOther } from './order-api'
+import { getTopBanner, getOrderContent, getOrderContenNo, getTipsOther, needNightFee, submitOrder, getPrePayOrder, getWxPay} from './order-api'
 import { getDefaultAdd } from '../address/service'
 import {jumpTo as jumpToUtil} from "../../utils/common";
+import {validateTel} from '../../utils/regexpValidate'
 import './order-submit.scss'
+import order from "../staff-order/order";
 
 type Service = {
   "id": string,
@@ -28,12 +31,18 @@ interface State {
   repairUserAddressId:string
   serviceContent:Service
   address:string
+  userMobile:string,
   otherTips:string,
   serviceFeeTips:string,
   serviceTimeTips:string,
+  nightFee:object
+  repairOrderOfferPlanDtoList:Array<object>
+  repairUserAddressObj:object
+  faultReason:string
 }
 
-
+@inject('appStore')
+@observer
 class OrderSubmit extends Component<{},State>{
   config: Config = {
     navigationBarTitleText: '订单确认',
@@ -44,10 +53,18 @@ class OrderSubmit extends Component<{},State>{
     current:0,
     repairCategoryId:'',
     repairUserAddressId:'',
+    repairUserAddressObj:{},
     address:'',
+    userMobile:'',
+    faultReason:'',
     otherTips:'',
     serviceFeeTips:'',
     serviceTimeTips:'',
+    nightFee:{
+      serviceAmount:0,
+      hopeDoorTime:'',
+    },
+    repairOrderOfferPlanDtoList:[], //收费项目列表
     serviceContent:{
       "id": "",
       "name": "",
@@ -71,6 +88,16 @@ class OrderSubmit extends Component<{},State>{
     this.topBanner()
     this.getDefaultAddress()
     this.getTips()
+    this.isNeedNightFee()
+  }
+  componentDidShow(){
+    const orderForm = this.props.appStore.orderForm
+    this.setState({
+      address:orderForm.address,
+      userMobile:orderForm.userMobile,
+      repairUserAddressId:orderForm.addressObj.id,
+      repairUserAddressObj:orderForm.addressObj
+    })
   }
   topBanner= ()=>{
     getTopBanner().then(res=>{
@@ -84,17 +111,26 @@ class OrderSubmit extends Component<{},State>{
       }
     })
   }
+  // 获取默认地址
   getDefaultAddress = ()=>{
     getDefaultAdd().then(res=>{
       if(res.data.code===0){
         let data = res.data.data
-        if(data&&data.id){
-          let data = res.data.data
-          this.setState({
-            repairUserAddressId: data.id,
-            address:data.areaInfo + data.address
+        if(data){
+          this.setState(()=>{
+            return {
+              repairUserAddressId: data.id,
+              address:data.areaInfo + data.address,
+              repairUserAddressObj:data
+            }
+          },()=>{
+            this.props.appStore.setOrderForm({
+              address:data.areaInfo + data.address,
+              addressObj:data
+            })
+            this.getOrderContentWithAdd()
           })
-          this.getOrderContentWithAdd()
+
         }else{
           this.getOrderContentNone()
         }
@@ -104,17 +140,49 @@ class OrderSubmit extends Component<{},State>{
       }
     })
   }
+  // 判断是否需要夜间费
+  isNeedNightFee = ()=>{
+    needNightFee().then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data;
+        let feePro ;
+        if(data.serviceAmount>0){
+           feePro = {
+            planType:'NIGHT_FEE',
+            serviceCost:data.serviceAmount
+          }
+        }
+        this.setState((prevState:State)=>{
+          let repairOrderOfferPlanDtoList = prevState.repairOrderOfferPlanDtoList
+          if(typeof feePro === 'object'){
+            repairOrderOfferPlanDtoList.push(feePro)
+          }
+         return {
+           nightFee:{
+             serviceAmount: data.serviceAmount,
+             hopeDoorTime:data.hopeDoorTime,
+           },
+           repairOrderOfferPlanDtoList:repairOrderOfferPlanDtoList
+         }
+        })
+      }
+    })
+  }
   // 有默认地址获取内容
   getOrderContentWithAdd = ()=>{
+
     let params = {
       repairUserAddressId:this.state.repairUserAddressId,
       repairCategoryId:this.state.repairCategoryId,
     }
+    Taro.showLoading({title:'加载服务中'})
     getOrderContent(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         this.setState({
           serviceContent:res.data.data
         })
+
       }
     })
   }
@@ -141,70 +209,150 @@ class OrderSubmit extends Component<{},State>{
       }
     })
   }
+  // 提交表单
   submitForm=()=>{
-    Taro.showModal({
-      title: '温馨提示',
-      content: '空调维修师傅出工即需要先支付上门费20.00元且无法退款',
-      confirmText:'我同意',
-      cancelText:'算了吧',
-    }).then(res => console.log(res.confirm, res.cancel))
-
-    Taro.showToast({
-      title: '当前服务地址暂不支持该服务项目',
-      icon: 'none',
-      duration: 2000
-    }).then(res => console.log(res))
-  }
-  // 支付成功
-  paySuccess = ()=>{
-    Taro.showModal({
-      content: '支付成功',
-      confirmText:'查看订单',
-      cancelText:'返回首页',
-    }).then(res => {
-      console.log(res.confirm, res.cancel)
-      if(res.confirm){
-        // 我的
-        Taro.reLaunch({
-          url: '/pages/index/index',
+    let serviceContent = this.state.serviceContent
+    let params = {
+      repairRegionId:this.state.serviceContent.repairRegionId,
+      repairAddressId:this.state.repairUserAddressId,
+      address:this.state.address,
+      tllPhone:this.state.userMobile,
+      username:this.state.repairUserAddressObj.userName,
+      repairCategoryId:this.state.repairCategoryId,
+      faultReason:this.state.faultReason,
+      hopeDoorTime:this.state.nightFee.hopeDoorTime,
+      repairStationId:this.state.serviceContent.repairStationId,
+      repairOrderOfferPlanDtoList:this.state.repairOrderOfferPlanDtoList,
+    }
+    if(!params.tllPhone||!params.address||!validateTel(params.tllPhone)){
+      Taro.showToast({
+        title:'请完整并正确填写地址和地址',
+        icon:'none'
+      })
+      return
+    }
+    // 预收上门费
+    if(serviceContent.isPrepayDtd==='Y'){
+      Taro.showModal({
+        title: '温馨提示',
+        content: `当前服务需要预付上门费${serviceContent.dtdServiceFee}元`,
+        confirmText:'我同意',
+        cancelText:'算了吧',
+      }).then(res => {
+          if(res.confirm){
+            //发起预付上门费支付
+            Taro.showLoading({title:'获取支付信息中'})
+            getPrePayOrder(params).then(res=>{
+              Taro.hideLoading()
+              if(res.data.code===0){
+                let params = {
+                  "orderIds":[res.data.data.orderSn],
+                  "payBusinessType":"W_REPAIR_DOOR_FEE",
+                  "payCode":"WX_XCX"
+                }
+                this.startPay(params)
+              }
+            })
+          }
         })
-      }else{
-        // 首页
-        Taro.reLaunch({
-          url: '/pages/index/index',
+    }else{
+      // 直接提交
+
+      if(this.state.serviceContent.dtdServiceFee>0){
+        params.repairOrderOfferPlanDtoList.push({
+          planType:'WAITING_DOOR_ING_FEE',
+          serviceCost:this.state.serviceContent.dtdServiceFee
+        })
+      }
+      submitOrder(params).then(res=>{
+        if(res.data.code===0){
+          this.orderSuccess()
+        }else{
+          Taro.showToast({
+            title:res.data.msg,
+            icon:'none'
+          })
+          // Taro.showModal({
+          //   title:'操作提示',
+          //   content: '提交失败'+res.data.msg,
+          //   confirmText:'拔打客服',
+          //   cancelText:'返回首页',
+          // }).then(resInner=>{
+          //   if(resInner.confirm){
+          //    //
+          //   }
+          //   if(resInner.cancel){
+          //     Taro.reLaunch({url:'/pages/index/index'})
+          //   }
+          // })
+        }
+      })
+    }
+  }
+  // 调起支付
+  startPay = (params)=>{
+    getWxPay(params).then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        console.log('支付信息',data)
+        Taro.requestPayment({
+          success:()=>{
+            this.orderSuccess()
+              console.log('接口调用成功')
+          },
+          fail (res) {
+            console.log('接口调用失败')
+            console.log('支付失败')
+          },
+          ...data
         })
       }
     })
   }
-  // 提交成功
-  submitResult=(res:boolean)=>{
-    if(res){
-      Taro.showModal({
-        title:'操作提示',
-        content: '提交成功',
-        confirmText:'查看报修单',
-        cancelText:'返回首页',
-      })
-    }else{
-      Taro.showModal({
-        title:'操作提示',
-        content: '提交失败',
-        confirmText:'拔打客服',
-        cancelText:'返回首页',
-      })
-    }
+  // 支付成功
+  orderSuccess = ()=>{
+    Taro.showModal({
+      title:'操作提示',
+      content:'订单提交成功,您可以在【我的】-【报修订单】中查看',
+      confirmText:'查看报修单',
+      cancelText:'返回首页',
+    }).then(resInner=>{
+      if(resInner.confirm){
+        Taro.redirectTo({
+          url:'/pages/custom-order/lists'
+        })
+      }
+      if(resInner.cancel){
+        Taro.reLaunch({url:'/pages/index/index'})
+      }
+    })
   }
   // banner跳转
   jumpTo=(info,otherType?:string)=>{
     jumpToUtil(info,otherType)
   }
+  // 切换tab
   toggleTab=(value)=>{
     this.setState({
       current: value
     })
   }
-  render(){
+  // 输入手机号
+  handleInputMobile=(e)=>{
+    let value = e.detail.value
+    this.setState({
+      userMobile:value
+    })
+    this.props.appStore.setOrderForm({userMobile:value})
+  }
+  handleInputReason=(e)=>{
+    let value = e.detail.value
+    this.setState({
+      faultReason:value
+    })
+  }
 
+  render(){
     return (<View className='page'>
       {
         this.state.bannerLists.length>0?
@@ -243,11 +391,17 @@ class OrderSubmit extends Component<{},State>{
           <Text className='info-title'>服务收费</Text>
           <View className='info-content'>服务费{this.state.serviceContent.serviceFee}元起</View>
         </View>
-        <View className='info-item'>
-          <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
-          <Text className='info-title'>上门费</Text>
-          <View className='info-content'>服务费 {this.state.serviceContent.dtdServiceFee}元起</View>
-        </View>
+        {
+          this.state.serviceContent.hasDtdServiceFee!=='Y'
+            ?null
+            :( <View className='info-item'>
+              <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
+              <Text className='info-title'>上门费</Text>
+              <View className='info-content'>服务费 {this.state.serviceContent.dtdServiceFee}元起
+                {this.state.serviceContent.isPrepayDtd==='Y'?<Text className='little-tips'>(需要预付)</Text>:null}
+              </View>
+            </View>)
+        }
       </View>
 
       <View className='service-form'>
@@ -259,32 +413,39 @@ class OrderSubmit extends Component<{},State>{
         <View className='form-item'>
           <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
           <Text className='form-label'>联系方式</Text>
-          <Input type='text' placeholder='请输入联系方式' />
+          <Input type='text' value={this.state.userMobile} onInput={this.handleInputMobile} placeholder='请输入联系方式' />
         </View>
-
+        <View className='form-item form-item-textarea'>
+          <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
+          <Text className='form-label'>故障说明</Text>
+          <Textarea className='form-textarea' value={this.state.faultReason} onInput={this.handleInputReason} placeholder='请输入故障说明，最多200字' maxlength={200} />
+        </View>
       </View>
-      <AtTabs current={this.state.current} tabList={[{ title: '服务说明' }, { title: '服务时间' }, { title: '服务费用' }, { title: '其他' }]} onClick={this.toggleTab}>
-        <AtTabsPane current={this.state.current} index={0} >
-          <View className='tips-inner'>
-            <RichText nodes={this.state.serviceContent.serviceDescription}/>
-          </View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={1}>
-          <View className='tips-inner'>
-            <RichText nodes={this.state.serviceTimeTips}/>
-          </View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={2}>
-          <View className='tips-inner'>
-            <RichText nodes={this.state.serviceFeeTips}/>
-          </View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={3}>
-          <View className='tips-inner'>
-            <RichText nodes={this.state.otherTips}/>
-          </View>
-        </AtTabsPane>
-      </AtTabs>
+      <View className="other-tips">
+        <AtTabs className="other-tips-tab" current={this.state.current} tabList={[{ title: '服务说明' }, { title: '服务时间' }, { title: '服务费用' }, { title: '其他' }]} onClick={this.toggleTab}>
+          <AtTabsPane current={this.state.current} index={0} >
+            <View className='tips-inner'>
+              <RichText nodes={this.state.serviceContent.serviceDescription}/>
+            </View>
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={1}>
+            <View className='tips-inner'>
+              <RichText nodes={this.state.serviceTimeTips}/>
+            </View>
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={2}>
+            <View className='tips-inner'>
+              <RichText nodes={this.state.serviceFeeTips}/>
+            </View>
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={3}>
+            <View className='tips-inner'>
+              <RichText nodes={this.state.otherTips}/>
+            </View>
+          </AtTabsPane>
+        </AtTabs>
+      </View>
+
 
       <View className="submit-bar">
         <View className='protocal'>

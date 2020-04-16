@@ -4,6 +4,7 @@ import Index from './pages/index'
 
 import counterStore from './store/counter'
 import userStore from './store/user'
+import appStore from './store/app'
 import './styles/custom-taro.scss'
 import './styles/base.scss'
 
@@ -15,7 +16,8 @@ import './styles/base.scss'
 
 const store = {
   counterStore,
-  userStore
+  userStore,
+  appStore
 }
 
 class App extends Component {
@@ -29,26 +31,26 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index',
-      'pages/index/more-service',
-      'pages/index/web-view',
-      'pages/login/login',
-      'pages/login/toggle-login',
-      'pages/order/order-submit',
-      'pages/address/order-add',
-      'pages/address/add-edit',
-      'pages/mine/mine',
-      'pages/mine/pocket',
-      'pages/mine/qr-code',
-      'pages/mine/invite-history',
-      'pages/mall/mall',
-      'pages/mall/goods-detail',
-      'pages/mall/order-now',
-      'pages/mall/order-lists-custom',
-      'pages/mall/order-lists-staff',
-      'pages/custom-order/lists',
-      'pages/custom-order/detail',
-      'pages/admin/admin',
+      'pages/index/index', //首页
+      'pages/index/more-service', // 服务分类-更多
+      'pages/index/web-view',  // 单独打开H5
+      'pages/login/login',  // 登录
+      'pages/login/toggle-login', // 登录（默认）
+      'pages/order/order-submit', // 订单确认
+      'pages/address/order-add',  // 地址管理
+      'pages/address/add-edit',   // 编辑地址
+      'pages/mine/mine',  // 我的
+      'pages/mine/pocket',  // 钱包
+      'pages/mine/qr-code', // 邀请码
+      'pages/mine/invite-history',  // 邀请历史
+      'pages/mall/mall',  // 预约商城-首页
+      'pages/mall/goods-detail',  // 预约商城-详情
+      'pages/mall/order-now', // 预约商城-下单
+      'pages/mall/order-lists-custom', // 预约商城-订单列表
+      'pages/mall/order-lists-staff', // 预约商城-师傅预约列表
+      'pages/custom-order/lists', // 我的-报修订单
+      'pages/custom-order/detail',  // 报修订单-详情
+      'pages/admin/admin',  // 我的-管理员
       'pages/admin/staffs',
       'pages/staff-order/order',
       'pages/staff-order/quote',

@@ -1,6 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View,  Icon, Button, Input} from '@tarojs/components'
+import {inject, observer } from '@tarojs/mobx'
 import { AtCheckbox } from 'taro-ui'
 import {getLocationAuth} from '../../utils/common'
 import {validateTel, validateEmpty} from '../../utils/regexpValidate'
@@ -20,6 +21,8 @@ type State = {
   userMobile:string
   isDefault:string
 }
+@inject('appStore')
+@observer
 class AddEdit extends Component<{},State>{
   config: Config = {
     navigationBarTitleText: '选择地址',
@@ -42,6 +45,7 @@ class AddEdit extends Component<{},State>{
     }
   }
   componentWillMount(){
+    console.log(this.props)
     let id = this.$router.params.id
     if(id!=='undefined'){
       this.getEditAddInfo(id)

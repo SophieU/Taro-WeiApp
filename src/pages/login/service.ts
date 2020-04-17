@@ -23,6 +23,7 @@ export const loginApp = ()=>{
             let dataBody = data.data
             Taro.setStorageSync("loginStatus",'success')
             Taro.setStorageSync("userId",dataBody.userId)
+            Taro.setStorageSync("accessToken",dataBody.accessToken)
             Taro.setStorageSync("userType",dataBody.userType)
             let apiUserInfo = {
               userPhone: dataBody.username,

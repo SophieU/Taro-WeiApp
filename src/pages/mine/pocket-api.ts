@@ -24,3 +24,4 @@ export const setPassword = (payPwd)=>{
   return request.post(`/api/v1/user/account/setPayPwd?userId=${userId}&payPwd=${payPwd}`)
 }
 /* 钱包相关-end */
+

@@ -1,24 +1,63 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Input, Picker, Navigator} from '@tarojs/components'
-import './order-now.less'
+import {inject, observer} from '@tarojs/mobx'
+import './order-now.scss'
 
+@inject('appStore')
+@observer
 class GoodsDetail extends  Component{
 
   config: Config={
     navigationBarTitleText:'预约提交',
     navigationStyle:'default'
   }
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state={
-      installDate:'请选择',
-      installTime:'请选择'
+      installDate:'',
+      installTime:'请选择',
+      address:'',
     }
   }
-
-  onTimeChange=()=>{
-
+  componentDidShow(){
+    const orderForm = this.props.appStore.orderForm
+    this.setState({
+      address:orderForm.address,
+      userMobile:orderForm.userMobile,
+      repairUserAddressId:orderForm.addressObj.id,
+      repairUserAddressObj:orderForm.addressObj
+    })
+  }
+  onDateChange=(e)=>{
+    let value = e.detail.value
+    this.setState({
+      installDate:value
+    })
+  }
+  onTimeChange=(e)=>{
+    let value = e.detail.value
+    this.setState({
+      installTime:value
+    })
+  }
+  submitBook=()=>{
+    Taro.showModal({
+      title:'温馨提示',
+      content:'您的预约订单已提交，可在【我的】-【预约订单】中查看',
+      confirmText:'查看订单',
+      cancelText:'回到首页'
+    }).then(res=>{
+      if(res.confirm){
+        Taro.redirectTo({
+          url:'/pages/mall/order-lists-custom'
+        })
+      }else{
+        Taro.reLaunch({
+          url:'/pages/index/index'
+        })
+      }
+    })
   }
   render(){
     return (
@@ -34,17 +73,17 @@ class GoodsDetail extends  Component{
           <View className='form-item'>
             <View className='form-label'>预约地址：</View>
             <View className='form-control pick-add'>
-              <Input className='add-input' disabled={true} placeholder='请选择地址' />
+              <Navigator className='add-input' url='/pages/address/order-add?from=bookOrder' >{this.state.address?this.state.address:'请选择地址'}</Navigator>
+              {/*<Input className='add-input' disabled={true} placeholder='请选择地址' onClick={this.chooseAddress}/>*/}
             </View>
           </View>
           <View className='form-item'>
             <View className='form-label'>预约安装日期：</View>
             <View className='form-control'>
-              <Picker mode='date' onChange={this.onTimeChange}>
+              <Picker mode='date' onChange={this.onDateChange}>
                 <View className='picker'>
-                 {this.state.installDate}
+                 {this.state.installDate?this.state.installDate:'请选择'}
                 </View>
-
               </Picker>
 
             </View>
@@ -54,7 +93,7 @@ class GoodsDetail extends  Component{
             <View className='form-control'>
               <Picker mode='time' onChange={this.onTimeChange}>
                 <View className='picker'>
-                  {this.state.installTime}
+                  {this.state.installTime?this.state.installTime:'请选择'}
                 </View>
               </Picker>
 
@@ -62,7 +101,7 @@ class GoodsDetail extends  Component{
           </View>
 
         </View>
-        <Button className='blue-btn lang-btn submit-now'>确认提交</Button>
+        <Button onClick={this.submitBook} className='orange-btn lang-btn submit-now'>确认提交</Button>
       </View>
     )
   }

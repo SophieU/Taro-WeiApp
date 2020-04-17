@@ -6,7 +6,8 @@ import './admin.less'
 
 class Admin extends Component{
   config: Config = {
-    navigationBarTitleText:'工单管理'
+    navigationBarTitleText:'工单管理',
+    navigationStyle:'default'
   }
   constructor() {
     super();

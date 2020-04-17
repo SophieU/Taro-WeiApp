@@ -2,7 +2,6 @@ import Taro from '@tarojs/taro'
 import {baseUrl,securitySign} from "../config";
 import {HTTP_STATUS} from './status'
 
-let accessToken = ''
 export const logError = (name,action,info?:any)=>{
   if(!info){
     info='empty'
@@ -21,6 +20,7 @@ export const logError = (name,action,info?:any)=>{
   }
 }
 export default {
+  accessToken:Taro.getStorageSync('accessToken'),
   baseRequest(params,methods='GET'){
     let { url, data } = params
     let contentType = 'application/x-www-form-urlencoded'
@@ -38,7 +38,7 @@ export default {
       url: baseUrl + url,
       data: data,
       method: methods,
-      header: { 'content-type': contentType, 'securitySign':securitySign, 'accessToken':accessToken},
+      header: { 'content-type': contentType, 'securitySign':securitySign, 'accessToken':this.accessToken},
       success(res){
         if(res.statusCode === HTTP_STATUS.NOT_FOUND){
           return logError('api','请求资源不存在')
@@ -57,14 +57,14 @@ export default {
     return Taro.request(option)
   },
   setAccessToken(accessToken){
-    accessToken = accessToken
+   this.accessToken=accessToken
   },
   get(url,data?:object){
     let option = {url, data}
-    return this.baseRequest(option)
+    return this.baseRequest(option,'GET')
   },
   post(url,data?:object,contentType?: string){
-    let params = {url,data,contentType}
+    let params = {url,data,contentType:'application/json'}
     return this.baseRequest(params,'POST')
   },
   put(url, data?: object) {

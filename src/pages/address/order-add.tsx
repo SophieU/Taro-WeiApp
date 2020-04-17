@@ -86,6 +86,12 @@ class OrderAdd extends Component<AddProp,AddState>{
         addressObj:data
       })
       Taro.navigateBack({delta:-1})
+    }else if(this.state.fromPage==='bookOrder'){
+      appStore.setOrderForm({
+        address:data.areaInfo+data.address,
+        addressObj:data
+      })
+      Taro.navigateBack({delta:-1})
     }
   }
   render(){

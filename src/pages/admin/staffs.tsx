@@ -10,7 +10,8 @@ interface State {
 }
 class Lists extends Component<{},State>{
   config:Config = {
-    navigationBarTitleText:'报修详情'
+    navigationBarTitleText:'报修订单',
+    navigationStyle:'default'
   }
   constructor() {
     super();

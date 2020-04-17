@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Text, Navigator} from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import './order-lists.less'
+import './order-lists.scss'
 
 class OrderListsStaff extends  Component{
   config: Config={

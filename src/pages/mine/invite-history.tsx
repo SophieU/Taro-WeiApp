@@ -19,7 +19,8 @@ class Mine extends  Component{
     totalCount:0
   }
   config: Config={
-    navigationBarTitleText:'邀请记录'
+    navigationBarTitleText:'邀请记录',
+    navigationStyle:'default',
   }
   componentWillMount(){
     this.getLists()

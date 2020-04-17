@@ -152,3 +152,8 @@ export const jumpTo = (info,otherType?:string)=>{
     })
   }
 }
+
+// 简易深克隆
+export const simpleClone = (obj) => {
+  return JSON.parse(JSON.stringify(obj))
+}

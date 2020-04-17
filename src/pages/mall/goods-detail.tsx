@@ -1,12 +1,17 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Swiper, SwiperItem, Navigator} from '@tarojs/components'
-import './goods-detail.less'
+import './goods-detail.scss'
 
 class GoodsDetail extends  Component{
   config: Config={
     navigationBarTitleText:'预约商城',
     navigationStyle:'default'
+  }
+  orderNow= ()=>{
+    Taro.navigateTo({
+      url:'/pages/mall/order-now'
+    })
   }
   render(){
     return (
@@ -48,7 +53,7 @@ class GoodsDetail extends  Component{
           </View>
         </View>
         <View className='foot'>
-          <Button className='go-now'>立即预约</Button>
+          <Button onClick={this.orderNow} className='go-now'>立即预约</Button>
         </View>
       </View>
     )

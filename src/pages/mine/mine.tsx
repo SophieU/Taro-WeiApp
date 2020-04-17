@@ -75,6 +75,24 @@ class Mine extends  Component<{}, State>{
       inviteUserPhone:val
     })
   }
+  handleNavigate(url){
+    let userId = Taro.getStorageSync('userId')
+    if(!userId){
+      Taro.showModal({
+        title:'温馨提示',
+        content:'您还未登录，请先登录',
+        confirmText:'去登录'
+      }).then(res=>{
+        if(res.confirm){
+         Taro.redirectTo({
+           url:'/pages/login/toggle-login'
+         })
+        }
+      })
+    }else{
+      Taro.navigateTo({url})
+    }
+  }
   render(){
     return (
       <View className='mine page'>
@@ -94,41 +112,41 @@ class Mine extends  Component<{}, State>{
         <View className='control-wrap'>
           <View className='control-lists'>
             {/*用户端*/}
-            <View className='control-item'>
+            <View onClick={()=>{this.handleNavigate('/pages/custom-order/lists')}} className='control-item'>
               <View className='control-title'>报修订单</View>
               <View className='control-desc'></View>
             </View>
-            <View className='control-item'>
+            <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-custom')}}  className='control-item'>
               <View className='control-title'>预约订单</View>
               <View className='control-desc'></View>
             </View>
-            <Navigator url='/pages/address/order-add'  className='control-item'>
+            <View onClick={()=>{this.handleNavigate('/pages/address/order-add')}}  className='control-item'>
               <View className='control-title'>我的地址</View>
               <View className='control-desc'></View>
-            </Navigator>
+            </View>
             <View className='control-item'>
               <View className='control-title'>在线客服</View>
               <View className='control-desc'></View>
             </View>
-            <Navigator url='/pages/mine/qr-code' className='control-item'>
+            <View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item'>
               <View className='control-title'>我的邀请码</View>
               <View className='control-desc'></View>
-            </Navigator>
+            </View>
             <View onClick={this.toggleInvitePhoneModal} className='control-item'>
               <View className='control-title'>设置邀请人</View>
               <View className='control-desc'></View>
             </View>
             {/*服务师傅*/}
             <View className='control-item'>
-              <View className='control-title'>报修接单管理</View>
+              <View onClick={()=>{this.handleNavigate('/pages/admin/staffs')}} className='control-title'>报修接单管理</View>
               <View className='control-desc'></View>
             </View>
-            <View className='control-item'>
+            <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-staff')}} className='control-item'>
               <View className='control-title'>预约接单管理</View>
               <View className='control-desc'></View>
             </View>
             {/*管理员端*/}
-            <View className='control-item'>
+            <View onClick={()=>{this.handleNavigate('/pages/admin/admin')}} className='control-item'>
               <View className='control-title'>派单管理</View>
               <View className='control-desc'></View>
             </View>

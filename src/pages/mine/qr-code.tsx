@@ -8,11 +8,12 @@ interface State {
   qrCodeUrl:string
 }
 class Mine extends  Component{
+  config: Config={
+    navigationBarTitleText:'邀请二维码',
+    navigationStyle:'default'
+  }
   state:State = {
     qrCodeUrl:''
-  }
-  config: Config={
-    navigationBarTitleText:'邀请二维码'
   }
   componentWillMount(){
     createQRCode().then(res=>{

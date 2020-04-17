@@ -272,19 +272,6 @@ class OrderSubmit extends Component<{},State>{
             title:res.data.msg,
             icon:'none'
           })
-          // Taro.showModal({
-          //   title:'操作提示',
-          //   content: '提交失败'+res.data.msg,
-          //   confirmText:'拔打客服',
-          //   cancelText:'返回首页',
-          // }).then(resInner=>{
-          //   if(resInner.confirm){
-          //    //
-          //   }
-          //   if(resInner.cancel){
-          //     Taro.reLaunch({url:'/pages/index/index'})
-          //   }
-          // })
         }
       })
     }

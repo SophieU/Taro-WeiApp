@@ -51,7 +51,7 @@ class App extends Component {
       'pages/custom-order/lists', // 我的-报修订单
       'pages/custom-order/detail',  // 报修订单-详情
       'pages/admin/admin',  // 我的-管理员
-      'pages/admin/staffs',
+      'pages/admin/staffs',  // 我的-报修订单-师傅端
       'pages/staff-order/order',
       'pages/staff-order/quote',
       'pages/staff-order/order-deal',

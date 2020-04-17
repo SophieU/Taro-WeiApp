@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Text, Navigator} from '@tarojs/components'
-import './order-lists.less'
+import './order-lists.scss'
 
 class OrderListsCustom extends  Component{
   config: Config={

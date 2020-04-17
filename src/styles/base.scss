@@ -21,6 +21,12 @@ right: http://qiniu.kingdou.fun/right.png
   color: #FFFFFF;
   border-color:#216EC6;
 }
+.orange-btn{
+  background: $color;
+  font-size: 16px;
+  color: #FFFFFF;
+  border-color:$color;
+}
 .btn{
   font-size: 12px;
   padding: 0 15px;
@@ -45,4 +51,7 @@ right: http://qiniu.kingdou.fun/right.png
 }
 .text-grey{
   color: #999;
+}
+.link-text{
+  color: #78A4F4;
 }

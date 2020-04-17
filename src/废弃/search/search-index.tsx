@@ -4,7 +4,8 @@ import {View} from '@tarojs/components'
 
 class Search extends Component {
   config: Config = {
-    navigationBarTitleText: '搜索',
+     : '搜索',
+    navigationStyle:'default'
   }
   render(){
     return (<View>test</View>)

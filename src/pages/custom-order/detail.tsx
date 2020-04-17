@@ -1,21 +1,25 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button} from '@tarojs/components'
-import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction  } from 'taro-ui'
+import {View, Image, Button,Text} from '@tarojs/components'
+import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
+import { getDetail, cancelOrder , cancelReason} from './order-apis'
 import './detail.scss'
 
 
-interface Lists{
-  date:string,
-  title:string,
-  status:string
+type cancelReason = {
+  createTime:string
+  id:string
+  isValid:string
+  orderStateConfig:string
+  reasonName:string
 }
 interface State {
-  current:number,
-  lists:Array<object>
-  orderStatus:string,
-  cancelReson:string,
+  id:string
+  cancelReasonId:string
+  orderDetail:object
+  cancelReasonLists:Array<cancelReason>
   reasonModal:boolean
+  baseInfo:object
 }
 class Lists extends Component<{},State>{
   config:Config = {
@@ -25,16 +29,45 @@ class Lists extends Component<{},State>{
   constructor() {
     super();
     this.state = {
-      current:0,
-      orderStatus: 'payed', // payed-已付款，waitPay-待付款，waitOrder-待接单，cancled-已取消，finihsed-已完成
-      lists:[{date:'2019/10/10 10:10', title:'换锁儿呀呀呀',status:'待服务'}],
-      cancelReson:'option1',
+      id:'',
+      cancelReasonId:'',
+      orderDetail:{},
+      cancelReasonLists:[],
       reasonModal:false,
+      baseInfo:{}
     }
   }
-  handleTab=(index)=>{
+  componentWillMount(){
+    let id = this.$router.params.id
     this.setState({
-      current:index
+      id:id
+    },()=>{
+      this.getOrderDetail()
+      this.getCancelReason()
+    })
+  }
+  // 获取订单详情
+  getOrderDetail = ()=>{
+    const id = this.state.id
+    getDetail(id).then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        this.setState({
+          orderDetail:res.data.data,
+          baseInfo:data.baseInfo
+        })
+      }
+    })
+  }
+  // 获取取消原因列表
+  getCancelReason = ()=>{
+    cancelReason().then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        this.setState({
+          cancelReasonLists:data
+        })
+      }
     })
   }
   renderFoot= (status:string)=> {
@@ -61,8 +94,8 @@ class Lists extends Component<{},State>{
       {
         return (<View  className='page-foot'>
           <View className='foot-item'>已付款： ￥1.00</View>
-          <Button onClick={this.handleCancel} className='submit-btn line-btn'>取消报修</Button>
-          <Button className='submit-btn'>联系网点</Button>
+          <Button onClick={this.handleCancelModal} className='submit-btn line-btn'>取消报修</Button>
+          <Button className='submit-btn' onClick={()=>this.call('18108242933')}>联系网点</Button>
         </View>)
       }
       break;
@@ -70,7 +103,7 @@ class Lists extends Component<{},State>{
       {
         return (<View  className='page-foot'>
           <View className='foot-item'>已付款： ￥1.00</View>
-          <Button className='submit-btn'>联系师傅</Button>
+          <Button className='submit-btn' onClick={()=>this.call('18108242933')}>联系师傅</Button>
         </View>)
       }
       break;
@@ -90,24 +123,54 @@ class Lists extends Component<{},State>{
   }
   handleRadioChange = (value)=>{
     this.setState({
-      cancelReson:value
-    })
-  }
-  handleCancel = ()=>{
-    this.setState({
-      reasonModal:!this.state.reasonModal
+      cancelReasonId:value
     })
   }
   handleCancelModal = ()=>{
-    this.setState({
-      reasonModal:false,
-      cancelReson:'',
+    this.setState((prevState)=>{
+      return {
+        reasonModal:!prevState.reasonModal,
+        cancelReasonId:'',
+      }
     })
   }
   handleConfirmModal= ()=>{
-
+    let params = {
+      repairOrderId:this.state.id,
+      cancelReasonId:this.state.cancelReasonId
+    }
+    cancelOrder(params).then(res=>{
+      if(res.data.code===0){
+        Taro.showToast({
+          title:'订单取消成功',
+          icon:'none'
+        })
+        Taro.navigateBack({delta:-1})
+      }else{
+        Taro.showToast({
+          title:'订单取消失败：'+res.data.msg,
+          icon:'none'
+        })
+      }
+    })
+  }
+  // 拔打电话
+  call = (phone)=>{
+    Taro.makePhoneCall({
+      phoneNumber: phone
+    })
   }
   render(){
+    let cancelReasonArr = []
+      this.state.cancelReasonLists.forEach(item=>{
+      if(item.isValid==='Y'){
+        let obj = {
+          label:item.reasonName,
+          value:item.id
+        }
+        cancelReasonArr.push(obj)
+      }
+    })
     return (<View className='page detail-page'>
       <View className='info-wrap'>
         <View className='detail-block'>
@@ -115,23 +178,23 @@ class Lists extends Component<{},State>{
           <View className='detail-info'>
             <View className='info-item'>
               <View className='item-label'>报修时间</View>
-              <View className='item-info'>2018/08/02 20：00</View>
+              <View className='item-info'>{this.state.baseInfo.createTime}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>工单单号</View>
-              <View className='item-info'>6789897945845645</View>
+              <View className='item-info'>{this.state.baseInfo.orderSn}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>工单状态</View>
-              <View className='item-info'>已完成</View>
+              <View className='item-info'>{this.state.baseInfo.orderStateName}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>服务网点</View>
-              <View className='item-info'>24小区服务网点</View>
+              <View className='item-info'>{this.state.baseInfo.stationName}</View>
             </View>
             <View className='info-item'>
-              <View className='item-label'>联系电话</View>
-              <View className='item-info'>876865654</View>
+              <View className='item-label'>网点电话</View>
+              <View className='item-info'>{this.state.baseInfo.stationPhone}</View>
             </View>
           </View>
         </View>
@@ -144,7 +207,7 @@ class Lists extends Component<{},State>{
             </View>
             <View className='info-item'>
               <View className='item-label'>联系电话</View>
-              <View className='item-info'>136****6666</View>
+              <View className='item-info'><Text className='link-text' onClick={()=>this.call('18108242933')}>136****1234</Text></View>
             </View>
           </View>
         </View>
@@ -153,19 +216,19 @@ class Lists extends Component<{},State>{
           <View className='detail-info'>
             <View className='info-item'>
               <View className='item-label'>维修区域</View>
-              <View className='item-info'>24小区</View>
+              <View className='item-info'>{this.state.baseInfo.repairRegionName}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>详细地址</View>
-              <View className='item-info'>3-3-2</View>
+              <View className='item-info'>{this.state.baseInfo.address}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>联系电话</View>
-              <View className='item-info'>13627381624</View>
+              <View className='item-info'>{this.state.baseInfo.userPhone}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>报修类别</View>
-              <View className='item-info'>用气服务（上门费10.00元）</View>
+              <View className='item-info'>{this.state.baseInfo.repairCategoryName}</View>
             </View>
           </View>
         </View>
@@ -213,14 +276,9 @@ class Lists extends Component<{},State>{
         <AtModalHeader>取消原因</AtModalHeader>
         <AtModalContent>
           <AtRadio
-            options={[
-              { label: '无人接单', value: 'option1' },
-              { label: '问题已解决', value: 'option2' },
-              { label: '找其他途径解决', value: 'option3' },
-              { label: '服务态度不好', value: 'option3' }
-            ]}
-            value={this.state.cancelReson}
-            onClick={this.handleRadioChange.bind(this)}
+            options={cancelReasonArr}
+            value={this.state.cancelReasonId}
+            onClick={this.handleRadioChange}
           />
         </AtModalContent>
         <AtModalAction>

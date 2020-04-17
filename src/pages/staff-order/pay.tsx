@@ -10,7 +10,8 @@ interface State {
 }
 class Quote extends Component<{},State>{
   config:Config = {
-    navigationBarTitleText:'收款'
+    navigationBarTitleText:'收款',
+    navigationStyle:'default'
   }
   constructor() {
     super();

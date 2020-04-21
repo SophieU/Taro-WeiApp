@@ -1,8 +1,10 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button,Text} from '@tarojs/components'
-import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
-import { getDetail, cancelOrder , cancelReason} from './order-apis'
+import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction ,AtTag,AtTabs, AtTabsPane  } from 'taro-ui'
+import { getDetail, cancelOrder , cancelReason, getCommentOption, submitComment} from './order-apis'
+import {getWxPay} from "../order/order-api";
+import {simpleClone} from '../../utils/common'
 import './detail.scss'
 
 
@@ -20,6 +22,18 @@ interface State {
   cancelReasonLists:Array<cancelReason>
   reasonModal:boolean
   baseInfo:object
+  repairOrderOfferPlanVoList:Array<object>
+  repairOrderAmountVos:Array<object>
+  dispatchInfo:object|null
+  waitPay:number,
+  payed:number,
+  commentInfo:object
+  commentNowModal:boolean
+  commentOptions:Array<object>
+  commentActiveTags:Array<string>
+  currentComment:number
+  commentDetail:Array<object>
+  commentDetailModal:boolean
 }
 class Lists extends Component<{},State>{
   config:Config = {
@@ -34,7 +48,19 @@ class Lists extends Component<{},State>{
       orderDetail:{},
       cancelReasonLists:[],
       reasonModal:false,
-      baseInfo:{}
+      baseInfo:{orderState:'ASSIGNED'},
+      repairOrderOfferPlanVoList:[],
+      dispatchInfo:null,
+      repairOrderAmountVos:[],
+      waitPay:0,
+      payed:0,
+      commentInfo:{},
+      currentComment:0,
+      commentNowModal:false,
+      commentOptions:[],
+      commentActiveTags:[],
+      commentDetail:[],
+      commentDetailModal:false
     }
   }
   componentWillMount(){
@@ -44,6 +70,18 @@ class Lists extends Component<{},State>{
     },()=>{
       this.getOrderDetail()
       this.getCancelReason()
+      this.getCommentLists()
+    })
+  }
+
+  // 获取评价选项列表
+  getCommentLists = ()=>{
+    getCommentOption().then(res=>{
+      if(res.data.code===0){
+        this.setState({
+          commentOptions:res.data.data
+        })
+      }
     })
   }
   // 获取订单详情
@@ -52,12 +90,135 @@ class Lists extends Component<{},State>{
     getDetail(id).then(res=>{
       if(res.data.code===0){
         let data = res.data.data
+        let waitPay = 0
+        let payed = 0
+        data.repairOrderAmountVos.forEach(item=>{
+          if(item.type==='STAY_PAY_AMOUNT'){
+            waitPay=item.amount
+          }
+          if(item.type==='ALREADY_PAY_AMOUNT'){
+            payed=item.amount
+          }
+        })
+
         this.setState({
           orderDetail:res.data.data,
-          baseInfo:data.baseInfo
+          baseInfo:data.baseInfo,
+          repairOrderOfferPlanVoList:data.repairOrderOfferPlanVoList,
+          dispatchInfo:data.dispatchInfo,
+          repairOrderAmountVos:data.repairOrderAmountVos,
+          waitPay:waitPay,
+          payed:payed,
+          commentInfo:data.commentInfo,
+          commentDetail:data.commentInfo.comment?[data.commentInfo.comment.comment]:[]
         })
       }
     })
+  }
+  // 调起支付
+  startPay=()=>{
+    let params = {
+      "orderIds":[this.state.baseInfo.id],
+      "payBusinessType":"W_REPAIR_ORDER",
+      "payCode":"WX_XCX"
+    }
+    getWxPay(params).then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        console.log('支付信息',data)
+        Taro.requestPayment({
+          success:()=>{
+            this.orderSuccess()
+          },
+          fail (res) {
+            console.log('接口调用失败')
+            console.log('支付失败')
+          },
+          ...data
+        })
+      }else{
+        Taro.showToast({
+          title:res.data.msg,
+          icon:'none'
+        })
+      }
+    })
+  }
+  // 支付成功
+  orderSuccess= ()=>{
+    Taro.showModal({
+      content:'订单支付成功，可在【我的】-【报修订单】中查看',
+      confirmText:'查看订单',
+      cancelText:'回到首页',
+      success:(res)=>{
+        if(res.confirm){
+          Taro.reLaunch({
+            url:'/pages/mine/mine'
+          })
+        }else{
+          Taro.reLaunch({
+            url:'/pages/index/index'
+          })
+        }
+      }
+    })
+  }
+  // 底部渲染
+  renderFoot= ()=> {
+    let {dispatchInfo ,waitPay, payed, baseInfo,commentInfo} = this.state
+
+    switch(baseInfo.orderState){
+      case 'STAY_PAY':
+        {
+          return (  <View className='page-foot'>
+                <View className='ico-wrap'>
+                  <View className='ico-item'>
+                    <Image className='foot-ico' src={require('../../assets/imgs/tmp/cus-ser.png')}></Image>
+                    <View onClick={()=>this.call(baseInfo.stationPhone)}>联系网点</View>
+                  </View>
+                  <View className='ico-item'>
+                    <Image className='foot-ico' src={require('../../assets/imgs/tmp/staff.png')}></Image>
+                    <View onClick={()=>this.call(dispatchInfo.masterPhone)}>联系师傅</View>
+                  </View>
+                </View>
+                <Button onClick={this.startPay} className='submit-btn'>支付订单： ￥{waitPay}</Button>
+            </View>
+          )
+        }
+        break;
+      case 'ASSIGNED':  // 待接单
+      {
+        return (<View  className='page-foot'>
+          <View className='foot-item'>已付款： ￥{payed}</View>
+          <Button onClick={this.handleCancelModal} className='submit-btn line-btn'>取消报修</Button>
+          <Button className='submit-btn' onClick={()=>this.call(baseInfo.stationPhone)}>联系网点</Button>
+        </View>)
+      }
+      break;
+      case 'WAIT_DOOR':  // 待上门
+      {
+        return (<View  className='page-foot'>
+          <View className='foot-item'>已付款： ￥{payed}</View>
+          <Button className='submit-btn' onClick={()=>this.call(dispatchInfo.masterPhone)}>联系师傅</Button>
+        </View>)
+      }
+      break;
+      case 'CANCEL': // 已取消
+      {
+        return null
+      }
+      break;
+      case 'FINISH':  // 已结束
+      {
+
+          return (<View className='page-foot'>
+            <View className='foot-item'>已付款： ￥{payed}</View>
+            {commentInfo.hasComment==='N'?<Button onClick={()=>this.setState({commentNowModal:true})} className='submit-btn'>评价订单</Button>:<Button onClick={()=>this.setState({commentDetailModal:true})} className='submit-btn'>评价详情</Button>}
+          </View>)
+
+      }
+      break;
+    }
   }
   // 获取取消原因列表
   getCancelReason = ()=>{
@@ -70,62 +231,13 @@ class Lists extends Component<{},State>{
       }
     })
   }
-  renderFoot= (status:string)=> {
-    switch(status){
-      case 'waitPay':
-        {
-          return (  <View className='page-foot'>
-                <View className='ico-wrap'>
-                  <View className='ico-item'>
-                    <Image className='foot-ico' src={require('../../assets/imgs/tmp/cus-ser.png')}></Image>
-                    <View>联系网点</View>
-                  </View>
-                  <View className='ico-item'>
-                    <Image className='foot-ico' src={require('../../assets/imgs/tmp/staff.png')}></Image>
-                    <View>联系师傅</View>
-                  </View>
-                </View>
-                <Button className='submit-btn'>支付订单： ￥800.00</Button>
-            </View>
-          )
-        }
-        break;
-      case 'payed':
-      {
-        return (<View  className='page-foot'>
-          <View className='foot-item'>已付款： ￥1.00</View>
-          <Button onClick={this.handleCancelModal} className='submit-btn line-btn'>取消报修</Button>
-          <Button className='submit-btn' onClick={()=>this.call('18108242933')}>联系网点</Button>
-        </View>)
-      }
-      break;
-      case 'waitOrder':
-      {
-        return (<View  className='page-foot'>
-          <View className='foot-item'>已付款： ￥1.00</View>
-          <Button className='submit-btn' onClick={()=>this.call('18108242933')}>联系师傅</Button>
-        </View>)
-      }
-      break;
-      case 'cancled':
-      {
-        return null
-      }
-      break;
-      case 'finished':
-      {
-        return (<View className='page-foot'>
-          <View className='foot-item'>已付款： ￥1.00</View>
-          <Button className='submit-btn'>评价详情</Button>
-        </View>)
-      }
-    }
-  }
+  // 取消订单选择交互
   handleRadioChange = (value)=>{
     this.setState({
       cancelReasonId:value
     })
   }
+  // 取消订单弹窗
   handleCancelModal = ()=>{
     this.setState((prevState)=>{
       return {
@@ -134,6 +246,7 @@ class Lists extends Component<{},State>{
       }
     })
   }
+  // 取消订单操作
   handleConfirmModal= ()=>{
     let params = {
       repairOrderId:this.state.id,
@@ -158,6 +271,54 @@ class Lists extends Component<{},State>{
   call = (phone)=>{
     Taro.makePhoneCall({
       phoneNumber: phone
+    })
+  }
+  // 评价
+  clickCommentTag=(value)=>{
+    let commentActiveTags = JSON.parse(JSON.stringify(this.state.commentActiveTags))
+    if(commentActiveTags.indexOf(value.name)<=-1){
+      commentActiveTags.push(value.name)
+    }else{
+      commentActiveTags.splice(commentActiveTags.indexOf(value.name),1)
+    }
+    this.setState({
+      commentActiveTags:commentActiveTags
+    })
+  }
+  // 切换评价满意-不满意
+  handleCommentTab=(v)=>{
+    this.setState({
+      commentActiveTags:[],
+      currentComment:v
+    })
+  }
+  // 取消评价
+  cancelComment=()=>{
+    this.setState({
+      commentNowModal:false,
+      commentActiveTags:[],
+    })
+  }
+  // 提交评价
+  confirmComment=()=>{
+    const id = this.state.id
+    let currentComment = this.state.currentComment
+    let confirmCommentLists = simpleClone(this.state.commentOptions[currentComment])
+    let commentActiveTags = this.state.commentActiveTags
+    confirmCommentLists.children = confirmCommentLists.children.filter(item=>{
+      return commentActiveTags.indexOf(item.id)>-1
+    })
+    let params = confirmCommentLists
+    submitComment(id,params).then(res=>{
+      if(res.data.code===0){
+        Taro.showToast({
+          title:'评价成功',
+          icon:'none'
+        })
+        setTimeout(()=>{
+          Taro.navigateBack({delta:-1})
+        },1500)
+      }
     })
   }
   render(){
@@ -198,19 +359,23 @@ class Lists extends Component<{},State>{
             </View>
           </View>
         </View>
-        <View className='detail-block'>
-          <View className='detail-title'>师傅信息</View>
-          <View className='detail-info'>
-            <View className='info-item'>
-              <View className='item-label'>师傅姓名</View>
-              <View className='item-info'>张师傅</View>
+        {
+          !!this.state.dispatchInfo?(
+            <View className='detail-block'>
+              <View className='detail-title'>师傅信息</View>
+              <View className='detail-info'>
+                <View className='info-item'>
+                  <View className='item-label'>师傅姓名</View>
+                  <View className='item-info'>{this.state.dispatchInfo.masterName}</View>
+                </View>
+                <View className='info-item'>
+                  <View className='item-label'>联系电话</View>
+                  <View className='item-info'><Text className='link-text' onClick={()=>this.call(this.state.dispatchInfo.masterPhone)}>{this.state.dispatchInfo.masterPhone}</Text></View>
+                </View>
+              </View>
             </View>
-            <View className='info-item'>
-              <View className='item-label'>联系电话</View>
-              <View className='item-info'><Text className='link-text' onClick={()=>this.call('18108242933')}>136****1234</Text></View>
-            </View>
-          </View>
-        </View>
+          ):null
+        }
         <View className='detail-block'>
           <View className='detail-title'>基础信息</View>
           <View className='detail-info'>
@@ -232,45 +397,40 @@ class Lists extends Component<{},State>{
             </View>
           </View>
         </View>
-        <View className='detail-block'>
-          <View className='detail-title'>故障原因</View>
-          <View className='detail-info'>
-            <View className='info-item'>
-              <View className='item-label'>故障</View>
-              <View className='item-info'>软管老化</View>
-            </View>
-          </View>
-        </View>
         <View className='detail-block price-block'>
           <View className='detail-title'>费用清单</View>
           <View className='detail-info'>
-            <View className='info-item'>
-              <View className='price-label'>
-                <View className='item-label'>上门服务费</View>
-              </View>
-              <View className='item-info'>￥20.00</View>
-            </View>
-            <View className='info-item'>
-              <View className='price-label'>
-                <View className='label-title'>软管更换</View>
-                <View className='label-tips'>￥ 20.00</View>
-              </View>
-              <View className='item-label'>x1</View>
-              <View className='item-info'>￥20.00</View>
-            </View>
-            <View className='info-item'>
-              <View className='price-label'>
-                <View className='label-title'>软管(质保30天)</View>
-                <View className='label-tips'>￥ 20.00</View>
-              </View>
-              <View className='item-label'>x1</View>
-              <View className='item-info'>￥50.00</View>
-            </View>
+            {
+              this.state.repairOrderAmountVos.map(item=>{
+                return (<View key={item.id} className='info-item'>
+                  <View className='price-label'>
+                    <View className='item-label'>{item.name}</View>
+                  </View>
+                  <View className='item-info'>￥{item.amount}</View>
+                </View>)
+              })
+            }
           </View>
         </View>
+        <View className='detail-block price-block'>
+          <View className='detail-title'>费用明细</View>
+          <View className='detail-info'>
+            {
+              this.state.repairOrderOfferPlanVoList.map(item=>{
+                return (<View key={item.id} className='info-item'>
+                  <View className='price-label'>
+                    <View className='item-label'>{item.planName}</View>
+                  </View>
+                  <View className='item-info'>￥{item.amount}</View>
+                </View>)
+              })
+            }
+          </View>
+        </View>
+
       </View>
       {/*底部操作区*/}
-      {this.renderFoot('payed')}
+      {this.renderFoot()}
     {/*  取消弹窗*/}
       <AtModal isOpened={this.state.reasonModal} >
         <AtModalHeader>取消原因</AtModalHeader>
@@ -286,7 +446,85 @@ class Lists extends Component<{},State>{
           <Button onClick={ this.handleConfirmModal }>确定</Button>
         </AtModalAction>
       </AtModal>
+      {/*  评价弹窗*/}
+      <AtModal className='comment-modal' isOpened={this.state.commentNowModal} >
+        <AtModalHeader>评价订单</AtModalHeader>
+        <AtModalContent>
+          <AtTabs
+            animated={false}
+            current={this.state.currentComment}
+            tabList={this.state.commentOptions.map(item=>({title:item.name}))}
+            onClick={this.handleCommentTab.bind(this)}>
+            {
+              this.state.commentOptions.map((item,index)=>{
+                return <AtTabsPane className='comment-pane' current={this.state.currentComment} index={index} key={index}>
+                  <View className='comment-tag'>
+                    {
+                      item.children.map(child=>{
+                        const commentActiveTags = this.state.commentActiveTags
+                        return <AtTag
+                          className='tag-item'
+                          name={child.id}
+                          active={commentActiveTags.indexOf(child.id)>-1}
+                          type='primary'
+                          onClick={this.clickCommentTag}
+                          key={child.id}>
+                          {child.name}
+                        </AtTag>
+                      })
+                    }
+
+                  </View>
+                </AtTabsPane>
+              })
+            }
+          </AtTabs>
+        </AtModalContent>
+        <AtModalAction>
+          <Button  onClick={ this.cancelComment }>取消</Button>
+          <Button onClick={ this.confirmComment }>确定</Button>
+        </AtModalAction>
+      </AtModal>
+      {/*  取消弹窗*/}
+      <AtModal isOpened={this.state.commentDetailModal} >
+        <AtModalHeader>评价详情</AtModalHeader>
+        <AtModalContent>
+          <AtTabs
+            animated={false}
+            current={0}
+            tabList={this.state.commentDetail.map(item=>({title:item.name}))}
+            onClick={()=>console.log('111')}
+            >
+            {
+              this.state.commentDetail.map((item,index)=>{
+                return <AtTabsPane className='comment-pane' current={this.state.currentComment} index={index} key={index}>
+                  <View className='comment-tag'>
+                    {
+                      item.children.map(child=>{
+                        return <AtTag
+                          className='tag-item'
+                          name={child.id}
+                          active
+                          type='primary'
+                          key={child.id}>
+                          {child.name}
+                        </AtTag>
+                      })
+                    }
+
+                  </View>
+                </AtTabsPane>
+              })
+            }
+          </AtTabs>
+        </AtModalContent>
+        <AtModalAction>
+          <Button onClick={()=>this.setState({commentDetailModal:false})}>关闭</Button>
+        </AtModalAction>
+      </AtModal>
+
     </View>)
+
   }
 }
 export default Lists as ComponentType

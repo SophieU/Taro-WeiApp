@@ -1,6 +1,6 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Text, Navigator, Button, OpenData } from '@tarojs/components'
+import {View, Image, Text, Navigator, Button, OpenData,Block } from '@tarojs/components'
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from "taro-ui"
 import { observer, inject } from '@tarojs/mobx'
 import { setInvitePhone } from './services'
@@ -94,6 +94,7 @@ class Mine extends  Component<{}, State>{
     }
   }
   render(){
+    const userType = Taro.getStorageSync('userType')
     return (
       <View className='mine page'>
         <View className='user-info'>
@@ -112,44 +113,60 @@ class Mine extends  Component<{}, State>{
         <View className='control-wrap'>
           <View className='control-lists'>
             {/*用户端*/}
-            <View onClick={()=>{this.handleNavigate('/pages/custom-order/lists')}} className='control-item'>
-              <View className='control-title'>报修订单</View>
-              <View className='control-desc'></View>
-            </View>
-            <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-custom')}}  className='control-item'>
-              <View className='control-title'>预约订单</View>
-              <View className='control-desc'></View>
-            </View>
-            <View onClick={()=>{this.handleNavigate('/pages/address/order-add')}}  className='control-item'>
-              <View className='control-title'>我的地址</View>
-              <View className='control-desc'></View>
-            </View>
-            <View className='control-item'>
-              <View className='control-title'>在线客服</View>
-              <View className='control-desc'></View>
-            </View>
-            <View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item'>
-              <View className='control-title'>我的邀请码</View>
-              <View className='control-desc'></View>
-            </View>
-            <View onClick={this.toggleInvitePhoneModal} className='control-item'>
-              <View className='control-title'>设置邀请人</View>
-              <View className='control-desc'></View>
-            </View>
+            {userType==='USER'?(
+              <Block>
+                <View onClick={()=>{this.handleNavigate('/pages/custom-order/lists')}} className='control-item'>
+                  <View className='control-title'>报修订单</View>
+                  <View className='control-desc'></View>
+                </View>
+                <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-custom')}}  className='control-item'>
+                  <View className='control-title'>预约订单</View>
+                  <View className='control-desc'></View>
+                </View>
+                <View onClick={()=>{this.handleNavigate('/pages/address/order-add')}}  className='control-item'>
+                  <View className='control-title'>我的地址</View>
+                  <View className='control-desc'></View>
+                </View>
+                <View className='control-item'>
+                  <View className='control-title'>在线客服</View>
+                  <View className='control-desc'></View>
+                </View>
+                <View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item'>
+                  <View className='control-title'>我的邀请码</View>
+                  <View className='control-desc'></View>
+                </View>
+                <View onClick={this.toggleInvitePhoneModal} className='control-item'>
+                  <View className='control-title'>设置邀请人</View>
+                  <View className='control-desc'></View>
+                </View>
+              </Block>
+            ):null}
+
             {/*服务师傅*/}
-            <View className='control-item'>
-              <View onClick={()=>{this.handleNavigate('/pages/admin/staffs')}} className='control-title'>报修接单管理</View>
-              <View className='control-desc'></View>
-            </View>
-            <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-staff')}} className='control-item'>
-              <View className='control-title'>预约接单管理</View>
-              <View className='control-desc'></View>
-            </View>
+            {userType==='SERVICE_USER'?(
+              <Block>
+                <View className='control-item'>
+                  <View onClick={()=>{this.handleNavigate('/pages/admin/staffs')}} className='control-title'>报修接单管理</View>
+                  <View className='control-desc'></View>
+                </View>
+                <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-staff')}} className='control-item'>
+                  <View className='control-title'>预约接单管理</View>
+                  <View className='control-desc'></View>
+                </View>
+              </Block>
+            ):null}
+
             {/*管理员端*/}
-            <View onClick={()=>{this.handleNavigate('/pages/admin/admin')}} className='control-item'>
-              <View className='control-title'>派单管理</View>
-              <View className='control-desc'></View>
-            </View>
+            {
+              userType==='ADMIN'?(
+                <Block>
+                  <View onClick={()=>{this.handleNavigate('/pages/admin/admin')}} className='control-item'>
+                    <View className='control-title'>派单管理</View>
+                    <View className='control-desc'></View>
+                  </View>
+                </Block>
+              ):null
+            }
           </View>
         </View>
       {/*  邀请人电话弹窗  */}

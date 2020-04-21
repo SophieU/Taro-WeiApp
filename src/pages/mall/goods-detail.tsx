@@ -1,18 +1,36 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button, Swiper, SwiperItem, Navigator} from '@tarojs/components'
+import {View, Image, Swiper, SwiperItem,Text, RichText ,Navigator} from '@tarojs/components'
+import {getSubscribeDetail} from './mall-apis'
 import './goods-detail.scss'
 
 class GoodsDetail extends  Component{
   config: Config={
-    navigationBarTitleText:'预约商城',
+    navigationBarTitleText:'预约服务详情',
     navigationStyle:'default'
   }
-  orderNow= ()=>{
-    Taro.navigateTo({
-      url:'/pages/mall/order-now'
+  state={
+    id:'',
+    detail:{}
+  }
+  componentWillMount(){
+    let id = this.$router.params.id
+    this.setState({
+      id:id
+    })
+    this.getDetail(id)
+  }
+  getDetail = (id)=>{
+    getSubscribeDetail(id).then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        this.setState({
+          detail:data
+        })
+      }
     })
   }
+
   render(){
     return (
       <View className='page'>
@@ -23,21 +41,24 @@ class GoodsDetail extends  Component{
           circular
           indicatorDots
           autoplay>
-          <SwiperItem>
-              <Image className='goods-img' src={require('../../assets/imgs/tmp/1.png')}></Image>
-          </SwiperItem>
-          <SwiperItem>
-            <Image className='goods-img' src={require('../../assets/imgs/tmp/1.png')}></Image>
-          </SwiperItem>
-          <SwiperItem>
-            <Image className='goods-img' src={require('../../assets/imgs/tmp/1.png')}></Image>
-          </SwiperItem>
+          {
+            this.state.detail.productListImageList.map((item,index)=>{
+              return <SwiperItem key={index} >
+                <Image className='goods-img' src={item}></Image>
+              </SwiperItem>
+            })
+          }
+
+
         </Swiper>
 
         <View className='goods-desc'>
           <View className='desc-left'>
-            <View className='goods-price'>￥ 90</View>
-            <View className='descript'>遗世独立哎哎呀哎呀哎呀哎呀哎呀哎呀呀遗世独立哎哎呀哎呀哎呀哎呀哎呀哎呀呀</View>
+            <View className='goods-price'>
+              ￥ {this.state.detail.productPrice}
+              <Text className='price-tips'>市场价：123{this.state.detail.productMarketPrice}</Text>
+            </View>
+            <View className='descript'>{this.state.detail.productJingle}</View>
           </View>
           <View className='desc-right'>
             <View className='share'>
@@ -49,11 +70,11 @@ class GoodsDetail extends  Component{
         <View className='detail'>
           <View className='detail-title'>商品介绍</View>
           <View className='detail-content'>
-            <Image className='test' src={require('../../assets/imgs/tmp/1.png')}></Image>
+            <RichText nodes={this.state.detail.productBody}></RichText>
           </View>
         </View>
         <View className='foot'>
-          <Button onClick={this.orderNow} className='go-now'>立即预约</Button>
+          <Navigator className='go-now' url={'/pages/mall/order-now?id='+this.state.detail.productId}>立即预约</Navigator>
         </View>
       </View>
     )

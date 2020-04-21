@@ -37,9 +37,9 @@ class Login extends Component{
           <View className="read-proto">
             {
               this.state.readed?
-                (<Image className="radio" src={require("../../assets/imgs/tmp/login-check.png")} ></Image>)
+                (<Image className="radio" src={require("../assets/imgs/tmp/login-check.png")} ></Image>)
                 :
-                (<Image className="radio" src={require("../../assets/imgs/tmp/login-check-none.png")}></Image>)
+                (<Image className="radio" src={require("../assets/imgs/tmp/login-check-none.png")}></Image>)
             }
           </View>
           <View className="login-protocal">我已阅读并同意 <Navigator className="out-link" url="">《服务协议》</Navigator></View>

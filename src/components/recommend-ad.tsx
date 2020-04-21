@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component} from '@tarojs/taro'
 import { View, Image, Text, Navigator} from '@tarojs/components'
-import {loginStatusFilter} from '../utils/common'
+import {loginStatusFilter, jumpTo as jumpToUtil} from '../utils/common'
 import './recommend-ad.scss'
 
 /*
@@ -22,36 +22,8 @@ class RecommendAd extends Component{
     super(props);
   }
   /* 判断跳转到哪儿 */
-  jumpTo = (info,otherType?:string)=>{
-    let needLogin = info.needLogin
-    let type = info.recommendCategoryCode
-    if(needLogin==='Y'){
-      loginStatusFilter(()=>{
-        if(type==='E_SERVICE_CATEGORY'||type==='E_SERVICE'||otherType==='E_SERVICE_CATEGORY'){
-          // 跳转订单确认
-          Taro.navigateTo({
-            url:`/pages/order/order-submit?id=${info.target||info.id}`
-          })
-        }else if(type==='E_PROJECT'){
-          // 跳转更多服务
-          Taro.navigateTo({
-            url:`/pages/index/more-service?id=${info.target}`
-          })
-        }else if(type==='APP_JUMP'){
-          // 中转APP内页
-          Taro.navigateTo({
-            url:info.target
-          })
-        }else if(type==='H5'){
-          // 打开H5
-          if(!info.target) return;
-          Taro.navigateTo({
-            url:`/pages/index/web-view?target=${info.target}`
-          })
-        }
-      })
-    }
-
+  jumpTo = (info)=>{
+    jumpToUtil(info)
   }
   renderCode1(data,key){
     return (<View className='ad-wrap type-1' key={key}>

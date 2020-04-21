@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image,Button, Navigator} from '@tarojs/components'
-import {loginApp,registerPhone} from './service'
+import {registerPhone} from './login-apis'
 import './toggleLogin.scss'
 
 interface State {
@@ -17,11 +17,9 @@ class Login extends Component{
     openId:'',
     readed:false,
   }
-  componentWillMount(){
-    loginApp()
-  }
   wxAutoLogin= (e)=>{
     let {iv,encryptedData} = e.detail
+    console.log(encryptedData)
     let params = {
       iv,
       encryptedData
@@ -29,12 +27,27 @@ class Login extends Component{
     Taro.showLoading({
       title:'一键登录中'
     })
+    Taro.checkSession({
+      success () {
+        //session_key 未过期，并且在本生命周期一直有效
+        console.log('未过期')
+      },
+      fail () {
+        // session_key 已经失效，需要重新执行登录流程
+        Taro.login() //重新登录
+      }
+    })
+    console.log(params)
     registerPhone(params).then(res=>{
       Taro.hideLoading()
-      Taro.reLaunch({
-        url: '/pages/index/index'
-      })
+      if(res.data.code===0){
+        Taro.showToast({title:'欢迎新用户'})
+        Taro.reLaunch({
+          url: '/pages/index/index'
+        })
+      }
     })
+
   }
   toggleReaded = ()=>{
     this.setState((prevState:State)=>{

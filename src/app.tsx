@@ -34,7 +34,6 @@ class App extends Component {
       'pages/index/index', //首页
       'pages/index/more-service', // 服务分类-更多
       'pages/index/web-view',  // 单独打开H5
-      'pages/login/login',  // 登录
       'pages/login/toggle-login', // 登录（默认）
       'pages/order/order-submit', // 订单确认
       'pages/address/order-add',  // 地址管理

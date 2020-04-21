@@ -109,3 +109,36 @@
 .info-wrap{
   padding-bottom: 70px;
 }
+
+// 组件-tag样式修改
+.comment-modal{
+  .satisfaction{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+    .item-text{
+      color: #999;
+      margin-left: 10px;
+    }
+    .satisfaction-item{
+      display: flex;
+      align-items: center;
+    }
+  }
+
+}
+.comment-pane{
+  padding-top: 15px;
+}
+.tag-item{
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.at-tag{
+ height: 35px;
+  line-height: 35px;
+  padding: 0 10px;
+  font-size: 12px;
+  background:#efefef;
+}

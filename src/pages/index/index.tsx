@@ -5,7 +5,7 @@ import { observer, inject } from '@tarojs/mobx'
 import CustomerService from '../../components/customer-service'
 import RecommendAd from '../../components/recommend-ad'
 import {decodeQueryString, jumpTo as jumpToUtil} from '../../utils/common'
-import {loginApp} from '../login/service'
+import {loginApp} from '../login/login-apis'
 import { getBannerLists, getServiceLists } from './servics'
 import './index.scss'
 
@@ -69,12 +69,9 @@ class Index extends Component<{}, PageState> {
         Taro.setStorageSync('invitePhone', parseSence.ivphone)
       }
     }
+    console.log(1111)
     /*登录小程序*/
     loginApp()
-    // if(!Taro.getStorageSync('loginStatus')){
-    //   loginApp()
-    // }
-
     /*界面信息数据*/
     this.getBanner()
     this.getService()

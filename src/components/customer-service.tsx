@@ -15,7 +15,14 @@ class CustomerService extends Component{
     })
   }
   callService= ()=>{
-
+    Taro.makePhoneCall({
+      phoneNumber: '10086'
+    })
+  }
+  onlineService = ()=>{
+    Taro.showToast({
+      title:'客服暂未上线'
+    })
   }
   render(){
     return (<View className={this.state.hideService?'customer-service':'customer-service expand'}>
@@ -28,7 +35,7 @@ class CustomerService extends Component{
           :(<Block>
             <View className='expand-service'>
               <View className='expand-button'>
-                <View><Image className='custom-ico'  src={require('../assets/imgs/tmp/im.png')}></Image>在线咨询</View>
+                <View onClick={this.onlineService}><Image className='custom-ico'  src={require('../assets/imgs/tmp/im.png')}></Image>在线咨询</View>
                 <Text>（8:30-20:00）</Text>
               </View>
               <View className='expand-button'>

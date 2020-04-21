@@ -36,3 +36,14 @@ export const cancelOrder = (params)=>{
 export const cancelReason = ()=>{
   return request.get(`/api/v1/repair/cancel/reason/getAllCancelReason?doUser=USER`)
 }
+
+/*
+* 查询评价选择项
+* */
+export const getCommentOption = ()=>{
+  return request.get(`/api/v1/repair/comment/getAllRepairComment`)
+}
+// 用户评价订单-提交
+export const submitComment = (id,params)=>{
+  return request.post(`/api/v1/repair/order/commentRepairOrder?userId=${userId}&repairOrderId=${id}`,params)
+}

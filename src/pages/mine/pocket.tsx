@@ -173,7 +173,6 @@ class Mine extends  Component{
   }
   // 提现输入
   handleWithdrawChange = (val,key)=>{
-    console.log(val)
     this.setState({
       [key]:val
     })
@@ -190,8 +189,18 @@ class Mine extends  Component{
           title:'操作成功',
           icon:'none'
         })
-        this.toggleModalStatus('widthdraw')
-        this.getWithDrawHistory()
+        this.setState({
+          hasNextPage:true,
+          hasNextPageWith:true,
+          pageNo:1,
+          flowLists:[],
+          withdrawLists:[]
+        },()=>{
+          this.toggleModalStatus('widthdraw')
+          this.getInfo()
+          this.getFlow()
+          this.getWithDrawHistory()
+        })
       }else{
         Taro.showToast({
           title:'操作失败:'+res.data.msg,

@@ -1,12 +1,48 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Text, Navigator} from '@tarojs/components'
+import {customOrderLists} from './mall-apis'
 import './order-lists.scss'
 
 class OrderListsCustom extends  Component{
   config: Config={
     navigationBarTitleText:'订单列表',
     navigationStyle:'default'
+  }
+  state={
+    pageNo:1,
+    pageSize:5,
+    hasNextPage:true,
+    lists:[]
+  }
+  componentWillMount(){
+    this.getLists()
+  }
+  getLists = ()=>{
+    let {pageNo,pageSize,hasNextPage} = this.state
+    let params = {
+      pageNo,
+      pageSize
+    }
+    if(!hasNextPage){
+      Taro.showToast({
+        title:'没有更多了~',
+        icon:'none'
+      })
+      return
+    }
+    customOrderLists(params).then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        this.setState(prevState=>{
+          return {
+            pageNo:data.pageNo,
+            hasNextPage:data.hasNextPage,
+            lists:prevState.lists.concat(data.list)
+          }
+        })
+      }
+    })
   }
   render(){
     return (

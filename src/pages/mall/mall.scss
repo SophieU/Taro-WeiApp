@@ -1,11 +1,16 @@
+.page{
+  height: 100vh;
+}
 .mall-lists{
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  flex-wrap: wrap;
   .mall-item{
     background: #fff;
-    flex: 50% 0 0;
+    flex: 49% 0 0;
     overflow: hidden;
+    margin-bottom: 10px;
     &:nth-child(2n-1){
       margin-right: 5px;
     }
@@ -20,6 +25,7 @@
     margin: 0 auto;
     display: block;
     margin-bottom: 5px;
+    background:#f5f5f5;
   }
   .goods-title{
     font-size: 12px;
@@ -50,4 +56,5 @@
       background: transparent;
     }
   }
+
 }

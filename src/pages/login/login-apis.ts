@@ -5,7 +5,7 @@ import userStore from '../../store/user'
 /*
 *  user login action
 * */
-export const loginApp = ()=>{
+export const loginApp = (registerCallback?:()=>void)=>{
   Taro.login({
     success (res) {
       if (res.code) {
@@ -18,6 +18,7 @@ export const loginApp = ()=>{
             let openId:string = data.data.openId
             Taro.setStorageSync("wxOpenId",openId)
             Taro.setStorageSync("loginStatus",'new')
+            typeof registerCallback==='function'&&registerCallback()
           }else if(data.code===0){
             // 正常登录
             let dataBody = data.data
@@ -33,6 +34,7 @@ export const loginApp = ()=>{
             request.setAccessToken(dataBody.accessToken)
             userStore.setAPIUserInfo(apiUserInfo)
             userStore.setUserAccount(dataBody.userAccount)
+
           }else{
             console.log(data)
             Taro.setStorageSync("loginStatus",'fail')
@@ -47,18 +49,15 @@ export const loginApp = ()=>{
 }
 
 /*
-* new user to register and mark invite user phone
+* 新用户注册并登录
 * */
 export const registerPhone = (params)=>{
   let openId = Taro.getStorageSync('wxOpenId')
   let inviteUserPhone = Taro.getStorageSync('invitePhone')
   params.openId = openId
-  let queryString = `openId=${openId}
-   $encryptedData=${params.encryptedData}
-   &iv=${params.iv}
-   `
   if(inviteUserPhone){
-    queryString+=`inviteUserPhone=${inviteUserPhone}&isInvite=Y`
+    params.inviteUserPhone=inviteUserPhone
+    params.isInvite='Y'
   }
-  return request.post(`/api/v1/user/xcx/authBindPhone?${queryString}`)
+  return request.post(`/api/v1/user/xcx/authBindPhone`,params)
 }

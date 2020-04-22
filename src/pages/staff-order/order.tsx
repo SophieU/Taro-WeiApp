@@ -1,12 +1,18 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button, Text} from '@tarojs/components'
+import {View, ScrollView, Button, Text, Block,Navigator} from '@tarojs/components'
 import {AtButton,AtTabs, AtTabsPane } from 'taro-ui'
-import './order.less'
+import {repairOrderLists} from './staff-apis'
+import './order.scss'
 
 
 interface State {
   current:number
+  pageNo:number
+  pageSize:number
+  hasNextPage:boolean
+  repairOrderState:string
+  lists:Array<object>
 }
 class Lists extends Component<{},State>{
   config:Config = {
@@ -17,61 +23,117 @@ class Lists extends Component<{},State>{
     super();
     this.state = {
       current:0,
+      pageNo:1,
+      pageSize:5,
+      hasNextPage:true,
+      repairOrderState:'PENDING_ORDER',
+      lists:[],
+      orderStateOptions:['PENDING_ORDER','HANDLEING','FINISH','EXCEPTION'],
     }
   }
+  componentWillMount(){
+    this.getLists()
+  }
+  getLists= ()=>{
+    let {pageNo,pageSize,hasNextPage} = this.state
+    if(!hasNextPage){
+      Taro.showToast({
+        title:'没有更多了',
+        icon:'none'
+      })
+      return
+    }
+    let params = {
+      pageNo,
+      pageSize,
+      hasNextPage,
+      userId:Taro.getStorageSync('userId'),
+      masterId:Taro.getStorageSync('masterInfo').masterId,
+      repairOrderState:this.state.repairOrderState
+    }
+    Taro.showLoading({title:'加载中'})
+    repairOrderLists(params).then(res=>{
+      Taro.hideLoading()
+      if(res.data.code===0){
+        let data = res.data.data
+        this.setState(prevState=>{
+          return {
+            hasNextPage:data.hasNextPage,
+            pageNo:data.hasNextPage?data.nextPage:data.pageNo,
+            lists:prevState.lists.concat(data.list)
+          }
+        })
+      }
+    })
+  }
   handleClick=(value)=>{
-    this.setState({
-      current:value
+    this.setState(prevState=>{
+      return {
+        current:value,
+        lists:[],
+        pageNo:1,
+        pageSize:5,
+        hasNextPage:true,
+        repairOrderState:prevState.orderStateOptions[value]
+      }
+    },()=>{
+      this.getLists()
     })
   }
   render(){
     const tabList = [{ title: '待处理' }, { title: '处理中' }, { title: '已完成' }, { title: '申述中' }]
-    return (<View className='page'>
-      <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick}>
-        <AtTabsPane current={this.state.current} index={0} >
-          <View className='order-lists'>
-            <View className='order-item'>
-              <View className='order-row'>
-                <View className='row-title'>工单编号</View>
-                <View className='row-info'>59854545454857857857</View>
-              </View>
-              <View className='order-row'>
-                <View className='row-title'>工单状态</View>
-                <View className='row-info'><Text className='text-warm'>待上门</Text></View>
-              </View>
-               <View className='order-row'>
-                <View className='row-title'>维修地点</View>
-                <View className='row-info'>力宝大厦，N-15-7</View>
-              </View>
-              <View className='order-row'>
-                <View className='row-title'>报修类别</View>
-                <View className='row-info'>用气服务</View>
-              </View>
+    return (<ScrollView
+      className='page'
+      scrollY
+      onScrollToLower={this.getLists}
+    >
+      <AtTabs className='tabs-header' current={this.state.current} tabList={tabList} onClick={this.handleClick}></AtTabs>
+      <View className='order-lists'>
+        {
+          this.state.lists.map(item=>{
+            return ( <View key={item.id} className='order-item'>
+              <Navigator url={'/pages/staff-order/detail?id='+item.id}>
+                <View className='order-row'>
+                  <View className='row-title'>工单编号</View>
+                  <View className='row-info'>{item.orderSn}</View>
+                </View>
+                <View className='order-row'>
+                  <View className='row-title'>工单状态</View>
+                  <View className='row-info'><Text className='text-warm'>{item.orderStateName}</Text></View>
+                </View>
+                <View className='order-row'>
+                  <View className='row-title'>维修地点</View>
+                  <View className='row-info'>{item.address||'无'}</View>
+                </View>
+                <View className='order-row'>
+                  <View className='row-title'>报修内容</View>
+                  <View className='row-info'>{item.repairCategoryName}</View>
+                </View>
+              </Navigator>
+
               <View className='item-foot'>
-                <View className='order-date'>2018/09/10 12：11</View>
+                <View className='order-date'>{item.createTime}</View>
                 <View className='order-btns'>
-                  <Button className='btn default-btn'>申述</Button>
-                  <Button className='btn primary-btn'>开始处理</Button>
+                  {
+                    this.state.repairOrderState==='PENDING_ORDER'?(
+                      <Block>
+                        <Button onClick={()=>Taro.navigateTo({url:'/pages/staff-order/refuse?id='+item.id})} className='btn primary-btn'>申述</Button>
+                        <Button onClick={()=>{Taro.navigateTo({url:'/pages/staff-order/quote?id='+item.id})}} className='btn orange-btn'>生成报价</Button>
+                      </Block>
+                    ):null
+                  }
                   {/*待上门*/}
                   {false?(<Button className='btn primary-btn'>生成报价</Button>):null}
                   {/*待支付*/}
                   {false?(<Button className='btn primary-btn'>继续支付</Button>):null}
                 </View>
               </View>
-            </View>
-          </View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={1}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={2}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页三的内容</View>
-        </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={3}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页三的内容</View>
-        </AtTabsPane>
-      </AtTabs>
-    </View>)
+            </View>)
+          })
+        }
+
+      </View>
+    </ScrollView>)
   }
 }
 export default Lists as ComponentType

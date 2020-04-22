@@ -157,3 +157,4 @@ export const jumpTo = (info,otherType?:string)=>{
 export const simpleClone = (obj) => {
   return JSON.parse(JSON.stringify(obj))
 }
+

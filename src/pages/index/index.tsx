@@ -69,7 +69,6 @@ class Index extends Component<{}, PageState> {
         Taro.setStorageSync('invitePhone', parseSence.ivphone)
       }
     }
-    console.log(1111)
     /*登录小程序*/
     loginApp()
     /*界面信息数据*/
@@ -183,14 +182,14 @@ class Index extends Component<{}, PageState> {
         {
           this.state.serviceBlockLists.map((item,index)=>{
             return (<View className='function-block' key={item.id}>
-              <View className="left-block">
+              <Navigator className="left-block" url={'/pages/index/more-service?id='+item.id}>
                 <Image className='left-bg' src={item.iconUrlOne}></Image>
-                <Text className='bock-title'>{item.name}</Text>
-                <Navigator className='bock-more' url={'/pages/index/more-service?id='+item.id}>
-                  查看全部
-                  <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>
-                </Navigator>
-              </View>
+                {/*<Text className='bock-title'>{item.name}</Text>*/}
+                {/*<Navigator className='bock-more' url={'/pages/index/more-service?id='+item.id}>*/}
+                {/*  查看全部*/}
+                {/*  <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>*/}
+                {/*</Navigator>*/}
+              </Navigator>
               <View className="right-block">
                 {
                   item.categoryList.map(child=>{

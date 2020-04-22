@@ -39,7 +39,7 @@ export const submitOrder = (params)=>{
 *  @params {object} query  querystring参数
 *  @params {number} query.pageNo 页码
 * */
-export const customOrderLists = (query,params?:object)=>{
+export const customOrderLists = (query,params)=>{
   let queryStr = `pageNo=${query.pageNo}&pageSize=${query.pageSize}&userId=${userId}`
   return request.post(`/api/v1/order/getOrderForPage?${queryStr}`,params)
 }

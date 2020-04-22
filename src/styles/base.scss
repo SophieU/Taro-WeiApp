@@ -5,28 +5,6 @@
 /*
 right: http://qiniu.kingdou.fun/right.png
 */
-.lang-btn{
-  width: 350px;
-  height: 44px;
-  margin: 0 auto;
-  background: #FFFFFF;
-  border: 1px solid #216EC6;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #216EC6;
-}
-.blue-btn{
-  background: #216EC6;
-  font-size: 16px;
-  color: #FFFFFF;
-  border-color:#216EC6;
-}
-.orange-btn{
-  background: $color;
-  font-size: 16px;
-  color: #FFFFFF;
-  border-color:$color;
-}
 .btn{
   font-size: 12px;
   padding: 0 15px;
@@ -36,15 +14,48 @@ right: http://qiniu.kingdou.fun/right.png
   border: .5px solid #ddd;
   outline: none;
   height: 35px;
-  width: 80px;
+  min-width: 80px;
   margin-right: 10px;
   line-height: 35px;
   display: inline-block;
 }
-.primary-btn{
+.lang-btn{
+  width: 350px;
+  height: 44px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid #216EC6;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #216EC6;
+}
+.blue-btn{
+  background: #216EC6;
+  font-size: 14px;
+  color: #FFFFFF;
+  border-color:#216EC6;
+}
+.orange-btn{
   background: $color;
-  color: #fff;
-  border-color: $color;
+  font-size: 14px;
+  color: #FFFFFF;
+  border-color:$color;
+}
+
+.primary-btn{
+  background: #fff;
+  color: #333;
+  border-color: #ddd;
+  font-size: 12px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  box-shadow: none;
+  outline: none;
+  height: 35px;
+  width: 80px;
+  margin-right: 10px;
+  line-height: 35px;
+  display: inline-block;
 }
 .text-warm{
   color: $color;

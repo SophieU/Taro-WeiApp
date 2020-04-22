@@ -50,11 +50,13 @@ class App extends Component {
       'pages/custom-order/lists', // 我的-报修订单
       'pages/custom-order/detail',  // 报修订单-详情
       'pages/admin/admin',  // 我的-管理员
-      'pages/admin/staffs',  // 我的-报修订单-师傅端
-      'pages/staff-order/order',
-      'pages/staff-order/quote',
-      'pages/staff-order/order-deal',
-      'pages/staff-order/pay',
+      'pages/admin/staffs',  // 我的-师傅选择
+      'pages/staff-order/order', // 师傅端-报修订单
+      'pages/staff-order/detail', // 师傅端-报修详情
+      'pages/staff-order/quote', // 师傅端-报价清单
+      'pages/staff-order/refuse', // 师傅端-申述
+      'pages/staff-order/order-deal', // 师傅端-确认订单
+      'pages/staff-order/pay',  // 师傅端-二维码收款
     ],
     window: {
       backgroundTextStyle: 'light',

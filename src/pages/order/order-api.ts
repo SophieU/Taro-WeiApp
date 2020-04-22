@@ -47,7 +47,7 @@ export const findOrderInfo = (repairOrderId)=>{
 * @description 获取支付信息【支付--小程序支付和扫码支付通用】
 * @params {Array} orderIds  订单号列表【预付上门费时内容为orderSn, 订单详情时内容为orderId】
 * @params {string} payBusinessType  订单业务类型【W_REPAIR_ORDER 报修业务；W_REPAIR_DOOR_FEE 报修上门费；BOOKING_ORDER 预约订单】
-* @params {string} payCode  支付code，固定写死
+* @params {string} payCode  支付code，固定写死 WX_XCX
 * */
 export const getWxPay = (params)=>{
   return request.post(`/pay/wx/getPay?userId=${userId}`,params,'application/json')

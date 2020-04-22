@@ -112,41 +112,40 @@ class Mine extends  Component<{}, State>{
         </View>
         <View className='control-wrap'>
           <View className='control-lists'>
-            {/*用户端*/}
-            {userType==='USER'?(
-              <Block>
-                <View onClick={()=>{this.handleNavigate('/pages/custom-order/lists')}} className='control-item'>
-                  <View className='control-title'>报修订单</View>
-                  <View className='control-desc'></View>
-                </View>
-                <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-custom')}}  className='control-item'>
-                  <View className='control-title'>预约订单</View>
-                  <View className='control-desc'></View>
-                </View>
-                <View onClick={()=>{this.handleNavigate('/pages/address/order-add')}}  className='control-item'>
-                  <View className='control-title'>我的地址</View>
-                  <View className='control-desc'></View>
-                </View>
-                <View className='control-item'>
-                  <View className='control-title'>在线客服</View>
-                  <View className='control-desc'></View>
-                </View>
-                <View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item'>
-                  <View className='control-title'>我的邀请码</View>
-                  <View className='control-desc'></View>
-                </View>
-                <View onClick={this.toggleInvitePhoneModal} className='control-item'>
-                  <View className='control-title'>设置邀请人</View>
-                  <View className='control-desc'></View>
-                </View>
-              </Block>
-            ):null}
+            {/*公共菜单*/}
+            <Block>
+              <View onClick={()=>{this.handleNavigate('/pages/custom-order/lists')}} className='control-item'>
+                <View className='control-title'>报修订单</View>
+                <View className='control-desc'></View>
+              </View>
+              <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-custom')}}  className='control-item'>
+                <View className='control-title'>预约订单</View>
+                <View className='control-desc'></View>
+              </View>
+              <View onClick={()=>{this.handleNavigate('/pages/address/order-add')}}  className='control-item'>
+                <View className='control-title'>我的地址</View>
+                <View className='control-desc'></View>
+              </View>
+              <View className='control-item'>
+                <View className='control-title'>在线客服</View>
+                <View className='control-desc'></View>
+              </View>
+              <View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item'>
+                <View className='control-title'>我的邀请码</View>
+                <View className='control-desc'></View>
+              </View>
+              <View onClick={this.toggleInvitePhoneModal} className='control-item'>
+                <View className='control-title'>设置邀请人</View>
+                <View className='control-desc'></View>
+              </View>
+            </Block>
 
             {/*服务师傅*/}
             {userType==='SERVICE_USER'?(
               <Block>
+                <View className='control-divider'>接单管理</View>
                 <View className='control-item'>
-                  <View onClick={()=>{this.handleNavigate('/pages/admin/staffs')}} className='control-title'>报修接单管理</View>
+                  <View onClick={()=>{this.handleNavigate('/pages/staff-order/order')}} className='control-title'>报修接单管理</View>
                   <View className='control-desc'></View>
                 </View>
                 <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-staff')}} className='control-item'>
@@ -160,6 +159,16 @@ class Mine extends  Component<{}, State>{
             {
               userType==='ADMIN'?(
                 <Block>
+                  <View className='control-divider'>接单管理</View>
+                  <View className='control-item'>
+                    <View onClick={()=>{this.handleNavigate('/pages/staff-order/order')}} className='control-title'>报修接单管理</View>
+                    <View className='control-desc'></View>
+                  </View>
+                  <View onClick={()=>{this.handleNavigate('/pages/mall/order-lists-staff')}} className='control-item'>
+                    <View className='control-title'>预约接单管理</View>
+                    <View className='control-desc'></View>
+                  </View>
+                  <View className='control-divider'>接单管理</View>
                   <View onClick={()=>{this.handleNavigate('/pages/admin/admin')}} className='control-item'>
                     <View className='control-title'>派单管理</View>
                     <View className='control-desc'></View>

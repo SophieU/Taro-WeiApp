@@ -281,7 +281,6 @@ class OrderSubmit extends Component<{},State>{
     getWxPay(params).then(res=>{
       if(res.data.code===0){
         let data = res.data.data
-        console.log('支付信息',data)
         Taro.requestPayment({
           success:()=>{
             this.orderSuccess()

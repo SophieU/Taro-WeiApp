@@ -44,10 +44,20 @@
 }
 .control-lists{
   margin-top: 10px;
-  background: #fff;
   border-radius: 8px;
   overflow: hidden;
   padding-left: 10px;
+  background: #fff;
+  .control-divider{
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    padding:10px 0;
+    background:#f7f7f7;
+    padding-left: 10px;
+    position: relative;
+    left: -10px;
+  }
   .control-item{
     height: 44px;
     display: flex;

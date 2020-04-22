@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Text} from '@tarojs/components'
 import {AtButton,AtInput, AtTabsPane } from 'taro-ui'
-import './order.less'
+import './order.scss'
 
 
 interface State {

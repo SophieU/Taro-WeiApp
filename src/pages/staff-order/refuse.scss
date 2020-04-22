@@ -1,0 +1,50 @@
+.refuse-page{
+  padding:15px;
+  background:#f5f5f5;
+  min-height: 100vh;
+}
+.info-wrap{
+  margin-bottom: 15px;
+  .wrap-header{
+    display: flex;
+    justify-content: space-between;
+    padding:10px 0;
+    font-size: 14px;
+    .info-title{
+      color: #333;
+      font-weight: 600;
+    }
+    .info-right{
+      color: #999;
+      font-size: 12px;
+    }
+  }
+  .info-body{
+    background:#fff;
+    padding:0 10px;
+    .info-row{
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      border-bottom: 1px solid #efefef;
+      &:last-child{
+        border: none;
+      }
+      .row-title{
+        color: #666;
+      }
+      .row-content{
+        color: #333;
+      }
+      .radio-item{
+        display: block;
+      }
+    }
+  }
+
+}
+.orange-btn{
+  line-height: 44px;
+}

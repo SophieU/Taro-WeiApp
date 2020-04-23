@@ -1,6 +1,6 @@
 .page{
   min-height: 100vh;
-  padding-top: 32px;
+  //padding-top: 32px;
   background:#f5f5f5;
   .tabs-header{
     height: 32px;
@@ -17,6 +17,9 @@
   padding: 15px 5px;
   font-size: 14px;
   border-bottom: 1px solid #efefef;
+  &:last-child{
+    border: none;
+  }
   .row-title{
     flex: 80px 0 0;
   }
@@ -62,6 +65,7 @@
     }
     .other-row{
       background: #fff;
+      padding:10px 0;
     }
   }
   .page-foot{
@@ -78,6 +82,10 @@
     .price-total{
       font-size: 14px;
     }
+  }
+  .submit-btn{
+    background:#EA7744;
+    color:#fff;
   }
 }
 
@@ -153,3 +161,4 @@
 
   }
 }
+

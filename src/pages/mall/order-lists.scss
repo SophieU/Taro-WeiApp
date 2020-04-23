@@ -60,3 +60,28 @@
     }
   }
 }
+.order-lists-custom{
+  .order-body{
+    border-top: 1px solid #efefef;
+    padding-top: 15px;
+  }
+  .item-row{
+    display: flex;
+    font-size: 12px;
+    .goods-time{
+      color: #999;
+      margin-top: 5px;
+    }
+    .price{
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  }
+  .btn-group{
+    display:flex;
+    padding-top: 15px;
+    .btn{
+      flex: 1 0 0;
+    }
+  }
+}

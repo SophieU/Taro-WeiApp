@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button,Text} from '@tarojs/components'
-import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction ,AtTag,AtTabs, AtTabsPane  } from 'taro-ui'
+import {View, Button,Text} from '@tarojs/components'
+import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import {getWxPay} from "../order/order-api";
 import {orderDetail} from './staff-apis'
 import {simpleClone} from '../../utils/common'
@@ -19,6 +19,8 @@ interface State {
   repairOrderAmountVos:Array<object>
   dispatchInfo:object|null
   totalAmount:number
+  showAction:boolean
+  repairOrderDispatchId:string
 }
 class Lists extends Component<{},State>{
   config:Config = {
@@ -31,16 +33,17 @@ class Lists extends Component<{},State>{
       id:'',
       cancelReasonId:'',
       orderDetail:{},
-      cancelReasonLists:[],
       reasonModal:false,
       baseInfo:{orderState:'ASSIGNED'},
       repairOrderOfferPlanVoList:[],
       dispatchInfo:null,
       repairOrderAmountVos:[],
       totalAmount:0,
+      showAction:false,
+      repairOrderDispatchId:'', //派单Id，用于重新报价时
     }
   }
-  componentWillMount(){
+  componentDidShow(){
     let id = this.$router.params.id
     this.setState({
       id:id
@@ -64,6 +67,7 @@ class Lists extends Component<{},State>{
         this.setState({
           orderDetail:res.data.data,
           baseInfo:data.baseInfo,
+          repairOrderDispatchId:data.baseInfo.repairOrderDispatchId,
           repairOrderOfferPlanVoList:data.repairOrderOfferPlanVoList,
           dispatchInfo:data.dispatchInfo,
           repairOrderAmountVos:data.repairOrderAmountVos,
@@ -72,7 +76,25 @@ class Lists extends Component<{},State>{
       }
     })
   }
+  // 等待用户端支付
+  waitPay=(type)=>{
+    this.setState({
+      showAction:false
+    },()=>{
+      if(type==='user'){
+        Taro.showToast({
+          title:'等待用户支付中',
+          icon:'loading',
+          duration:120000
+        })
+      }else if(type==='qr-code'){
+        Taro.navigateTo({
+          url:'/pages/staff-order/pay?type=staff&id='+this.state.id
+        })
+      }
+    })
 
+  }
   // 支付成功
   orderSuccess= ()=>{
     Taro.showModal({
@@ -92,25 +114,53 @@ class Lists extends Component<{},State>{
       }
     })
   }
-
+  sureOrder= ()=>{
+    this.setState({
+      showAction:true
+    })
+  }
+  resetPrice = ()=>{
+    let queryStr=`id=${this.state.id}&dispatchId=${this.state.repairOrderDispatchId}`
+    Taro.navigateTo({url:`/pages/staff-order/quote?${queryStr}`})
+  }
   // 拔打电话
   call = (phone)=>{
     Taro.makePhoneCall({
       phoneNumber: phone
     })
   }
-
-  render(){
-    let cancelReasonArr = []
-      this.state.cancelReasonLists.forEach(item=>{
-      if(item.isValid==='Y'){
-        let obj = {
-          label:item.reasonName,
-          value:item.id
-        }
-        cancelReasonArr.push(obj)
+  renderFoot(){
+    const {baseInfo,repairOrderAmountVos} = this.state
+    let total = 0
+    repairOrderAmountVos.forEach(item=>{
+      if(item.type==='ALL_AMOUNT'){
+        total=item.amount
       }
     })
+    switch (baseInfo.orderStateName) {
+      case '待上门':
+      {
+        return ( <View  className='page-foot'>
+          <View className="btn-group">
+            <Button className='orange-btn lang-btn' onClick={this.resetPrice}>生成报价</Button>
+          </View>
+        </View>)
+      }
+      break;
+      case '待付款':
+      {
+        return ( <View  className='page-foot'>
+          <View className='foot-item'>总计： ￥{total}</View>
+          <View className="btn-group">
+            <Button className='primary-btn' onClick={this.resetPrice}>重新报价</Button>
+            <Button className='submit-btn' onClick={this.sureOrder}>确认</Button>
+          </View>
+        </View>)
+      }
+    }
+  }
+  render(){
+
     return (<View className='page detail-page'>
       <View className='info-wrap'>
         <View className='detail-block'>
@@ -126,7 +176,7 @@ class Lists extends Component<{},State>{
             </View>
             <View className='info-item'>
               <View className='item-label'>工单状态</View>
-              <View className='item-info'>{this.state.baseInfo.orderStateName}</View>
+              <View className='text-warm'>{this.state.baseInfo.orderStateName}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>服务网点</View>
@@ -209,16 +259,19 @@ class Lists extends Component<{},State>{
 
       </View>
       {/*底部操作区*/}
-      <View  className='page-foot'>
-        <View className='foot-item'>总计： ￥{this.state.totalAmount}</View>
-        <View className="btn-group">
-          <Button className='primary-btn' onClick={()=>{Taro.navigateTo({url:'/pages/staff-order/quote'})}}>重新报价</Button>
-          <Button className='submit-btn' >确认</Button>
-        </View>
-
-      </View>
+      {this.renderFoot()}
+      {/* 底部操作区 */}
+      <AtActionSheet isOpened={this.state.showAction} cancelText='取消' title='请选择收款方式'>
+        <AtActionSheetItem onClick={()=>this.waitPay('user')}>
+          用户端支付
+        </AtActionSheetItem>
+        <AtActionSheetItem onClick={()=>this.waitPay('qr-code')}>
+          二维码收款
+        </AtActionSheetItem>
+      </AtActionSheet>
 
     </View>)
+
 
   }
 }

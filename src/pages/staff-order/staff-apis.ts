@@ -45,3 +45,26 @@ export const submitRefuse = (params)=>{
 export const orderDetail = (repairOrderId)=>{
   return request.get(`/api/v1/repair/order/getRepairOrderInfoById?userId=${userId}&repairOrderId=${repairOrderId}&type=master`)
 }
+
+// 二维码收款
+/*
+*
+* "orderIds":["a551164163c64f868ea744d769dac503"],
+* "payBusinessType":"W_REPAIR_ORDER（工单业务类型）",
+* "payCode":"WX_XCX/WX_QR"
+*
+* */
+export const QrPay = (params)=>{
+  return request.post(`/pay/wx/getPay?userId=${userId}`,params)
+}
+/*
+* 查询支付结果 —— Y为已支付，N为未支付；
+ */
+export const payRes = (paySn)=>{
+  return request.get(`/pay/query/payState?paySn=${paySn}`)
+}
+
+// 提交报价方案
+export const setPricePlan = (id,params)=>{
+  return request.post(`/api/v1/repair/order/submitPlanPay?userId=${userId}&repairOrderDispatchId=${id}`,params)
+}

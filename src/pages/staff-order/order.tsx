@@ -110,24 +110,6 @@ class Lists extends Component<{},State>{
                   <View className='row-info'>{item.repairCategoryName}</View>
                 </View>
               </Navigator>
-
-              <View className='item-foot'>
-                <View className='order-date'>{item.createTime}</View>
-                <View className='order-btns'>
-                  {
-                    this.state.repairOrderState==='PENDING_ORDER'?(
-                      <Block>
-                        <Button onClick={()=>Taro.navigateTo({url:'/pages/staff-order/refuse?id='+item.id})} className='btn primary-btn'>申述</Button>
-                        <Button onClick={()=>{Taro.navigateTo({url:'/pages/staff-order/quote?id='+item.id})}} className='btn orange-btn'>生成报价</Button>
-                      </Block>
-                    ):null
-                  }
-                  {/*待上门*/}
-                  {false?(<Button className='btn primary-btn'>生成报价</Button>):null}
-                  {/*待支付*/}
-                  {false?(<Button className='btn primary-btn'>继续支付</Button>):null}
-                </View>
-              </View>
             </View>)
           })
         }

@@ -43,3 +43,8 @@ export const customOrderLists = (query,params)=>{
   let queryStr = `pageNo=${query.pageNo}&pageSize=${query.pageSize}&userId=${userId}`
   return request.post(`/api/v1/order/getOrderForPage?${queryStr}`,params)
 }
+
+// 抢单
+export const grabOrder = (params)=>{
+  return request.post(`/api/v1/order/vyingOrder?userId=${userId}`,params)
+}

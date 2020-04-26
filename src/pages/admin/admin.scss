@@ -49,11 +49,22 @@
     justify-content: space-between;
     padding: 10px 0;
   }
-  .foot-btn{
-    width: 120px;
-    font-size: 14px;
-    box-sizing: border-box;
-    height: 34px;
-    line-height: 34px;
+  //.foot-btn{
+  //  width: 120px;
+  //  font-size: 14px;
+  //  box-sizing: border-box;
+  //  height: 34px;
+  //  line-height: 34px;
+  //}
+  .btn-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .btn{
+      flex:1 0 0;
+      margin-bottom: 10px;
+    }
+
   }
 }

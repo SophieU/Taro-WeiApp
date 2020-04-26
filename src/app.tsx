@@ -49,8 +49,8 @@ class App extends Component {
       'pages/mall/order-lists-staff', // 预约商城-师傅预约列表
       'pages/custom-order/lists', // 我的-报修订单
       'pages/custom-order/detail',  // 报修订单-详情
-      'pages/admin/admin',  // 我的-管理员
-      'pages/admin/staffs',  // 我的-师傅选择
+      'pages/admin/admin',  // 管理员-派单列表
+      'pages/admin/staffs',  // 管理员-师傅选择
       'pages/staff-order/order', // 师傅端-报修订单
       'pages/staff-order/detail', // 师傅端-报修详情
       'pages/staff-order/quote', // 师傅端-报价清单

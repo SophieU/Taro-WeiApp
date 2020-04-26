@@ -155,7 +155,7 @@ class Mine extends  Component<{}, State>{
               </Block>
             ):null}
 
-            {/*管理员端*/}
+            {/*管理员端   */}
             {
               userType==='ADMIN'?(
                 <Block>
@@ -168,9 +168,9 @@ class Mine extends  Component<{}, State>{
                     <View className='control-title'>预约接单管理</View>
                     <View className='control-desc'></View>
                   </View>
-                  <View className='control-divider'>接单管理</View>
+                  <View className='control-divider'>派单管理</View>
                   <View onClick={()=>{this.handleNavigate('/pages/admin/admin')}} className='control-item'>
-                    <View className='control-title'>派单管理</View>
+                    <View className='control-title'>处理工单</View>
                     <View className='control-desc'></View>
                   </View>
                 </Block>

@@ -26,9 +26,9 @@ export const loginApp = (registerCallback?:()=>void)=>{
             Taro.setStorageSync("userId",dataBody.userId)
             Taro.setStorageSync("accessToken",dataBody.accessToken)
             Taro.setStorageSync("userType",dataBody.userType)
-            if(dataBody.userType==='SERVICE_USER'){
-              let {masterId,repairStationId,businessState,masterRoleCode,isServiceUser} = dataBody
-              let masterObj = {masterId,repairStationId,businessState,masterRoleCode,isServiceUser}
+            if(dataBody.userType==='SERVICE_USER'||dataBody.userType==='ADMIN'){
+              let {masterId,repairStationId,businessState,masterRoleCode,isServiceUser,masterName} = dataBody
+              let masterObj = {masterId,repairStationId,businessState,masterRoleCode,isServiceUser,masterName}
               Taro.setStorageSync("masterInfo",masterObj)
             }
             let apiUserInfo = {

@@ -50,19 +50,34 @@ class Admin extends Component{
     })
   }
   // 分配工单
-  dispatchOrder= (item)=>{
+  dispatchOrder= (e)=>{
+    let id = e.target.dataset.id
+    let controlObj=null
+    this.state.orderLists.forEach(item=>{
+      if(item.orderId===id){
+        controlObj=item
+      }
+    })
+    console.log(controlObj)
     Taro.navigateTo({
-      url:`/pages/admin/staffs?orderId=${item.orderId}&stationName=${item.stationName}&type=${item.type}`
+      url:`/pages/admin/staffs?orderId=${controlObj.orderId}&stationName=${controlObj.stationName}&type=${controlObj.type}`
     })
   }
   // 驳回申诉
-  conflict = (item)=>{
+  conflict = (e)=>{
+    let id = e.target.dataset.id
+    let controlObj=null
+    this.state.orderLists.forEach(item=>{
+      if(item.orderId===id){
+        controlObj=item
+      }
+    })
     let masterInfo = Taro.getStorageSync('masterInfo')
     let params = {
-      appealId:item.appealId,
+      appealId:controlObj.appealId,
       userId:masterInfo.masterId,
       username:masterInfo.masterName,
-      departmentName:item.stationName
+      departmentName:controlObj.stationName
     }
     conflictAppeal(params).then(res=>{
       if(res.data.code===0){
@@ -82,13 +97,20 @@ class Admin extends Component{
     })
   }
   // 关闭工单 -申诉
-  closeOrder=(item)=>{
+  closeOrder=(e)=>{
+    let controlObj=null
+    let id = e.target.dataset.id
+    this.state.orderLists.forEach(item=>{
+      if(item.orderId===id){
+        controlObj=item
+      }
+    })
     let masterInfo =Taro.getStorageSync('masterInfo')
     let params = {
-      "appealId":item.item,
+      "appealId":controlObj.appealId,
       "userId":masterInfo.masterId,
       "username":masterInfo.masterName,
-      "departmentName":item.repairStationName
+      "departmentName":controlObj.repairStationName
     }
     closeAppeal(params).then(res=>{
       if(res.data.code===0){
@@ -125,13 +147,14 @@ class Admin extends Component{
       }
     })
   }
-  renderFootBtn = (orderType:string,orderItem)=>{
+  renderFootBtn = (orderType:string,orderId)=>{
+
     switch (orderType) {
       case '待上门':
       {
         /*重新派单*/
         return ( <View className='btn-wrap'>
-          <Button onClick={()=>this.handleCancelModal(orderItem)} className='btn primary-btn' >取消工单</Button>
+          <Button data-id={orderId} onClick={this.handleCancelModal} className='btn primary-btn' >取消工单</Button>
         </View>)
       }
       break;
@@ -139,8 +162,8 @@ class Admin extends Component{
       {
         /*取消订单*/
         return (<View className='btn-wrap'>
-          <Button onClick={()=>this.handleCancelModal(orderItem)} className='btn primary-btn'>取消工单</Button>
-          <Button onClick={()=>this.dispatchOrder(orderItem)} className='btn orange-btn'>分配工单</Button>
+          <Button data-id={orderId}  onClick={this.handleCancelModal} className='btn primary-btn'>取消工单</Button>
+          <Button data-id={orderId}  onClick={this.dispatchOrder} className='btn orange-btn'>分配工单</Button>
         </View>)
       }
       break;
@@ -148,10 +171,10 @@ class Admin extends Component{
       {
         // 关闭订单
         return (<View className='btn-wrap'>
-          <Button onClick={()=>this.dispatchOrder(orderItem)} className='btn orange-btn'>重新派单</Button>
-          <Button onClick={()=>this.conflict(orderItem)} className='btn primary-btn'>驳回申诉</Button>
-          <Button onClick={()=>this.cancelAppeal(orderItem)} className='btn primary-btn'>取消工单</Button>
-          <Button onClick={()=>this.closeOrder(orderItem)} className='btn primary-btn'>关闭工单</Button>
+          <Button data-id={orderId}   onClick={this.dispatchOrder} className='btn orange-btn'>重新派单</Button>
+          <Button data-id={orderId}   onClick={this.conflict} className='btn primary-btn'>驳回申诉</Button>
+          <Button data-id={orderId}   onClick={this.cancelAppeal} className='btn primary-btn'>取消工单</Button>
+          <Button data-id={orderId}   onClick={this.closeOrder} className='btn primary-btn'>关闭工单</Button>
         </View>)
       }
       break;
@@ -164,23 +187,37 @@ class Admin extends Component{
     })
   }
   // 取消订单弹窗
-  handleCancelModal = (item)=>{
+  handleCancelModal = (e)=>{
+    let id = e.target.dataset.id
+    let controlObj=null
+    this.state.orderLists.forEach(item=>{
+      if(item.orderId===id){
+        controlObj=item
+      }
+    })
     this.setState((prevState)=>{
       return {
         reasonModal:!prevState.reasonModal,
         cancelReasonId:'',
-        nowItem:item,
+        nowItem:controlObj,
       }
     })
   }
   // 取消工单-申述
-  cancelAppeal= (item)=>{
+  cancelAppeal= (e)=>{
+    let id = e.target.dataset.id
+    let controlObj=null
+    this.state.orderLists.forEach(item=>{
+      if(item.orderId===id){
+        controlObj=item
+      }
+    })
     let masterInfo =Taro.getStorageSync('masterInfo')
     let params = {
-      "appealId":item.item,
+      "appealId":controlObj.item,
       "userId":masterInfo.masterId,
       "username":masterInfo.masterName,
-      "departmentName":item.repairStationName
+      "departmentName":controlObj.repairStationName
     }
     cancelConf(params).then(res=>{
       if(res.data.code===0){
@@ -289,7 +326,7 @@ class Admin extends Component{
                   }
                 </View>
                 <View className='order-foot'>
-                  {this.renderFootBtn(item.orderStateName,item)}
+                  {this.renderFootBtn(item.orderStateName,item.orderId)}
                 </View>
               </View>
             </View>

@@ -53,6 +53,7 @@ class Lists extends Component<{},State>{
   dispatchOrderNow=()=>{
     let masterInfo = Taro.getStorageSync('masterInfo')
     let {orderId,choosed,stationName,type} = this.state
+    console.log('staffs------',orderId)
     let params = {
       serviceUserId:choosed,
       departmentName:stationName,

@@ -1,0 +1,97 @@
+<template name="renderCode1">
+    <block>
+        <view class="ad-wrap type-1" wx:key="key">
+            <image bindtap="anonymousFunc0" class="ad-img" src="{{data[0].targetImage}}"></image>
+        </view>
+    </block>
+</template>
+<template name="renderCode2">
+    <block>
+        <view class="ad-wrap type-2" wx:key="key">
+            <image bindtap="anonymousFunc1" wx:key="configId" class="ad-img" src="{{item.$original.targetImage}}" wx:for="{{loopArray34}}" wx:for-item="item" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
+        </view>
+    </block>
+</template>
+<template name="renderCode3">
+    <block>
+        <view class="ad-wrap" wx:key="key">
+            <view class="left-ad">
+                <image bindtap="anonymousFunc2" class="ad-img" src="{{data[0].targetImage}}"></image>
+            </view>
+            <view class="right-ad">
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc3" class="ad-img" src="{{data[1].targetImage}}"></image>
+                </view>
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc4" class="ad-img" src="{{data[2].targetImage}}"></image>
+                </view>
+            </view>
+        </view>
+    </block>
+</template>
+<template name="renderCode4">
+    <block>
+        <view class="ad-wrap" wx:key="key">
+            <view class="right-ad">
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc5" class="ad-img" src="{{data[1].targetImage}}"></image>
+                </view>
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc6" class="ad-img" src="{{data[2].targetImage}}"></image>
+                </view>
+            </view>
+            <view class="left-ad">
+                <image bindtap="anonymousFunc7" class="ad-img" src="{{data[0].targetImage}}"></image>
+            </view>
+        </view>
+    </block>
+</template>
+<block wx:if="{{$taroCompReady}}">
+    <block wx:if="{{formatCode === '2' || formatCode === '6'}}">
+        <template is="renderCode2" data="{{..._$_$anonymousState__temp}}"></template>
+    </block>
+    <block wx:elif="{{formatCode === '3'}}">
+        <template is="renderCode3" data="{{..._$_$anonymousState__temp2}}"></template>
+    </block>
+    <block wx:elif="{{formatCode === '4'}}">
+        <template is="renderCode4" data="{{..._$_$anonymousState__temp3}}"></template>
+    </block>
+    <block wx:elif="{{formatCode === '5'}}">
+        <template is="renderCode5" data="{{..._$_$anonymousState__temp4}}"></template>
+    </block>
+    <block wx:elif="{{formatCode === '7'}}">
+        <template is="renderCode7" data="{{..._$_$anonymousState__temp5}}"></template>
+    </block>
+    <view wx:else>
+        <template is="renderCode1" data="{{...anonymousState__temp6}}"></template>
+    </view>
+</block>
+<template name="renderCode5">
+    <block>
+        <view class="ad-wrap" wx:key="key">
+            <view class="right-ad">
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc8" class="ad-img" src="{{data[0].targetImage}}"></image>
+                </view>
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc9" class="ad-img" src="{{data[1].targetImage}}"></image>
+                </view>
+            </view>
+            <view class="right-ad">
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc10" class="ad-img" src="{{data[2].targetImage}}"></image>
+                </view>
+                <view class="right-ad-item">
+                    <image bindtap="anonymousFunc11" class="ad-img" src="{{data[3].targetImage}}"></image>
+                </view>
+            </view>
+        </view>
+    </block>
+</template>
+<template name="renderCode7">
+    <block>
+        <view class="ad-wrap type-7" wx:key="key">
+            <image bindtap="anonymousFunc12" wx:key="configId" class="ad-img" src="{{item.$original.targetImage}}" wx:for="{{loopArray35}}" wx:for-item="item" wx:for-index="__index12" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}"></image>
+        </view>
+    </block>
+</template>

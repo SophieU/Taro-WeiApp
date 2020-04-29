@@ -3,7 +3,7 @@ import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Text, Navigator, Button, OpenData,Block } from '@tarojs/components'
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from "taro-ui"
 import { observer, inject } from '@tarojs/mobx'
-import { setInvitePhone } from './services'
+import { setInvitePhone, getUserBaseInfo } from './services'
 import {validateTel} from '../../utils/regexpValidate'
 // import { getUserBaseInfo } from './services'
 import './mine.scss'
@@ -43,6 +43,24 @@ class Mine extends  Component<{}, State>{
     this.setState({
       userInfo: userStore.wxUserInfo,
       apiUserInfo: userStore.apiUserInfo
+    })
+  }
+  // 真没必要，but...
+  onPullDownRefresh(){
+    const { userStore } = this.props
+    this.setState({
+      userInfo: userStore.wxUserInfo,
+      apiUserInfo: userStore.apiUserInfo
+    },()=>{
+      this.getBaseInfo()
+    })
+  }
+  getBaseInfo = ()=>{
+    getUserBaseInfo().then(res=>{
+      if(res.data.code===0){
+        Taro.stopPullDownRefresh()
+        this.props.userStore.setAPIUserInfo(res.data.data)
+      }
     })
   }
   toggleInvitePhoneModal= ()=>{
@@ -103,7 +121,7 @@ class Mine extends  Component<{}, State>{
           <View className='user-block'>
             {/*<View className='name'>{this.state.userInfo.nickName}</View>*/}
             <OpenData className='name' type="userNickName"></OpenData>
-            <View className='tel'>{this.state.apiUserInfo.userPhone}</View>
+            <View className='tel'>{this.state.apiUserInfo.username}</View>
           </View>
           <Navigator url='/pages/mine/pocket' className='my-pocket'>
             <Image className='pocket-ico' src={require('../../assets/imgs/tmp/pocket.png')}></Image>
@@ -134,14 +152,17 @@ class Mine extends  Component<{}, State>{
                 <View className='control-title'>我的邀请码</View>
                 <View className='control-desc'></View>
               </View>
-              <View onClick={this.toggleInvitePhoneModal} className='control-item'>
-                <View className='control-title'>设置邀请人</View>
-                <View className='control-desc'></View>
-              </View>
+              {
+                this.state.apiUserInfo.isShowInvitePage==='Y'? (<View onClick={this.toggleInvitePhoneModal} className='control-item'>
+                  <View className='control-title'>设置邀请人</View>
+                  <View className='control-desc'></View>
+                </View>):null
+              }
+
             </Block>
 
             {/*服务师傅*/}
-            {userType==='SERVICE_USER'?(
+            {this.state.apiUserInfo.isServiceUser==='Y'?(
               <Block>
                 <View className='control-divider'>接单管理</View>
                 <View className='control-item'>
@@ -157,7 +178,7 @@ class Mine extends  Component<{}, State>{
 
             {/*管理员端   */}
             {
-              userType==='ADMIN'?(
+              userType==='ADMIN'&&this.state.apiUserInfo.isServiceUser==='Y'?(
                 <Block>
                   <View className='control-divider'>接单管理</View>
                   <View className='control-item'>

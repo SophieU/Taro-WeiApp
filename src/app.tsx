@@ -63,7 +63,10 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '速达优服',
       navigationBarTextStyle: 'black',
-      navigationStyle:'custom'
+      navigationStyle:'custom',
+      enablePullDownRefresh:true,
+      onReachBottomDistance:30,
+      backgroundColor: "#f5f5f5"
     },
     tabBar: {
       borderStyle: 'white',

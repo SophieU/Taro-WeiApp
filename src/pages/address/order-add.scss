@@ -50,7 +50,7 @@
     display: flex;
   }
   .item-tag{
-    display: block;
+    display: inline-block;
     width: 30px;
     height: 15px;
     border: 1px solid #216EC6;
@@ -61,7 +61,7 @@
     border-radius: 2px;
     margin-left: 15px;
     position: relative;
-    top: 2px;
+    top: -2px;
   }
   .edit-btn{
     flex: 24px 0 0;
@@ -103,9 +103,12 @@
   }
   .btn-wrap{
     margin-top: 15px;
-    .save-btn{
+    .save-btn,.primary-btn{
       margin-bottom: 10px;
+      height: 44px;
+      line-height: 44px;
     }
+
   }
 }
 .at-checkbox::before, .at-checkbox::after{

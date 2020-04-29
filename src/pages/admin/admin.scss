@@ -1,9 +1,18 @@
+$color:#EA7744;
 .nothing{
   padding:15px;
   color: #999;
   text-align: center;
 }
-
+.phone{
+  color: $color;
+}
+.loading-refresh{
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: #999;
+}
 .order-lists{
   .item-header{
     display: flex;
@@ -15,9 +24,15 @@
       color: #999;
     }
     .header-type{
-      background: #E0F7F6;
-      color: #94E9D8;
+      background: #47C479;
+      color: #fff;
       padding: 4px 8px;
+      &.abnormal{
+        background:#f00;
+      }
+      &.waiting{
+        background: #EA7744;
+      }
     }
   }
 

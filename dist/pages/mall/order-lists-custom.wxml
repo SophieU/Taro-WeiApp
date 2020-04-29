@@ -1,0 +1,33 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page order-lists-custom">
+        <view class="order-lists">
+            <view class="order-item" wx:for="{{loopArray45}}" wx:for-item="item" wx:for-index="__index0">
+                <view class="order-top">
+                    <view class="order-title">订单{{item.$original.orderSn}}</view>
+                    <view class="order-status"><text>{{item.$original.orderStateName}}</text>
+                    </view>
+                </view>
+                <view class="order-body">
+                    <image class="order-img" src="{{item.$original.productImage}}"></image>
+                    <view class="order-info">
+                        <view class="item-row-flex">
+                            <view class="goods-title">{{item.$original.productName}}</view>
+                            <view class="goods-price">￥{{item.$original.orderAmount}}</view>
+                        </view>
+                        <view class="item-row">
+                            <view class="goods-tips">服务师傅：{{item.$original.repairServiceUserName}}({{item.$original.repairServiceUserPhone}})</view>
+                            <view class="goods-tips">上门时间：{{item.$original.hopeDoorTime}}</view>
+                            <view class="goods-tips">服务地址：{{item.$original.repairAddress}}</view>
+                        </view>
+                    </view>
+                </view>
+                <block wx:if="{{item.$original.orderStateName === '待付款'}}">
+                    <view class="control-foot">
+                        <button bindtap="anonymousFunc0" class="pay-btn primary-btn" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">联系师傅</button>
+                        <button bindtap="anonymousFunc1" class="pay-btn orange-btn" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}">现在付款</button>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+</block>

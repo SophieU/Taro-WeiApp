@@ -65,7 +65,7 @@ class Quote extends Component<{},State>{
         clearInterval(timer)
       }
       this.getPayResult()
-    },5000)
+    },3000)
     let timeOutTimer = setTimeout(()=>{
       clearTimeout(timeOutTimer)
       clearInterval(timer)
@@ -126,7 +126,15 @@ class Quote extends Component<{},State>{
         if(res.data.data==='Y'){
           Taro.showToast({
             title:'用户支付成功'
-          })
+          }).then(()=>setTimeout(()=>{
+            let { id, type} = this.state
+            if(type==='staff'){
+              Taro.navigateTo({url:'/pages/staff-order/detail?id='+id})
+            }else{
+              Taro.navigateTo({url:'/pages/mall/order-lists-staff'})
+            }
+
+          },1000))
         }
       }
     })
@@ -142,15 +150,6 @@ class Quote extends Component<{},State>{
        <Image className='qr-code' src={'data:image/png;base64,'+this.state.qrContent}></Image>
      </View>
       <View className='price-lists'>
-        <View className='price-divider'>费用清单</View>
-        {
-          this.state.payInfo.map(item=>{
-            return (<View className='price-item' key={item.type}>
-              <View className='item-left'>{item.name}</View>
-              <View className='item-right'><Text className='text-warm'>￥{item.amount}</Text></View>
-            </View>)
-          })
-        }
         <View className='price-divider'>费用明细</View>
         {
           this.state.detailLists.map(item=>{

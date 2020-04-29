@@ -1,70 +1,101 @@
-@import '../../styles/mixin.scss';
+//@import '../../styles/mixin.scss';
 .order-lists{
   padding:10px 15px;
-}
-.order-item{
-  @include card;
-  background:#fff;
-  border-radius: 4px;
-  padding:10px;
-  margin-bottom: 15px;
+  .order-item{
+    //@include card;
+    background:#fff;
+    border-radius: 4px;
+    padding:10px;
+    margin-bottom: 15px;
 
+    .order-top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 10px;
+      .order-title{
+        font-weight: bold;
+      }
+      .order-status{
+        color: #999;
+      }
+    }
+    .order-body{
+      display: flex;
+      .order-img{
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+        background:#f5f5f5;
+      }
+      .order-info{
+        flex: 1 0 0 ;
+      }
+      .goods-tips{
+        font-size: 12px;
+        color: #999;
+        margin-top: 3px;
+      }
+    }
+    .item-row-flex{
+      display: flex;
+      font-size: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .goods-price{
+        color: #EA7744;
+        min-width: 40px;
+      }
+    }
+    .control-foot{
+      padding:5px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .pay-btn{
+        flex: 40% 0 0;
+      }
+    }
+  }
+}
+
+.order-lists-custom{
+  padding-top: 35px;
+  .fix-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
   .order-top{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
-    margin-bottom: 10px;
-    .order-title{
-      font-weight: bold;
-    }
-    .order-status{
-      color: #999;
-    }
-  }
-  .order-body{
-    display: flex;
-    .order-img{
-      width: 100px;
-      height: 100px;
-      margin-right: 10px;
-      background:#f5f5f5;
-    }
-    .order-info{
-      flex: 1 0 0 ;
-    }
-    .goods-tips{
+    .order-state{
       font-size: 12px;
-      color: #999;
-      margin-top: 3px;
+      color:#EA7744;
     }
   }
-  .item-row-flex{
-    display: flex;
-    font-size: 14px;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    .goods-price{
-      color: $color;
-      min-width: 40px;
+  .order-item{
+    .order-body{
+      border-top: 1px solid #efefef;
+      padding-top: 15px;
+      display: block;
+    }
+    .user-row{
+      padding:10px 0;
+      margin-top: 10px;
+      border-top: 1px solid #efefef;
+      border-bottom: 1px solid #efefef;
+    }
+    .info-row{
+      font-size: 12px;
+      color: #666;
     }
   }
-  .control-foot{
-    padding:5px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    .pay-btn{
-      flex: 40% 0 0;
-    }
-  }
-}
-.order-lists-custom{
-  .order-body{
-    border-top: 1px solid #efefef;
-    padding-top: 15px;
-  }
+
   .item-row{
     display: flex;
     font-size: 12px;
@@ -73,7 +104,8 @@
       margin-top: 5px;
     }
     .price{
-      font-size: 14px;
+      color: #999;
+      font-size: 12px;
       margin-top: 5px;
     }
   }

@@ -1,0 +1,8 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="qr-code-page">
+        <image class="qr-code" src="{{qrCodeUrl}}"></image>
+        <view class="text">扫一扫加入速达优服</view>
+        <navigator url="/pages/mine/invite-history" class="invite-link">我的邀请记录</navigator>
+        <button bindtap="saveCodeImg" class="save-btn">保存图片</button>
+    </view>
+</block>

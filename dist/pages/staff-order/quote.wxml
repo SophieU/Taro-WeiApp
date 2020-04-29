@@ -1,0 +1,25 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page quote-page">
+        <view class="top-price" wx:key="id" wx:for="{{repairOrderOfferPlanVoList}}" wx:for-item="item" wx:for-index="_anonIdx2">
+            <view class="price-left">{{item.planName}}</view>
+            <view class="price-right">￥ {{item.amount}}</view>
+        </view>
+        <view class="other-price">
+            <view class="other-title">人工服务费</view>
+            <view class="other-row">
+                <input class="input-fee" type="number" placeholder="请输入人工服务费" value="{{servicePrice}}" bindinput="filterInput" bindchange="anonymousFunc0" />
+            </view>
+        </view>
+        <view class="other-price">
+            <view class="other-title">材料费</view>
+            <view class="other-row">
+                <input class="input-fee" type="number" placeholder="请输入材料费" value="{{materialsPrice}}" bindinput="filterInput" bindchange="anonymousFunc1" />
+            </view>
+        </view>
+        <view class="page-foot">
+            <view class="price-total"><text>总计：</text><text class="text-warm">￥{{totalAmount + servicePrice + materialsPrice}}</text>
+            </view>
+            <button bindtap="submitPlan" class="btn submit-btn">确认</button>
+        </view>
+    </view>
+</block>

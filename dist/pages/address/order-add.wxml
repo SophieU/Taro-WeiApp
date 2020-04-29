@@ -1,0 +1,28 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page">
+        <block>
+            <block wx:if="{{addressLists.length > 0}}">
+                <view class="add-lists-wrap">
+                    <view class="add-lists">
+                        <view class="add-item" wx:key="index" wx:for="{{loopArray411}}" wx:for-item="item" wx:for-index="index">
+                            <view class="item-info">
+                                <view class="item-text" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">{{item.$original.areaInfo}} {{item.$original.address}}
+                                    <block wx:if="{{item.$original.id === defaultId}}"><text class="item-tag">默认</text>
+                                    </block>
+                                </view>
+                            </view>
+                            <image class="edit-btn" src="{{item.$loopState__temp2}}" bindtap="anonymousFunc1" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}"></image>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="no-address">
+                    <image class="no-address-img" src="{{anonymousState__temp3}}"></image>
+                    <view class="no-address-text">还未添加地址~</view>
+                </view>
+            </block>
+        </block>
+        <button bindtap="anonymousFunc2" class="add-address">添加地址</button>
+    </view>
+</block>

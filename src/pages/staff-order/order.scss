@@ -1,6 +1,7 @@
-.page{
+@import "../../styles/mixin";
+.staff-order-page{
   min-height: 100vh;
-  //padding-top: 32px;
+  padding-top: 32px;
   background:#f5f5f5;
   .tabs-header{
     height: 32px;
@@ -10,7 +11,9 @@
     right: 0;
     z-index: 999;
   }
-
+  .order-item{
+    @include card;
+  }
 }
 .order-row{
   display: flex;
@@ -55,6 +58,9 @@
     .price-right{
       color: #EA7744;
     }
+  }
+  .input-fee{
+    padding: 0 15px;
   }
   .other-price{
     .other-title{
@@ -123,9 +129,7 @@
         width: 80px;
         text-align: left;
       }
-      .item-info{
-        color: #333;
-      }
+
     }
   }
   .page-foot{
@@ -140,8 +144,24 @@
     align-items: center;
     padding: 0 15px;
     box-shadow: 0 0 10px 1px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    .foot-item{
+      flex:1 0 0;
+      color: #EA7744;
+      font-size: 14px;
+    }
     .btn-group{
+      flex:1 0 0;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-right: 10px;
+      &:last-child{
+        margin-right: 0;
+      }
+      .btn{
+        flex:1 0 0;
+      }
       .submit-btn{
         min-width:80px;
         margin: 0;
@@ -159,6 +179,17 @@
       }
     }
 
+  }
+  .at-toast .toast-body{
+    min-width: 128px;
+    padding: 10px;
+  }
+  .at-toast .toast-body-content__img-item{
+    width: 30px;
+    height: 30px;
+  }
+  .at-toast .toast-body.at-toast__body--loading{
+    padding-bottom: 10px;
   }
 }
 

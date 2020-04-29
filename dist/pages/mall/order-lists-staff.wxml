@@ -1,0 +1,56 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page order-lists-custom">
+        <at-tabs compid="{{$compid__58}}"></at-tabs>
+        <view class="order-lists">
+            <view class="order-item" wx:key="id" wx:for="{{loopArray48}}" wx:for-item="item" wx:for-index="__index0">
+                <view class="order-top">
+                    <view class="order-title">{{item.$original.orderSn}}</view>
+                    <block wx:if="{{item.$original.orderStateName}}">
+                        <view class="order-state">{{item.$original.orderStateName}}</view>
+                    </block>
+                </view>
+                <view class="order-body">
+                    <view class="item-row">
+                        <image class="order-img" src="{{item.$original.productImage}}"></image>
+                        <view class="goods-detail">
+                            <view class="goods-title">{{item.$original.productName}}</view>
+                            <view class="goods-time">上门时间：{{item.$original.hopeDoorTime}}</view>
+                            <view class="goods-time">下单时间：{{item.$original.addTime}}</view>
+                            <view class="price">订单价格：<text class="text-warm">￥ {{item.$original.orderAmount}}</text>
+                            </view>
+                            <view class="price">商品价格：<text class="text-warm">￥ {{item.$original.productAmount}}</text>
+                            </view>
+                            <view class="price">服务费：<text class="text-warm">￥ {{item.$original.serviceAmount}}</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="user-row">
+                        <view class="info-row">用户姓名：{{item.$original.username}}</view>
+                        <view bindtap="anonymousFunc0" class="info-row" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">用户电话：{{item.$original.userPhone}}</view>
+                        <view class="info-row">用户地址：{{item.$original.repairAddress}}</view>
+                        <block wx:if="{{item.$original.payTime}}">
+                            <view class="info-row">支付时间：{{item.$original.payTime}}</view>
+                        </block>
+                    </view>
+                </view>
+                <view class="btn-group">
+                    <block wx:if="{{current === 0}}">
+                        <button bindtap="anonymousFunc1" class="btn orange-btn" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}">抢单</button>
+                    </block>
+                    <block wx:if="{{current === 1}}">
+                        <block>
+                            <button class="btn primary-btn" bindtap="anonymousFunc2" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey3}}">收款</button>
+                            <block wx:if="{{item.$original}}">
+                                <button class="btn orange-btn" bindtap="anonymousFunc3" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey4}}">报价</button>
+                            </block>
+                        </block>
+                    </block>
+                </view>
+            </view>
+        </view>
+        <at-action-sheet compid="{{$compid__59}}">
+            <at-action-sheet-item compid="{{$compid__60}}">用户端支付</at-action-sheet-item>
+            <at-action-sheet-item compid="{{$compid__61}}">二维码收款</at-action-sheet-item>
+        </at-action-sheet>
+    </view>
+</block>

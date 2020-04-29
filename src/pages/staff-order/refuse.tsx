@@ -16,11 +16,14 @@ class Refuse extends Component{
     reasonLists:[],
     requestRadioId:'',
     reasonId:'',
+    orderSn:'',
+    repaireType:'',
+    orderState:'',
   }
   componentWillMount(){
-    let id = this.$router.params.id
+    let {id,orderSn,orderState,repaireType} = this.$router.params
     this.setState({
-      id
+      id,orderSn,orderState,repaireType
     },()=>{
       this.getRefuseRequest()
       this.getRefuseReason()
@@ -60,15 +63,13 @@ class Refuse extends Component{
       repairOrderId:id,
       statementRequestId:requestRadioId,
       statementReasonId:reasonId,
-      masterId:Taro.getStorageSync('userId')
+      masterId:Taro.getStorageSync('masterInfo').masterId
     }
-
+    Taro.showLoading({title:'提交中'})
     submitRefuse(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
-        Taro.showToast({title:'申述提交成功',icon:'none'}).then(()=>{
-          Taro.reLaunch({url:'/pages/mine/mine'})
-        })
-
+        Taro.showToast({title:'申述提交成功',icon:'none'}).then(()=>setTimeout(()=>Taro.reLaunch({url:'/pages/mine/mine'}),1000))
       }else{
         Taro.showToast({title:'申述提交失败'+res.data.msg,icon:'none'})
       }
@@ -79,20 +80,19 @@ class Refuse extends Component{
       <View className='info-wrap'>
         <View className='wrap-header'>
           <View className='info-title'>服务信息</View>
-          <View className='info-right'>2019-10-10 11：11</View>
         </View>
         <View className='info-body'>
           <View className='info-row'>
             <View className="row-title">工单编号</View>
-            <View className="row-content">1234567894645645789</View>
+            <View className="row-content">{this.state.orderSn}</View>
           </View>
           <View className='info-row'>
             <View className="row-title">工单状态</View>
-            <View className="row-content"><Text className='text-warm'>已上门</Text></View>
+            <View className="row-content"><Text className='text-warm'>{this.state.orderState}</Text></View>
           </View>
           <View className='info-row'>
             <View className="row-title">报修类别</View>
-            <View className="row-content">用气服务</View>
+            <View className="row-content">{this.state.repaireType}</View>
           </View>
         </View>
       </View>

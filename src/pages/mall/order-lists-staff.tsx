@@ -19,12 +19,26 @@ class OrderListsStaff extends  Component{
       current: 0,
       pageNo:1,
       pageSize:5,
+      hasNextPage:true,
       lists:[],
       showAction:false,
       id:'',
     }
   }
   componentWillMount(){
+    this.getLists()
+  }
+  onPullDownRefresh(){
+    this.setState({
+      pageNo:1,
+      pageSize:5,
+      lists:[],
+      hasNextPage:true
+    },()=>{
+      this.getLists()
+    })
+  }
+  onReachBottom(){
     this.getLists()
   }
   // 抢单
@@ -52,7 +66,7 @@ class OrderListsStaff extends  Component{
     })
   }
   getLists=()=>{
-    let {current,pageNo,pageSize} = this.state
+    let {current,pageNo,pageSize,hasNextPage} = this.state
     const masterInfo = Taro.getStorageSync('masterInfo')
     let params = {}
     switch (current) {
@@ -81,9 +95,16 @@ class OrderListsStaff extends  Component{
       pageSize,
       userId:Taro.getStorageSync('userId')
     }
+    if(!hasNextPage){
+      Taro.showToast({title:'没有更多了',icon:'none'})
+      return
+    }
+    Taro.showNavigationBarLoading()
     Taro.showLoading({title:'加载中'})
     customOrderLists(query,params).then(res=>{
       Taro.hideLoading()
+      Taro.hideNavigationBarLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(prevState=>{
@@ -100,7 +121,8 @@ class OrderListsStaff extends  Component{
     this.setState({
       current: index,
       pageNo:1,
-      hasNextPage:true
+      hasNextPage:true,
+      lists:[]
     },()=>{
       this.getLists()
     })
@@ -140,10 +162,15 @@ class OrderListsStaff extends  Component{
   setPrice= (item)=>{
 
   }
+  callPhone= (tel)=>{
+    Taro.makePhoneCall({
+      phoneNumber:tel
+    })
+  }
   render(){
     return (
       <View className='page order-lists-custom'>
-        <AtTabs current={this.state.current} tabList={[
+        <AtTabs className='fix-header' current={this.state.current} tabList={[
           { title: '抢单' },
           { title: '待服务' },
           { title: '已完成' },
@@ -155,6 +182,7 @@ class OrderListsStaff extends  Component{
               return (<View className='order-item' key={item.id}>
                 <View className='order-top'>
                   <View className='order-title'>{item.orderSn}</View>
+                  {item.orderStateName?<View className='order-state'>{item.orderStateName}</View>:null}
                 </View>
                 <View className='order-body'>
                   <View className='item-row'>
@@ -163,8 +191,16 @@ class OrderListsStaff extends  Component{
                       <View className='goods-title'>{item.productName}</View>
                       <View className='goods-time'>上门时间：{item.hopeDoorTime}</View>
                       <View className='goods-time'>下单时间：{item.addTime}</View>
-                      <View className='price'>价格：<Text className='text-warm'>￥ {item.productAmount}</Text></View>
+                      <View className='price'>订单价格：<Text className='text-warm'>￥ {item.orderAmount}</Text></View>
+                      <View className='price'>商品价格：<Text className='text-warm'>￥ {item.productAmount}</Text></View>
+                      <View className='price'>服务费：<Text className='text-warm'>￥ {item.serviceAmount}</Text></View>
                     </View>
+                  </View>
+                  <View className="user-row">
+                    <View className="info-row">用户姓名：{item.username}</View>
+                    <View onClick={()=>this.callPhone(item.userPhone)} className="info-row">用户电话：{item.userPhone}</View>
+                    <View className="info-row">用户地址：{item.repairAddress}</View>
+                    {item.payTime?<View className="info-row">支付时间：{item.payTime}</View>:null}
                   </View>
                 </View>
                 <View className='btn-group'>

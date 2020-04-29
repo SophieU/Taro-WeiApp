@@ -5,7 +5,7 @@ import {inject, observer } from '@tarojs/mobx'
 import { AtCheckbox } from 'taro-ui'
 import {getLocationAuth} from '../../utils/common'
 import {validateTel, validateEmpty} from '../../utils/regexpValidate'
-import {saveAdd, defaultSet} from './service'
+import {saveAdd, defaultSet, deleteAdd} from './service'
 import './order-add.scss'
 
 type State = {
@@ -45,7 +45,6 @@ class AddEdit extends Component<{},State>{
     }
   }
   componentWillMount(){
-    console.log(this.props)
     let id = this.$router.params.id
     if(id!=='undefined'){
       this.getEditAddInfo(id)
@@ -172,10 +171,29 @@ class AddEdit extends Component<{},State>{
       }
     })
   }
+  deleteHandler=()=>{
+    let id = this.state.id
+    Taro.showModal({
+      title:'温馨提示',
+      content:'您确定要删除此地址吗？',
+      success:(res)=>{
+        if(res.confirm){
+          deleteAdd(id).then(res=>{
+            if(res.data.code===0){
+              Taro.showToast({title:'删除成功',icon:'none'}).then(()=>setTimeout(()=>{
+                Taro.navigateBack({delta:-1})
+              },1000))
+            }
+          })
+        }
+      }
+    })
+
+  }
   render(){
     return (<View className='page form-page' style={{background: '#fff'}}>
         <View className='form-item'>
-          <View className='form-label'>收货地址: </View>
+          <View className='form-label'>地址: </View>
           <View className='form-control picker'>
             <Input onClick={this.goAddress} className='picker-input' disabled={true} placeholder='点击选择' value={this.state.areaInfo}></Input>
             <Icon className='picker-ico' size='20' type='search' />
@@ -210,7 +228,7 @@ class AddEdit extends Component<{},State>{
       </View>
         <View className='btn-wrap'>
           <Button onClick={this.saveSet} className='lang-btn blue-btn save-btn'>保存</Button>
-          <Button className='lang-btn'>删除</Button>
+          <Button onClick={this.deleteHandler} className='lang-btn primary-btn'>删除</Button>
         </View>
     </View>)
   }

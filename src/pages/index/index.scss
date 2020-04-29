@@ -70,20 +70,30 @@
 
 /* start： icon-lists */
 .service-type{
-  display: flex;
+  width: 100%;
+  //display: flex;
   background: #fff;
-  justify-content: flex-start;
-  align-items: center;
+  //justify-content: flex-start;
+  //flex-wrap:nowrap;
+  text-align: left;
+  white-space: nowrap;
+  //align-items: center;
   padding: 15px;
   margin-bottom: 10px;
+  box-sizing: border-box;
   .service-type-item{
-    flex: 25% 0 0;
-    max-width: 69px;
+    display: inline-block;
+    //flex: 70px 0 0;
+    width: 69px;
+    //max-width: 69px;
     text-align: center;
+    margin-bottom: 5px;
     .item-icon{
       width: 44px;
       height: 44px;
       display: block;
+      border-radius: 100%;
+      overflow: hidden;
       margin: 0 auto;
       margin-bottom: 10px;
     }

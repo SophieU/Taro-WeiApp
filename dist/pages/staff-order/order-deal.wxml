@@ -1,0 +1,152 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page detail-page">
+        <view class="info-wrap">
+            <view class="detail-block">
+                <view class="detail-title">工单信息</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="item-label">报修时间</view>
+                        <view class="item-info">2018/08/02 20：00</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">工单单号</view>
+                        <view class="item-info">6789897945845645</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">工单状态</view>
+                        <view class="item-info">已完成</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">服务网点</view>
+                        <view class="item-info">24小区服务网点</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">联系电话</view>
+                        <view class="item-info">876865654</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail-block">
+                <view class="detail-title">师傅信息</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="item-label">师傅姓名</view>
+                        <view class="item-info">张师傅</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">联系电话</view>
+                        <view class="item-info">136****6666</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail-block">
+                <view class="detail-title">基础信息</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="item-label">维修区域</view>
+                        <view class="item-info">24小区</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">详细地址</view>
+                        <view class="item-info">3-3-2</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">联系电话</view>
+                        <view class="item-info">13627381624</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">报修类别</view>
+                        <view class="item-info">用气服务（上门费10.00元）</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail-block">
+                <view class="detail-title">故障原因</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="item-label">故障</view>
+                        <view class="item-info">软管老化</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail-block price-block">
+                <view class="detail-title">费用清单</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="price-label">
+                            <view class="item-label">上门服务费</view>
+                        </view>
+                        <view class="item-info">￥20.00</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="price-label">
+                            <view class="label-title">软管更换</view>
+                            <view class="label-tips">￥ 20.00</view>
+                        </view>
+                        <view class="item-label">x1</view>
+                        <view class="item-info">￥20.00</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="price-label">
+                            <view class="label-title">软管(质保30天)</view>
+                            <view class="label-tips">￥ 20.00</view>
+                        </view>
+                        <view class="item-label">x1</view>
+                        <view class="item-info">￥50.00</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="page-foot">
+            <view class="price-total"><text class="text-grey">总计：</text><text class="text-warm">￥60.00</text>
+            </view>
+            <view>
+                <block>
+                    <button class="btn default-btn">用户端支付</button>
+                    <button class="btn primary-btn">二维码收款</button>
+                </block>
+            </view>
+        </view>
+    </view>
+</block>
+<template name="renderFoot">
+    <block>
+        <block wx:if="{{status === 'waitPay'}}">
+            <view class="page-foot">
+                <view class="ico-wrap">
+                    <view class="ico-item">
+                        <image class="foot-ico" src="{{_$anonymousState__temp}}"></image>
+                        <view>联系网点</view>
+                    </view>
+                    <view class="ico-item">
+                        <image class="foot-ico" src="{{_$anonymousState__temp2}}"></image>
+                        <view>联系师傅</view>
+                    </view>
+                </view>
+                <button class="submit-btn">支付订单： ￥800.00</button>
+            </view>
+        </block>
+        <block wx:elif="{{status === 'payed'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥1.00</view>
+                <button bindtap="handleCancel" class="submit-btn line-btn">取消报修</button>
+                <button class="submit-btn">联系网点</button>
+            </view>
+        </block>
+        <block wx:elif="{{status === 'waitOrder'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥1.00</view>
+                <button class="submit-btn">联系师傅</button>
+            </view>
+        </block>
+        <block wx:elif="{{status === 'cancled'}}">
+            <view></view>
+        </block>
+        <block wx:elif="{{status === 'finished'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥1.00</view>
+                <button class="submit-btn">评价详情</button>
+            </view>
+        </block>
+    </block>
+</template>

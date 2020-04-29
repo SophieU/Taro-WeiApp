@@ -1,0 +1,67 @@
+<block wx:if="{{$taroCompReady}}">
+    <scroll-view class="page-scroll" scroll-y="{{true}}" bindscrolltolower="scrollToBottom">
+        <view class="top-info">
+            <view class="info-row">
+                <view class="money-title">我的余额:</view>
+                <view class="money">￥ {{wallet.money}}</view>
+                <button bindtap="handleWithdrawBtn" class="withdraw">提现</button>
+            </view>
+            <view class="info-row fixed-right">
+                <view class="money-title">冻结金额：</view>
+                <view class="freez-money">￥ {{wallet.frozenAmount}}</view>
+            </view>
+        </view>
+        <view class="history">
+            <at-tabs compid="{{$compid__643}}">
+                <at-tabs-pane compid="{{$compid__644}}">
+                    <view class="history-lists">
+                        <view class="history-item" wx:key="index" wx:for="{{flowLists}}" wx:for-item="item" wx:for-index="index">
+                            <view class="left">
+                                <view class="title">{{item.changeIntro}}</view>
+                                <view class="time">{{item.createTime}}</view>
+                            </view>
+                            <view class="{{item.changeType === 1 ? 'right add' : 'right decrement'}}">{{item.changeType === 1 ? '+' : '-'}}{{item.changeNum}}元</view>
+                        </view>
+                    </view>
+                </at-tabs-pane>
+                <at-tabs-pane compid="{{$compid__645}}">
+                    <view class="history-lists">
+                        <view class="history-item" wx:key="index" wx:for="{{withdrawLists}}" wx:for-item="item" wx:for-index="index">
+                            <view class="left">
+                                <view class="title">单号:{{item.withdrawSn}}</view>
+                                <view class="time">{{item.createTime}}</view>
+                                <view class="status">{{item.withdrawRemark}}</view>
+                            </view>
+                            <view class="right">
+                                <view class="status">{{item.orderStateName}}</view>
+                                <view class="decrement">-{{item.amount}}元</view>
+                            </view>
+                        </view>
+                    </view>
+                </at-tabs-pane>
+            </at-tabs>
+        </view>
+        <at-modal compid="{{$compid__646}}">
+            <at-modal-header>温馨提醒</at-modal-header>
+            <at-modal-content>
+                <view class="pwd-tips">您还未设置密码，请先设置密码</view>
+                <at-input compid="{{$compid__647}}"></at-input>
+            </at-modal-content>
+            <at-modal-action>
+                <button bindtap="anonymousFunc0">取消</button>
+                <button bindtap="handlePwd">确定</button>
+            </at-modal-action>
+        </at-modal>
+        <at-modal compid="{{$compid__648}}">
+            <at-modal-header>提现</at-modal-header>
+            <at-modal-content>
+                <at-input compid="{{$compid__649}}"></at-input>
+                <at-input compid="{{$compid__650}}"></at-input>
+            </at-modal-content>
+            <at-modal-action>
+                <button bindtap="anonymousFunc3">取消</button>
+                <button bindtap="handleWithdraw">确定</button>
+            </at-modal-action>
+        </at-modal>
+    </scroll-view>
+</block>

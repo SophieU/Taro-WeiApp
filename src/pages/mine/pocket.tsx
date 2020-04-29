@@ -76,7 +76,9 @@ class Mine extends  Component{
   }
   // 钱包信息
   getInfo=()=>{
+    Taro.showLoading({title:''})
     getWalletInfo().then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let data = res.data.data
         this.setState({
@@ -142,12 +144,13 @@ class Mine extends  Component{
     if(type==='pwd'){
       this.setState({
         showModalPwd:false,
-        withdrawPwd:''
+        withdrawPwd:'',
       })
     }else if(type==='widthdraw'){
       this.setState({
         showModal:false,
-        withdrawMoney:''
+        withdrawMoney:'',
+        withdrawPwdForm:'',
       })
     }
 
@@ -194,7 +197,9 @@ class Mine extends  Component{
           hasNextPageWith:true,
           pageNo:1,
           flowLists:[],
-          withdrawLists:[]
+          withdrawLists:[],
+          withdrawPwdForm:'',
+          withdrawMoney:'',
         },()=>{
           this.toggleModalStatus('widthdraw')
           this.getInfo()
@@ -212,7 +217,8 @@ class Mine extends  Component{
   // 切换tab
   handleTabClick=(value)=>{
     this.setState({
-      current: value
+      current: value,
+      showModalPwd:false
     })
   }
   // 提现密码设置
@@ -308,7 +314,7 @@ class Mine extends  Component{
           </AtTabs>
         </View>
         {/*弹窗-设置密码*/}
-        <AtModal className='pwd-modal' isOpened={this.state.showModalPwd}>
+        <AtModal closeOnClickOverlay={false} className='pwd-modal' isOpened={this.state.showModalPwd}>
           <AtModalHeader>温馨提醒</AtModalHeader>
           <AtModalContent>
            <View className='pwd-tips'>您还未设置密码，请先设置密码</View>

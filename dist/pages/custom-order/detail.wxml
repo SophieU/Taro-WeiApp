@@ -1,0 +1,180 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page detail-page">
+        <view class="info-wrap">
+            <view class="detail-block">
+                <view class="detail-title">工单信息</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="item-label">报修时间</view>
+                        <view class="item-info">{{baseInfo.createTime}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">工单单号</view>
+                        <view class="item-info">{{baseInfo.orderSn}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">工单状态</view>
+                        <view class="item-info">{{baseInfo.orderStateName}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">服务网点</view>
+                        <view class="item-info">{{baseInfo.stationName}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">网点电话</view>
+                        <view class="item-info">{{baseInfo.stationPhone}}</view>
+                    </view>
+                </view>
+            </view>
+            <block wx:if="{{!!dispatchInfo}}">
+                <view class="detail-block">
+                    <view class="detail-title">师傅信息</view>
+                    <view class="detail-info">
+                        <view class="info-item">
+                            <view class="item-label">师傅姓名</view>
+                            <view class="item-info">{{dispatchInfo.masterName}}</view>
+                        </view>
+                        <view class="info-item">
+                            <view class="item-label">联系电话</view>
+                            <view class="item-info"><text class="link-text" bindtap="anonymousFunc0">{{dispatchInfo.masterPhone}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <view class="detail-block">
+                <view class="detail-title">基础信息</view>
+                <view class="detail-info">
+                    <view class="info-item">
+                        <view class="item-label">维修区域</view>
+                        <view class="item-info">{{baseInfo.repairRegionName}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">详细地址</view>
+                        <view class="item-info">{{baseInfo.address}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">联系电话</view>
+                        <view class="item-info">{{baseInfo.userPhone}}</view>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">报修类别</view>
+                        <view class="item-info">{{baseInfo.repairCategoryName}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail-block price-block">
+                <view class="detail-title">费用清单</view>
+                <view class="detail-info">
+                    <view wx:key="id" class="info-item" wx:for="{{repairOrderAmountVos}}" wx:for-item="item" wx:for-index="_anonIdx2">
+                        <view class="price-label">
+                            <view class="item-label">{{item.name}}</view>
+                        </view>
+                        <view class="item-info">￥{{item.amount}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="detail-block price-block">
+                <view class="detail-title">费用明细</view>
+                <view class="detail-info">
+                    <view wx:key="id" class="info-item" wx:for="{{repairOrderOfferPlanVoList}}" wx:for-item="item" wx:for-index="_anonIdx4">
+                        <view class="price-label">
+                            <view class="item-label">{{item.planName}}</view>
+                        </view>
+                        <view class="item-info">￥{{item.amount}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <template is="renderFoot" data="{{...anonymousState__temp}}"></template>
+        <at-modal compid="{{$compid__94}}">
+            <at-modal-header>取消原因</at-modal-header>
+            <at-modal-content>
+                <at-radio compid="{{$compid__95}}"></at-radio>
+            </at-modal-content>
+            <at-modal-action>
+                <button bindtap="handleCancelModal">取消</button>
+                <button bindtap="handleConfirmModal">确定</button>
+            </at-modal-action>
+        </at-modal>
+        <at-modal compid="{{$compid__96}}">
+            <at-modal-header>评价订单</at-modal-header>
+            <at-modal-content>
+                <at-tabs compid="{{$compid__97}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray66}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__91}}">
+                        <view class="comment-tag">
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__90}}">{{child.$original.name}}</at-tag>
+                        </view>
+                    </at-tabs-pane>
+                </at-tabs>
+            </at-modal-content>
+            <at-modal-action>
+                <button bindtap="cancelComment">取消</button>
+                <button bindtap="confirmComment">确定</button>
+            </at-modal-action>
+        </at-modal>
+        <at-modal compid="{{$compid__98}}">
+            <at-modal-header>评价详情</at-modal-header>
+            <at-modal-content>
+                <at-tabs compid="{{$compid__99}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray67}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__93}}">
+                        <view class="comment-tag">
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__92}}">{{child.$original.name}}</at-tag>
+                        </view>
+                    </at-tabs-pane>
+                </at-tabs>
+            </at-modal-content>
+            <at-modal-action>
+                <button bindtap="anonymousFunc2">关闭</button>
+            </at-modal-action>
+        </at-modal>
+    </view>
+</block>
+<template name="renderFoot">
+    <block>
+        <block wx:if="{{baseInfo.orderState === 'STAY_PAY'}}">
+            <view class="page-foot">
+                <view class="ico-wrap">
+                    <view class="ico-item">
+                        <image class="foot-ico" src="{{_$anonymousState__temp}}"></image>
+                        <view bindtap="anonymousFunc3">联系网点</view>
+                    </view>
+                    <view class="ico-item">
+                        <image class="foot-ico" src="{{_$anonymousState__temp2}}"></image>
+                        <view bindtap="anonymousFunc4">联系师傅</view>
+                    </view>
+                </view>
+                <button bindtap="startPay" class="submit-btn">支付订单： ￥{{waitPay}}</button>
+            </view>
+        </block>
+        <block wx:elif="{{baseInfo.orderState === 'ASSIGNED'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥{{payed}}</view>
+                <button bindtap="handleCancelModal" class="submit-btn line-btn">取消报修</button>
+                <button class="submit-btn" bindtap="anonymousFunc5">联系网点</button>
+            </view>
+        </block>
+        <block wx:elif="{{baseInfo.orderState === 'WAIT_DOOR'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥{{payed}}</view>
+                <button class="submit-btn" bindtap="anonymousFunc6">联系师傅</button>
+            </view>
+        </block>
+        <block wx:elif="{{baseInfo.orderState === 'CANCEL'}}">
+            <view></view>
+        </block>
+        <block wx:elif="{{baseInfo.orderState === 'FINISH'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥{{payed}}</view>
+                <block>
+                    <block wx:if="{{commentInfo.hasComment === 'N'}}">
+                        <button bindtap="anonymousFunc7" class="submit-btn">评价订单</button>
+                    </block>
+                    <block wx:else>
+                        <button bindtap="anonymousFunc8" class="submit-btn">评价详情</button>
+                    </block>
+                </block>
+            </view>
+        </block>
+    </block>
+</template>

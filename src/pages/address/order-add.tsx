@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {inject, observer } from '@tarojs/mobx'
 import {View, Image, Button} from '@tarojs/components'
-import { getAddLists, deleteAdd, getDefaultAdd } from './service'
+import { getAddLists, getDefaultAdd } from './service'
 import './order-add.scss'
 
 
@@ -34,7 +34,6 @@ class OrderAdd extends Component<AddProp,AddState>{
       fromPage:'',
     }
   }
-  componentWillMount(){}
   componentDidShow(){
     let from = this.$router.params.from
     this.setState({
@@ -48,14 +47,7 @@ class OrderAdd extends Component<AddProp,AddState>{
       url:`/pages/address/add-edit?id=${id}`
     })
   }
-  deleteHandler=(id)=>{
-    deleteAdd(id).then(res=>{
-      if(res.data.code===0){
-        Taro.showToast({title:'删除成功',icon:'none'})
-        this.getOrderLists()
-      }
-    })
-  }
+
   getDefault= ()=>{
     getDefaultAdd().then(res=>{
       if(res.data.code===0){
@@ -68,7 +60,9 @@ class OrderAdd extends Component<AddProp,AddState>{
     })
   }
   getOrderLists = ()=>{
+    Taro.showLoading({title:'加载地址列表中'})
     getAddLists().then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         this.setState({
           addressLists:res.data.data
@@ -101,11 +95,14 @@ class OrderAdd extends Component<AddProp,AddState>{
           {this.state.addressLists.map((item,index)=>{
             return ( <View className='add-item' key={index} >
               <View className="item-info">
-                <View className='item-text' onClick={()=>this.handleClickAdd(item)}>{item.areaInfo} {item.address}</View>
-                {item.id===this.state.defaultId?<View className='item-tag'>默认</View>:null}
+                <View className='item-text' onClick={()=>this.handleClickAdd(item)}>
+                  {item.areaInfo} {item.address}
+                  {item.id===this.state.defaultId?<Text className='item-tag'>默认</Text>:null}
+                </View>
+
               </View>
               <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')} onClick={()=>this.goEdit(item.id)}></Image>
-              <Image className='edit-btn' src={require('../../assets/imgs/tmp/delete.png')} onClick={()=>this.deleteHandler(item.id)}></Image>
+              {/*<Image className='edit-btn' src={require('../../assets/imgs/tmp/delete.png')} onClick={()=>this.deleteHandler(item.id)}></Image>*/}
             </View>)
           })}
         </View>

@@ -1,0 +1,86 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page">
+        <block wx:if="{{bannerLists.length > 0}}">
+            <swiper class="order-banner" circular="{{true}}" autoplay="{{true}}">
+                <swiper-item wx:key="id" wx:for="{{loopArray58}}" wx:for-item="item" wx:for-index="__index0">
+                    <image bindtap="anonymousFunc0" class="order-banner" src="{{item.$original.imgName}}" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
+                </swiper-item>
+            </swiper>
+        </block>
+        <view class="service-info">
+            <view class="info-item">
+                <image class="info-ico" src="{{anonymousState__temp}}"></image><text class="info-title">服务类型</text>
+                <view class="info-content">{{serviceContent.parentName}}</view>
+            </view>
+            <view class="info-item">
+                <image class="info-ico" src="{{anonymousState__temp2}}"></image><text class="info-title">服务项目</text>
+                <view class="info-content">{{serviceContent.name}}</view>
+            </view>
+            <view class="info-item">
+                <image class="info-ico" src="{{anonymousState__temp3}}"></image><text class="info-title">服务说明</text>
+                <view class="info-content">{{serviceContent.description}}</view>
+            </view>
+            <view class="info-item">
+                <image class="info-ico" src="{{anonymousState__temp4}}"></image><text class="info-title">服务收费</text>
+                <view class="info-content">服务费{{serviceContent.serviceFee}}元起</view>
+            </view>
+            <block wx:if="{{!(serviceContent.hasDtdServiceFee !== 'Y')}}">
+                <view class="info-item">
+                    <image class="info-ico" src="{{anonymousState__temp5}}"></image><text class="info-title">上门费</text>
+                    <view class="info-content">服务费 {{serviceContent.dtdServiceFee}}元起
+                        <block wx:if="{{serviceContent.isPrepayDtd === 'Y'}}"><text class="little-tips">(需要预付)</text>
+                        </block>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <view class="service-form">
+            <view class="form-item">
+                <image class="form-ico" src="{{anonymousState__temp6}}"></image><text class="form-label">服务地址</text>
+                <navigator class="form-nav info-content" url="/pages/address/order-add?from=orderSubmit">{{address ? address : '请选择地址'}}</navigator>
+            </view>
+            <view class="form-item">
+                <image class="form-ico" src="{{anonymousState__temp7}}"></image><text class="form-label">联系方式</text>
+                <input type="text" value="{{userMobile}}" bindinput="handleInputMobile" placeholder="请输入联系方式" />
+            </view>
+            <view class="form-item form-item-textarea">
+                <image class="form-ico" src="{{anonymousState__temp8}}"></image><text class="form-label">故障说明</text>
+                <textarea class="form-textarea" value="{{faultReason}}" bindinput="handleInputReason" placeholder="请输入故障说明，最多200字" maxlength="{{200}}"></textarea>
+            </view>
+        </view>
+        <view class="other-tips">
+            <at-tabs compid="{{$compid__68}}">
+                <at-tabs-pane compid="{{$compid__69}}">
+                    <view class="tips-inner">
+                        <rich-text nodes="{{serviceContent.serviceDescription}}"></rich-text>
+                    </view>
+                </at-tabs-pane>
+                <at-tabs-pane compid="{{$compid__70}}">
+                    <view class="tips-inner">
+                        <rich-text nodes="{{serviceTimeTips}}"></rich-text>
+                    </view>
+                </at-tabs-pane>
+                <at-tabs-pane compid="{{$compid__71}}">
+                    <view class="tips-inner">
+                        <rich-text nodes="{{serviceFeeTips}}"></rich-text>
+                    </view>
+                </at-tabs-pane>
+                <at-tabs-pane compid="{{$compid__72}}">
+                    <view class="tips-inner">
+                        <rich-text nodes="{{otherTips}}"></rich-text>
+                    </view>
+                </at-tabs-pane>
+            </at-tabs>
+        </view>
+        <view class="submit-bar">
+            <view class="protocal">
+                <radio color="#216EC6" value="1" checked="{{true}}">已同意
+                    <navigator class="outlink">用户协议</navigator>
+                </radio>
+            </view>
+            <view class="btn-wrap">
+                <button bindtap="submitForm" class="btn-form">提交订单</button>
+            </view>
+        </view>
+    </view>
+</block>

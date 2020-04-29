@@ -114,7 +114,7 @@ export const objToQuery= (source:object):string => {
 * */
 export const jumpTo = (info,otherType?:string)=>{
   let needLogin = info.needLogin
-  let type = info.serviceCategoryCode
+  let type = info.serviceCategoryCode || info.recommendCategoryCode
   let userId = Taro.getStorageSync('userId')
   if(needLogin==='Y'&&!userId){
     Taro.showModal({
@@ -152,7 +152,7 @@ export const jumpTo = (info,otherType?:string)=>{
     })
   }
 }
-
+// 设置UserInfo
 // 简易深克隆
 export const simpleClone = (obj) => {
   return JSON.parse(JSON.stringify(obj))

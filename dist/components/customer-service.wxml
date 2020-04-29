@@ -1,0 +1,26 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="{{hideService ? 'customer-service' : 'customer-service expand'}}">
+        <block>
+            <block wx:if="{{hideService}}">
+                <block>
+                    <image bindtap="toggleService" class="cus-ser" src="{{anonymousState__temp}}"></image><text>客服</text>
+                </block>
+            </block>
+            <block wx:else>
+                <block>
+                    <view class="expand-service">
+                        <view class="expand-button">
+                            <view bindtap="onlineService">
+                                <image class="custom-ico" src="{{anonymousState__temp2}}"></image>在线咨询</view><text>（8:30-20:00）</text>
+                        </view>
+                        <view class="expand-button">
+                            <view bindtap="callService">
+                                <image class="custom-ico" src="{{anonymousState__temp3}}"></image>热线电话</view><text>（8:30-20:00）</text>
+                        </view>
+                        <icon bindtap="toggleService" size="18" type="clear" color="#EA7744"></icon>
+                    </view>
+                </block>
+            </block>
+        </block>
+    </view>
+</block>

@@ -1,0 +1,19 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="pay-page">
+        <view class="top-bg">
+            <view class="pay-title">
+                <image class="weixin-pay" src="{{anonymousState__temp}}"></image>
+                <view>微信支付</view>
+            </view>
+            <image class="qr-code" src="{{'data:image/png;base64,' + qrContent}}"></image>
+        </view>
+        <view class="price-lists">
+            <view class="price-divider">费用明细</view>
+            <view class="price-item" wx:key="id" wx:for="{{detailLists}}" wx:for-item="item" wx:for-index="_anonIdx2">
+                <view class="item-left">{{item.planName}}</view>
+                <view class="item-right"><text class="text-warm">￥{{item.serviceCost}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>

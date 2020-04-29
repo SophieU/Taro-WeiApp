@@ -2,7 +2,7 @@ import {ComponentType} from 'react'
 import Taro, {Component,Config} from '@tarojs/taro'
 import {View, ScrollView, Image, Text} from '@tarojs/components'
 import {getServiceAll} from './servics'
-import './more.less'
+import './more.scss'
 
 interface State {
   serviceLists:Array<serviceListsItem>

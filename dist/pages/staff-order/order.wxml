@@ -1,0 +1,55 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="staff-order-page">
+        <at-tabs compid="{{$compid__150}}"></at-tabs>
+        <view class="order-lists">
+            <view wx:key="id" class="order-item" wx:for="{{lists}}" wx:for-item="item" wx:for-index="_anonIdx2">
+                <view bindtap="navigateTo" data-url="{{'/pages/staff-order/detail?id=' + item.id}}">
+                    <view class="order-row">
+                        <view class="row-title">工单编号</view>
+                        <view class="row-info">{{item.orderSn}}</view>
+                    </view>
+                    <view class="order-row">
+                        <view class="row-title">工单状态</view>
+                        <block wx:if="{{item.orderStateName === '待接单' || item.orderStateName === '已完成'}}">
+                            <view class="row-info"><text class="text-green">{{item.orderStateName}}</text>
+                            </view>
+                        </block>
+                        <block wx:if="{{item.orderStateName === '待上门' || item.orderStateName === '待付款'}}">
+                            <view class="row-info"><text class="text-warm">{{item.orderStateName}}</text>
+                            </view>
+                        </block>
+                        <block wx:if="{{item.orderStateName === '已取消' || item.orderStateName === '已接单'}}">
+                            <view class="row-info"><text class="text-blue">{{item.orderStateName}}</text>
+                            </view>
+                        </block>
+                        <block wx:if="{{item.orderStateName === '已关闭' || item.orderStateName === '异常'}}">
+                            <view class="row-info"><text class="text-grey">{{item.orderStateName}}</text>
+                            </view>
+                        </block>
+                    </view>
+                    <view class="order-row">
+                        <view class="row-title">下单时间</view>
+                        <view class="row-info">{{item.createTime}}</view>
+                    </view>
+                    <view class="order-row">
+                        <view class="row-title">联系人</view>
+                        <view class="row-info">{{item.username}}</view>
+                    </view>
+                    <view class="order-row">
+                        <view class="row-title">联系电话</view>
+                        <view class="row-info"><text catchtap="call" class="text-warm" data-e-tap-so="this" data-e-tap-a-a="{{item.userPhone}}">{{item.userPhone}}</text>
+                        </view>
+                    </view>
+                    <view class="order-row">
+                        <view class="row-title">报修内容</view>
+                        <view class="row-info">{{item.repairCategoryName}}</view>
+                    </view>
+                    <view class="order-row">
+                        <view class="row-title">报修地址</view>
+                        <view class="row-info">{{item.address || '无'}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>

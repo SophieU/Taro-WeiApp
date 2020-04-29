@@ -63,7 +63,10 @@ export const QrPay = (params)=>{
 export const payRes = (paySn)=>{
   return request.get(`/pay/query/payState?paySn=${paySn}`)
 }
-
+// 查询支付结果---用户端支付
+export const payResCustom = (repairOrderDispatchId)=>{
+  return request.get(`/pay/query/payState/byId?businessId=${repairOrderDispatchId}`)
+}
 // 提交报价方案
 export const setPricePlan = (id,params)=>{
   return request.post(`/api/v1/repair/order/submitPlanPay?userId=${userId}&repairOrderDispatchId=${id}`,params)

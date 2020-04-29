@@ -80,42 +80,76 @@ class Lists extends Component<{},State>{
       this.getLists()
     })
   }
+  onPullDownRefresh(){
+    this.setState({
+      lists:[],
+      pageNo:1,
+      pageSize:5,
+      hasNextPage:true,
+    },()=>{
+      this.getLists()
+    })
+  }
+  onReachBottom(){
+    this.getLists()
+  }
+  call(tel,e){
+    e.stopPropagation()
+    Taro.makePhoneCall({
+      phoneNumber:tel
+    })
+  }
+  navigateTo=(e)=>{
+    var url = e.currentTarget.dataset.url
+    Taro.navigateTo({url:url})
+  }
   render(){
     const tabList = [{ title: '待处理' }, { title: '处理中' }, { title: '已完成' }, { title: '申述中' }]
-    return (<ScrollView
-      className='page'
-      scrollY
-      onScrollToLower={this.getLists}
-    >
+    return (<View className='staff-order-page'>
       <AtTabs className='tabs-header' current={this.state.current} tabList={tabList} onClick={this.handleClick}></AtTabs>
       <View className='order-lists'>
         {
           this.state.lists.map(item=>{
             return ( <View key={item.id} className='order-item'>
-              <Navigator url={'/pages/staff-order/detail?id='+item.id}>
+              <View onClick={this.navigateTo} data-url={'/pages/staff-order/detail?id='+item.id}>
                 <View className='order-row'>
                   <View className='row-title'>工单编号</View>
                   <View className='row-info'>{item.orderSn}</View>
                 </View>
                 <View className='order-row'>
                   <View className='row-title'>工单状态</View>
-                  <View className='row-info'><Text className='text-warm'>{item.orderStateName}</Text></View>
+                  {item.orderStateName==='待接单'||item.orderStateName==='已完成'?<View className='row-info'><Text className='text-green'>{item.orderStateName}</Text></View>:null}
+                  {item.orderStateName==='待上门'||item.orderStateName==='待付款'?<View className='row-info'><Text className='text-warm'>{item.orderStateName}</Text></View>:null}
+                  {item.orderStateName==='已取消'||item.orderStateName==='已接单'?<View className='row-info'><Text className='text-blue'>{item.orderStateName}</Text></View>:null}
+                  {item.orderStateName==='已关闭'||item.orderStateName==='异常'?<View className='row-info'><Text className='text-grey'>{item.orderStateName}</Text></View>:null}
+                </View>
+               <View className='order-row'>
+                  <View className='row-title'>下单时间</View>
+                  <View className='row-info'>{item.createTime}</View>
                 </View>
                 <View className='order-row'>
-                  <View className='row-title'>维修地点</View>
-                  <View className='row-info'>{item.address||'无'}</View>
+                  <View className='row-title'>联系人</View>
+                  <View className='row-info'>{item.username}</View>
+                </View>
+                <View className='order-row'>
+                  <View className='row-title'>联系电话</View>
+                  <View className='row-info'><Text onClick={this.call.bind(this,item.userPhone)} className='text-warm'>{item.userPhone}</Text></View>
                 </View>
                 <View className='order-row'>
                   <View className='row-title'>报修内容</View>
                   <View className='row-info'>{item.repairCategoryName}</View>
                 </View>
-              </Navigator>
+                <View className='order-row'>
+                  <View className='row-title'>报修地址</View>
+                  <View className='row-info'>{item.address||'无'}</View>
+                </View>
+              </View>
             </View>)
           })
         }
 
       </View>
-    </ScrollView>)
+    </View>)
   }
 }
 export default Lists as ComponentType

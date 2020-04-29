@@ -1,0 +1,38 @@
+<block wx:if="{{$taroCompReady}}">
+    <scroll-view class="page" scroll-y="{{true}}" bindscrolltolower="getOrderLists">
+        <at-tabs compid="{{$compid__53}}">
+            <at-tabs-pane compid="{{$compid__54}}">
+                <template is="renderListItem" data="{{...anonymousState__temp}}"></template>
+            </at-tabs-pane>
+            <at-tabs-pane compid="{{$compid__55}}">
+                <template is="renderListItem" data="{{...anonymousState__temp2}}"></template>
+            </at-tabs-pane>
+            <at-tabs-pane compid="{{$compid__56}}">
+                <template is="renderListItem" data="{{...anonymousState__temp3}}"></template>
+            </at-tabs-pane>
+            <at-tabs-pane compid="{{$compid__57}}">
+                <template is="renderListItem" data="{{...anonymousState__temp4}}"></template>
+            </at-tabs-pane>
+        </at-tabs>
+    </scroll-view>
+</block>
+<template name="renderListItem">
+    <block>
+        <view class="order-lists">
+            <block>
+                <block wx:if="{{lists.length > 0}}">
+                    <navigator class="order-lists-item" wx:key="index" url="{{'/pages/custom-order/detail?id=' + item.id}}" wx:for="{{lists}}" wx:for-item="item" wx:for-index="index">
+                        <view class="order-date">{{item.createTime}}</view>
+                        <view class="order-info">
+                            <view class="info-left">{{item.repairCategoryName}}</view>
+                            <view class="order-right">{{item.orderStateName}}</view>
+                        </view>
+                    </navigator>
+                </block>
+                <block wx:else>
+                    <view class="no-data">暂无数据~</view>
+                </block>
+            </block>
+        </view>
+    </block>
+</template>

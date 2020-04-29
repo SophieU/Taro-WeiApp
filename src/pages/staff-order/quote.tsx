@@ -1,6 +1,6 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button, Text} from '@tarojs/components'
+import {View, Input, Button, Text} from '@tarojs/components'
 import {AtButton,AtInput, AtTabsPane } from 'taro-ui'
 import {setPricePlan, orderDetail} from './staff-apis'
 import './order.scss'
@@ -69,9 +69,9 @@ class Quote extends Component<{},State>{
     })
   }
   submitPlan = ()=>{
-    if(this.state.servicePrice<=0){
+    if(!this.state.servicePrice&&!this.state.materialsPrice){
       Taro.showToast({
-        title:'请填写服务费',
+        title:'请至少填写服务费或材料费中一项',
         icon:'none'
       })
       return
@@ -99,8 +99,19 @@ class Quote extends Component<{},State>{
       }
     })
   }
-  handlePriceChange=(value,prop)=>{
-    this.setState({[prop]:value*1})
+  handlePriceChange=(e,prop)=>{
+    var value = e.detail.value
+    this.setState({[prop]:parseFloat(value)})
+  }
+  filterInput=(e)=>{
+    var value = e.detail.value
+    // 最多两位输入
+    if(value.toString().split('.')[1]&&value.toString().split('.')[1].length>=2){
+      return parseFloat(value).toFixed(2)
+    }
+    if(value.indexOf('.')>-1&&value.split('.').length>2){
+      return ''
+    }
   }
   render(){
     return (<View className='page quote-page'>
@@ -115,24 +126,43 @@ class Quote extends Component<{},State>{
       <View className='other-price'>
         <View className='other-title'>人工服务费</View>
         <View className='other-row'>
-          <AtInput
-            name='servicePrice'
-            type='number'
-            placeholder='请输入人工服务费'
-            value={this.state.servicePrice}
-            onChange={(e)=>this.handlePriceChange(e,'servicePrice')}
-          ></AtInput>
+          <Input
+              className='input-fee'
+              type='number'
+               placeholder='请输入人工服务费'
+               value={this.state.servicePrice}
+               onInput={this.filterInput}
+               onChange={(val)=>this.handlePriceChange(val,'servicePrice')}
+          ></Input>
+         {/*<AtInput*/}
+         {/*   name='servicePrice'*/}
+         {/*   type='number'*/}
+         {/*   placeholder='请输入人工服务费'*/}
+         {/*   value={this.state.servicePrice}*/}
+         {/*   onInput={this.filterInput}*/}
+         {/*   onChange={(val)=>this.handlePriceChange(val,'servicePrice')}*/}
+         {/* ></AtInput>*/}
         </View>
       </View>
       <View className='other-price'>
         <View className='other-title'>材料费</View>
         <View className='other-row'>
-          <AtInput
-            name='materialsPrice'
+          <Input
+            className='input-fee'
+            type='number'
             placeholder='请输入材料费'
             value={this.state.materialsPrice}
-            onChange={(e)=>this.handlePriceChange(e,'materialsPrice')}
-          ></AtInput>
+            onInput={this.filterInput}
+            onChange={(val)=>this.handlePriceChange(val,'materialsPrice')}
+          ></Input>
+          {/*<AtInput*/}
+          {/*  name='materialsPrice'*/}
+          {/*  type='number'*/}
+          {/*  placeholder='请输入材料费'*/}
+          {/*  value={this.state.materialsPrice}*/}
+          {/*  onInput={this.filterInput}*/}
+          {/*  onChange={(e)=>this.handlePriceChange(e,'materialsPrice')}*/}
+          {/*></AtInput>*/}
         </View>
       </View>
 

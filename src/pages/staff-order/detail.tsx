@@ -1,10 +1,9 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Button,Text} from '@tarojs/components'
-import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
-import {getWxPay} from "../order/order-api";
-import {orderDetail} from './staff-apis'
-import {simpleClone} from '../../utils/common'
+import { AtActionSheet, AtActionSheetItem ,AtToast} from 'taro-ui'
+import {orderDetail, payResCustom} from './staff-apis'
+
 import './order.scss'
 
 
@@ -21,8 +20,10 @@ interface State {
   totalAmount:number
   showAction:boolean
   repairOrderDispatchId:string
+  countDown:number
+  timer:string|object
 }
-class Lists extends Component<{},State>{
+class Lists extends Component{
   config:Config = {
     navigationBarTitleText:'报修详情',
     navigationStyle:'default'
@@ -41,17 +42,54 @@ class Lists extends Component<{},State>{
       totalAmount:0,
       showAction:false,
       repairOrderDispatchId:'', //派单Id，用于重新报价时
+      timer:null, // 轮询定时器
+      countDown:120,
+      waitPayToast:false,
+      commentInfo:null,
     }
   }
   componentDidShow(){
+    this.loadPage()
+  }
+  componentWillUnmount(){
+    clearInterval(this.state.timer)
+  }
+  loadPage(){
     let id = this.$router.params.id
     this.setState({
-      id:id
+      id:id,
+      counteDown:120,
+      waitPayToast:false,
+      timer:null,
     },()=>{
       this.getOrderDetail()
     })
   }
-
+  // 轮询获取支付结果
+  getPayResult = ()=>{
+    payResCustom(this.state.repairOrderDispatchId).then(res=>{
+      if(res.data.code===0){
+        this.setState({
+          payRes:res.data.data
+        })
+        if(res.data.data==='Y'){
+          Taro.showToast({
+            title:'收款成功'
+          }).then(()=>setTimeout(()=>{
+            let { timer} = this.state
+            clearInterval(timer)
+            this.loadPage()
+          },1000))
+        }
+      }
+    })
+  }
+  // 订单申述
+  appealOrder= ()=>{
+    let {id,baseInfo} = this.state
+    let query = `id=${id}&orderSn=${baseInfo.orderSn}&orderState=${baseInfo.orderStateName}&repaireType=${baseInfo.repairCategoryName}`
+    Taro.navigateTo({url:'/pages/staff-order/refuse?'+query)
+  }
   // 获取订单详情
   getOrderDetail = ()=>{
     const id = this.state.id
@@ -71,7 +109,8 @@ class Lists extends Component<{},State>{
           repairOrderOfferPlanVoList:data.repairOrderOfferPlanVoList,
           dispatchInfo:data.dispatchInfo,
           repairOrderAmountVos:data.repairOrderAmountVos,
-          totalAmount:totalAmount
+          totalAmount:totalAmount,
+          commentInfo:data.commentInfo
         })
       }
     })
@@ -82,11 +121,31 @@ class Lists extends Component<{},State>{
       showAction:false
     },()=>{
       if(type==='user'){
-        Taro.showToast({
-          title:'等待用户支付中',
-          icon:'loading',
-          duration:120000
-        })
+        let timer = setInterval(()=>{
+          if(!this.state.timer){
+            this.setState({
+              timer,
+              waitPayToast:true
+            })
+          }
+          if(this.state.countDown<=0){
+            clearInterval(this.state.timer)
+            Taro.hideLoading()
+            this.setState({
+              countDown:120,
+              waitPayToast:false,
+              timer:null
+            })
+          }else{
+            this.setState(prevState=>{
+              countDown:prevState.countDown--
+            })
+          }
+          // 间隔3秒轮询
+          if(this.state.countDown%3===0){
+            this.getPayResult()
+          }
+        },1000)
       }else if(type==='qr-code'){
         Taro.navigateTo({
           url:'/pages/staff-order/pay?type=staff&id='+this.state.id
@@ -94,25 +153,6 @@ class Lists extends Component<{},State>{
       }
     })
 
-  }
-  // 支付成功
-  orderSuccess= ()=>{
-    Taro.showModal({
-      content:'订单支付成功，可在【我的】-【报修订单】中查看',
-      confirmText:'查看订单',
-      cancelText:'回到首页',
-      success:(res)=>{
-        if(res.confirm){
-          Taro.reLaunch({
-            url:'/pages/mine/mine'
-          })
-        }else{
-          Taro.reLaunch({
-            url:'/pages/index/index'
-          })
-        }
-      }
-    })
   }
   sureOrder= ()=>{
     this.setState({
@@ -142,7 +182,8 @@ class Lists extends Component<{},State>{
       {
         return ( <View  className='page-foot'>
           <View className="btn-group">
-            <Button className='orange-btn lang-btn' onClick={this.resetPrice}>生成报价</Button>
+            <Button className='primary-btn btn' onClick={this.appealOrder}>申述</Button>
+            <Button className='orange-btn btn' onClick={this.resetPrice}>生成报价</Button>
           </View>
         </View>)
       }
@@ -150,41 +191,56 @@ class Lists extends Component<{},State>{
       case '待付款':
       {
         return ( <View  className='page-foot'>
-          <View className='foot-item'>总计： ￥{total}</View>
+          <View className='foot-item'>￥{total}</View>
           <View className="btn-group">
-            <Button className='primary-btn' onClick={this.resetPrice}>重新报价</Button>
-            <Button className='submit-btn' onClick={this.sureOrder}>确认</Button>
+            <Button className='primary-btn btn' onClick={this.appealOrder}>申述</Button>
+            <Button className='primary-btn btn' onClick={this.resetPrice}>重新报价</Button>
+            <Button className='submit-btn btn' onClick={this.sureOrder}>收款</Button>
           </View>
         </View>)
       }
+        break;
+    case '异常':
+      {
+        return ( <View  className='page-foot'>
+          <View className='foot-item'>￥{total}</View>
+          <View className="btn-group">
+            <Button className='primary-btn btn' onClick={this.resetPrice}>重新报价</Button>
+            <Button className='submit-btn btn' onClick={this.sureOrder}>收款</Button>
+          </View>
+        </View>)
+      }
+        break;
+
     }
   }
-  render(){
 
+  render(){
+    const stateText = this.state.baseInfo.orderStateName
     return (<View className='page detail-page'>
       <View className='info-wrap'>
         <View className='detail-block'>
           <View className='detail-title'>工单信息</View>
           <View className='detail-info'>
             <View className='info-item'>
-              <View className='item-label'>报修时间</View>
-              <View className='item-info'>{this.state.baseInfo.createTime}</View>
+              <View className='item-label'>报修信息</View>
+              <View className='item-info'>{this.state.baseInfo.repairCategoryName}</View>
             </View>
             <View className='info-item'>
-              <View className='item-label'>工单单号</View>
+              <View className='item-label'>工单编号</View>
               <View className='item-info'>{this.state.baseInfo.orderSn}</View>
             </View>
             <View className='info-item'>
+              <View className='item-label'>下单时间</View>
+              <View className='item-info'>{this.state.baseInfo.createTime}</View>
+            </View>
+
+            <View className='info-item'>
               <View className='item-label'>工单状态</View>
-              <View className='text-warm'>{this.state.baseInfo.orderStateName}</View>
-            </View>
-            <View className='info-item'>
-              <View className='item-label'>服务网点</View>
-              <View className='item-info'>{this.state.baseInfo.stationName}</View>
-            </View>
-            <View className='info-item'>
-              <View className='item-label'>网点电话</View>
-              <View className='item-info'>{this.state.baseInfo.stationPhone}</View>
+              {stateText==='待接单'||stateText==='已完成'?<View className='text-green'>{stateText}</View>:null}
+              {stateText==='待上门'||stateText==='待付款'?<View className='text-warm'>{stateText}</View>:null}
+              {stateText==='已取消'||stateText==='已接单'?<View className='text-blue'>{stateText}</View>:null}
+              {stateText==='已关闭'||stateText==='异常'?<View className='text-grey'>{stateText}</View>:null}
             </View>
           </View>
         </View>
@@ -206,11 +262,11 @@ class Lists extends Component<{},State>{
           ):null
         }
         <View className='detail-block'>
-          <View className='detail-title'>基础信息</View>
+          <View className='detail-title'>用户信息</View>
           <View className='detail-info'>
             <View className='info-item'>
-              <View className='item-label'>维修区域</View>
-              <View className='item-info'>{this.state.baseInfo.repairRegionName}</View>
+              <View className='item-label'>联系人</View>
+              <View className='item-info'>{this.state.baseInfo.username}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>详细地址</View>
@@ -218,11 +274,7 @@ class Lists extends Component<{},State>{
             </View>
             <View className='info-item'>
               <View className='item-label'>联系电话</View>
-              <View className='item-info'>{this.state.baseInfo.userPhone}</View>
-            </View>
-            <View className='info-item'>
-              <View className='item-label'>报修类别</View>
-              <View className='item-info'>{this.state.baseInfo.repairCategoryName}</View>
+              <View className='item-info link-tekxt' onClick={()=>this.call(this.state.baseInfo.userPhone)}>{this.state.baseInfo.userPhone}</View>
             </View>
           </View>
         </View>
@@ -235,7 +287,7 @@ class Lists extends Component<{},State>{
                   <View className='price-label'>
                     <View className='item-label'>{item.name}</View>
                   </View>
-                  <View className='item-info'>￥{item.amount}</View>
+                  <View className='item-info text-warm'>￥{item.amount}</View>
                 </View>)
               })
             }
@@ -250,13 +302,53 @@ class Lists extends Component<{},State>{
                   <View className='price-label'>
                     <View className='item-label'>{item.planName}</View>
                   </View>
-                  <View className='item-info'>￥{item.amount}</View>
+                  <View className='item-info '>
+                    <Text className='text-warm'>￥{item.amount}</Text>
+                    {item.isPay==='Y'?<Text className='text-grey'>（已支付）</Text>:null}
+                  </View>
                 </View>)
               })
             }
           </View>
         </View>
-
+        {
+          this.state.baseInfo.statementReasonName?(
+            <View className='detail-block'>
+              <View className='detail-title'>申述信息</View>
+              <View className='detail-info'>
+                <View className='info-item'>
+                  <View className='item-label'>申述原因</View>
+                  <View className='item-info'>{this.state.baseInfo.statementReasonName}</View>
+                </View>
+                <View className='info-item'>
+                  <View className='item-label'>申述请求</View>
+                  <View className='item-info'>{this.state.baseInfo.statementRequestName}</View>
+                </View>
+              </View>
+            </View>
+          ):null
+        }
+        {
+          this.state.commentInfo.comment?(
+            <View className='detail-block'>
+              <View className='detail-title'>用户评价</View>
+              <View className='detail-info'>
+                <View className='info-item'>
+                  <View className='item-label'>评价结果</View>
+                  <View className='item-info'>{this.state.commentInfo.comment.comment.name}</View>
+                </View>
+                <View className='info-item'>
+                  <View className='item-label'>评价详情</View>
+                  <View className='item-info'>
+                    {this.state.commentInfo.comment.comment.children.map(item=>{
+                      return <Text key={item.id}>{item.name}、</Text>
+                    })}
+                  </View>
+                </View>
+              </View>
+            </View>
+          ):null
+        }
       </View>
       {/*底部操作区*/}
       {this.renderFoot()}
@@ -269,7 +361,8 @@ class Lists extends Component<{},State>{
           二维码收款
         </AtActionSheetItem>
       </AtActionSheet>
-
+    {/*等待支付提示*/}
+      <AtToast status='loading' duration={0} isOpened={this.state.waitPayToast} text={`等待支付中,剩余${this.state.countDown}S`} icon="loading-3"></AtToast>
     </View>)
 
 

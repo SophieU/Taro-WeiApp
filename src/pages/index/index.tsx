@@ -75,13 +75,18 @@ class Index extends Component<{}, PageState> {
     this.getBanner()
     this.getService()
   }
-  componentWillReact () {
-    console.log('componentWillReact')
-  }
-  componentDidMount () { }
   componentWillUnmount () {}
-  componentDidShow () { }
-  componentDidHide () { }
+  onPullDownRefresh(){
+    Taro.showNavigationBarLoading()
+    /*登录小程序*/
+    loginApp()
+    /*界面信息数据*/
+    this.getBanner()
+    this.getService()
+  }
+  onReachBottom(){
+    this.getService()
+  }
   constructor(props) {
     super(props);
     this.state={
@@ -94,11 +99,6 @@ class Index extends Component<{}, PageState> {
       pageSize:10,
       hasNextPage:true
     }
-  }
-  toggleService=()=>{
-    this.setState({
-      hideService:!this.state.hideService
-    })
   }
   /* 获取banner信息 */
   getBanner= ()=>{
@@ -115,6 +115,7 @@ class Index extends Component<{}, PageState> {
   }
   /* 获取服务栏目 */
   getService = ()=>{
+    Taro.showLoading({title:'加载中'})
     if(!this.state.hasNextPage){
       return
     }
@@ -123,6 +124,10 @@ class Index extends Component<{}, PageState> {
       pageSize:this.state.pageSize
     }
     getServiceLists(params).then(res=>{
+      Taro.hideNavigationBarLoading()
+      Taro.stopPullDownRefresh()
+      Taro.hideLoading()
+
       if(res.data.code===0){
         let data = res.data.data
         this.setState({
@@ -140,17 +145,14 @@ class Index extends Component<{}, PageState> {
   render () {
     // const { counterStore: { counter } } = this.props
     return (
-      <ScrollView
-        className={this.state.adBannerList.length>0?'index':'index no-banner'}
-        scrollY
-        onScrollToLower={this.getService}
-      >
+      <View className={this.state.adBannerList.length>0?'index':'index no-banner'}>
         <View className='header-index'>速达优服</View>
         <Swiper
           className='banner-wrap'
           indicatorColor='#fff'
           indicatorActiveColor='#EA7744'
           indicatorDots
+          autoplay
         >
           {this.state.adBannerList.map((item,index)=>{
             return <SwiperItem  key={index}>
@@ -164,14 +166,14 @@ class Index extends Component<{}, PageState> {
           })}
         </Swiper>
         {/*icon列表*/}
-        <View className='service-type'>
+        <ScrollView scrollX={true} className='service-type'>
           {this.state.serviceList.map(item=>{
             return (<View className='service-type-item' key={item.serviceId} onClick={()=>this.jumpTo(item)}>
               <Image className='item-icon' src={item.iconName}/>
               <Text className='item-text'>{item.title}</Text>
             </View>)
           })}
-        </View>
+        </ScrollView>
         {/* 广告区 */}
         {
           this.state.configApiVoList.map(item=>{
@@ -184,11 +186,6 @@ class Index extends Component<{}, PageState> {
             return (<View className='function-block' key={item.id}>
               <Navigator className="left-block" url={'/pages/index/more-service?id='+item.id}>
                 <Image className='left-bg' src={item.iconUrlOne}></Image>
-                {/*<Text className='bock-title'>{item.name}</Text>*/}
-                {/*<Navigator className='bock-more' url={'/pages/index/more-service?id='+item.id}>*/}
-                {/*  查看全部*/}
-                {/*  <Image className='block-more-ico' src={require('../../assets/imgs/tmp/more.png')}></Image>*/}
-                {/*</Navigator>*/}
               </Navigator>
               <View className="right-block">
                 {
@@ -205,9 +202,9 @@ class Index extends Component<{}, PageState> {
         }
         {/*客服悬浮*/}
         <CustomerService></CustomerService>
-         {/* 授权信息*/}
+        {/* 授权信息*/}
 
-      </ScrollView>
+      </View>
     )
   }
 }

@@ -8,7 +8,8 @@ import './admin.scss'
 class Admin extends Component{
   config: Config = {
     navigationBarTitleText:'工单处理',
-    navigationStyle:'default'
+    navigationStyle:'default',
+    enablePullDownRefresh:true,
   }
   constructor() {
     super();
@@ -21,11 +22,27 @@ class Admin extends Component{
       hasNextPage:true,
       reasonModal:false,
       cancelReasonId:'',
+      showRefresh:false,
       nowItem:{}, //正在操作的订单id
     }
   }
   componentDidShow(){
     this.reloadData()
+  }
+  onReachBottom(){
+    this.getLists()
+  }
+  // 下拉刷新
+  onPullDownRefresh(){
+    this.setState({
+      pageNo:1,
+      pageSize:5,
+      orderLists:[],
+      hasNextPage:true,
+    },()=>{
+      Taro.showNavigationBarLoading()
+      this.reloadData()
+    })
   }
   // 重新加载
   reloadData=()=>{
@@ -58,7 +75,6 @@ class Admin extends Component{
         controlObj=item
       }
     })
-    console.log(controlObj)
     Taro.navigateTo({
       url:`/pages/admin/staffs?orderId=${controlObj.orderId}&stationName=${controlObj.stationName}&type=${controlObj.type}`
     })
@@ -72,29 +88,37 @@ class Admin extends Component{
         controlObj=item
       }
     })
-    let masterInfo = Taro.getStorageSync('masterInfo')
-    let params = {
-      appealId:controlObj.appealId,
-      userId:masterInfo.masterId,
-      username:masterInfo.masterName,
-      departmentName:controlObj.stationName
-    }
-    conflictAppeal(params).then(res=>{
-      if(res.data.code===0){
-        Taro.showToast({title:'驳回成功',icon:'none'}).then(()=>{
-          this.setState({
-            pageNo:1,
-            pageSize:5,
-            hasNextPage:true,
-            orderLists:[]
-          },()=>{
-            this.getLists()
+    Taro.showModal({
+      title:'确认要驳回订单吗？',
+      success:res=>{
+        if(res.confirm){
+          let masterInfo = Taro.getStorageSync('masterInfo')
+          let params = {
+            appealId:controlObj.appealId,
+            userId:masterInfo.masterId,
+            username:masterInfo.masterName,
+            departmentName:controlObj.stationName
+          }
+          conflictAppeal(params).then(res=>{
+            if(res.data.code===0){
+              Taro.showToast({title:'驳回成功',icon:'none'}).then(()=>setTimeout(()=>{
+                this.setState({
+                  pageNo:1,
+                  pageSize:5,
+                  hasNextPage:true,
+                  orderLists:[]
+                },()=>{
+                  this.getLists()
+                })
+              }))
+            }else{
+              Taro.showToast({title:'驳回失败'+res.data.msg,icon:'none'})
+            }
           })
-        })
-      }else{
-        Taro.showToast({title:'驳回失败'+res.data.msg,icon:'none'})
+        }
       }
     })
+
   }
   // 关闭工单 -申诉
   closeOrder=(e)=>{
@@ -105,25 +129,34 @@ class Admin extends Component{
         controlObj=item
       }
     })
-    let masterInfo =Taro.getStorageSync('masterInfo')
-    let params = {
-      "appealId":controlObj.appealId,
-      "userId":masterInfo.masterId,
-      "username":masterInfo.masterName,
-      "departmentName":controlObj.repairStationName
-    }
-    closeAppeal(params).then(res=>{
-      if(res.data.code===0){
-        Taro.showToast({title:'操作成功',icon:'none'}).then(()=>{
-          this.reloadData()
-        })
-      }else{
-        Taro.showToast({title:'操作失败',icon:'none'})
+    Taro.showModal({
+      title:'确认要关闭工单吗？',
+      success:res=>{
+        if(res.confirm){
+          let masterInfo =Taro.getStorageSync('masterInfo')
+          let params = {
+            "appealId":controlObj.appealId,
+            "userId":masterInfo.masterId,
+            "username":masterInfo.masterName,
+            "departmentName":controlObj.stationName
+          }
+          closeAppeal(params).then(res=>{
+            if(res.data.code===0){
+              Taro.showToast({title:'操作成功',icon:'none'}).then(()=>setTimeout(()=>{
+                this.reloadData()
+              },1000))
+            }else{
+              Taro.showToast({title:'操作失败',icon:'none'})
+            }
+          })
+        }
       }
     })
+
   }
   // 列表
   getLists = ()=>{
+    Taro.showLoading({title:'加载中'})
     let {pageNo,pageSize,hasNextPage} = this.state
     if(!hasNextPage){
       Taro.showToast({title:'没有更多了',icon:'none'})
@@ -135,6 +168,9 @@ class Admin extends Component{
       stationId:Taro.getStorageSync('masterInfo').repairStationId
     }
     lists(params).then(res=>{
+      Taro.hideNavigationBarLoading()
+      Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(prevState=>{
@@ -147,7 +183,9 @@ class Admin extends Component{
       }
     })
   }
-  renderFootBtn = (orderType:string,orderId)=>{
+  renderFootBtn = (orderItem)=>{
+    let orderType = orderItem.orderStateName
+    let orderId = orderItem.orderId
 
     switch (orderType) {
       case '待上门':
@@ -171,10 +209,24 @@ class Admin extends Component{
       {
         // 关闭订单
         return (<View className='btn-wrap'>
-          <Button data-id={orderId}   onClick={this.dispatchOrder} className='btn orange-btn'>重新派单</Button>
-          <Button data-id={orderId}   onClick={this.conflict} className='btn primary-btn'>驳回申诉</Button>
-          <Button data-id={orderId}   onClick={this.cancelAppeal} className='btn primary-btn'>取消工单</Button>
-          <Button data-id={orderId}   onClick={this.closeOrder} className='btn primary-btn'>关闭工单</Button>
+          {
+            orderItem.statementRequestCode==='CLOSE_ORDER'?(<Block>
+              <Button data-id={orderId}   onClick={this.closeOrder} className='btn orange-btn'>关闭工单</Button>
+              <Button data-id={orderId}   onClick={this.conflict} className='btn primary-btn'>驳回申诉</Button>
+            </Block>):null
+          }
+          {
+            orderItem.statementRequestCode==='CANCEL_ORDER'?(<Block>
+              <Button data-id={orderId}   onClick={this.cancelAppeal} className='btn orange-btn'>取消工单</Button>
+              <Button data-id={orderId}   onClick={this.conflict} className='btn primary-btn'>驳回申诉</Button>
+            </Block>):null
+          }
+           {
+            orderItem.statementRequestCode==='DISTRIBUTE_ORDER'?(<Block>
+              <Button data-id={orderId}   onClick={this.dispatchOrder} className='btn orange-btn'>重新派单</Button>
+              <Button data-id={orderId}   onClick={this.conflict} className='btn primary-btn'>驳回申诉</Button>
+            </Block>):null
+          }
         </View>)
       }
       break;
@@ -212,47 +264,65 @@ class Admin extends Component{
         controlObj=item
       }
     })
-    let masterInfo =Taro.getStorageSync('masterInfo')
-    let params = {
-      "appealId":controlObj.item,
-      "userId":masterInfo.masterId,
-      "username":masterInfo.masterName,
-      "departmentName":controlObj.repairStationName
-    }
-    cancelConf(params).then(res=>{
-      if(res.data.code===0){
-        Taro.showToast({title:'操作成功',icon:'none'}).then(()=>{
-          this.reloadData()
-        })
-      }else{
-        Taro.showToast({title:'操作失败',icon:'none'})
+    Taro.showModal({
+      title:'确定要取消工单吗？',
+      success:res=>{
+        if(res.confirm){
+          let masterInfo =Taro.getStorageSync('masterInfo')
+          let params = {
+            "appealId":controlObj.appealId,
+            "userId":masterInfo.masterId,
+            "username":masterInfo.masterName,
+            "departmentName":controlObj.stationName
+          }
+          cancelConf(params).then(res=>{
+            if(res.data.code===0){
+              Taro.showToast({title:'操作成功',icon:'none'}).then(()=>{
+                setTimeout(()=>{
+                  this.reloadData()
+                },1000)
+              })
+            }else{
+              Taro.showToast({title:'操作失败',icon:'none'})
+            }
+          })
+        }
       }
     })
+
   }
   // 取消订单操作-正常工单
   handleConfirmModal= ()=>{
     let {nowItem,cancelReasonId} = this.state
     let masterInfo = Taro.getStorageSync('masterInfo')
+    console.log('stationName----',nowItem.stationName)
     let params = {
       orderId:nowItem.orderId,
       reasonId:cancelReasonId,
       userId:masterInfo.masterId,
       username:masterInfo.masterName,
-      departmentName:nowItem.repairStationName,
+      departmentName:nowItem.stationName,
     }
     cancel(params).then(res=>{
       if(res.data.code===0){
         Taro.showToast({
           title:'订单取消成功',
           icon:'none'
-        }).then(()=>{
-          this.reloadData()
-        })
+        }).then(()=>setTimeout(()=>this.reloadData(),1000))
       }else{
         Taro.showToast({
           title:'订单取消失败：'+res.data.msg,
           icon:'none'
         })
+      }
+    })
+  }
+  // 电话
+  makePhoneCall= (tel)=>{
+    Taro.makePhoneCall({
+      phoneNumber:tel,
+      fail:()=>{
+        return false
       }
     })
   }
@@ -267,19 +337,23 @@ class Admin extends Component{
         cancelReasonArr.push(obj)
       }
     })
-    return (<ScrollView style={{height:'100vh'}} className='page' scrollY onScrollToLower={this.getLists}>
-      {/*<AtTabs current={this.state.currentTab} tabList={[{ title: '工单处理' }]}>*/}
-      {/*  */}
-      {/*</AtTabs>*/}
+    return (
+
+      <View
+          style={{height:'100vh'}}
+          className='page'
+      >
       <AtTabsPane current={this.state.currentTab} index={0} >
         <View className='order-wrap'>
           {this.state.orderLists.length<=0?( <View className='nothing'>这里空空如也~</View>):null}
+          <View className='order-lists'>
           {this.state.orderLists.map(item=>{
-            return <View className='order-lists' key={item.orderId}>
-              <View className='order-item'>
+            return  <View className='order-item'  key={item.orderId}>
                 <View className='item-header'>
                   <View className='header-time'>{item.createTime}</View>
-                  <View className='header-type'>{item.orderStateName}</View>
+                  {item.orderStateName==='异常'? <View className='header-type abnormal'>{item.orderStateName}</View>:null}
+                  {item.orderStateName==='待上门'? <View className='header-type'>{item.orderStateName}</View>:null}
+                  {item.orderStateName==='待接单'? <View className='header-type waiting'>{item.orderStateName}</View>:null}
                 </View>
                 <View className='order-number'>订单编号：{item.orderSn}</View>
                 <View className='order-info'>
@@ -289,10 +363,6 @@ class Admin extends Component{
                   </View>
                   <View className='info-item'>
                     <Text className='info-label'>报修地址：</Text>
-                    <Text className='info-inner'>{item.repairRegionName}</Text>
-                  </View>
-                  <View className='info-item'>
-                    <Text className='info-label'>详细地址：</Text>
                     <Text className='info-inner'>{item.address}</Text>
                   </View>
                   <View className='info-item'>
@@ -301,14 +371,20 @@ class Admin extends Component{
                   </View>
                   <View className='info-item'>
                     <Text className='info-label'>用户手机：</Text>
-                    <Text className='info-inner'>{item.userPhone}</Text>
+                    <Text className='info-inner phone' onClick={()=>this.makePhoneCall(item.userPhone)}>{item.userPhone}</Text>
                   </View>
                   <View className='divider'></View>
                   {
-                    item.orderStateName!=='待接单'?(<View className='info-item'>
-                      <Text className='info-label'>接单师傅：</Text>
-                      <Text className='info-inner'>{item.serviceUserName}</Text>
-                    </View>):null
+                    item.orderStateName!=='待接单'?(<Block>
+                      <View className='info-item'>
+                        <Text className='info-label'>接单师傅：</Text>
+                        <Text className='info-inner'>{item.serviceUserName}</Text>
+                      </View>
+                      <View className='info-item'>
+                        <Text className='info-label'>师傅电话：</Text>
+                        <Text onClick={()=>this.makePhoneCall(item.serviceUserPhone)} className='info-inner phone'>{item.serviceUserPhone}</Text>
+                      </View>
+                    </Block>):null
                   }
                   <View className='info-item'>
                     <Text className='info-label'>工单状态：</Text>
@@ -326,11 +402,11 @@ class Admin extends Component{
                   }
                 </View>
                 <View className='order-foot'>
-                  {this.renderFootBtn(item.orderStateName,item.orderId)}
+                  {this.renderFootBtn(item)}
                 </View>
               </View>
-            </View>
           })}
+          </View>
         </View>
       </AtTabsPane>
       {/*  取消弹窗*/}
@@ -348,7 +424,7 @@ class Admin extends Component{
           <Button onClick={ this.handleConfirmModal }>确定</Button>
         </AtModalAction>
       </AtModal>
-    </ScrollView>)
+    </View>)
   }
 }
 export default Admin as ComponentType

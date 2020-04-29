@@ -1,0 +1,25 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="page-content login-page">
+        <view class="icon-wrap">
+            <view class="icon-title">欢迎，速达优服</view>
+        </view>
+        <view class="btn-wrap">
+            <button open-type="getPhoneNumber" class="wx-login" bindgetphonenumber="wxAutoLogin">微信用户一键登录</button>
+        </view>
+        <view class="protocal-wrap">
+            <view class="read-proto" bindtap="toggleReaded">
+                <block>
+                    <block wx:if="{{readed}}">
+                        <image class="radio" src="{{anonymousState__temp}}"></image>
+                    </block>
+                    <block wx:else>
+                        <image class="radio" src="{{anonymousState__temp2}}"></image>
+                    </block>
+                </block>
+            </view>
+            <view class="login-protocal">我已阅读并同意
+                <navigator class="out-link" url="/pages/login/protocal?type=service">《服务协议》</navigator>
+            </view>
+        </view>
+    </view>
+</block>

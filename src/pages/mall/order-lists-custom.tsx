@@ -87,7 +87,7 @@ class OrderListsCustom extends  Component{
           <View className='order-lists'>
             {
               this.state.lists.map(item=>{
-                return ( <View className='order-item'>
+                return ( <View className='order-item' key={item.orderSn}>
                   <View className='order-top'>
                     <View className='order-title'>订单{item.orderSn}</View>
                     <View className='order-status'>
@@ -114,7 +114,6 @@ class OrderListsCustom extends  Component{
                       item.username?(<Block>
                         <View className="info-row">用户电话：{item.userPhone}</View>
                         <View className="info-row">用户姓名：{item.username}</View>
-                        <View className="info-row">服务地址：{item.repairAddress}</View>
                       </Block>):null
                     }
 

@@ -10,7 +10,7 @@
     <scroll-view class="invite-history-page" scroll-y="{{true}}" scroll-with-animation="{{true}}" bindscrolltolower="getLists">
         <view class="page-title">共邀新 <text class="blue-text">{{totalCount}}</text>人</view>
         <view class="history-block">
-            <view wx:key="index" wx:for="{{loopArray44}}" wx:for-item="item" wx:for-index="index">
+            <view wx:key="index" wx:for="{{loopArray45}}" wx:for-item="item" wx:for-index="index">
                 <template is="renderListsBlock" data="{{...item.$loopState__temp3}}"></template>
             </view>
         </view>

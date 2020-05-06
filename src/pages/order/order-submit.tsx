@@ -8,7 +8,6 @@ import { getDefaultAdd } from '../address/service'
 import {jumpTo as jumpToUtil} from "../../utils/common";
 import {validateTel} from '../../utils/regexpValidate'
 import './order-submit.scss'
-import order from "../staff-order/order";
 
 type Service = {
   "id": string,
@@ -32,6 +31,7 @@ interface State {
   serviceContent:Service
   address:string
   userMobile:string,
+  userName:string,
   otherTips:string,
   serviceFeeTips:string,
   serviceTimeTips:string,
@@ -55,6 +55,7 @@ class OrderSubmit extends Component<{},State>{
     repairUserAddressId:'',
     repairUserAddressObj:{},
     address:'',
+    userName:'',
     userMobile:'',
     faultReason:'',
     otherTips:'',
@@ -65,6 +66,7 @@ class OrderSubmit extends Component<{},State>{
       hopeDoorTime:'',
     },
     repairOrderOfferPlanDtoList:[], //收费项目列表
+    timer:null,
     serviceContent:{
       "id": "",
       "name": "",
@@ -77,7 +79,7 @@ class OrderSubmit extends Component<{},State>{
       "description":"服务说明",
       "serviceDescription": "服务说明",
       "repairRegionId": "",
-      "repairStationId": ""
+      "repairStationId": "",
     }
   }
   componentWillMount(){
@@ -94,10 +96,15 @@ class OrderSubmit extends Component<{},State>{
     const orderForm = this.props.appStore.orderForm
     this.setState({
       address:orderForm.address,
-      userMobile:orderForm.userMobile,
+      userMobile:orderForm.addressObj.userMobile,
+      userName:orderForm.addressObj.userName,
       repairUserAddressId:orderForm.addressObj.id,
       repairUserAddressObj:orderForm.addressObj
     })
+  }
+  componentWillUnmount(){
+
+    clearTimeout(this.state.timer)
   }
   topBanner= ()=>{
     getTopBanner().then(res=>{
@@ -121,6 +128,8 @@ class OrderSubmit extends Component<{},State>{
             return {
               repairUserAddressId: data.id,
               address:data.areaInfo + data.address,
+              userName:data.userName,
+              userMobile:data.userMobile,
               repairUserAddressObj:data
             }
           },()=>{
@@ -183,6 +192,17 @@ class OrderSubmit extends Component<{},State>{
           serviceContent:res.data.data
         })
 
+      }else{
+        Taro.showToast({
+          title:res.data.msg,
+          icon:'none',
+          duration:3000
+        }).then(()=>{
+          let timer = setTimeout(()=>{Taro.navigateBack({delta:-1})},3000)
+          this.setState({
+            timer
+          })
+        })
       }
     })
   }
@@ -205,6 +225,11 @@ class OrderSubmit extends Component<{},State>{
           otherTips:data.other,
           serviceFeeTips:data.serviceFee,
           serviceTimeTips:data.serviceTime
+        })
+      }else{
+        Taro.showToast({
+          title:res.data.msg,
+          icon:'none'
         })
       }
     })
@@ -251,6 +276,11 @@ class OrderSubmit extends Component<{},State>{
                   "payCode":"WX_XCX"
                 }
                 this.startPay(params)
+              }else{
+                Taro.showToast({
+                  title:res.data.msg,
+                  icon:'none'
+                })
               }
             })
           }
@@ -264,7 +294,9 @@ class OrderSubmit extends Component<{},State>{
           serviceCost:this.state.serviceContent.dtdServiceFee
         })
       }
+      Taro.showLoading({title:'处理中'})
       submitOrder(params).then(res=>{
+        Taro.hideLoading()
         if(res.data.code===0){
           this.orderSuccess()
         }else{
@@ -278,7 +310,9 @@ class OrderSubmit extends Component<{},State>{
   }
   // 调起支付
   startPay = (params)=>{
+    Taro.showLoading({title:'处理中'})
     getWxPay(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let data = res.data.data
         Taro.requestPayment({
@@ -372,18 +406,21 @@ class OrderSubmit extends Component<{},State>{
           <Text className='info-title'>服务说明</Text>
           <View className='info-content'>{this.state.serviceContent.description}</View>
         </View>
-        <View className='info-item'>
-          <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
-          <Text className='info-title'>服务收费</Text>
-          <View className='info-content'>服务费 <Text className='text-warm'>{this.state.serviceContent.serviceFee}</Text> 元起</View>
-        </View>
+        {
+          this.state.serviceContent.serviceFee!==0?(<View className='info-item'>
+            <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
+            <Text className='info-title'>服务收费</Text>
+            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text> 元起</View>
+          </View>):null
+        }
+
         {
           this.state.serviceContent.hasDtdServiceFee!=='Y'
             ?null
             :( <View className='info-item'>
               <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
               <Text className='info-title'>上门费</Text>
-              <View className='info-content'>服务费 <Text className='text-warm'>{this.state.serviceContent.dtdServiceFee}</Text>元起
+              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>元起
                 {this.state.serviceContent.isPrepayDtd==='Y'?<Text className='little-tips'>(需要预付)</Text>:null}
               </View>
             </View>)
@@ -395,6 +432,11 @@ class OrderSubmit extends Component<{},State>{
           <Image className='form-ico' src={require('../../assets/imgs/tmp/img_location.png')}></Image>
           <Text className='form-label'>服务地址</Text>
           <Navigator className='form-nav info-content' url='/pages/address/order-add?from=orderSubmit' >{this.state.address?this.state.address:'请选择地址'}</Navigator>
+        </View>
+        <View className='form-item'>
+          <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
+          <Text className='form-label'>联系人</Text>
+          <Input type='text' value={this.state.userName} onInput={this.handleInputMobile} placeholder='请输入姓名' />
         </View>
         <View className='form-item'>
           <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
@@ -435,7 +477,7 @@ class OrderSubmit extends Component<{},State>{
 
       <View className="submit-bar">
         <View className='protocal'>
-          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url='http://ttfwap.yishengyue.cn/arg/E-arg.htm' className='outlink'>用户协议</Navigator></Radio>
+          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url='/pages/index/web-view?target=http://ttfwap.yishengyue.cn/arg/E-arg.html' className='outlink'>用户协议</Navigator></Radio>
         </View>
         <View className='btn-wrap'>
           <Button onClick={this.submitForm} className='btn-form'>提交订单</Button>

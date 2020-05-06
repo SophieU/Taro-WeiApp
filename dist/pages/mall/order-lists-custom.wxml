@@ -1,7 +1,7 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="page custom-lists">
         <view class="order-lists">
-            <view class="order-item" wx:for="{{loopArray47}}" wx:for-item="item" wx:for-index="__index0">
+            <view class="order-item" wx:key="orderSn" wx:for="{{loopArray116}}" wx:for-item="item" wx:for-index="__index0">
                 <view class="order-top">
                     <view class="order-title">订单{{item.$original.orderSn}}</view>
                     <view class="order-status"><text class="text-green">{{item.$original.orderStateName}}</text>
@@ -30,7 +30,6 @@
                         <block>
                             <view class="info-row">用户电话：{{item.$original.userPhone}}</view>
                             <view class="info-row">用户姓名：{{item.$original.username}}</view>
-                            <view class="info-row">服务地址：{{item.$original.repairAddress}}</view>
                         </block>
                     </block>
                 </view>

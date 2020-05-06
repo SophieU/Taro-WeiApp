@@ -1,1 +1,116 @@
-.scroll-wrapper{position:absolute;top:0;left:0;bottom:0;right:0}.top-slider{height:98rpx;background:#f1f1f1;opacity:.93;padding:0 32rpx;-webkit-box-sizing:border-box;box-sizing:border-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-flex-wrap:nowrap;-ms-flex-wrap:nowrap;flex-wrap:nowrap;width:100%;position:fixed;top:0;left:0;right:0}.top-nav{font-size:30rpx;color:#333;text-align:center;white-space:nowrap;height:100%;line-height:98rpx;margin-right:68rpx}.top-nav.active{color:#216ec6;position:relative}.top-nav.active:after{content:"";display:block;height:6rpx;width:52rpx;background:#216ec6;position:absolute;bottom:0;left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%)}.icon-lists-wrap{padding:20rpx 30rpx;background:#fff}.icon-lists-top,.icon-lists-top .wrap-more{-webkit-align-items:center;-ms-flex-align:center;align-items:center}.icon-lists-top{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:30rpx 0}.icon-lists-top .wrap-title{font-size:30rpx;color:#525c66;font-weight:600}.icon-lists-top .wrap-more{font-size:26rpx;color:#b7b7b7;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center}.icon-lists-top .wrap-more .more-ico{width:30rpx;height:30rpx;margin-left:8rpx}.icon-lists-top .wrap-more,.lists{display:-webkit-flex;display:-ms-flexbox;display:flex}.lists .lists-item{-webkit-flex:25% 0 0;-ms-flex:25% 0 0;flex:25% 0 0;text-align:center}.lists .list-img{display:block;width:56rpx;height:56rpx;margin:0 auto 12rpx}.lists .list-text{font-size:24rpx;color:gray}
+.scroll-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+.top-slider {
+  height: 98rpx;
+  background: #F1F1F1;
+  opacity: 0.93;
+  padding: 0 32rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; }
+
+.top-nav {
+  font-size: 30rpx;
+  color: #333333;
+  text-align: center;
+  white-space: nowrap;
+  height: 100%;
+  line-height: 98rpx;
+  margin-right: 68rpx; }
+
+.top-nav.active {
+    color: #216EC6;
+    position: relative; }
+
+.top-nav.active:after {
+      content: "";
+      display: block;
+      height: 6rpx;
+      width: 52rpx;
+      background: #216EC6;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+              transform: translateX(-50%); }
+
+.icon-lists-wrap {
+  padding: 20rpx 30rpx;
+  background: #fff; }
+
+.icon-lists-top {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 30rpx 0; }
+
+.icon-lists-top .wrap-title {
+    font-size: 30rpx;
+    color: #525C66;
+    font-weight: 600; }
+
+.icon-lists-top .wrap-more {
+    font-size: 26rpx;
+    color: #B7B7B7;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+
+.icon-lists-top .wrap-more .more-ico {
+      width: 30rpx;
+      height: 30rpx;
+      margin-left: 8rpx; }
+
+.lists {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.lists .lists-item {
+    -webkit-flex: 25% 0 0;
+        -ms-flex: 25% 0 0;
+            flex: 25% 0 0;
+    text-align: center; }
+
+.lists .list-img {
+    display: block;
+    width: 56rpx;
+    height: 56rpx;
+    margin: 0 auto;
+    margin-bottom: 12rpx; }
+
+.lists .list-text {
+    font-size: 24rpx;
+    color: #808080; }
+

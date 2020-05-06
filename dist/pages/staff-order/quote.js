@@ -1,1 +1,259 @@
-(wx.webpackJsonp=wx.webpackJsonp||[]).push([[49],{"150":function(t,e,n){t.exports=n.p+"pages/staff-order/quote.wxml"},"235":function(t,e,n){"use strict";n.r(e);n(236);var o=n(89);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r)},"236":function(t,e,n){"use strict";n(150)},"34":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{"value":!0});var o=function(t,e,n){return e&&defineProperties(t.prototype,e),n&&defineProperties(t,n),t};function defineProperties(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}var r,i,a=n(0),u=function _interopRequireDefault(t){return t&&t.__esModule?t:{"default":t}}(a),s=n(10);function _possibleConstructorReturn(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}n(87);var c=(function _inherits(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{"constructor":{"value":t,"enumerable":!1,"writable":!0,"configurable":!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(Quote,a.Component),o(Quote,[{"key":"_constructor","value":function _constructor(){(function get(t,e,n){null===t&&(t=Function.prototype);var o=Object.getOwnPropertyDescriptor(t,e);if(void 0===o){var r=Object.getPrototypeOf(t);return null===r?void 0:get(r,e,n)}if("value"in o)return o.value;var i=o.get;return void 0!==i?i.call(n):void 0})(Quote.prototype.__proto__||Object.getPrototypeOf(Quote.prototype),"_constructor",this).call(this),this.state={"staffPrice":0,"id":"","type":"","doorFee":"","nightFee":"","servicePrice":"","materialsPrice":"","totalAmount":0,"repairOrderOfferPlanVoList":[],"dispatchId":""},this.$$refs=new u.default.RefsArray}},{"key":"componentWillMount","value":function componentWillMount(){var t=this,e=this.$router.params,n=e.id,o=e.type,r=e.dispatchId;console.log(r),this.setState({"id":n,"type":o,"dispatchId":r},function(){t.getFee()})}},{"key":"_createData","value":function _createData(t,e,n){var o=this;return this.__state=t||this.state||{},this.__props=e||this.props||{},this.$prefix,this.anonymousFunc0=function(t){return o.handlePriceChange(t,"servicePrice")},this.anonymousFunc1=function(t){return o.handlePriceChange(t,"materialsPrice")},Object.assign(this.__state,{}),this.__state}},{"key":"anonymousFunc0","value":function anonymousFunc0(){}},{"key":"anonymousFunc1","value":function anonymousFunc1(){}}]),i=r=Quote,r.$$events=["filterInput","anonymousFunc0","anonymousFunc1","submitPlan"],r.$$componentPath="pages/staff-order/quote",i);function Quote(){var t,e,o;!function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,Quote);for(var n=arguments.length,r=Array(n),i=0;i<n;i++)r[i]=arguments[i];return(e=o=_possibleConstructorReturn(this,(t=Quote.__proto__||Object.getPrototypeOf(Quote)).call.apply(t,[this].concat(r)))).$usedState=["staffPrice","id","type","doorFee","nightFee","servicePrice","materialsPrice","totalAmount","repairOrderOfferPlanVoList","dispatchId"],o.config={"navigationBarTitleText":"报价清单","navigationStyle":"default"},o.getFee=function(){(0,s.orderDetail)(o.state.id).then(function(t){if(0===t.data.code){var e=0,n=t.data.data.repairOrderOfferPlanVoList.filter(function(t){return"MATERIAL_PROJECT"!==t.planType&&"SERVICE_PROJECT"!==t.planType&&(e+=t.amount,!0)});o.setState({"repairOrderOfferPlanVoList":n,"totalAmount":e})}})},o.submitPlan=function(){if(o.state.servicePrice||o.state.materialsPrice){u.default.showLoading({"title":"提交中"});var t=[{"planType":"SERVICE_PROJECT","serviceCost":o.state.servicePrice},{"planType":"MATERIAL_PROJECT","serviceCost":o.state.materialsPrice}];(0,s.setPricePlan)(o.state.dispatchId,t).then(function(t){0===t.data.code?u.default.showToast({"title":"报价方案提交成功"}).then(function(){u.default.navigateBack()}):u.default.showToast({"title":t.data.msg,"icon":"none"})})}else u.default.showToast({"title":"请至少填写服务费或材料费中一项","icon":"none"})},o.handlePriceChange=function(t,e){var n=t.detail.value;o.setState(function _defineProperty(t,e,n){return e in t?Object.defineProperty(t,e,{"value":n,"enumerable":!0,"configurable":!0,"writable":!0}):t[e]=n,t}({},e,parseFloat(n)))},o.filterInput=function(t){var e=t.detail.value;return e.toString().split(".")[1]&&2<=e.toString().split(".")[1].length?parseFloat(e).toFixed(2):-1<e.indexOf(".")&&2<e.split(".").length?"":void 0},o.customComponents=[],_possibleConstructorReturn(o,e)}e.default=c,Component(n(0).default.createComponent(c,!0))},"89":function(t,e,n){"use strict";n.r(e);var o=n(34),r=n.n(o);for(var i in o)"default"!==i&&function(t){n.d(e,t,function(){return o[t]})}(i);e.default=r.a}},[[235,0,1,2]]]);
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["pages/staff-order/quote"],{
+
+/***/ "./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/staff-order/quote.tsx?taro&type=script&parse=PAGE&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./src/pages/staff-order/quote.tsx?taro&type=script&parse=PAGE& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _class, _temp2;
+
+var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
+
+var _taroWeapp2 = _interopRequireDefault(_taroWeapp);
+
+var _staffApis = __webpack_require__(/*! ./staff-apis */ "./src/pages/staff-order/staff-apis.ts");
+
+__webpack_require__(/*! ./order.scss */ "./src/pages/staff-order/order.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Quote = (_temp2 = _class = function (_BaseComponent) {
+  _inherits(Quote, _BaseComponent);
+
+  function Quote() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Quote);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Quote.__proto__ || Object.getPrototypeOf(Quote)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["staffPrice", "id", "type", "doorFee", "nightFee", "servicePrice", "materialsPrice", "totalAmount", "repairOrderOfferPlanVoList", "dispatchId"], _this.config = {
+      navigationBarTitleText: '报价清单',
+      navigationStyle: 'default'
+    }, _this.getFee = function () {
+      (0, _staffApis.orderDetail)(_this.state.id).then(function (res) {
+        if (res.data.code === 0) {
+          var totalAmount = 0;
+          var data = res.data.data.repairOrderOfferPlanVoList.filter(function (item) {
+            if (item.planType === 'MATERIAL_PROJECT' || item.planType === 'SERVICE_PROJECT') {
+              return false;
+            } else {
+              totalAmount += item.amount;
+              return true;
+            }
+          });
+          _this.setState({
+            repairOrderOfferPlanVoList: data,
+            totalAmount: totalAmount
+          });
+        }
+      });
+    }, _this.submitPlan = function () {
+      if (!_this.state.servicePrice && !_this.state.materialsPrice) {
+        _taroWeapp2.default.showToast({
+          title: '请至少填写服务费或材料费中一项',
+          icon: 'none'
+        });
+        return;
+      }
+      _taroWeapp2.default.showLoading({ title: '提交中' });
+      var params = [{
+        "planType": "SERVICE_PROJECT",
+        "serviceCost": _this.state.servicePrice
+      }, {
+        "planType": "MATERIAL_PROJECT",
+        "serviceCost": _this.state.materialsPrice
+      }];
+      (0, _staffApis.setPricePlan)(_this.state.dispatchId, params).then(function (res) {
+        if (res.data.code === 0) {
+          _taroWeapp2.default.showToast({
+            title: '报价方案提交成功'
+          }).then(function () {
+            _taroWeapp2.default.navigateBack();
+          });
+        } else {
+          _taroWeapp2.default.showToast({ title: res.data.msg, icon: 'none' });
+        }
+      });
+    }, _this.handlePriceChange = function (e, prop) {
+      var value = e.detail.value;
+      _this.setState(_defineProperty({}, prop, parseFloat(value)));
+    }, _this.filterInput = function (e) {
+      var value = e.detail.value;
+      // 最多两位输入
+      if (value.toString().split('.')[1] && value.toString().split('.')[1].length >= 2) {
+        return parseFloat(value).toFixed(2);
+      }
+      if (value.indexOf('.') > -1 && value.split('.').length > 2) {
+        return '';
+      }
+    }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Quote, [{
+    key: '_constructor',
+    value: function _constructor() {
+      _get(Quote.prototype.__proto__ || Object.getPrototypeOf(Quote.prototype), '_constructor', this).call(this);
+
+      this.state = {
+        staffPrice: 0,
+        id: '',
+        type: '',
+        doorFee: '',
+        nightFee: '',
+        servicePrice: '',
+        materialsPrice: '',
+        totalAmount: 0,
+        repairOrderOfferPlanVoList: [],
+        dispatchId: ''
+      };
+      this.$$refs = new _taroWeapp2.default.RefsArray();
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      var _$router$params = this.$router.params,
+          id = _$router$params.id,
+          type = _$router$params.type,
+          dispatchId = _$router$params.dispatchId;
+
+      console.log(dispatchId);
+      this.setState({
+        id: id,
+        type: type,
+        dispatchId: dispatchId
+      }, function () {
+        _this2.getFee();
+      });
+    }
+  }, {
+    key: '_createData',
+    value: function _createData() {
+      var _this3 = this;
+
+      this.__state = arguments[0] || this.state || {};
+      this.__props = arguments[1] || this.props || {};
+      var __isRunloopRef = arguments[2];
+      var __prefix = this.$prefix;
+      ;
+
+      this.anonymousFunc0 = function (val) {
+        return _this3.handlePriceChange(val, 'servicePrice');
+      };
+
+      this.anonymousFunc1 = function (val) {
+        return _this3.handlePriceChange(val, 'materialsPrice');
+      };
+
+      Object.assign(this.__state, {});
+      return this.__state;
+    }
+  }, {
+    key: 'anonymousFunc0',
+    value: function anonymousFunc0(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc1',
+    value: function anonymousFunc1(e) {
+      ;
+    }
+  }]);
+
+  return Quote;
+}(_taroWeapp.Component), _class.$$events = ["filterInput", "anonymousFunc0", "anonymousFunc1", "submitPlan"], _class.$$componentPath = "pages/staff-order/quote", _temp2);
+exports.default = Quote;
+
+Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(Quote, true));
+
+/***/ }),
+
+/***/ "./node_modules/_file-loader@4.3.0@file-loader/dist/cjs.js?name=[path][name].wxml&context=E:\\myGitHub\\Taro-WeiApp\\src!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/staff-order/quote.tsx?taro&type=template&parse=PAGE&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/_file-loader@4.3.0@file-loader/dist/cjs.js?name=[path][name].wxml&context=E:/myGitHub/Taro-WeiApp/src!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./src/pages/staff-order/quote.tsx?taro&type=template&parse=PAGE& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "pages/staff-order/quote.wxml";
+
+/***/ }),
+
+/***/ "./src/pages/staff-order/quote.tsx":
+/*!*****************************************!*\
+  !*** ./src/pages/staff-order/quote.tsx ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _quote_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./quote.tsx?taro&type=template&parse=PAGE& */ "./src/pages/staff-order/quote.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./quote.tsx?taro&type=script&parse=PAGE& */ "./src/pages/staff-order/quote.tsx?taro&type=script&parse=PAGE&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+
+
+/***/ }),
+
+/***/ "./src/pages/staff-order/quote.tsx?taro&type=script&parse=PAGE&":
+/*!**********************************************************************!*\
+  !*** ./src/pages/staff-order/quote.tsx?taro&type=script&parse=PAGE& ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./quote.tsx?taro&type=script&parse=PAGE& */ "./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/staff-order/quote.tsx?taro&type=script&parse=PAGE&");
+/* harmony import */ var _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/pages/staff-order/quote.tsx?taro&type=template&parse=PAGE&":
+/*!************************************************************************!*\
+  !*** ./src/pages/staff-order/quote.tsx?taro&type=template&parse=PAGE& ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!file-loader?name=[path][name].wxml&context=E:/myGitHub/Taro-WeiApp/src!../../../node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!../../../node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./quote.tsx?taro&type=template&parse=PAGE& */ "./node_modules/_file-loader@4.3.0@file-loader/dist/cjs.js?name=[path][name].wxml&context=E:\\myGitHub\\Taro-WeiApp\\src!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/staff-order/quote.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_quote_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ })
+
+},[["./src/pages/staff-order/quote.tsx","runtime","vendors","common"]]]);

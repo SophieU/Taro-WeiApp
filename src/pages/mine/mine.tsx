@@ -162,7 +162,7 @@ class Mine extends  Component<{}, State>{
             </Block>
 
             {/*服务师傅*/}
-            {this.state.apiUserInfo.isServiceUser==='Y'?(
+            { (userType==='ADMIN'&&this.state.apiUserInfo.isServiceUser==='Y')||userType==='SERVICE_USER'?(
               <Block>
                 <View className='control-divider'>接单管理</View>
                 <View className='control-item'>

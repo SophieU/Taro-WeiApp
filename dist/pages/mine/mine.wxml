@@ -40,7 +40,7 @@
                         </view>
                     </block>
                 </block>
-                <block wx:if="{{apiUserInfo.isServiceUser === 'Y'}}">
+                <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y' || userType === 'SERVICE_USER'}}">
                     <block>
                         <view class="control-divider">接单管理</view>
                         <view class="control-item">
@@ -64,10 +64,10 @@
                 </block>
             </view>
         </view>
-        <at-modal compid="{{$compid__51}}">
+        <at-modal compid="{{$compid__301}}">
             <at-modal-header>设置邀请人</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__52}}"></at-input>
+                <at-input compid="{{$compid__302}}"></at-input>
                 <view class="tips">新用户注册成功7天内，可填写邀请人信息</view>
             </at-modal-content>
             <at-modal-action>

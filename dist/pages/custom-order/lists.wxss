@@ -12,11 +12,19 @@
     -webkit-box-shadow: 0 0 40rpx 4rpx rgba(0, 0, 0, 0.1);
             box-shadow: 0 0 40rpx 4rpx rgba(0, 0, 0, 0.1); }
 
-.order-lists .order-lists-item .order-date {
-      color: #999;
+.order-lists .order-lists-item .order-top {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
       font-size: 24rpx;
-      padding: 20rpx 0;
-      border-bottom: 2rpx solid #efefef; }
+      -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+              justify-content: space-between; }
+
+.order-lists .order-lists-item .order-top .order-date {
+        color: #999;
+        padding: 20rpx 0;
+        border-bottom: 2rpx solid #efefef; }
 
 .order-lists .order-lists-item .order-row {
       display: -webkit-flex;

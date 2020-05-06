@@ -54,7 +54,7 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__59", "$compid__60", "$compid__61", "$compid__62", "$compid__63", "anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "stateMap", "current", "lists", "pageSize", "pageNo", "hasNextPage", "pageState"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__393", "$compid__394", "$compid__395", "$compid__396", "$compid__397", "anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "stateMap", "current", "lists", "pageSize", "pageNo", "hasNextPage", "pageState"], _this.config = {
       navigationBarTitleText: '报修记录',
       navigationStyle: 'default'
     }, _this.handleTab = function (index) {
@@ -196,6 +196,11 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       });
     }
   }, {
+    key: 'onReachBottom',
+    value: function onReachBottom() {
+      this.getOrderLists();
+    }
+  }, {
     key: '_createData',
     value: function _createData() {
       this.__state = arguments[0] || this.state || {};
@@ -204,68 +209,68 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__59"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__393"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__59 = _genCompid2[0],
-          $compid__59 = _genCompid2[1];
+          $prevCompid__393 = _genCompid2[0],
+          $compid__393 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__60"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__394"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__60 = _genCompid4[0],
-          $compid__60 = _genCompid4[1];
+          $prevCompid__394 = _genCompid4[0],
+          $compid__394 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__61"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__395"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__61 = _genCompid6[0],
-          $compid__61 = _genCompid6[1];
+          $prevCompid__395 = _genCompid6[0],
+          $compid__395 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__62"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__396"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__62 = _genCompid8[0],
-          $compid__62 = _genCompid8[1];
+          $prevCompid__396 = _genCompid8[0],
+          $compid__396 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__397"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__63 = _genCompid10[0],
-          $compid__63 = _genCompid10[1];
+          $prevCompid__397 = _genCompid10[0],
+          $compid__397 = _genCompid10[1];
 
       var tabLists = [{ title: '待处理' }, { title: '待付款' }, { title: '待评价' }, { title: '已完成' }];
 
-      var anonymousState__temp = this._createListItemData(__prefix + "gdzzzzzzzz")(this.__state.lists['STAY_RECEIPT']);
+      var anonymousState__temp = this._createListItemData(__prefix + "bijzzzzzzz")(this.__state.lists['STAY_RECEIPT']);
 
-      var anonymousState__temp2 = this._createListItemData(__prefix + "gezzzzzzzz")(this.__state.lists['STAY_PAY']);
+      var anonymousState__temp2 = this._createListItemData(__prefix + "bjazzzzzzz")(this.__state.lists['STAY_PAY']);
 
-      var anonymousState__temp3 = this._createListItemData(__prefix + "gfzzzzzzzz")(this.__state.lists['STAY_COMMENT']);
+      var anonymousState__temp3 = this._createListItemData(__prefix + "bjbzzzzzzz")(this.__state.lists['STAY_COMMENT']);
 
-      var anonymousState__temp4 = this._createListItemData(__prefix + "ggzzzzzzzz")(this.__state.lists['FINISH']);
+      var anonymousState__temp4 = this._createListItemData(__prefix + "bjczzzzzzz")(this.__state.lists['FINISH']);
 
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "tabList": tabLists,
         "onClick": this.handleTab
-      }, $compid__59, $prevCompid__59);
+      }, $compid__393, $prevCompid__393);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 0
-      }, $compid__60, $prevCompid__60);
+      }, $compid__394, $prevCompid__394);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 1
-      }, $compid__61, $prevCompid__61);
+      }, $compid__395, $prevCompid__395);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 2
-      }, $compid__62, $prevCompid__62);
+      }, $compid__396, $prevCompid__396);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 3
-      }, $compid__63, $prevCompid__63);
+      }, $compid__397, $prevCompid__397);
       Object.assign(this.__state, {
-        $compid__59: $compid__59,
-        $compid__60: $compid__60,
-        $compid__61: $compid__61,
-        $compid__62: $compid__62,
-        $compid__63: $compid__63,
+        $compid__393: $compid__393,
+        $compid__394: $compid__394,
+        $compid__395: $compid__395,
+        $compid__396: $compid__396,
+        $compid__397: $compid__397,
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
         anonymousState__temp3: anonymousState__temp3,
@@ -285,7 +290,7 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
   }]);
 
   return Lists;
-}(_taroWeapp.Component), _class.$$events = ["getOrderLists"], _class.$$componentPath = "pages/custom-order/lists", _temp2);
+}(_taroWeapp.Component), _class.$$events = [], _class.$$componentPath = "pages/custom-order/lists", _temp2);
 exports.default = Lists;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(Lists, true));

@@ -127,7 +127,6 @@ class Lists extends Component<{},State>{
   // 列表渲染
   renderListItem=(lists)=>{
     return <View className='order-lists'>
-
       {
         lists.length>0?
         lists.map((item,index)=> {
@@ -136,18 +135,20 @@ class Lists extends Component<{},State>{
             key={index}
             url={'/pages/custom-order/detail?id='+item.id}
           >
-            <View className='order-date'>{item.createTime}</View>
+            <View className='order-top'>
+              <View className='order-date'>{item.createTime}</View>
+              <View className='order-state'>{item.orderStateName}</View>
+            </View>
+
             <View className='order-info'>
-              <View className='info-left'>{item.repairCategoryName}</View>
-              <View className='order-right'>{item.orderStateName}</View>
+              <View className='info-left'>{item.orderSn}</View>
+              <View className='order-right'>{item.repairCategoryName}</View>
             </View>
             {
               item.masterName?(<View className='order-row'>
                 <View className='info-left'>接单师傅：{item.masterName} <Text className='text-blue'>({item.masterPhone})</Text></View>
               </View>):null
             }
-
-
           </Navigator>)
         })
           :(<View className='no-data'>暂无数据~</View>)
@@ -182,13 +183,12 @@ class Lists extends Component<{},State>{
       this.getOrderLists()
     })
   }
+  onReachBottom(){
+    this.getOrderLists()
+  }
   render(){
     const tabLists = [{title:'待处理'},{title:'待付款'},{title:'待评价'},{title:'已完成'}]
-    return (<ScrollView
-      className='page'
-      scrollY
-      onScrollToLower={this.getOrderLists}
-    >
+    return (<View className='page' >
       <AtTabs current={this.state.current} tabList={tabLists} onClick={this.handleTab}>
         <AtTabsPane current={this.state.current} index={0}>
           {this.renderListItem(this.state.lists['STAY_RECEIPT'])}
@@ -203,7 +203,7 @@ class Lists extends Component<{},State>{
           {this.renderListItem(this.state.lists['FINISH'])}
         </AtTabsPane>
       </AtTabs>
-    </ScrollView>)
+    </View>)
   }
 }
 export default Lists as ComponentType

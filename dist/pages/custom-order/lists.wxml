@@ -1,20 +1,20 @@
 <block wx:if="{{$taroCompReady}}">
-    <scroll-view class="page" scroll-y="{{true}}" bindscrolltolower="getOrderLists">
-        <at-tabs compid="{{$compid__59}}">
-            <at-tabs-pane compid="{{$compid__60}}">
+    <view class="page">
+        <at-tabs compid="{{$compid__393}}">
+            <at-tabs-pane compid="{{$compid__394}}">
                 <template is="renderListItem" data="{{...anonymousState__temp}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__61}}">
+            <at-tabs-pane compid="{{$compid__395}}">
                 <template is="renderListItem" data="{{...anonymousState__temp2}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__62}}">
+            <at-tabs-pane compid="{{$compid__396}}">
                 <template is="renderListItem" data="{{...anonymousState__temp3}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__63}}">
+            <at-tabs-pane compid="{{$compid__397}}">
                 <template is="renderListItem" data="{{...anonymousState__temp4}}"></template>
             </at-tabs-pane>
         </at-tabs>
-    </scroll-view>
+    </view>
 </block>
 <template name="renderListItem">
     <block>
@@ -22,10 +22,13 @@
             <block>
                 <block wx:if="{{lists.length > 0}}">
                     <navigator class="order-lists-item" wx:key="index" url="{{'/pages/custom-order/detail?id=' + item.id}}" wx:for="{{lists}}" wx:for-item="item" wx:for-index="index">
-                        <view class="order-date">{{item.createTime}}</view>
+                        <view class="order-top">
+                            <view class="order-date">{{item.createTime}}</view>
+                            <view class="order-state">{{item.orderStateName}}</view>
+                        </view>
                         <view class="order-info">
-                            <view class="info-left">{{item.repairCategoryName}}</view>
-                            <view class="order-right">{{item.orderStateName}}</view>
+                            <view class="info-left">{{item.orderSn}}</view>
+                            <view class="order-right">{{item.repairCategoryName}}</view>
                         </view>
                         <block wx:if="{{item.masterName}}">
                             <view class="order-row">

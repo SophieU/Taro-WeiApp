@@ -71,6 +71,9 @@ margin-top: 10px;
     background-position: right center;
     font-size: 14px;
     color: #333;
+    &.last-item{
+      border-bottom: none;
+    }
     .control-title{
       flex:1 0 0;
     }

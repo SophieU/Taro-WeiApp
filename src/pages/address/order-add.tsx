@@ -1,8 +1,8 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {inject, observer } from '@tarojs/mobx'
-import {View, Image, Button} from '@tarojs/components'
-import { getAddLists, getDefaultAdd } from './service'
+import {View, Image, Button,Text} from '@tarojs/components'
+import { getAddLists } from './service'
 import './order-add.scss'
 
 
@@ -13,7 +13,6 @@ type addLists = {
 }
 interface AddState {
   addressLists:Array<addLists>,
-  defaultId:string
   fromPage:string
 }
 interface AddProp {
@@ -30,7 +29,6 @@ class OrderAdd extends Component<AddProp,AddState>{
     super(props);
     this.state={
       addressLists:[ ],
-      defaultId:'',
       fromPage:'',
     }
   }
@@ -40,7 +38,6 @@ class OrderAdd extends Component<AddProp,AddState>{
       fromPage:from
     })
     this.getOrderLists()
-    this.getDefault()
   }
   goEdit=(id?:string)=>{
     Taro.navigateTo({
@@ -48,17 +45,6 @@ class OrderAdd extends Component<AddProp,AddState>{
     })
   }
 
-  getDefault= ()=>{
-    getDefaultAdd().then(res=>{
-      if(res.data.code===0){
-        if(res.data.data){
-          this.setState({
-            defaultId:res.data.data.id
-          })
-        }
-      }
-    })
-  }
   getOrderLists = ()=>{
     Taro.showLoading({title:'加载地址列表中'})
     getAddLists().then(res=>{
@@ -97,7 +83,7 @@ class OrderAdd extends Component<AddProp,AddState>{
               <View className="item-info">
                 <View className='item-text' onClick={()=>this.handleClickAdd(item)}>
                   {item.areaInfo} {item.address}
-                  {item.id===this.state.defaultId?<Text className='item-tag'>默认</Text>:null}
+                  {item.isDefault==='Y'?<Text className='item-tag'>默认</Text>:null}
                 </View>
 
               </View>

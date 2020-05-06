@@ -1,6 +1,6 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View,  Button, ScrollView} from '@tarojs/components'
+import {View,  Button, Text} from '@tarojs/components'
 import {AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtTabs, AtTabsPane } from "taro-ui"
 import {getWalletInfo, walletFlow, withdrawHistory, startWithdraw, setPassword} from './pocket-api'
 import './pocket.scss'
@@ -69,6 +69,12 @@ class Mine extends  Component{
     navigationBarTitleText:'我的钱包',
     navigationStyle:'default'
   }
+  onPullDownRefresh(){
+    this.refreshPage()
+  }
+  onReachBottom(){
+    this.scrollToBottom()
+  }
   componentWillMount(){
     this.getInfo()
     this.getFlow()
@@ -76,9 +82,10 @@ class Mine extends  Component{
   }
   // 钱包信息
   getInfo=()=>{
-    Taro.showLoading({title:''})
+    Taro.showLoading({title:'加载中'})
     getWalletInfo().then(res=>{
       Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState({
@@ -100,7 +107,12 @@ class Mine extends  Component{
       pageNo:this.state.pageNo,
       pageSize:this.state.pageSize
     }
+    Taro.showToast({
+      title:'加载中',
+      icon:'none'
+    })
     walletFlow(param).then(res=>{
+      Taro.hideToast()
       if(res.data.code===0){
         let data = res.data.data
         this.setState((prevState:State)=>{
@@ -126,7 +138,12 @@ class Mine extends  Component{
       pageNo:this.state.pageNoWith,
       pageSize:this.state.pageSizeWith
     }
+    Taro.showToast({
+      title:'加载中',
+      icon:'none'
+    })
     withdrawHistory(param).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let data = res.data.data
         this.setState((prevState:State)=>{
@@ -174,6 +191,29 @@ class Mine extends  Component{
       })
     }
   }
+  // 重新刷新页面内容
+  refreshPage=()=>{
+    this.setState({
+      pageSize:10,
+      pageNo:1,
+      current:0,
+      hasNextPage:true,
+      hasNextPageWith:true,
+      pageSizeWith:10,
+      pageNoWith:1,
+      flowLists:[],
+      withdrawLists:[],
+      showModalPwd:false,
+      withdrawPwd:'',
+      showModal:false,
+      withdrawMoney:'',
+      withdrawPwdForm:'',
+    },()=>{
+      this.getInfo()
+      this.getFlow()
+      this.getWithDrawHistory()
+    })
+  }
   // 提现输入
   handleWithdrawChange = (val,key)=>{
     this.setState({
@@ -186,26 +226,18 @@ class Mine extends  Component{
       "amount":this.state.withdrawMoney,
       "payPwd":this.state.withdrawPwdForm
     }
+    Taro.showToast({
+      title:'提交中',
+      icon:'none'
+    })
     startWithdraw(params).then(res=>{
+      Taro.hideToast()
       if(res.data.code===0){
         Taro.showToast({
           title:'操作成功',
           icon:'none'
         })
-        this.setState({
-          hasNextPage:true,
-          hasNextPageWith:true,
-          pageNo:1,
-          flowLists:[],
-          withdrawLists:[],
-          withdrawPwdForm:'',
-          withdrawMoney:'',
-        },()=>{
-          this.toggleModalStatus('widthdraw')
-          this.getInfo()
-          this.getFlow()
-          this.getWithDrawHistory()
-        })
+        this.refreshPage()
       }else{
         Taro.showToast({
           title:'操作失败:'+res.data.msg,
@@ -257,11 +289,7 @@ class Mine extends  Component{
   }
   render(){
     return (
-      <ScrollView
-        className='page-scroll'
-        scrollY
-        onScrollToLower={this.scrollToBottom}
-      >
+      <View className='page-scroll' >
         <View className='top-info'>
           <View className='info-row'>
             <View className='money-title'>我的余额: </View>
@@ -284,7 +312,11 @@ class Mine extends  Component{
                           <View className='title'>{item.changeIntro}</View>
                           <View className='time'>{item.createTime}</View>
                         </View>
-                        <View className={item.changeType===1?'right add':'right decrement'}>{item.changeType===1?'+':'-'}{item.changeNum}元</View>
+                        <View className='right'>
+                          {item.state==='-1'? <View className='status'>冻结中</View>:null}
+                          <View className={item.changeType===1?' add':' decrement'}>{item.changeType===1?'+':'-'}{item.changeNum}元</View>
+                        </View>
+
                       </View>
                     )
                   })
@@ -299,10 +331,17 @@ class Mine extends  Component{
                         <View className='left'>
                           <View className='title'>单号:{item.withdrawSn}</View>
                           <View className='time'>{item.createTime}</View>
-                          <View className='status'>{item.withdrawRemark}</View>
+                          <View className='status'>
+                            {item.withdrawRemark}
+
+                          </View>
                         </View>
                         <View className='right'>
-                          <View className='status'>{item.orderStateName}</View>
+                          <View className='status'>
+                            {item.orderStateName==='处理中'?<Text className='text-green'>{item.orderStateName}</Text>:null}
+                            {item.orderStateName==='已完成'?<Text>{item.orderStateName}</Text>:null}
+                            {item.orderStateName==='处理失败'?<Text className='text-warm'>{item.orderStateName}</Text>:null}
+                          </View>
                           <View className='decrement'>-{item.amount}元</View>
                         </View>
                       </View>
@@ -322,7 +361,6 @@ class Mine extends  Component{
               name='withdrawPwd'
               type='password'
               placeholder='请设置提现密码,最少6位'
-              autoFocus
               value={this.state.withdrawPwd}
               onChange={this.handleWithdrawPwdChange}
             />
@@ -358,7 +396,7 @@ class Mine extends  Component{
             <Button onClick={this.handleWithdraw}>确定</Button>
           </AtModalAction>
         </AtModal>
-      </ScrollView>
+      </View>
     )
   }
 }

@@ -1,6 +1,6 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button, Text, Navigator} from '@tarojs/components'
+import {View, Image, Button, Text, Block} from '@tarojs/components'
 import {customOrderLists} from './mall-apis'
 import {getWxPay} from '../order/order-api'
 import './order-lists.scss'
@@ -83,7 +83,7 @@ class OrderListsCustom extends  Component{
   }
   render(){
     return (
-      <View className='page order-lists-custom'>
+      <View className='page custom-lists'>
           <View className='order-lists'>
             {
               this.state.lists.map(item=>{
@@ -91,7 +91,7 @@ class OrderListsCustom extends  Component{
                   <View className='order-top'>
                     <View className='order-title'>订单{item.orderSn}</View>
                     <View className='order-status'>
-                      <Text>{item.orderStateName}</Text>
+                      <Text className='text-green'>{item.orderStateName}</Text>
                     </View>
                   </View>
                   <View className="order-body">
@@ -102,11 +102,22 @@ class OrderListsCustom extends  Component{
                         <View className='goods-price'>￥{item.orderAmount}</View>
                       </View>
                       <View className='item-row'>
-                        <View className="goods-tips">服务师傅：{item.repairServiceUserName}({item.repairServiceUserPhone})</View>
+                        <View className="goods-tips">服务师傅：{item.repairServiceUserName} <Text onClick={()=>Taro.makePhoneCall({phoneNumber:item.repairServiceUserPhone})} className='text-blue'>({item.repairServiceUserPhone})</Text></View>
                         <View className="goods-tips">上门时间：{item.hopeDoorTime}</View>
                         <View className="goods-tips">服务地址：{item.repairAddress}</View>
                       </View>
                     </View>
+                  </View>
+                  <View className="other-info">
+                    {item.payTime?<View className="info-row">支付时间：{item.payTime}</View>:null}
+                    {
+                      item.username?(<Block>
+                        <View className="info-row">用户电话：{item.userPhone}</View>
+                        <View className="info-row">用户姓名：{item.username}</View>
+                        <View className="info-row">服务地址：{item.repairAddress}</View>
+                      </Block>):null
+                    }
+
                   </View>
                   {
                     item.orderStateName==='待付款'?(

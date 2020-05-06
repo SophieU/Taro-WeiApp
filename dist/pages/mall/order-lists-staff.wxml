@@ -1,6 +1,6 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="page order-lists-custom">
-        <at-tabs compid="{{$compid__58}}"></at-tabs>
+        <at-tabs compid="{{$compid__55}}"></at-tabs>
         <view class="order-lists">
             <view class="order-item" wx:key="id" wx:for="{{loopArray48}}" wx:for-item="item" wx:for-index="__index0">
                 <view class="order-top">
@@ -48,9 +48,9 @@
                 </view>
             </view>
         </view>
-        <at-action-sheet compid="{{$compid__59}}">
-            <at-action-sheet-item compid="{{$compid__60}}">用户端支付</at-action-sheet-item>
-            <at-action-sheet-item compid="{{$compid__61}}">二维码收款</at-action-sheet-item>
+        <at-action-sheet compid="{{$compid__56}}">
+            <at-action-sheet-item compid="{{$compid__57}}">用户端支付</at-action-sheet-item>
+            <at-action-sheet-item compid="{{$compid__58}}">二维码收款</at-action-sheet-item>
         </at-action-sheet>
     </view>
 </block>

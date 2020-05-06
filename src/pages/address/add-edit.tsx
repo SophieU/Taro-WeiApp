@@ -66,6 +66,7 @@ class AddEdit extends Component<{},State>{
         longitude
       })
     }
+
   }
   getEditAddInfo=(id)=>{
     let addLists = Taro.getStorageSync('addressLists')
@@ -91,24 +92,44 @@ class AddEdit extends Component<{},State>{
     this.setState({
       chooseLocation: Taro.requirePlugin('chooseLocation')
     })
-    const key = 'E4EBZ-Z7QRF-BREJT-JZGXD-2DDE6-6XB6T';  //使用在腾讯位置服务申请的key
-    const referer = '天富一生约'; //调用插件的app的名称
-    getLocationAuth(()=>{
-      Taro.getLocation({
-        type: 'wgs84',
-        success:(res)=>{
-          const latitude = res.latitude
-          const longitude = res.longitude
-          const location = JSON.stringify({
-            latitude: latitude,
-            longitude: longitude
-          });
-          const category = '公司企业,房产小区';
-          Taro.navigateTo({
-            url: `plugin://chooseLocation/index?key=${key}&referer=${referer}&location=${location}&category=${category}`
-          });
+    // Taro.authorize({scope: "scope.userLocation"})
+    Taro.getSetting({
+      success:res=>{
+        if(!res.authSetting['scope.userLocation']){
+          Taro.showModal({
+            title:'',
+            content:'您还未授权访问地理信息，请先同意授权',
+            success:(res)=>{
+              if(res.confirm){
+                Taro.openSetting({
+                  success: (res) => { console.log(res)}
+                })
+              }
+            }
+          })
+
+        }else{
+          const key = 'E4EBZ-Z7QRF-BREJT-JZGXD-2DDE6-6XB6T';  //使用在腾讯位置服务申请的key
+          const referer = '天富一生约'; //调用插件的app的名称
+          getLocationAuth(()=>{
+            Taro.getLocation({
+              type: 'wgs84',
+              success:(res)=>{
+                const latitude = res.latitude
+                const longitude = res.longitude
+                const location = JSON.stringify({
+                  latitude: latitude,
+                  longitude: longitude
+                });
+                const category = '公司企业,房产小区';
+                Taro.navigateTo({
+                  url: `plugin://chooseLocation/index?key=${key}&referer=${referer}&location=${location}&category=${category}`
+                });
+              }
+            })
+          })
         }
-      })
+      }
     })
 
   }
@@ -196,7 +217,7 @@ class AddEdit extends Component<{},State>{
           <View className='form-label'>地址: </View>
           <View className='form-control picker'>
             <Input onClick={this.goAddress} className='picker-input' disabled={true} placeholder='点击选择' value={this.state.areaInfo}></Input>
-            <Icon className='picker-ico' size='20' type='search' />
+            <Icon onClick={this.goAddress}  className='picker-ico' size='20' type='search' />
           </View>
         </View>
         <View className='form-item'>

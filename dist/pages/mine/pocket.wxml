@@ -1,5 +1,5 @@
 <block wx:if="{{$taroCompReady}}">
-    <scroll-view class="page-scroll" scroll-y="{{true}}" bindscrolltolower="scrollToBottom">
+    <view class="page-scroll">
         <view class="top-info">
             <view class="info-row">
                 <view class="money-title">我的余额:</view>
@@ -12,19 +12,24 @@
             </view>
         </view>
         <view class="history">
-            <at-tabs compid="{{$compid__643}}">
-                <at-tabs-pane compid="{{$compid__644}}">
+            <at-tabs compid="{{$compid__75}}">
+                <at-tabs-pane compid="{{$compid__76}}">
                     <view class="history-lists">
                         <view class="history-item" wx:key="index" wx:for="{{flowLists}}" wx:for-item="item" wx:for-index="index">
                             <view class="left">
                                 <view class="title">{{item.changeIntro}}</view>
                                 <view class="time">{{item.createTime}}</view>
                             </view>
-                            <view class="{{item.changeType === 1 ? 'right add' : 'right decrement'}}">{{item.changeType === 1 ? '+' : '-'}}{{item.changeNum}}元</view>
+                            <view class="right">
+                                <block wx:if="{{item.state === '-1'}}">
+                                    <view class="status">冻结中</view>
+                                </block>
+                                <view class="{{item.changeType === 1 ? ' add' : ' decrement'}}">{{item.changeType === 1 ? '+' : '-'}}{{item.changeNum}}元</view>
+                            </view>
                         </view>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__645}}">
+                <at-tabs-pane compid="{{$compid__77}}">
                     <view class="history-lists">
                         <view class="history-item" wx:key="index" wx:for="{{withdrawLists}}" wx:for-item="item" wx:for-index="index">
                             <view class="left">
@@ -33,7 +38,14 @@
                                 <view class="status">{{item.withdrawRemark}}</view>
                             </view>
                             <view class="right">
-                                <view class="status">{{item.orderStateName}}</view>
+                                <view class="status">
+                                    <block wx:if="{{item.orderStateName === '处理中'}}"><text class="text-green">{{item.orderStateName}}</text>
+                                    </block>
+                                    <block wx:if="{{item.orderStateName === '已完成'}}"><text>{{item.orderStateName}}</text>
+                                    </block>
+                                    <block wx:if="{{item.orderStateName === '处理失败'}}"><text class="text-warm">{{item.orderStateName}}</text>
+                                    </block>
+                                </view>
                                 <view class="decrement">-{{item.amount}}元</view>
                             </view>
                         </view>
@@ -41,27 +53,27 @@
                 </at-tabs-pane>
             </at-tabs>
         </view>
-        <at-modal compid="{{$compid__646}}">
+        <at-modal compid="{{$compid__78}}">
             <at-modal-header>温馨提醒</at-modal-header>
             <at-modal-content>
                 <view class="pwd-tips">您还未设置密码，请先设置密码</view>
-                <at-input compid="{{$compid__647}}"></at-input>
+                <at-input compid="{{$compid__79}}"></at-input>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="anonymousFunc0">取消</button>
                 <button bindtap="handlePwd">确定</button>
             </at-modal-action>
         </at-modal>
-        <at-modal compid="{{$compid__648}}">
+        <at-modal compid="{{$compid__80}}">
             <at-modal-header>提现</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__649}}"></at-input>
-                <at-input compid="{{$compid__650}}"></at-input>
+                <at-input compid="{{$compid__81}}"></at-input>
+                <at-input compid="{{$compid__82}}"></at-input>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="anonymousFunc3">取消</button>
                 <button bindtap="handleWithdraw">确定</button>
             </at-modal-action>
         </at-modal>
-    </scroll-view>
+    </view>
 </block>

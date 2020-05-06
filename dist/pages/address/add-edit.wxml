@@ -4,7 +4,7 @@
             <view class="form-label">地址:</view>
             <view class="form-control picker">
                 <input bindtap="goAddress" class="picker-input" disabled="{{true}}" placeholder="点击选择" value="{{areaInfo}}" />
-                <icon class="picker-ico" size="20" type="search"></icon>
+                <icon bindtap="goAddress" class="picker-ico" size="20" type="search"></icon>
             </view>
         </view>
         <view class="form-item">
@@ -27,7 +27,7 @@
         </view>
         <view class="form-item">
             <view class="form-control ">
-                <at-checkbox compid="{{$compid__661}}"></at-checkbox>
+                <at-checkbox compid="{{$compid__53}}"></at-checkbox>
             </view>
         </view>
         <view class="btn-wrap">

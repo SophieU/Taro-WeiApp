@@ -339,7 +339,7 @@ class OrderSubmit extends Component<{},State>{
   }
 
   render(){
-    return (<View className='page'>
+    return (<View className='page order-submit-page'>
       {
         this.state.bannerLists.length>0?
           (<Swiper
@@ -375,7 +375,7 @@ class OrderSubmit extends Component<{},State>{
         <View className='info-item'>
           <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
           <Text className='info-title'>服务收费</Text>
-          <View className='info-content'>服务费{this.state.serviceContent.serviceFee}元起</View>
+          <View className='info-content'>服务费 <Text className='text-warm'>{this.state.serviceContent.serviceFee}</Text> 元起</View>
         </View>
         {
           this.state.serviceContent.hasDtdServiceFee!=='Y'
@@ -383,7 +383,7 @@ class OrderSubmit extends Component<{},State>{
             :( <View className='info-item'>
               <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
               <Text className='info-title'>上门费</Text>
-              <View className='info-content'>服务费 {this.state.serviceContent.dtdServiceFee}元起
+              <View className='info-content'>服务费 <Text className='text-warm'>{this.state.serviceContent.dtdServiceFee}</Text>元起
                 {this.state.serviceContent.isPrepayDtd==='Y'?<Text className='little-tips'>(需要预付)</Text>:null}
               </View>
             </View>)
@@ -435,7 +435,7 @@ class OrderSubmit extends Component<{},State>{
 
       <View className="submit-bar">
         <View className='protocal'>
-          <Radio color='#216EC6' value='1' checked>已同意 <Navigator className='outlink'>用户协议</Navigator></Radio>
+          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url='http://ttfwap.yishengyue.cn/arg/E-arg.htm' className='outlink'>用户协议</Navigator></Radio>
         </View>
         <View className='btn-wrap'>
           <Button onClick={this.submitForm} className='btn-form'>提交订单</Button>

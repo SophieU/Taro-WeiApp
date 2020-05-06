@@ -78,11 +78,23 @@ class Index extends Component<{}, PageState> {
   componentWillUnmount () {}
   onPullDownRefresh(){
     Taro.showNavigationBarLoading()
-    /*登录小程序*/
-    loginApp()
-    /*界面信息数据*/
-    this.getBanner()
-    this.getService()
+    this.setState({
+      hideService:true,
+      configApiVoList:[],
+      serviceList:[],
+      adBannerList:[],
+      serviceBlockLists:[],
+      pageNo:1,
+      pageSize:10,
+      hasNextPage:true
+    },()=>{
+      /*登录小程序*/
+      loginApp()
+      /*界面信息数据*/
+      this.getBanner()
+      this.getService()
+    })
+
   }
   onReachBottom(){
     this.getService()
@@ -117,6 +129,9 @@ class Index extends Component<{}, PageState> {
   getService = ()=>{
     Taro.showLoading({title:'加载中'})
     if(!this.state.hasNextPage){
+      Taro.hideNavigationBarLoading()
+      Taro.stopPullDownRefresh()
+      Taro.hideLoading()
       return
     }
     let params = {

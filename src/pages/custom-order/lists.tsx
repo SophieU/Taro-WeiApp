@@ -61,6 +61,31 @@ class Lists extends Component<{},State>{
   componentWillMount(){
     this.getOrderLists()
   }
+  onPullDownRefresh(){
+    this.setState({
+      lists:{
+        STAY_RECEIPT:[],
+        STAY_PAY:[],
+        STAY_COMMENT:[],
+        FINISH:[],
+      },
+      pageNo:{
+        STAY_RECEIPT:1,
+        STAY_PAY:1,
+        STAY_COMMENT:1,
+        FINISH:1,
+      },
+      hasNextPage:{
+        STAY_RECEIPT:true,
+        STAY_PAY:true,
+        STAY_COMMENT:true,
+        FINISH:true,
+      },
+      pageState:'STAY_RECEIPT'
+    },()=>{
+      this.getOrderLists()
+    })
+  }
   // 获取列表
   getOrderLists(){
     let stateType = this.state.pageState
@@ -71,12 +96,14 @@ class Lists extends Component<{},State>{
       })
       return
     }
+    Taro.showLoading({title:'数据加载中'})
     let params = {
       pageNo:this.state.pageNo[stateType],
       pageSize:this.state.pageSize,
       repairOrderState:this.state.pageState
     }
     getLists(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(prevState=>{
@@ -114,6 +141,13 @@ class Lists extends Component<{},State>{
               <View className='info-left'>{item.repairCategoryName}</View>
               <View className='order-right'>{item.orderStateName}</View>
             </View>
+            {
+              item.masterName?(<View className='order-row'>
+                <View className='info-left'>接单师傅：{item.masterName} <Text className='text-blue'>({item.masterPhone})</Text></View>
+              </View>):null
+            }
+
+
           </Navigator>)
         })
           :(<View className='no-data'>暂无数据~</View>)

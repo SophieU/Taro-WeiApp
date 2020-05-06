@@ -1,16 +1,16 @@
 <block wx:if="{{$taroCompReady}}">
     <scroll-view class="page" scroll-y="{{true}}" bindscrolltolower="getOrderLists">
-        <at-tabs compid="{{$compid__53}}">
-            <at-tabs-pane compid="{{$compid__54}}">
+        <at-tabs compid="{{$compid__59}}">
+            <at-tabs-pane compid="{{$compid__60}}">
                 <template is="renderListItem" data="{{...anonymousState__temp}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__55}}">
+            <at-tabs-pane compid="{{$compid__61}}">
                 <template is="renderListItem" data="{{...anonymousState__temp2}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__56}}">
+            <at-tabs-pane compid="{{$compid__62}}">
                 <template is="renderListItem" data="{{...anonymousState__temp3}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__57}}">
+            <at-tabs-pane compid="{{$compid__63}}">
                 <template is="renderListItem" data="{{...anonymousState__temp4}}"></template>
             </at-tabs-pane>
         </at-tabs>
@@ -27,6 +27,12 @@
                             <view class="info-left">{{item.repairCategoryName}}</view>
                             <view class="order-right">{{item.orderStateName}}</view>
                         </view>
+                        <block wx:if="{{item.masterName}}">
+                            <view class="order-row">
+                                <view class="info-left">接单师傅：{{item.masterName}} <text class="text-blue">({{item.masterPhone}})</text>
+                                </view>
+                            </view>
+                        </block>
                     </navigator>
                 </block>
                 <block wx:else>

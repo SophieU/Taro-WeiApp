@@ -15,11 +15,19 @@
       padding: 10px 0;
       border-bottom: 1px solid #efefef;
     }
+    .order-row{
+      display: flex;
+      font-size: 14px;
+      justify-content: space-between;
+      padding: 10px 0;
+      color:#999;
+    }
     .order-info{
       display: flex;
       justify-content: space-between;
       padding: 10px 0;
       font-size: 14px;
+
       .info-left{
         color: #333;
       }

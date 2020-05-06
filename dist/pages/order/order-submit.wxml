@@ -1,8 +1,8 @@
 <block wx:if="{{$taroCompReady}}">
-    <view class="page">
+    <view class="page order-submit-page">
         <block wx:if="{{bannerLists.length > 0}}">
             <swiper class="order-banner" circular="{{true}}" autoplay="{{true}}">
-                <swiper-item wx:key="id" wx:for="{{loopArray58}}" wx:for-item="item" wx:for-index="__index0">
+                <swiper-item wx:key="id" wx:for="{{loopArray59}}" wx:for-item="item" wx:for-index="__index0">
                     <image bindtap="anonymousFunc0" class="order-banner" src="{{item.$original.imgName}}" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
                 </swiper-item>
             </swiper>
@@ -22,12 +22,12 @@
             </view>
             <view class="info-item">
                 <image class="info-ico" src="{{anonymousState__temp4}}"></image><text class="info-title">服务收费</text>
-                <view class="info-content">服务费{{serviceContent.serviceFee}}元起</view>
+                <view class="info-content">服务费 <text class="text-warm">{{serviceContent.serviceFee}}</text> 元起</view>
             </view>
             <block wx:if="{{!(serviceContent.hasDtdServiceFee !== 'Y')}}">
                 <view class="info-item">
                     <image class="info-ico" src="{{anonymousState__temp5}}"></image><text class="info-title">上门费</text>
-                    <view class="info-content">服务费 {{serviceContent.dtdServiceFee}}元起
+                    <view class="info-content">服务费 <text class="text-warm">{{serviceContent.dtdServiceFee}}</text>元起
                         <block wx:if="{{serviceContent.isPrepayDtd === 'Y'}}"><text class="little-tips">(需要预付)</text>
                         </block>
                     </view>
@@ -49,23 +49,23 @@
             </view>
         </view>
         <view class="other-tips">
-            <at-tabs compid="{{$compid__68}}">
-                <at-tabs-pane compid="{{$compid__69}}">
+            <at-tabs compid="{{$compid__70}}">
+                <at-tabs-pane compid="{{$compid__71}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{serviceContent.serviceDescription}}"></rich-text>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__70}}">
+                <at-tabs-pane compid="{{$compid__72}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{serviceTimeTips}}"></rich-text>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__71}}">
+                <at-tabs-pane compid="{{$compid__73}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{serviceFeeTips}}"></rich-text>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__72}}">
+                <at-tabs-pane compid="{{$compid__74}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{otherTips}}"></rich-text>
                     </view>
@@ -75,7 +75,7 @@
         <view class="submit-bar">
             <view class="protocal">
                 <radio color="#216EC6" value="1" checked="{{true}}">已同意
-                    <navigator class="outlink">用户协议</navigator>
+                    <navigator url="http://ttfwap.yishengyue.cn/arg/E-arg.htm" class="outlink">用户协议</navigator>
                 </radio>
             </view>
             <view class="btn-wrap">

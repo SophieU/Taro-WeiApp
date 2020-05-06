@@ -101,7 +101,7 @@
             <at-modal-header>评价订单</at-modal-header>
             <at-modal-content>
                 <at-tabs compid="{{$compid__97}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray66}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__91}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray68}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__91}}">
                         <view class="comment-tag">
                             <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__90}}">{{child.$original.name}}</at-tag>
                         </view>
@@ -117,7 +117,7 @@
             <at-modal-header>评价详情</at-modal-header>
             <at-modal-content>
                 <at-tabs compid="{{$compid__99}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray67}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__93}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray69}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__93}}">
                         <view class="comment-tag">
                             <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__92}}">{{child.$original.name}}</at-tag>
                         </view>

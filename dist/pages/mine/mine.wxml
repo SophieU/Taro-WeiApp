@@ -29,12 +29,12 @@
                         <view class="control-title">在线客服</view>
                         <view class="control-desc"></view>
                     </view>
-                    <view bindtap="anonymousFunc3" class="control-item">
+                    <view bindtap="anonymousFunc3" class="control-item last-item">
                         <view class="control-title">我的邀请码</view>
                         <view class="control-desc"></view>
                     </view>
                     <block wx:if="{{apiUserInfo.isShowInvitePage === 'Y'}}">
-                        <view bindtap="toggleInvitePhoneModal" class="control-item">
+                        <view bindtap="toggleInvitePhoneModal" class="control-item last-item">
                             <view class="control-title">设置邀请人</view>
                             <view class="control-desc"></view>
                         </view>
@@ -47,7 +47,7 @@
                             <view bindtap="anonymousFunc4" class="control-title">报修接单管理</view>
                             <view class="control-desc"></view>
                         </view>
-                        <view bindtap="anonymousFunc5" class="control-item">
+                        <view bindtap="anonymousFunc5" class="control-item last-item">
                             <view class="control-title">预约接单管理</view>
                             <view class="control-desc"></view>
                         </view>
@@ -55,17 +55,8 @@
                 </block>
                 <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y'}}">
                     <block>
-                        <view class="control-divider">接单管理</view>
-                        <view class="control-item">
-                            <view bindtap="anonymousFunc6" class="control-title">报修接单管理</view>
-                            <view class="control-desc"></view>
-                        </view>
-                        <view bindtap="anonymousFunc7" class="control-item">
-                            <view class="control-title">预约接单管理</view>
-                            <view class="control-desc"></view>
-                        </view>
                         <view class="control-divider">派单管理</view>
-                        <view bindtap="anonymousFunc8" class="control-item">
+                        <view bindtap="anonymousFunc6" class="control-item">
                             <view class="control-title">处理工单</view>
                             <view class="control-desc"></view>
                         </view>
@@ -73,10 +64,10 @@
                 </block>
             </view>
         </view>
-        <at-modal compid="{{$compid__617}}">
+        <at-modal compid="{{$compid__51}}">
             <at-modal-header>设置邀请人</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__618}}"></at-input>
+                <at-input compid="{{$compid__52}}"></at-input>
                 <view class="tips">新用户注册成功7天内，可填写邀请人信息</view>
             </at-modal-content>
             <at-modal-action>

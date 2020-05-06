@@ -1,12 +1,12 @@
 <block wx:if="{{$taroCompReady}}">
     <view style="{{anonymousState__temp3}}" class="page">
-        <at-tabs-pane compid="{{$compid__87}}">
+        <at-tabs-pane compid="{{$compid__83}}">
             <view class="order-wrap">
                 <block wx:if="{{orderLists.length <= 0}}">
                     <view class="nothing">这里空空如也~</view>
                 </block>
                 <view class="order-lists">
-                    <view class="order-item" wx:key="orderId" wx:for="{{loopArray63}}" wx:for-item="item" wx:for-index="__index0">
+                    <view class="order-item" wx:key="orderId" wx:for="{{loopArray62}}" wx:for-item="item" wx:for-index="__index0">
                         <view class="item-header">
                             <view class="header-time">{{item.$original.createTime}}</view>
                             <block wx:if="{{item.$original.orderStateName === '异常'}}">
@@ -56,10 +56,10 @@
                 </view>
             </view>
         </at-tabs-pane>
-        <at-modal compid="{{$compid__88}}">
+        <at-modal compid="{{$compid__84}}">
             <at-modal-header>取消原因</at-modal-header>
             <at-modal-content>
-                <at-radio compid="{{$compid__89}}"></at-radio>
+                <at-radio compid="{{$compid__85}}"></at-radio>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="handleCancelModal">取消</button>

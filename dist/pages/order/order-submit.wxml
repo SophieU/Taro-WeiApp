@@ -2,7 +2,7 @@
     <view class="page order-submit-page">
         <block wx:if="{{bannerLists.length > 0}}">
             <swiper class="order-banner" circular="{{true}}" autoplay="{{true}}">
-                <swiper-item wx:key="id" wx:for="{{loopArray112}}" wx:for-item="item" wx:for-index="__index0">
+                <swiper-item wx:key="id" wx:for="{{loopArray65}}" wx:for-item="item" wx:for-index="__index0">
                     <image bindtap="anonymousFunc0" class="order-banner" src="{{item.$original.imgName}}" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
                 </swiper-item>
             </swiper>
@@ -18,18 +18,18 @@
             </view>
             <view class="info-item">
                 <image class="info-ico" src="{{anonymousState__temp3}}"></image><text class="info-title">服务说明</text>
-                <view class="info-content">{{serviceContent.description}}</view>
+                <view class="info-content  wrap">{{serviceContent.description}}</view>
             </view>
             <block wx:if="{{serviceContent.serviceFee !== 0}}">
                 <view class="info-item">
                     <image class="info-ico" src="{{anonymousState__temp4}}"></image><text class="info-title">服务收费</text>
-                    <view class="info-content"><text class="text-warm strong">{{serviceContent.serviceFee}}</text> 元起</view>
+                    <view class="info-content"><text class="text-warm strong">{{serviceContent.serviceFee}}</text> /次起</view>
                 </view>
             </block>
             <block wx:if="{{!(serviceContent.hasDtdServiceFee !== 'Y')}}">
                 <view class="info-item">
                     <image class="info-ico" src="{{anonymousState__temp5}}"></image><text class="info-title">上门费</text>
-                    <view class="info-content"><text class="text-warm strong">{{serviceContent.dtdServiceFee}}</text>元起
+                    <view class="info-content"><text class="text-warm strong">{{serviceContent.dtdServiceFee}}</text>/次
                         <block wx:if="{{serviceContent.isPrepayDtd === 'Y'}}"><text class="little-tips">(需要预付)</text>
                         </block>
                     </view>
@@ -43,11 +43,11 @@
             </view>
             <view class="form-item">
                 <image class="form-ico" src="{{anonymousState__temp7}}"></image><text class="form-label">联系人</text>
-                <input type="text" value="{{userName}}" bindinput="handleInputMobile" placeholder="请输入姓名" />
+                <input type="text" value="{{userName}}" bindinput="anonymousFunc1" placeholder="请输入姓名" />
             </view>
             <view class="form-item">
                 <image class="form-ico" src="{{anonymousState__temp8}}"></image><text class="form-label">联系方式</text>
-                <input type="text" value="{{userMobile}}" bindinput="handleInputMobile" placeholder="请输入联系方式" />
+                <input type="text" maxlength="{{11}}" value="{{userMobile}}" bindinput="anonymousFunc2" placeholder="请输入联系方式" />
             </view>
             <view class="form-item form-item-textarea">
                 <image class="form-ico" src="{{anonymousState__temp9}}"></image><text class="form-label">故障说明</text>
@@ -55,23 +55,23 @@
             </view>
         </view>
         <view class="other-tips">
-            <at-tabs compid="{{$compid__318}}">
-                <at-tabs-pane compid="{{$compid__319}}">
+            <at-tabs compid="{{$compid__93}}">
+                <at-tabs-pane compid="{{$compid__94}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{serviceContent.serviceDescription}}"></rich-text>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__320}}">
+                <at-tabs-pane compid="{{$compid__95}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{serviceTimeTips}}"></rich-text>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__321}}">
+                <at-tabs-pane compid="{{$compid__96}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{serviceFeeTips}}"></rich-text>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__322}}">
+                <at-tabs-pane compid="{{$compid__97}}">
                     <view class="tips-inner">
                         <rich-text nodes="{{otherTips}}"></rich-text>
                     </view>
@@ -85,7 +85,7 @@
                 </radio>
             </view>
             <view class="btn-wrap">
-                <button bindtap="submitForm" class="btn-form">提交订单</button>
+                <button bindtap="isNeedNightFee" class="btn-form">提交订单</button>
             </view>
         </view>
     </view>

@@ -29,10 +29,12 @@
                         <view class="control-title">在线客服</view>
                         <view class="control-desc"></view>
                     </view>
-                    <view bindtap="anonymousFunc3" class="control-item last-item">
-                        <view class="control-title">我的邀请码</view>
-                        <view class="control-desc"></view>
-                    </view>
+                    <block wx:if="{{anonymousState__temp2}}">
+                        <view bindtap="anonymousFunc3" class="control-item ">
+                            <view class="control-title">我的邀请码</view>
+                            <view class="control-desc"></view>
+                        </view>
+                    </block>
                     <block wx:if="{{apiUserInfo.isShowInvitePage === 'Y'}}">
                         <view bindtap="toggleInvitePhoneModal" class="control-item last-item">
                             <view class="control-title">设置邀请人</view>
@@ -40,7 +42,7 @@
                         </view>
                     </block>
                 </block>
-                <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y' || userType === 'SERVICE_USER'}}">
+                <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y' || userType === 'SERVICE_USER' && apiUserInfo.isServiceUser === 'Y'}}">
                     <block>
                         <view class="control-divider">接单管理</view>
                         <view class="control-item">
@@ -64,10 +66,10 @@
                 </block>
             </view>
         </view>
-        <at-modal compid="{{$compid__301}}">
+        <at-modal compid="{{$compid__74}}">
             <at-modal-header>设置邀请人</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__302}}"></at-input>
+                <at-input compid="{{$compid__75}}"></at-input>
                 <view class="tips">新用户注册成功7天内，可填写邀请人信息</view>
             </at-modal-content>
             <at-modal-action>

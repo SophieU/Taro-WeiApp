@@ -87,23 +87,23 @@
             </view>
         </view>
         <template is="renderFoot" data="{{...anonymousState__temp}}"></template>
-        <at-modal compid="{{$compid__94}}">
+        <at-modal compid="{{$compid__102}}">
             <at-modal-header>取消原因</at-modal-header>
             <at-modal-content>
-                <at-radio compid="{{$compid__95}}"></at-radio>
+                <at-radio compid="{{$compid__103}}"></at-radio>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="handleCancelModal">取消</button>
                 <button bindtap="handleConfirmModal">确定</button>
             </at-modal-action>
         </at-modal>
-        <at-modal compid="{{$compid__96}}">
+        <at-modal compid="{{$compid__104}}">
             <at-modal-header>评价订单</at-modal-header>
             <at-modal-content>
-                <at-tabs compid="{{$compid__97}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray68}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__91}}">
+                <at-tabs compid="{{$compid__105}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray68}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__99}}">
                         <view class="comment-tag">
-                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__90}}">{{child.$original.name}}</at-tag>
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__98}}">{{child.$original.name}}</at-tag>
                         </view>
                     </at-tabs-pane>
                 </at-tabs>
@@ -113,13 +113,13 @@
                 <button bindtap="confirmComment">确定</button>
             </at-modal-action>
         </at-modal>
-        <at-modal compid="{{$compid__98}}">
+        <at-modal compid="{{$compid__106}}">
             <at-modal-header>评价详情</at-modal-header>
             <at-modal-content>
-                <at-tabs compid="{{$compid__99}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray69}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__93}}">
+                <at-tabs compid="{{$compid__107}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray69}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__101}}">
                         <view class="comment-tag">
-                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__92}}">{{child.$original.name}}</at-tag>
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__100}}">{{child.$original.name}}</at-tag>
                         </view>
                     </at-tabs-pane>
                 </at-tabs>
@@ -135,16 +135,22 @@
         <block wx:if="{{baseInfo.orderState === 'STAY_PAY'}}">
             <view class="page-foot">
                 <view class="ico-wrap">
-                    <view class="ico-item">
+                    <view class="ico-item" bindtap="anonymousFunc3">
                         <image class="foot-ico" src="{{_$anonymousState__temp}}"></image>
-                        <view bindtap="anonymousFunc3">联系网点</view>
+                        <view>联系网点</view>
                     </view>
-                    <view class="ico-item">
+                    <view class="ico-item" bindtap="anonymousFunc4">
                         <image class="foot-ico" src="{{_$anonymousState__temp2}}"></image>
-                        <view bindtap="anonymousFunc4">联系师傅</view>
+                        <view>联系师傅</view>
                     </view>
                 </view>
                 <button bindtap="startPay" class="submit-btn">支付订单： ￥{{waitPay}}</button>
+            </view>
+        </block>
+        <block wx:elif="{{baseInfo.orderState === 'VYING'}}">
+            <view class="page-foot">
+                <view class="foot-item">已付款： ￥{{payed}}</view>
+                <button bindtap="handleCancelModal" class="submit-btn line-btn">取消报修</button>
             </view>
         </block>
         <block wx:elif="{{baseInfo.orderState === 'ASSIGNED'}}">
@@ -157,6 +163,7 @@
         <block wx:elif="{{baseInfo.orderState === 'WAIT_DOOR'}}">
             <view class="page-foot">
                 <view class="foot-item">已付款： ￥{{payed}}</view>
+                <button bindtap="handleCancelModal" class="submit-btn line-btn">取消报修</button>
                 <button class="submit-btn" bindtap="anonymousFunc6">联系师傅</button>
             </view>
         </block>

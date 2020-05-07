@@ -172,19 +172,27 @@ class Lists extends Component<{},State>{
         {
           return (  <View className='page-foot'>
                 <View className='ico-wrap'>
-                  <View className='ico-item'>
+                  <View className='ico-item'  onClick={()=>this.call(baseInfo.stationPhone)}>
                     <Image className='foot-ico' src={require('../../assets/imgs/tmp/cus-ser.png')}></Image>
-                    <View onClick={()=>this.call(baseInfo.stationPhone)}>联系网点</View>
+                    <View>联系网点</View>
                   </View>
-                  <View className='ico-item'>
+                  <View className='ico-item' onClick={()=>this.call(dispatchInfo.masterPhone)}>
                     <Image className='foot-ico' src={require('../../assets/imgs/tmp/staff.png')}></Image>
-                    <View onClick={()=>this.call(dispatchInfo.masterPhone)}>联系师傅</View>
+                    <View >联系师傅</View>
                   </View>
                 </View>
                 <Button onClick={this.startPay} className='submit-btn'>支付订单： ￥{waitPay}</Button>
             </View>
           )
         }
+        break;
+      case 'VYING':  // 待抢单
+      {
+        return (<View  className='page-foot'>
+          <View className='foot-item'>已付款： ￥{payed}</View>
+          <Button onClick={this.handleCancelModal} className='submit-btn line-btn'>取消报修</Button>
+        </View>)
+      }
         break;
       case 'ASSIGNED':  // 待接单
       {
@@ -199,6 +207,7 @@ class Lists extends Component<{},State>{
       {
         return (<View  className='page-foot'>
           <View className='foot-item'>已付款： ￥{payed}</View>
+          <Button onClick={this.handleCancelModal} className='submit-btn line-btn'>取消报修</Button>
           <Button className='submit-btn' onClick={()=>this.call(dispatchInfo.masterPhone)}>联系师傅</Button>
         </View>)
       }

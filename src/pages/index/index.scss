@@ -188,20 +188,16 @@ page{
       border: 0.5px solid #efefef;
       border-top: none;
       border-left: none;
-        //&:first-child{
-        //  border-right: 1px solid #efefef;
-        //  border-bottom: 1px solid #efefef;
-        //}
-        //&:last-child{
-        //  border-top: 1px solid #efefef;
-        //  border-left: 1px solid #efefef;
-        //}
       .item-img{
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
+        flex: 40px 0 0;
       }
       .item-text{
         font-size: 12px;
+        display: block;
+        text-align: center;
+        flex: 1 0 0;
         color: #808080;
       }
     }

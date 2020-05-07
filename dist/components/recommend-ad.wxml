@@ -8,7 +8,7 @@
 <template name="renderCode2">
     <block>
         <view class="ad-wrap type-2" wx:key="key">
-            <image bindtap="anonymousFunc1" wx:key="configId" class="ad-img" src="{{item.$original.targetImage}}" wx:for="{{loopArray41}}" wx:for-item="item" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
+            <image bindtap="anonymousFunc1" wx:key="configId" class="ad-img" src="{{item.$original.targetImage}}" wx:for="{{loopArray35}}" wx:for-item="item" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
         </view>
     </block>
 </template>
@@ -91,7 +91,7 @@
 <template name="renderCode7">
     <block>
         <view class="ad-wrap type-7" wx:key="key">
-            <image bindtap="anonymousFunc12" wx:key="configId" class="ad-img" src="{{item.$original.targetImage}}" wx:for="{{loopArray42}}" wx:for-item="item" wx:for-index="__index12" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}"></image>
+            <image bindtap="anonymousFunc12" wx:key="configId" class="ad-img" src="{{item.$original.targetImage}}" wx:for="{{loopArray36}}" wx:for-item="item" wx:for-index="__index12" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}"></image>
         </view>
     </block>
 </template>

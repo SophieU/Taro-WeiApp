@@ -15,7 +15,7 @@
   @include card();
   .info-item{
     display: flex;
-    height: 60px;
+    min-height: 60px;
     padding: 13px 0;
     box-sizing: border-box;
     align-items: center;
@@ -35,6 +35,9 @@
       color: #808080;
       flex: 60px 0 0;
       margin-right: 10px;
+    }
+    .info-content{
+
     }
     .little-tips{
       color: #999;

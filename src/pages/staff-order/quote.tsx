@@ -21,7 +21,8 @@ interface State {
 class Quote extends Component<{},State>{
   config:Config = {
     navigationBarTitleText:'报价清单',
-    navigationStyle:'default'
+    navigationStyle:'default',
+    enablePullDownRefresh:false,
   }
   constructor() {
     super();
@@ -117,10 +118,12 @@ class Quote extends Component<{},State>{
     return (<View className='page quote-page'>
       {
         this.state.repairOrderOfferPlanVoList.map(item=>{
-          return (<View className='top-price' key={item.id}>
-            <View className='price-left'>{item.planName}</View>
-            <View className='price-right'>￥ {item.amount}</View>
-          </View>)
+          if(item.isPay==='N'){
+            return (<View className='top-price' key={item.id}>
+              <View className='price-left'>{item.planName}</View>
+              <View className='price-right'>￥ {item.amount}</View>
+            </View>)
+          }
         })
       }
       <View className='other-price'>
@@ -134,14 +137,6 @@ class Quote extends Component<{},State>{
                onInput={this.filterInput}
                onChange={(val)=>this.handlePriceChange(val,'servicePrice')}
           ></Input>
-         {/*<AtInput*/}
-         {/*   name='servicePrice'*/}
-         {/*   type='number'*/}
-         {/*   placeholder='请输入人工服务费'*/}
-         {/*   value={this.state.servicePrice}*/}
-         {/*   onInput={this.filterInput}*/}
-         {/*   onChange={(val)=>this.handlePriceChange(val,'servicePrice')}*/}
-         {/* ></AtInput>*/}
         </View>
       </View>
       <View className='other-price'>
@@ -155,14 +150,6 @@ class Quote extends Component<{},State>{
             onInput={this.filterInput}
             onChange={(val)=>this.handlePriceChange(val,'materialsPrice')}
           ></Input>
-          {/*<AtInput*/}
-          {/*  name='materialsPrice'*/}
-          {/*  type='number'*/}
-          {/*  placeholder='请输入材料费'*/}
-          {/*  value={this.state.materialsPrice}*/}
-          {/*  onInput={this.filterInput}*/}
-          {/*  onChange={(e)=>this.handlePriceChange(e,'materialsPrice')}*/}
-          {/*></AtInput>*/}
         </View>
       </View>
 

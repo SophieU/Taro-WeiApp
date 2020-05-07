@@ -41,6 +41,7 @@ class Lists extends Component<{},State>{
         title:'没有更多了',
         icon:'none'
       })
+      Taro.stopPullDownRefresh()
       return
     }
     let params = {
@@ -54,6 +55,7 @@ class Lists extends Component<{},State>{
     Taro.showLoading({title:'加载中'})
     repairOrderLists(params).then(res=>{
       Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(prevState=>{

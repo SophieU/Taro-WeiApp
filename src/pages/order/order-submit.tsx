@@ -90,7 +90,6 @@ class OrderSubmit extends Component<{},State>{
     this.topBanner()
     this.getDefaultAddress()
     this.getTips()
-    this.isNeedNightFee()
   }
   componentDidShow(){
     const orderForm = this.props.appStore.orderForm
@@ -103,7 +102,6 @@ class OrderSubmit extends Component<{},State>{
     })
   }
   componentWillUnmount(){
-
     clearTimeout(this.state.timer)
   }
   topBanner= ()=>{
@@ -160,26 +158,39 @@ class OrderSubmit extends Component<{},State>{
             planType:'NIGHT_FEE',
             serviceCost:data.serviceAmount
           }
+          Taro.showModal({
+            title:'温馨提示',
+            content:data.tipsMeg,
+            confirmText:'确认',
+            cancelText:'取消'
+          }).then(res=>{
+            if(res.confirm){
+              this.setState((prevState:State)=>{
+                let repairOrderOfferPlanDtoList = prevState.repairOrderOfferPlanDtoList
+                if(typeof feePro === 'object'){
+                  repairOrderOfferPlanDtoList.push(feePro)
+                }
+                return {
+                  nightFee:{
+                    serviceAmount: data.serviceAmount,
+                    hopeDoorTime:data.hopeDoorTime,
+                  },
+                  repairOrderOfferPlanDtoList:repairOrderOfferPlanDtoList
+                }
+              },()=>{
+                this.submitForm()
+              })
+            }else{
+              console.log('取消下单')
+            }
+          })
         }
-        this.setState((prevState:State)=>{
-          let repairOrderOfferPlanDtoList = prevState.repairOrderOfferPlanDtoList
-          if(typeof feePro === 'object'){
-            repairOrderOfferPlanDtoList.push(feePro)
-          }
-         return {
-           nightFee:{
-             serviceAmount: data.serviceAmount,
-             hopeDoorTime:data.hopeDoorTime,
-           },
-           repairOrderOfferPlanDtoList:repairOrderOfferPlanDtoList
-         }
-        })
+
       }
     })
   }
   // 有默认地址获取内容
   getOrderContentWithAdd = ()=>{
-
     let params = {
       repairUserAddressId:this.state.repairUserAddressId,
       repairCategoryId:this.state.repairCategoryId,
@@ -235,7 +246,7 @@ class OrderSubmit extends Component<{},State>{
     })
   }
   // 提交表单
-  submitForm=()=>{
+submitForm=()=>{
     let serviceContent = this.state.serviceContent
     let params = {
       repairRegionId:this.state.serviceContent.repairRegionId,
@@ -256,6 +267,7 @@ class OrderSubmit extends Component<{},State>{
       })
       return
     }
+    // const needNightFee = await this.isNeedNightFee()
     // 预收上门费
     if(serviceContent.isPrepayDtd==='Y'){
       Taro.showModal({
@@ -334,7 +346,7 @@ class OrderSubmit extends Component<{},State>{
     Taro.showModal({
       title:'操作提示',
       content:'订单提交成功,您可以在【我的】-【报修订单】中查看',
-      confirmText:'查看报修单',
+      confirmText:'报修订单',
       cancelText:'返回首页',
     }).then(resInner=>{
       if(resInner.confirm){
@@ -358,10 +370,10 @@ class OrderSubmit extends Component<{},State>{
     })
   }
   // 输入手机号
-  handleInputMobile=(e)=>{
+  handleInput=(e,propName)=>{
     let value = e.detail.value
     this.setState({
-      userMobile:value
+      [propName]:value
     })
     this.props.appStore.setOrderForm({userMobile:value})
   }
@@ -404,13 +416,13 @@ class OrderSubmit extends Component<{},State>{
         <View className='info-item'>
           <Image className='info-ico' src={require('../../assets/imgs/tmp/img_explain.png')}></Image>
           <Text className='info-title'>服务说明</Text>
-          <View className='info-content'>{this.state.serviceContent.description}</View>
+          <View className='info-content  wrap'>{this.state.serviceContent.description}</View>
         </View>
         {
           this.state.serviceContent.serviceFee!==0?(<View className='info-item'>
             <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
             <Text className='info-title'>服务收费</Text>
-            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text> 元起</View>
+            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text> /次起</View>
           </View>):null
         }
 
@@ -420,7 +432,7 @@ class OrderSubmit extends Component<{},State>{
             :( <View className='info-item'>
               <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
               <Text className='info-title'>上门费</Text>
-              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>元起
+              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>/次
                 {this.state.serviceContent.isPrepayDtd==='Y'?<Text className='little-tips'>(需要预付)</Text>:null}
               </View>
             </View>)
@@ -436,12 +448,12 @@ class OrderSubmit extends Component<{},State>{
         <View className='form-item'>
           <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
           <Text className='form-label'>联系人</Text>
-          <Input type='text' value={this.state.userName} onInput={this.handleInputMobile} placeholder='请输入姓名' />
+          <Input type='text' value={this.state.userName} onInput={(e)=>this.handleInput(e,'userName')} placeholder='请输入姓名' />
         </View>
         <View className='form-item'>
           <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
           <Text className='form-label'>联系方式</Text>
-          <Input type='text' value={this.state.userMobile} onInput={this.handleInputMobile} placeholder='请输入联系方式' />
+          <Input type='text' maxLength={11} value={this.state.userMobile} onInput={(e)=>this.handleInput(e,'userMobile')} placeholder='请输入联系方式' />
         </View>
         <View className='form-item form-item-textarea'>
           <Image className='form-ico' src={require('../../assets/imgs/tmp/img_call.png')}></Image>
@@ -480,7 +492,7 @@ class OrderSubmit extends Component<{},State>{
           <Radio color='#216EC6' value='1' checked>已同意 <Navigator url='/pages/index/web-view?target=http://ttfwap.yishengyue.cn/arg/E-arg.html' className='outlink'>用户协议</Navigator></Radio>
         </View>
         <View className='btn-wrap'>
-          <Button onClick={this.submitForm} className='btn-form'>提交订单</Button>
+          <Button onClick={this.isNeedNightFee} className='btn-form'>提交订单</Button>
         </View>
       </View>
     </View>)

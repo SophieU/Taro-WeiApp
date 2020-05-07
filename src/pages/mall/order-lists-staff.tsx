@@ -1,9 +1,10 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button, Text, Block} from '@tarojs/components'
-import { AtTabs,AtActionSheet, AtActionSheetItem  } from 'taro-ui'
-import {customOrderLists,grabOrder} from './mall-apis'
+import {View, Image, Button, Text} from '@tarojs/components'
+import { AtTabs,AtActionSheet, AtActionSheetItem,AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction  } from 'taro-ui'
+import {customOrderLists,grabOrder,setPriceNow} from './mall-apis'
 import {observer,inject} from '@tarojs/mobx'
+import FootBtn from './lists-foot-btn'
 import './order-lists.scss'
 
 @inject('appStore')
@@ -23,6 +24,9 @@ class OrderListsStaff extends  Component{
       lists:[],
       showAction:false,
       id:'',
+      showPriceModal:false,
+      itemPrice:0,
+      currentItem:null
     }
   }
   componentWillMount(){
@@ -127,9 +131,10 @@ class OrderListsStaff extends  Component{
       this.getLists()
     })
   }
+
   // 打开收款操作
   setPay=(item)=>{
-    console.log(this.props)
+    console.log(item)
     this.setState({
       id:item.id,
       showAction:true,
@@ -158,9 +163,37 @@ class OrderListsStaff extends  Component{
     })
 
   }
+  // 报价输入框
+  handleItemPriceChange=(val)=>{
+    this.setState({
+      itemPrice:val
+    })
+  }
+  // 报价弹窗
+  togglePriceModal= (item)=>{
+    this.setState(preState=>{
+      return {
+        currentItem:item?item:null,
+        showPriceModal:!preState.showPriceModal,
+        itemPrice:!preState.showPriceModal?preState.itemPrice:0
+      }
+    })
+  }
   // 设置报价弹窗
-  setPrice= (item)=>{
+  setPrice= ()=>{
+    let params = {
+      "orderId":this.state.currentItem.id,
+      "serviceUserId":Taro.getStorageSync('masterInfo').masterId,
+      "serviceAmount":this.state.itemPrice//可为0
+    }
 
+    setPriceNow(params).then(res=>{
+      if(res.data.code===0){
+        Taro.showToast({title:'设置成功'})
+      }else{
+        Taro.showToast({title:res.data.msg,icon:'none'})
+      }
+    })
   }
   callPhone= (tel)=>{
     Taro.makePhoneCall({
@@ -178,7 +211,7 @@ class OrderListsStaff extends  Component{
         </AtTabs>
         <View className='order-lists'>
           {
-            this.state.lists.map(item=>{
+            this.state.lists.length>0?this.state.lists.map(item=>{
               return (<View className='order-item' key={item.id}>
                 <View className='order-top'>
                   <View className='order-title'>{item.orderSn}</View>
@@ -198,23 +231,15 @@ class OrderListsStaff extends  Component{
                   </View>
                   <View className="user-row">
                     <View className="info-row">用户姓名：{item.username}</View>
-                    <View onClick={()=>this.callPhone(item.userPhone)} className="info-row">用户电话：{item.userPhone}</View>
+                    <View  className="info-row ">用户电话：<Text className='text-blue' onClick={()=>this.callPhone(item.userPhone)}>{item.userPhone}</Text></View>
                     <View className="info-row">用户地址：{item.repairAddress}</View>
                     {item.payTime?<View className="info-row">支付时间：{item.payTime}</View>:null}
                   </View>
                 </View>
-                <View className='btn-group'>
-                  {this.state.current===0?<Button onClick={()=>this.getGrag(item.id)} className='btn orange-btn'>抢单</Button>:null}
-                  {
-                    this.state.current===1?
-                      (<Block>
-                        <Button className='btn primary-btn' onClick={()=>this.setPay(item)}>收款</Button>
-                        {item?<Button className='btn orange-btn' onClick={()=>this.setPrice(item)}>报价</Button>:null}
-                      </Block>):null
-                  }
-                </View>
+                <FootBtn current={this.state.current} item={item} setPrice={this.togglePriceModal} setPay={this.setPay} getGrag={this.getGrag}></FootBtn>
+
               </View>)
-            })
+            }):<View className='no-data'>暂无数据</View>
           }
         </View>
         {/* 底部操作区 */}
@@ -226,6 +251,26 @@ class OrderListsStaff extends  Component{
             二维码收款
           </AtActionSheetItem>
         </AtActionSheet>
+        {/*  设置报价  */}
+        <AtModal className='price-modal' isOpened={this.state.showPriceModal}>
+          <AtModalHeader>设置报价</AtModalHeader>
+          <AtModalContent>
+            <AtInput
+              className='price-input'
+              title='服务费'
+              name='itemPrice'
+              border={false}
+              type='number'
+              placeholder='请填写服务人工费'
+              value={this.state.itemPrice}
+              onChange={this.handleItemPriceChange}
+            />
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.togglePriceModal}>取消</Button>
+            <Button onClick={this.setPrice}>确定</Button>
+          </AtModalAction>
+        </AtModal>
       </View>
     )
   }

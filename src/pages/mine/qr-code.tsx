@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View,  Image, Button, Navigator} from '@tarojs/components'
-import { createQRCode } from './services'
+// import { createQRCode } from './services'
 import './qr-code.scss'
 
 interface State {
@@ -16,13 +16,8 @@ class Mine extends  Component{
     qrCodeUrl:''
   }
   componentWillMount(){
-    createQRCode().then(res=>{
-      let data= res.data
-      if(data.code===0){
-        this.setState({
-          qrCodeUrl:data.data.inviteQrImgUrl
-        })
-      }
+    this.setState({
+      qrCodeUrl:Taro.getStorageSync('inviteImg')
     })
   }
   saveImageLocal(filePath){

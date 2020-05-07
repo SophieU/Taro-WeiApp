@@ -59,22 +59,9 @@ class Quote extends Component<{},State>{
         this.getBookInfo()
       }
     })
-    // 轮询
-    let timer = setInterval(()=>{
-      if(this.state.payRes==='Y'){
-        clearInterval(timer)
-      }
-      this.getPayResult()
-    },3000)
-    let timeOutTimer = setTimeout(()=>{
-      clearTimeout(timeOutTimer)
-      clearInterval(timer)
-    },20000)
-    this.setState({
-      timer,
-      timeOutTimer
-    })
+
   }
+  // 预约订单
   getBookInfo= ()=>{
     console.log(this.props)
   }
@@ -90,7 +77,25 @@ class Quote extends Component<{},State>{
         this.setState({
           qrContent:data.qrContent,
           paySn:data.paySn
+        },()=>{
+          // 轮询
+          let timer = setInterval(()=>{
+            if(this.state.payRes==='Y'){
+              clearInterval(timer)
+            }
+            this.getPayResult()
+          },3000)
+          // 3分钟未支付清除
+          let timeOutTimer = setTimeout(()=>{
+            clearTimeout(timeOutTimer)
+            clearInterval(timer)
+          },180000)
+          this.setState({
+            timer,
+            timeOutTimer
+          })
         })
+
       }else{
         Taro.showToast({
           title:res.data.msg,
@@ -114,6 +119,8 @@ class Quote extends Component<{},State>{
           payInfo:data.repairOrderAmountVos,
           detailLists:data.repairOrderOfferPlanVoList
         })
+      }else{
+        Taro.showToast({title:res.data.msg,icon:'none'})
       }
     })
   }
@@ -133,7 +140,6 @@ class Quote extends Component<{},State>{
             }else{
               Taro.navigateTo({url:'/pages/mall/order-lists-staff'})
             }
-
           },1000))
         }
       }

@@ -12,8 +12,8 @@
             </view>
         </view>
         <view class="history">
-            <at-tabs compid="{{$compid__75}}">
-                <at-tabs-pane compid="{{$compid__76}}">
+            <at-tabs compid="{{$compid__66}}">
+                <at-tabs-pane compid="{{$compid__67}}">
                     <view class="history-lists">
                         <view class="history-item" wx:key="index" wx:for="{{flowLists}}" wx:for-item="item" wx:for-index="index">
                             <view class="left">
@@ -29,7 +29,7 @@
                         </view>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__77}}">
+                <at-tabs-pane compid="{{$compid__68}}">
                     <view class="history-lists">
                         <view class="history-item" wx:key="index" wx:for="{{withdrawLists}}" wx:for-item="item" wx:for-index="index">
                             <view class="left">
@@ -53,22 +53,22 @@
                 </at-tabs-pane>
             </at-tabs>
         </view>
-        <at-modal compid="{{$compid__78}}">
+        <at-modal compid="{{$compid__69}}">
             <at-modal-header>温馨提醒</at-modal-header>
             <at-modal-content>
                 <view class="pwd-tips">您还未设置密码，请先设置密码</view>
-                <at-input compid="{{$compid__79}}"></at-input>
+                <at-input compid="{{$compid__70}}"></at-input>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="anonymousFunc0">取消</button>
                 <button bindtap="handlePwd">确定</button>
             </at-modal-action>
         </at-modal>
-        <at-modal compid="{{$compid__80}}">
+        <at-modal compid="{{$compid__71}}">
             <at-modal-header>提现</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__81}}"></at-input>
-                <at-input compid="{{$compid__82}}"></at-input>
+                <at-input compid="{{$compid__72}}"></at-input>
+                <at-input compid="{{$compid__73}}"></at-input>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="anonymousFunc3">取消</button>

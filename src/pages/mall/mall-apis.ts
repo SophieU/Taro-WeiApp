@@ -48,3 +48,7 @@ export const customOrderLists = (query,params)=>{
 export const grabOrder = (params)=>{
   return request.post(`/api/v1/order/vyingOrder?userId=${userId}`,params)
 }
+// 报价
+export const setPriceNow = (params)=>{
+  return request.post(`/api/v1/order/submitOtherAmountForOrder?userId=${userId}`,params)
+}

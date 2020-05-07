@@ -24,7 +24,8 @@ export const getDetail = (id)=>{
 * repairOrderId=工单ID&cancelReasonId=取消原因ID
 * */
 export const cancelOrder = (params)=>{
-  return request.post(`/api/v1/repair/order/cancelRepairById?userId=${userId}`,params)
+  let queryString = `userId=${userId}&repairOrderId=${params.repairOrderId}&cancelReasonId=${params.cancelReasonId}`
+  return request.post(`/api/v1/repair/order/cancelRepairById?${queryString}`)
 }
 
 

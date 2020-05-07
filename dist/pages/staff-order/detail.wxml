@@ -44,10 +44,6 @@
                         <view class="item-info">{{baseInfo.orderSn}}</view>
                     </view>
                     <view class="info-item">
-                        <view class="item-label">下单时间</view>
-                        <view class="item-info">{{baseInfo.createTime}}</view>
-                    </view>
-                    <view class="info-item">
                         <view class="item-label">工单状态</view>
                         <block wx:if="{{stateText === '待接单' || stateText === '已完成'}}">
                             <view class="text-green">{{stateText}}</view>
@@ -61,6 +57,10 @@
                         <block wx:if="{{stateText === '已关闭' || stateText === '异常'}}">
                             <view class="text-grey">{{stateText}}</view>
                         </block>
+                    </view>
+                    <view class="info-item">
+                        <view class="item-label">下单时间</view>
+                        <view class="item-info">{{baseInfo.createTime}}</view>
                     </view>
                 </view>
             </view>
@@ -88,40 +88,40 @@
                         <view class="item-info">{{baseInfo.username}}</view>
                     </view>
                     <view class="info-item">
+                        <view class="item-label">联系电话</view>
+                        <view class="item-info link-text" bindtap="anonymousFunc1">{{baseInfo.userPhone}}</view>
+                    </view>
+                    <view class="info-item">
                         <view class="item-label">详细地址</view>
                         <view class="item-info">{{baseInfo.address}}</view>
                     </view>
-                    <view class="info-item">
-                        <view class="item-label">联系电话</view>
-                        <view class="item-info link-tekxt" bindtap="anonymousFunc1">{{baseInfo.userPhone}}</view>
-                    </view>
                 </view>
             </view>
-            <view class="detail-block price-block">
-                <view class="detail-title">费用清单</view>
-                <view class="detail-info">
-                    <view wx:key="id" class="info-item" wx:for="{{repairOrderAmountVos}}" wx:for-item="item" wx:for-index="_anonIdx2">
-                        <view class="price-label">
+            <block wx:if="{{repairOrderAmountVos.length > 0}}">
+                <view class="detail-block price-block">
+                    <view class="detail-title">费用清单</view>
+                    <view class="detail-info">
+                        <view wx:key="id" class="info-item" wx:for="{{repairOrderAmountVos}}" wx:for-item="item" wx:for-index="_anonIdx2">
                             <view class="item-label">{{item.name}}</view>
+                            <view class="item-info text-warm">￥{{item.amount}}</view>
                         </view>
-                        <view class="item-info text-warm">￥{{item.amount}}</view>
                     </view>
                 </view>
-            </view>
-            <view class="detail-block price-block">
-                <view class="detail-title">费用明细</view>
-                <view class="detail-info">
-                    <view wx:key="id" class="info-item" wx:for="{{repairOrderOfferPlanVoList}}" wx:for-item="item" wx:for-index="_anonIdx4">
-                        <view class="price-label">
+            </block>
+            <block wx:if="{{repairOrderOfferPlanVoList.length > 0}}">
+                <view class="detail-block price-block">
+                    <view class="detail-title">费用明细</view>
+                    <view class="detail-info">
+                        <view wx:key="id" class="info-item" wx:for="{{repairOrderOfferPlanVoList}}" wx:for-item="item" wx:for-index="_anonIdx4">
                             <view class="item-label">{{item.planName}}</view>
-                        </view>
-                        <view class="item-info "><text class="text-warm">￥{{item.amount}}</text>
-                            <block wx:if="{{item.isPay === 'Y'}}"><text class="text-grey">（已支付）</text>
-                            </block>
+                            <view class="item-info "><text class="text-warm">￥{{item.amount}}</text>
+                                <block wx:if="{{item.isPay === 'Y'}}"><text class="text-grey">（已支付）</text>
+                                </block>
+                            </view>
                         </view>
                     </view>
                 </view>
-            </view>
+            </block>
             <block wx:if="{{baseInfo.statementReasonName}}">
                 <view class="detail-block">
                     <view class="detail-title">申述信息</view>

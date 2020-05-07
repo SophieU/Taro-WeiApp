@@ -59,7 +59,12 @@ class Mine extends  Component<{}, State>{
     getUserBaseInfo().then(res=>{
       if(res.data.code===0){
         Taro.stopPullDownRefresh()
-        this.props.userStore.setAPIUserInfo(res.data.data)
+        let data = res.data.data
+        Taro.setStorageSync('inviteImg',data.inviteQrImgUrl)
+        this.props.userStore.setAPIUserInfo(data)
+        this.setState({
+          apiUserInfo:data
+        })
       }
     })
   }
@@ -112,7 +117,7 @@ class Mine extends  Component<{}, State>{
     }
   }
   render(){
-    const userType = Taro.getStorageSync('userType')
+    const userType = this.state.apiUserInfo.userType
     return (
       <View className='mine page'>
         <View className='user-info'>
@@ -148,10 +153,13 @@ class Mine extends  Component<{}, State>{
                 <View className='control-title'>在线客服</View>
                 <View className='control-desc'></View>
               </View>
-              <View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item last-item'>
+              {
+                ['ADMIN','SERVICE_USER','MERCHANT'].indexOf(userType)>-1?(<View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item '>
                 <View className='control-title'>我的邀请码</View>
                 <View className='control-desc'></View>
-              </View>
+                </View>):null
+              }
+
               {
                 this.state.apiUserInfo.isShowInvitePage==='Y'? (<View onClick={this.toggleInvitePhoneModal} className='control-item last-item'>
                   <View className='control-title'>设置邀请人</View>
@@ -162,7 +170,7 @@ class Mine extends  Component<{}, State>{
             </Block>
 
             {/*服务师傅*/}
-            { (userType==='ADMIN'&&this.state.apiUserInfo.isServiceUser==='Y')||userType==='SERVICE_USER'?(
+            { (userType==='ADMIN'&&this.state.apiUserInfo.isServiceUser==='Y')||(userType==='SERVICE_USER'&&this.state.apiUserInfo.isServiceUser==='Y')?(
               <Block>
                 <View className='control-divider'>接单管理</View>
                 <View className='control-item'>

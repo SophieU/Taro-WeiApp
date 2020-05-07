@@ -1,0 +1,32 @@
+.btn-group{
+  display:flex;
+  padding-top: 15px;
+  .btn{
+    margin-right: 8px;
+    &:last-child{
+      margin-right: 0;
+    }
+    flex: 1 0 0;
+  }
+}
+.orange-btn{
+  background: #EA7744;
+  font-size: 14px;
+  height: 35px;
+  line-height: 35px;
+  color: #FFFFFF;
+  border-color:#EA7744;
+}
+
+.primary-btn{
+  background: #fff;
+  color: #333;
+  border-color: #ddd;
+  font-size: 12px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  box-shadow: none;
+  outline: none;
+  height: 35px;
+  line-height: 35px;
+}

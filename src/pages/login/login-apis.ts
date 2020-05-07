@@ -26,17 +26,13 @@ export const loginApp = (registerCallback?:()=>void)=>{
             Taro.setStorageSync("userId",dataBody.userId)
             Taro.setStorageSync("accessToken",dataBody.accessToken)
             Taro.setStorageSync("userType",dataBody.userType)
+            Taro.setStorageSync('inviteImg',dataBody.inviteQrImgUrl)
             if(dataBody.userType==='SERVICE_USER'||dataBody.userType==='ADMIN'){
               let {masterId,repairStationId,businessState,masterRoleCode,isServiceUser,masterName,repairStationName} = dataBody
               let masterObj = {masterId,repairStationId,businessState,masterRoleCode,isServiceUser,masterName,repairStationName}
               Taro.setStorageSync("masterInfo",masterObj)
             }
-            // let apiUserInfo = {
-            //   userPhone: dataBody.username,
-            //   userType: dataBody.userType,
-            //   userId: dataBody.userId,
-            //   isShowInvitePage:dataBody.isShowInvitePage
-            // }
+
             request.setAccessToken(dataBody.accessToken)
             userStore.setAPIUserInfo(dataBody)
             userStore.setUserAccount(dataBody.userAccount)

@@ -1,16 +1,16 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="page">
-        <at-tabs compid="{{$compid__393}}">
-            <at-tabs-pane compid="{{$compid__394}}">
+        <at-tabs compid="{{$compid__57}}">
+            <at-tabs-pane compid="{{$compid__58}}">
                 <template is="renderListItem" data="{{...anonymousState__temp}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__395}}">
+            <at-tabs-pane compid="{{$compid__59}}">
                 <template is="renderListItem" data="{{...anonymousState__temp2}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__396}}">
+            <at-tabs-pane compid="{{$compid__60}}">
                 <template is="renderListItem" data="{{...anonymousState__temp3}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__397}}">
+            <at-tabs-pane compid="{{$compid__61}}">
                 <template is="renderListItem" data="{{...anonymousState__temp4}}"></template>
             </at-tabs-pane>
         </at-tabs>
@@ -21,21 +21,21 @@
         <view class="order-lists">
             <block>
                 <block wx:if="{{lists.length > 0}}">
-                    <navigator class="order-lists-item" wx:key="index" url="{{'/pages/custom-order/detail?id=' + item.id}}" wx:for="{{lists}}" wx:for-item="item" wx:for-index="index">
+                    <navigator class="order-lists-item" wx:key="index" url="{{'/pages/custom-order/detail?id=' + item.$original.id}}" wx:for="{{loopArray48}}" wx:for-item="item" wx:for-index="index">
                         <view class="order-top">
-                            <view class="order-date">{{item.createTime}}</view>
-                            <view class="order-state">{{item.orderStateName}}</view>
-                        </view>
-                        <view class="order-info">
-                            <view class="info-left">{{item.orderSn}}</view>
-                            <view class="order-right">{{item.repairCategoryName}}</view>
-                        </view>
-                        <block wx:if="{{item.masterName}}">
-                            <view class="order-row">
-                                <view class="info-left">接单师傅：{{item.masterName}} <text class="text-blue">({{item.masterPhone}})</text>
-                                </view>
+                            <view class="order-date">{{item.$original.createTime}}</view>
+                            <view class="order-state">
+                                <state-text compid="{{item.$compid__62}}"></state-text>
                             </view>
-                        </block>
+                        </view>
+                        <view class="order-info-lists">
+                            <view class="info-row">单号：{{item.$original.orderSn}}</view>
+                            <view class="info-row">报修项目：{{item.$original.repairCategoryName}}</view>
+                            <block wx:if="{{item.$original.masterName}}">
+                                <view class="info-row">接单师傅：{{item.$original.masterName}} <text class="text-blue">({{item.$original.masterPhone}})</text>
+                                </view>
+                            </block>
+                        </view>
                     </navigator>
                 </block>
                 <block wx:else>

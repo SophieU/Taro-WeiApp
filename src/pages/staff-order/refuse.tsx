@@ -59,6 +59,10 @@ class Refuse extends Component{
   }
   submitOrder=()=>{
     let {id,requestRadioId, reasonId} = this.state
+    if(!requestRadioId||!reasonId){
+      Taro.showToast({title:'请选择申请请求和申请原因',icon:'none'})
+      return
+    }
     let params = {
       repairOrderId:id,
       statementRequestId:requestRadioId,

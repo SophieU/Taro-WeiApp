@@ -93,15 +93,20 @@ class Lists extends Component{
   // 获取订单详情
   getOrderDetail = ()=>{
     const id = this.state.id
+    Taro.showLoading({title:'信息加载中',icon:'none'})
     orderDetail(id).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let data = res.data.data
         let totalAmount = 0
-        data.repairOrderAmountVos.map(item=>{
-          if(item.type= "ALL_AMOUNT"){
-            totalAmount=item.amount
-          }
-        })
+        if(data.repairOrderAmountVos){
+          data.repairOrderAmountVos.map(item=>{
+            if(item.type= "ALL_AMOUNT"){
+              totalAmount=item.amount
+            }
+          })
+        }
+
         this.setState({
           orderDetail:res.data.data,
           baseInfo:data.baseInfo,
@@ -231,17 +236,17 @@ class Lists extends Component{
               <View className='item-info'>{this.state.baseInfo.orderSn}</View>
             </View>
             <View className='info-item'>
-              <View className='item-label'>下单时间</View>
-              <View className='item-info'>{this.state.baseInfo.createTime}</View>
-            </View>
-
-            <View className='info-item'>
               <View className='item-label'>工单状态</View>
               {stateText==='待接单'||stateText==='已完成'?<View className='text-green'>{stateText}</View>:null}
               {stateText==='待上门'||stateText==='待付款'?<View className='text-warm'>{stateText}</View>:null}
               {stateText==='已取消'||stateText==='已接单'?<View className='text-blue'>{stateText}</View>:null}
               {stateText==='已关闭'||stateText==='异常'?<View className='text-grey'>{stateText}</View>:null}
             </View>
+            <View className='info-item'>
+              <View className='item-label'>下单时间</View>
+              <View className='item-info'>{this.state.baseInfo.createTime}</View>
+            </View>
+
           </View>
         </View>
         {
@@ -269,48 +274,49 @@ class Lists extends Component{
               <View className='item-info'>{this.state.baseInfo.username}</View>
             </View>
             <View className='info-item'>
+              <View className='item-label'>联系电话</View>
+              <View className='item-info link-text' onClick={()=>this.call(this.state.baseInfo.userPhone)}>{this.state.baseInfo.userPhone}</View>
+            </View>
+            <View className='info-item'>
               <View className='item-label'>详细地址</View>
               <View className='item-info'>{this.state.baseInfo.address}</View>
             </View>
-            <View className='info-item'>
-              <View className='item-label'>联系电话</View>
-              <View className='item-info link-tekxt' onClick={()=>this.call(this.state.baseInfo.userPhone)}>{this.state.baseInfo.userPhone}</View>
-            </View>
+
           </View>
         </View>
-        <View className='detail-block price-block'>
-          <View className='detail-title'>费用清单</View>
-          <View className='detail-info'>
-            {
-              this.state.repairOrderAmountVos.map(item=>{
-                return (<View key={item.id} className='info-item'>
-                  <View className='price-label'>
+        {
+          this.state.repairOrderAmountVos.length>0?(<View className='detail-block price-block'>
+            <View className='detail-title'>费用清单</View>
+            <View className='detail-info'>
+              {
+                this.state.repairOrderAmountVos.map(item=>{
+                  return (<View key={item.id} className='info-item'>
                     <View className='item-label'>{item.name}</View>
-                  </View>
-                  <View className='item-info text-warm'>￥{item.amount}</View>
-                </View>)
-              })
-            }
-          </View>
-        </View>
-        <View className='detail-block price-block'>
-          <View className='detail-title'>费用明细</View>
-          <View className='detail-info'>
-            {
-              this.state.repairOrderOfferPlanVoList.map(item=>{
+                    <View className='item-info text-warm'>￥{item.amount}</View>
+                  </View>)
+                })
+              }
+            </View>
+          </View>):null
+        }
+
+        {
+          this.state.repairOrderOfferPlanVoList.length>0?( <View className='detail-block price-block'>
+            <View className='detail-title'>费用明细</View>
+            <View className='detail-info'>
+              {this.state.repairOrderOfferPlanVoList.map(item=>{
                 return (<View key={item.id} className='info-item'>
-                  <View className='price-label'>
-                    <View className='item-label'>{item.planName}</View>
-                  </View>
+                  <View className='item-label'>{item.planName}</View>
                   <View className='item-info '>
                     <Text className='text-warm'>￥{item.amount}</Text>
                     {item.isPay==='Y'?<Text className='text-grey'>（已支付）</Text>:null}
                   </View>
                 </View>)
-              })
-            }
-          </View>
-        </View>
+              })}
+            </View>
+          </View>):null
+        }
+
         {
           this.state.baseInfo.statementReasonName?(
             <View className='detail-block'>

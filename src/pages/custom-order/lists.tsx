@@ -4,6 +4,7 @@ import {View, Image, Button, Text, Navigator, ScrollView} from '@tarojs/componen
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import {getLists} from './order-apis'
 import {simpleClone} from '../../utils/common'
+import StateText from '../../components/state-text-colorful'
 import './lists.scss'
 
 
@@ -81,7 +82,6 @@ class Lists extends Component<{},State>{
         STAY_COMMENT:true,
         FINISH:true,
       },
-      pageState:'STAY_RECEIPT'
     },()=>{
       this.getOrderLists()
     })
@@ -104,6 +104,7 @@ class Lists extends Component<{},State>{
     }
     getLists(params).then(res=>{
       Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(prevState=>{
@@ -137,18 +138,19 @@ class Lists extends Component<{},State>{
           >
             <View className='order-top'>
               <View className='order-date'>{item.createTime}</View>
-              <View className='order-state'>{item.orderStateName}</View>
+              <View className='order-state'>
+                {/*{['待接单','待上门'].indexOf(item.orderStateName)>-1?<Text className='text-green'>{item.orderStateName}</Text>:null}*/}
+                {/*{['待付款'].indexOf(item.orderStateName)>-1?<Text className='text-warm'>{item.orderStateName}</Text>:null}*/}
+                <StateText state={item.orderStateName}></StateText>
+              </View>
             </View>
-
-            <View className='order-info'>
-              <View className='info-left'>{item.orderSn}</View>
-              <View className='order-right'>{item.repairCategoryName}</View>
+            <View className="order-info-lists">
+              <View className='info-row'>单号：{item.orderSn}</View>
+              <View className='info-row'>报修项目：{item.repairCategoryName}</View>
+              {
+                item.masterName?(<View className='info-row'>接单师傅：{item.masterName} <Text className='text-blue'>({item.masterPhone})</Text></View>):null
+              }
             </View>
-            {
-              item.masterName?(<View className='order-row'>
-                <View className='info-left'>接单师傅：{item.masterName} <Text className='text-blue'>({item.masterPhone})</Text></View>
-              </View>):null
-            }
           </Navigator>)
         })
           :(<View className='no-data'>暂无数据~</View>)

@@ -1,0 +1,12 @@
+<block wx:if="{{$taroCompReady}}">
+    <block wx:if="{{state === '待接单'}}"><text style="{{_$anonymousState__temp}}">{{state}}</text>
+    </block>
+    <block wx:elif="{{state === '待上门'}}"><text style="{{_$anonymousState__temp2}}">{{state}}</text>
+    </block>
+    <block wx:elif="{{state === '待付款'}}"><text style="{{_$anonymousState__temp3}}">{{state}}</text>
+    </block>
+    <block wx:elif="{{state === '已取消'}}"><text style="{{_$anonymousState__temp4}}">{{state}}</text>
+    </block>
+    <block wx:elif="{{state === '已完成'}}"><text style="{{_$anonymousState__temp5}}">{{state}}</text>
+    </block><text style="{{anonymousState__temp6}}" wx:else>{{state}}</text>
+</block>

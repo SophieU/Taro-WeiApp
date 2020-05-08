@@ -63,17 +63,17 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       },
-      uglify: {
-        enable: true,
-        config: {}
-      },
-      csso: {
-        enable: true,
-        config: {
-        }
-      },
-      commonChunks: ['runtime', 'vendors', 'taro', 'common']
-    }
+    },
+    uglify: {
+      enable: true,
+      config: {}
+    },
+    csso: {
+      enable: true,
+      config: {
+      }
+    },
+    commonChunks: ['runtime', 'vendors', 'taro', 'common']
   },
   h5: {
     publicPath: '/',

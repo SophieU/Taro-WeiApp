@@ -60,7 +60,7 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray39", "loopArray40", "loopArray41", "loopArray42", "hideService", "configApiVoList", "serviceList", "adBannerList", "serviceBlockLists", "pageNo", "pageSize", "hasNextPage"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray37", "loopArray38", "loopArray39", "loopArray40", "hideService", "configApiVoList", "serviceList", "adBannerList", "serviceBlockLists", "pageNo", "pageSize", "hasNextPage"], _this.config = {
       navigationBarTitleText: '首页',
       navigationStyle: 'custom'
     }, _this.getBanner = function () {
@@ -194,12 +194,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var loopArray39 = this.__state.adBannerList.map(function (item, index) {
+      var loopArray37 = this.__state.adBannerList.map(function (item, index) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
 
-        var _$indexKey = "eizzz" + index;
+        var _$indexKey = "egzzz" + index;
 
         _this3.anonymousFunc0Map[_$indexKey] = function () {
           return _this3.jumpTo(item.$original);
@@ -213,12 +213,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
       // const { counterStore: { counter } } = this.props
 
 
-      var loopArray40 = this.__state.serviceList.map(function (item, __index1) {
+      var loopArray38 = this.__state.serviceList.map(function (item, __index1) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
 
-        var _$indexKey2 = "ejzzz" + __index1;
+        var _$indexKey2 = "ehzzz" + __index1;
 
         _this3.anonymousFunc1Map[_$indexKey2] = function () {
           return _this3.jumpTo(item.$original);
@@ -230,12 +230,12 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         };
       });
 
-      var loopArray41 = this.__state.configApiVoList.map(function (item, _anonIdx) {
+      var loopArray39 = this.__state.configApiVoList.map(function (item, _anonIdx) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
 
-        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "fbzzzzzzzz" + _anonIdx, true),
+        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "ejzzzzzzzz" + _anonIdx, true),
             _genCompid2 = _slicedToArray(_genCompid, 2),
             $prevCompid__60 = _genCompid2[0],
             $compid__60 = _genCompid2[1];
@@ -249,15 +249,15 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
         };
       });
 
-      var loopArray42 = this.__state.serviceBlockLists.map(function (item, index) {
+      var loopArray40 = this.__state.serviceBlockLists.map(function (item, index) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
-        var $anonymousCallee__6 = item.$original.categoryList.map(function (child, __index2) {
+        var $anonymousCallee__5 = item.$original.categoryList.map(function (child, __index2) {
           child = {
             $original: (0, _taroWeapp.internal_get_original)(child)
           };
-          var _$indexKey3 = "fazzz" + index + "-" + __index2;
+          var _$indexKey3 = "eizzz" + index + "-" + __index2;
 
           _this3.anonymousFunc2Map[_$indexKey3] = function () {
             _this3.jumpTo(child.$original, 'E_SERVICE_CATEGORY');
@@ -269,16 +269,16 @@ var Index = (_temp2 = _class = function (_BaseComponent) {
           };
         });
         return {
-          $anonymousCallee__6: $anonymousCallee__6,
+          $anonymousCallee__5: $anonymousCallee__5,
           $original: item.$original
         };
       });
 
       Object.assign(this.__state, {
+        loopArray37: loopArray37,
+        loopArray38: loopArray38,
         loopArray39: loopArray39,
-        loopArray40: loopArray40,
-        loopArray41: loopArray41,
-        loopArray42: loopArray42
+        loopArray40: loopArray40
       });
       return this.__state;
     }

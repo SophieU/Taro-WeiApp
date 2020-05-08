@@ -25,24 +25,31 @@
   .goods-desc .desc-left .descript {
       font-size: 28rpx;
       color: #333; }
-  .goods-desc .desc-right {
+  .goods-desc .share {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     text-align: right;
-    -webkit-flex: 160rpx 0 0;
-        -ms-flex: 160rpx 0 0;
-            flex: 160rpx 0 0; }
-  .goods-desc .desc-right .share {
-      display: inline-block;
-      color: #EA7744;
-      position: relative;
-      font-size: 24rpx;
-      padding-left: 40rpx; }
-  .goods-desc .desc-right .share .share-ico {
-        display: block;
-        width: 30rpx;
-        height: 30rpx;
-        position: absolute;
-        top: 0;
-        left: 0; }
+    -webkit-flex: 200rpx 0 0;
+        -ms-flex: 200rpx 0 0;
+            flex: 200rpx 0 0;
+    border: none;
+    position: static;
+    color: #EA7744;
+    font-size: 24rpx;
+    padding-left: 40rpx;
+    background: transparent; }
+  .goods-desc .share .share-ico {
+      display: block;
+      width: 30rpx;
+      height: 30rpx;
+      margin-right: 16rpx; }
   .detail {
   margin-top: 20rpx;
   background: #fff; }

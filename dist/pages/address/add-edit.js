@@ -62,7 +62,7 @@ var AddEdit = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddEdit.__proto__ || Object.getPrototypeOf(AddEdit)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "$compid__57", "pageType", "setDefault", "chooseLocation", "id", "areaInfo", "latitude", "longitude", "address", "userName", "userMobile", "isDefault"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddEdit.__proto__ || Object.getPrototypeOf(AddEdit)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "$compid__61", "pageType", "setDefault", "chooseLocation", "id", "areaInfo", "latitude", "longitude", "address", "userName", "userMobile", "isDefault"], _this.config = {
       navigationBarTitleText: '选择地址',
       navigationStyle: 'default'
     }, _this.getEditAddInfo = function (id) {
@@ -266,10 +266,10 @@ var AddEdit = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__57"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__61"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__57 = _genCompid2[0],
-          $compid__57 = _genCompid2[1];
+          $prevCompid__61 = _genCompid2[0],
+          $compid__61 = _genCompid2[1];
 
       var anonymousState__temp = (0, _taroWeapp.internal_inline_style)({ background: '#fff' });
 
@@ -290,11 +290,11 @@ var AddEdit = (_temp2 = _class = function (_BaseComponent) {
         "selectedList": this.__state.setDefault,
         "options": anonymousState__temp2,
         "onChange": this.handleRadioChange
-      }, $compid__57, $prevCompid__57);
+      }, $compid__61, $prevCompid__61);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
-        $compid__57: $compid__57
+        $compid__61: $compid__61
       });
       return this.__state;
     }

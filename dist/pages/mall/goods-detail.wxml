@@ -11,15 +11,14 @@
                 </view>
                 <view class="descript">{{detail.productJingle}}</view>
             </view>
-            <view class="desc-right">
-                <view class="share">
-                    <image class="share-ico" src="{{anonymousState__temp}}"></image>分享</view>
-            </view>
+            <button class="share" open-type="share">
+                <image class="share-ico" src="{{anonymousState__temp}}"></image><text>分享</text>
+            </button>
         </view>
         <view class="detail">
             <view class="detail-title">商品介绍</view>
             <view class="detail-content">
-                <rich-text nodes="{{detail.productBody}}"></rich-text>
+                <rich-custom compid="{{$compid__63}}"></rich-custom>
             </view>
         </view>
         <view class="foot">

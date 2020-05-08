@@ -287,7 +287,7 @@
   .custom-lists .other-info {
   margin-top: 20rpx;
   padding-top: 20rpx;
-  border-top: 2rpx solid #efefef; }
+  border-top: 2rpx solid #f5f5f5; }
   .custom-lists .other-info .info-row {
     font-size: 24rpx;
     color: #999; }
@@ -314,14 +314,14 @@
       font-size: 28rpx;
       color: #EA7744; }
   .order-lists-custom .order-item .order-body {
-    border-top: 2rpx solid #efefef;
+    border-top: 2rpx solid #f5f5f5;
     padding-top: 30rpx;
     display: block; }
   .order-lists-custom .order-item .user-row {
     padding: 20rpx 0;
     margin-top: 20rpx;
-    border-top: 2rpx solid #efefef;
-    border-bottom: 2rpx solid #efefef; }
+    border-top: 2rpx solid #f5f5f5;
+    border-bottom: 2rpx solid #f5f5f5; }
   .order-lists-custom .order-item .info-row {
     font-size: 28rpx;
     line-height: 40rpx;
@@ -413,7 +413,7 @@
   display: flex;
   padding: 30rpx 10rpx;
   font-size: 28rpx;
-  border-bottom: 2rpx solid #efefef; }
+  border-bottom: 2rpx solid #f5f5f5; }
 .order-row:last-child {
     border: none; }
 .order-row .row-title {
@@ -512,7 +512,7 @@
       display: -ms-flexbox;
       display: flex;
       height: 100rpx;
-      border-bottom: 2rpx solid #efefef;
+      border-bottom: 2rpx solid #f5f5f5;
       -webkit-align-items: center;
           -ms-flex-align: center;
               align-items: center; }

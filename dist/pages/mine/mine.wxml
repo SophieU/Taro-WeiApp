@@ -12,7 +12,7 @@
         </view>
         <view class="control-wrap">
             <view class="control-lists">
-                <block>
+                <view class="control-block">
                     <view bindtap="anonymousFunc0" class="control-item">
                         <view class="control-title">报修订单</view>
                         <view class="control-desc"></view>
@@ -41,9 +41,9 @@
                             <view class="control-desc"></view>
                         </view>
                     </block>
-                </block>
+                </view>
                 <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y' || userType === 'SERVICE_USER' && apiUserInfo.isServiceUser === 'Y'}}">
-                    <block>
+                    <view class="control-block">
                         <view class="control-divider">接单管理</view>
                         <view class="control-item">
                             <view bindtap="anonymousFunc4" class="control-title">报修接单管理</view>
@@ -53,23 +53,23 @@
                             <view class="control-title">预约接单管理</view>
                             <view class="control-desc"></view>
                         </view>
-                    </block>
+                    </view>
                 </block>
                 <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y'}}">
-                    <block>
+                    <view class="control-block">
                         <view class="control-divider">派单管理</view>
                         <view bindtap="anonymousFunc6" class="control-item">
                             <view class="control-title">处理工单</view>
                             <view class="control-desc"></view>
                         </view>
-                    </block>
+                    </view>
                 </block>
             </view>
         </view>
-        <at-modal compid="{{$compid__71}}">
+        <at-modal compid="{{$compid__76}}">
             <at-modal-header>设置邀请人</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__72}}"></at-input>
+                <at-input compid="{{$compid__77}}"></at-input>
                 <view class="tips">新用户注册成功7天内，可填写邀请人信息</view>
             </at-modal-content>
             <at-modal-action>

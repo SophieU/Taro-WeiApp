@@ -1,16 +1,16 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="page">
-        <at-tabs compid="{{$compid__59}}">
-            <at-tabs-pane compid="{{$compid__60}}">
+        <at-tabs compid="{{$compid__64}}">
+            <at-tabs-pane compid="{{$compid__65}}">
                 <template is="renderListItem" data="{{...anonymousState__temp}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__61}}">
+            <at-tabs-pane compid="{{$compid__66}}">
                 <template is="renderListItem" data="{{...anonymousState__temp2}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__62}}">
+            <at-tabs-pane compid="{{$compid__67}}">
                 <template is="renderListItem" data="{{...anonymousState__temp3}}"></template>
             </at-tabs-pane>
-            <at-tabs-pane compid="{{$compid__63}}">
+            <at-tabs-pane compid="{{$compid__68}}">
                 <template is="renderListItem" data="{{...anonymousState__temp4}}"></template>
             </at-tabs-pane>
         </at-tabs>
@@ -25,7 +25,7 @@
                         <view class="order-top">
                             <view class="order-date">{{item.$original.createTime}}</view>
                             <view class="order-state">
-                                <state-text compid="{{item.$compid__64}}"></state-text>
+                                <state-text compid="{{item.$compid__69}}"></state-text>
                             </view>
                         </view>
                         <view class="order-info-lists">

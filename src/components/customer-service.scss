@@ -46,6 +46,7 @@
       flex: 45% 0 0;
       &:first-child{
         border-right: 2px dashed #EA7744;
+        border-radius: 0;
       }
     }
     .custom-ico{
@@ -54,7 +55,17 @@
       margin-right: 4px;
       position: relative;
       top:2px;
+      border-radius: 0;
     }
+  }
+  .customer-service-btn{
+    position: static;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 10px;
+    color: #EA7744;
+    line-height: 1em;
   }
 }
 

@@ -55,25 +55,25 @@
             </view>
         </view>
         <view class="other-tips">
-            <at-tabs compid="{{$compid__96}}">
-                <at-tabs-pane compid="{{$compid__97}}">
+            <at-tabs compid="{{$compid__100}}">
+                <at-tabs-pane compid="{{$compid__101}}">
                     <view class="tips-inner">
-                        <rich-text nodes="{{serviceContent.serviceDescription}}"></rich-text>
+                        <rich-custom compid="{{$compid__102}}"></rich-custom>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__98}}">
+                <at-tabs-pane compid="{{$compid__103}}">
                     <view class="tips-inner">
-                        <rich-text nodes="{{serviceTimeTips}}"></rich-text>
+                        <rich-custom compid="{{$compid__104}}"></rich-custom>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__99}}">
+                <at-tabs-pane compid="{{$compid__105}}">
                     <view class="tips-inner">
-                        <rich-text nodes="{{serviceFeeTips}}"></rich-text>
+                        <rich-custom compid="{{$compid__106}}"></rich-custom>
                     </view>
                 </at-tabs-pane>
-                <at-tabs-pane compid="{{$compid__100}}">
+                <at-tabs-pane compid="{{$compid__107}}">
                     <view class="tips-inner">
-                        <rich-text nodes="{{otherTips}}"></rich-text>
+                        <rich-custom compid="{{$compid__108}}"></rich-custom>
                     </view>
                 </at-tabs-pane>
             </at-tabs>

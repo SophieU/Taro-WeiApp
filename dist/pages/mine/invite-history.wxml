@@ -2,7 +2,7 @@
     <block>
         <block>
             <view class="history-year">{{blockInfo.year}}</view>
-            <at-timeline compid="{{$compid__58}}"></at-timeline>
+            <at-timeline compid="{{$compid__62}}"></at-timeline>
         </block>
     </block>
 </template>

@@ -11891,4 +11891,6 @@ right: http://qiniu.kingdou.fun/right.png
   text-align: center;
   font-size: 28rpx;
   color: #999; }
+button:after {
+  display: none; }
 

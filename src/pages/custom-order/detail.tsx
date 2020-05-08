@@ -327,15 +327,16 @@ class Lists extends Component<{},State>{
       return commentActiveTags.indexOf(item.id)>-1
     })
     let params = confirmCommentLists
+    Taro.showLoading({title:'提交中'})
     submitComment(id,params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         Taro.showToast({
           title:'评价成功',
           icon:'none'
         })
-        setTimeout(()=>{
-          Taro.navigateBack({delta:-1})
-        },1500)
+        this.getOrderDetail()
+        
       }
     })
   }

@@ -155,10 +155,10 @@
             </block>
         </view>
         <template is="renderFoot" data="{{...anonymousState__temp}}"></template>
-        <at-action-sheet compid="{{$compid__92}}">
-            <at-action-sheet-item compid="{{$compid__93}}">用户端支付</at-action-sheet-item>
-            <at-action-sheet-item compid="{{$compid__94}}">二维码收款</at-action-sheet-item>
+        <at-action-sheet compid="{{$compid__96}}">
+            <at-action-sheet-item compid="{{$compid__97}}">用户端支付</at-action-sheet-item>
+            <at-action-sheet-item compid="{{$compid__98}}">二维码收款</at-action-sheet-item>
         </at-action-sheet>
-        <at-toast compid="{{$compid__95}}"></at-toast>
+        <at-toast compid="{{$compid__99}}"></at-toast>
     </view>
 </block>

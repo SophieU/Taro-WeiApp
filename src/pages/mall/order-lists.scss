@@ -65,7 +65,7 @@
   .other-info{
     margin-top: 10px;
     padding-top:10px;
-    border-top:1px solid #efefef;
+    border-top:1px solid #f5f5f5;
     .info-row{
       font-size: 12px;
       color: #999;
@@ -93,15 +93,15 @@
   }
   .order-item{
     .order-body{
-      border-top: 1px solid #efefef;
+      border-top: 1px solid #f5f5f5;
       padding-top: 15px;
       display: block;
     }
     .user-row{
       padding:10px 0;
       margin-top: 10px;
-      border-top: 1px solid #efefef;
-      border-bottom: 1px solid #efefef;
+      border-top: 1px solid #f5f5f5;
+      border-bottom: 1px solid #f5f5f5;
     }
     .info-row{
       font-size: 14px;
@@ -170,7 +170,7 @@
   min-height: 50px;
   padding: 15px;
   .price-input{
-    //border-bottom: 1px solid #efefef;
+    //border-bottom: 1px solid #f5f5f5;
   }
 
 }

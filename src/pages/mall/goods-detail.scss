@@ -26,23 +26,23 @@
     }
   }
 
-  .desc-right{
+  .share{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: right;
-    flex: 80px 0 0;
-    .share{
-      display: inline-block;
-      color:#EA7744;
-      position: relative;
-      font-size: 12px;
-      padding-left: 20px;
-      .share-ico{
-        display: block;
-        width: 15px;
-        height: 15px;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
+    flex: 100px 0 0;
+    border: none;
+    position: static;
+    color:#EA7744;
+    font-size: 12px;
+    padding-left: 20px;
+    background: transparent;
+    .share-ico{
+      display: block;
+      width: 15px;
+      height: 15px;
+      margin-right: 8px;
     }
   }
 }

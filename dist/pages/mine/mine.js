@@ -60,7 +60,7 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "$compid__71", "$compid__72", "userType", "userInfo", "apiUserInfo", "inviteUserPhone", "showInvitePhoneModal", "userStore"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "$compid__76", "$compid__77", "userType", "userInfo", "apiUserInfo", "inviteUserPhone", "showInvitePhoneModal", "userStore"], _this.config = {
       navigationBarTitleText: '我的',
       navigationStyle: 'default'
     }, _this.getBaseInfo = function () {
@@ -174,15 +174,15 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__71"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__76"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__71 = _genCompid2[0],
-          $compid__71 = _genCompid2[1];
+          $prevCompid__76 = _genCompid2[0],
+          $compid__76 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__72"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__77"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__72 = _genCompid4[0],
-          $compid__72 = _genCompid4[1];
+          $prevCompid__77 = _genCompid4[0],
+          $compid__77 = _genCompid4[1];
 
       var userType = this.__state.apiUserInfo.userType;
 
@@ -220,7 +220,7 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       _taroWeapp.propsManager.set({
         "className": "invite-modal",
         "isOpened": this.__state.showInvitePhoneModal
-      }, $compid__71, $prevCompid__71);
+      }, $compid__76, $prevCompid__76);
       _taroWeapp.propsManager.set({
         "className": "invite-input",
         "name": "inviteUserPhone",
@@ -229,12 +229,12 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
         "placeholder": "\u8BF7\u586B\u5199\u624B\u673A\u53F7\u7801",
         "value": this.__state.inviteUserPhone,
         "onChange": this.handleInviteUserPhoneChange
-      }, $compid__72, $prevCompid__72);
+      }, $compid__77, $prevCompid__77);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
-        $compid__71: $compid__71,
-        $compid__72: $compid__72,
+        $compid__76: $compid__76,
+        $compid__77: $compid__77,
         userType: userType
       });
       return this.__state;

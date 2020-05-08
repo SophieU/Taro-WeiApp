@@ -1,7 +1,8 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Swiper, SwiperItem,Text, RichText ,Navigator} from '@tarojs/components'
+import {View, Image, Swiper, SwiperItem,Text ,Navigator,Button} from '@tarojs/components'
 import {getSubscribeDetail} from './mall-apis'
+import RichCustom from '../../components/rich-text'
 import './goods-detail.scss'
 
 class GoodsDetail extends  Component{
@@ -60,17 +61,17 @@ class GoodsDetail extends  Component{
             </View>
             <View className='descript'>{this.state.detail.productJingle}</View>
           </View>
-          <View className='desc-right'>
-            <View className='share'>
-              <Image className='share-ico' src={require('../../assets/imgs/tmp/share.png')}></Image>
-              分享</View>
-          </View>
+
+          <Button className='share' open-type='share'>
+            <Image className='share-ico' src={require('../../assets/imgs/tmp/share.png')}></Image>
+            <Text>分享</Text>
+          </Button>
         </View>
 
         <View className='detail'>
           <View className='detail-title'>商品介绍</View>
           <View className='detail-content'>
-            <RichText nodes={this.state.detail.productBody}></RichText>
+            <RichCustom nodes={this.state.detail.productBody}></RichCustom>
           </View>
         </View>
         <View className='foot'>

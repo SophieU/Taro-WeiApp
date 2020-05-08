@@ -60,7 +60,7 @@ var AtTimeline = (_temp2 = _class = function (_AtComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtTimeline.__proto__ || Object.getPrototypeOf(AtTimeline)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp7", "anonymousState__temp8", "loopArray55", "items", "pending", "customStyle", "className"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtTimeline.__proto__ || Object.getPrototypeOf(AtTimeline)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp7", "anonymousState__temp8", "loopArray56", "items", "pending", "customStyle", "className"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AtTimeline, [{
@@ -92,7 +92,7 @@ var AtTimeline = (_temp2 = _class = function (_AtComponent) {
       };
       var anonymousState__temp7 = (0, _classnames2.default)(rootClassName, rootClassObject, this.__props.className);
       var anonymousState__temp8 = (0, _taroWeapp.internal_inline_style)(customStyle);
-      var loopArray55 = items.map(function (item, index) {
+      var loopArray56 = items.map(function (item, index) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
@@ -137,7 +137,7 @@ var AtTimeline = (_temp2 = _class = function (_AtComponent) {
       Object.assign(this.__state, {
         anonymousState__temp7: anonymousState__temp7,
         anonymousState__temp8: anonymousState__temp8,
-        loopArray55: loopArray55,
+        loopArray56: loopArray56,
         items: items
       });
       return this.__state;

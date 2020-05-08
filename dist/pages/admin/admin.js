@@ -52,7 +52,7 @@ var Admin = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Admin.__proto__ || Object.getPrototypeOf(Admin)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp3", "loopArray61", "$compid__89", "$compid__90", "$compid__91", "currentTab", "orderLists", "cancelReasonLists", "pageNo", "pageSize", "hasNextPage", "reasonModal", "cancelReasonId", "showRefresh", "nowItem"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Admin.__proto__ || Object.getPrototypeOf(Admin)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray61", "$compid__94", "$compid__95", "currentTab", "orderLists", "cancelReasonLists", "pageNo", "pageSize", "hasNextPage", "reasonModal", "cancelReasonId", "showRefresh", "nowItem"], _this.config = {
       navigationBarTitleText: '工单处理',
       navigationStyle: 'default',
       enablePullDownRefresh: true
@@ -279,7 +279,7 @@ var Admin = (_temp2 = _class = function (_BaseComponent) {
           return false;
         }
       });
-    }, _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.customComponents = ["AtTabsPane", "AtModal", "AtModalHeader", "AtModalContent", "AtRadio", "AtModalAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.customComponents = ["AtModal", "AtModalHeader", "AtModalContent", "AtRadio", "AtModalAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Admin, [{
@@ -339,20 +339,15 @@ var Admin = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__89"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__94"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__89 = _genCompid2[0],
-          $compid__89 = _genCompid2[1];
+          $prevCompid__94 = _genCompid2[0],
+          $compid__94 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__90"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__95"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__90 = _genCompid4[0],
-          $compid__90 = _genCompid4[1];
-
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__91"),
-          _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__91 = _genCompid6[0],
-          $compid__91 = _genCompid6[1];
+          $prevCompid__95 = _genCompid4[0],
+          $compid__95 = _genCompid4[1];
 
       var cancelReasonArr = [];
       this.__state.cancelReasonLists.forEach(function (item) {
@@ -364,7 +359,6 @@ var Admin = (_temp2 = _class = function (_BaseComponent) {
           cancelReasonArr.push(obj);
         }
       });
-      var anonymousState__temp3 = (0, _taroWeapp.internal_inline_style)({ height: '100vh' });
 
       var loopArray61 = this.__state.orderLists.map(function (item, __index0) {
         item = {
@@ -394,23 +388,17 @@ var Admin = (_temp2 = _class = function (_BaseComponent) {
       });
 
       _taroWeapp.propsManager.set({
-        "current": this.__state.currentTab,
-        "index": 0
-      }, $compid__89, $prevCompid__89);
-      _taroWeapp.propsManager.set({
         "isOpened": this.__state.reasonModal
-      }, $compid__90, $prevCompid__90);
+      }, $compid__94, $prevCompid__94);
       _taroWeapp.propsManager.set({
         "options": cancelReasonArr,
         "value": this.__state.cancelReasonId,
         "onClick": this.handleRadioChange
-      }, $compid__91, $prevCompid__91);
+      }, $compid__95, $prevCompid__95);
       Object.assign(this.__state, {
-        anonymousState__temp3: anonymousState__temp3,
         loopArray61: loopArray61,
-        $compid__89: $compid__89,
-        $compid__90: $compid__90,
-        $compid__91: $compid__91
+        $compid__94: $compid__94,
+        $compid__95: $compid__95
       });
       return this.__state;
     }

@@ -136,7 +136,7 @@ class Mine extends  Component<{}, State>{
         <View className='control-wrap'>
           <View className='control-lists'>
             {/*公共菜单*/}
-            <Block>
+            <View className='control-block'>
               <View onClick={()=>{this.handleNavigate('/pages/custom-order/lists')}} className='control-item'>
                 <View className='control-title'>报修订单</View>
                 <View className='control-desc'></View>
@@ -167,11 +167,11 @@ class Mine extends  Component<{}, State>{
                 </View>):null
               }
 
-            </Block>
+            </View>
 
             {/*服务师傅*/}
             { (userType==='ADMIN'&&this.state.apiUserInfo.isServiceUser==='Y')||(userType==='SERVICE_USER'&&this.state.apiUserInfo.isServiceUser==='Y')?(
-              <Block>
+              <View className='control-block'>
                 <View className='control-divider'>接单管理</View>
                 <View className='control-item'>
                   <View onClick={()=>{this.handleNavigate('/pages/staff-order/order')}} className='control-title'>报修接单管理</View>
@@ -181,19 +181,19 @@ class Mine extends  Component<{}, State>{
                   <View className='control-title'>预约接单管理</View>
                   <View className='control-desc'></View>
                 </View>
-              </Block>
+              </View>
             ):null}
 
             {/*管理员端   */}
             {
               userType==='ADMIN'&&this.state.apiUserInfo.isServiceUser==='Y'?(
-                <Block>
+                <View className='control-block'>
                   <View className='control-divider'>派单管理</View>
                   <View onClick={()=>{this.handleNavigate('/pages/admin/admin')}} className='control-item'>
                     <View className='control-title'>处理工单</View>
                     <View className='control-desc'></View>
                   </View>
-                </Block>
+                </View>
               ):null
             }
           </View>

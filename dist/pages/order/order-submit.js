@@ -68,7 +68,7 @@ var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = OrderSubmit.__proto__ || Object.getPrototypeOf(OrderSubmit)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "anonymousState__temp10", "loopArray65", "$compid__96", "$compid__97", "$compid__98", "$compid__99", "$compid__100", "bannerLists", "current", "repairCategoryId", "repairUserAddressId", "repairUserAddressObj", "address", "userName", "userMobile", "faultReason", "otherTips", "serviceFeeTips", "serviceTimeTips", "nightFee", "repairOrderOfferPlanDtoList", "timer", "serviceContent", "appStore"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = OrderSubmit.__proto__ || Object.getPrototypeOf(OrderSubmit)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "anonymousState__temp10", "loopArray65", "$compid__100", "$compid__101", "$compid__102", "$compid__103", "$compid__104", "$compid__105", "$compid__106", "$compid__107", "$compid__108", "bannerLists", "current", "repairCategoryId", "repairUserAddressId", "repairUserAddressObj", "address", "userName", "userMobile", "faultReason", "otherTips", "serviceFeeTips", "serviceTimeTips", "nightFee", "repairOrderOfferPlanDtoList", "timer", "serviceContent", "appStore"], _this.config = {
       navigationBarTitleText: '订单确认',
       navigationStyle: 'default'
     }, _this.topBanner = function () {
@@ -320,7 +320,7 @@ var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
       _this.setState({
         faultReason: value
       });
-    }, _this.anonymousFunc0Map = {}, _this.customComponents = ["AtTabs", "AtTabsPane"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.anonymousFunc0Map = {}, _this.customComponents = ["AtTabs", "AtTabsPane", "RichCustom"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(OrderSubmit, [{
@@ -403,30 +403,50 @@ var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__96"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__100"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__96 = _genCompid2[0],
-          $compid__96 = _genCompid2[1];
+          $prevCompid__100 = _genCompid2[0],
+          $compid__100 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__97"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__101"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__97 = _genCompid4[0],
-          $compid__97 = _genCompid4[1];
+          $prevCompid__101 = _genCompid4[0],
+          $compid__101 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__98"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__102"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__98 = _genCompid6[0],
-          $compid__98 = _genCompid6[1];
+          $prevCompid__102 = _genCompid6[0],
+          $compid__102 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__99"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__103"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__99 = _genCompid8[0],
-          $compid__99 = _genCompid8[1];
+          $prevCompid__103 = _genCompid8[0],
+          $compid__103 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__100"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__104"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__100 = _genCompid10[0],
-          $compid__100 = _genCompid10[1];
+          $prevCompid__104 = _genCompid10[0],
+          $compid__104 = _genCompid10[1];
+
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__105"),
+          _genCompid12 = _slicedToArray(_genCompid11, 2),
+          $prevCompid__105 = _genCompid12[0],
+          $compid__105 = _genCompid12[1];
+
+      var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__106"),
+          _genCompid14 = _slicedToArray(_genCompid13, 2),
+          $prevCompid__106 = _genCompid14[0],
+          $compid__106 = _genCompid14[1];
+
+      var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__107"),
+          _genCompid16 = _slicedToArray(_genCompid15, 2),
+          $prevCompid__107 = _genCompid16[0],
+          $compid__107 = _genCompid16[1];
+
+      var _genCompid17 = (0, _taroWeapp.genCompid)(__prefix + "$compid__108"),
+          _genCompid18 = _slicedToArray(_genCompid17, 2),
+          $prevCompid__108 = _genCompid18[0],
+          $compid__108 = _genCompid18[1];
 
       var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/img_project.png */ "./src/assets/imgs/tmp/img_project.png");
 
@@ -476,23 +496,35 @@ var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
         "current": this.__state.current,
         "tabList": anonymousState__temp10,
         "onClick": this.toggleTab
-      }, $compid__96, $prevCompid__96);
+      }, $compid__100, $prevCompid__100);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 0
-      }, $compid__97, $prevCompid__97);
+      }, $compid__101, $prevCompid__101);
+      _taroWeapp.propsManager.set({
+        "nodes": this.__state.serviceContent.serviceDescription
+      }, $compid__102, $prevCompid__102);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 1
-      }, $compid__98, $prevCompid__98);
+      }, $compid__103, $prevCompid__103);
+      _taroWeapp.propsManager.set({
+        "nodes": this.__state.serviceTimeTips
+      }, $compid__104, $prevCompid__104);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 2
-      }, $compid__99, $prevCompid__99);
+      }, $compid__105, $prevCompid__105);
+      _taroWeapp.propsManager.set({
+        "nodes": this.__state.serviceFeeTips
+      }, $compid__106, $prevCompid__106);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 3
-      }, $compid__100, $prevCompid__100);
+      }, $compid__107, $prevCompid__107);
+      _taroWeapp.propsManager.set({
+        "nodes": this.__state.otherTips
+      }, $compid__108, $prevCompid__108);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
@@ -505,11 +537,15 @@ var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
         anonymousState__temp9: anonymousState__temp9,
         anonymousState__temp10: anonymousState__temp10,
         loopArray65: loopArray65,
-        $compid__96: $compid__96,
-        $compid__97: $compid__97,
-        $compid__98: $compid__98,
-        $compid__99: $compid__99,
-        $compid__100: $compid__100
+        $compid__100: $compid__100,
+        $compid__101: $compid__101,
+        $compid__102: $compid__102,
+        $compid__103: $compid__103,
+        $compid__104: $compid__104,
+        $compid__105: $compid__105,
+        $compid__106: $compid__106,
+        $compid__107: $compid__107,
+        $compid__108: $compid__108
       });
       return this.__state;
     }

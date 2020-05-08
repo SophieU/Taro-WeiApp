@@ -113,20 +113,20 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       var _this2 = this;
 
       return function (blockInfo) {
-        var _genCompid = (0, _taroWeapp.genCompid)(_$uid + "$compid__58"),
+        var _genCompid = (0, _taroWeapp.genCompid)(_$uid + "$compid__62"),
             _genCompid2 = _slicedToArray(_genCompid, 2),
-            $prevCompid__58 = _genCompid2[0],
-            $compid__58 = _genCompid2[1];
+            $prevCompid__62 = _genCompid2[0],
+            $compid__62 = _genCompid2[1];
 
         var anonymousState__temp = _this2.formatTimeLineData(blockInfo.list);
         _taroWeapp.propsManager.set({
           "className": "at-timeline-custom",
           "pending": true,
           "items": anonymousState__temp
-        }, $compid__58, $prevCompid__58);
+        }, $compid__62, $prevCompid__62);
         return {
           anonymousState__temp: anonymousState__temp,
-          $compid__58: $compid__58,
+          $compid__62: $compid__62,
           blockInfo: blockInfo
         };
       };

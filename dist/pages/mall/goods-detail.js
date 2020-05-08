@@ -14,6 +14,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -50,7 +52,7 @@ var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GoodsDetail.__proto__ || Object.getPrototypeOf(GoodsDetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "id", "detail"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GoodsDetail.__proto__ || Object.getPrototypeOf(GoodsDetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "$compid__63", "id", "detail"], _this.config = {
       navigationBarTitleText: '预约服务详情',
       navigationStyle: 'default'
     }, _this.getDetail = function (id) {
@@ -62,7 +64,7 @@ var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
           });
         }
       });
-    }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.customComponents = ["RichCustom"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(GoodsDetail, [{
@@ -94,10 +96,19 @@ var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+          _genCompid2 = _slicedToArray(_genCompid, 2),
+          $prevCompid__63 = _genCompid2[0],
+          $compid__63 = _genCompid2[1];
+
       var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/share.png */ "./src/assets/imgs/tmp/share.png");
 
+      _taroWeapp.propsManager.set({
+        "nodes": this.__state.detail.productBody
+      }, $compid__63, $prevCompid__63);
       Object.assign(this.__state, {
-        anonymousState__temp: anonymousState__temp
+        anonymousState__temp: anonymousState__temp,
+        $compid__63: $compid__63
       });
       return this.__state;
     }

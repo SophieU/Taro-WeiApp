@@ -1,6 +1,6 @@
 import {ComponentType } from 'react'
 import Taro, {Component} from '@tarojs/taro'
-import {View, Image, Block, Text, Icon} from '@tarojs/components'
+import {View, Image, Block, Text, Icon,Button} from '@tarojs/components'
 import './customer-service.scss'
 
 class CustomerService extends Component{
@@ -34,12 +34,12 @@ class CustomerService extends Component{
           </Block>)
           :(<Block>
             <View className='expand-service'>
-              <View className='expand-button'>
-                <View onClick={this.onlineService}><Image className='custom-ico'  src={require('../assets/imgs/tmp/im.png')}></Image>在线咨询</View>
+              <Button className='expand-button customer-service-btn'  openType='contact' onClick={this.onlineService}>
+                <View ><Image className='custom-ico'  src={require('../assets/imgs/tmp/im.png')}></Image>在线咨询</View>
                 <Text>（8:30-20:00）</Text>
-              </View>
-              <View className='expand-button'>
-                <View onClick={this.callService}><Image className='custom-ico' src={require('../assets/imgs/tmp/call.png')}></Image>热线电话</View>
+              </Button>
+              <View className='expand-button' onClick={this.callService}>
+                <View ><Image className='custom-ico' src={require('../assets/imgs/tmp/call.png')}></Image>热线电话</View>
                 <Text>（8:30-20:00）</Text>
               </View>
               <Icon onClick={this.toggleService} size='18' type='clear' color='#EA7744'/>

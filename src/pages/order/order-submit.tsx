@@ -1,12 +1,13 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {inject, observer } from '@tarojs/mobx'
-import {View, Image, Text, Navigator, Input, Textarea , Swiper, SwiperItem, RichText, Radio, Button, Swiper, SwiperItem } from '@tarojs/components'
+import {View, Image, Text, Navigator, Input, Textarea , Swiper, SwiperItem, Radio, Button, Swiper, SwiperItem } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import { getTopBanner, getOrderContent, getOrderContenNo, getTipsOther, needNightFee, submitOrder, getPrePayOrder, getWxPay} from './order-api'
 import { getDefaultAdd } from '../address/service'
 import {jumpTo as jumpToUtil} from "../../utils/common";
 import {validateTel} from '../../utils/regexpValidate'
+import RichCustom from '../../components/rich-text'
 import './order-submit.scss'
 
 type Service = {
@@ -465,22 +466,22 @@ submitForm=()=>{
         <AtTabs className="other-tips-tab" current={this.state.current} tabList={[{ title: '服务说明' }, { title: '服务时间' }, { title: '服务费用' }, { title: '其他' }]} onClick={this.toggleTab}>
           <AtTabsPane current={this.state.current} index={0} >
             <View className='tips-inner'>
-              <RichText nodes={this.state.serviceContent.serviceDescription}/>
+              <RichCustom nodes={this.state.serviceContent.serviceDescription}/>
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <View className='tips-inner'>
-              <RichText nodes={this.state.serviceTimeTips}/>
+              <RichCustom nodes={this.state.serviceTimeTips}/>
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
             <View className='tips-inner'>
-              <RichText nodes={this.state.serviceFeeTips}/>
+              <RichCustom nodes={this.state.serviceFeeTips}/>
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
             <View className='tips-inner'>
-              <RichText nodes={this.state.otherTips}/>
+              <RichCustom nodes={this.state.otherTips}/>
             </View>
           </AtTabsPane>
         </AtTabs>

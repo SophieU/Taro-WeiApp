@@ -54,7 +54,7 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__59", "$compid__60", "$compid__61", "$compid__62", "$compid__63", "anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "stateMap", "current", "lists", "pageSize", "pageNo", "hasNextPage", "pageState"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__64", "$compid__65", "$compid__66", "$compid__67", "$compid__68", "anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "stateMap", "current", "lists", "pageSize", "pageNo", "hasNextPage", "pageState"], _this.config = {
       navigationBarTitleText: '报修记录',
       navigationStyle: 'default'
     }, _this.handleTab = function (index) {
@@ -209,30 +209,30 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__59"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__64"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__59 = _genCompid2[0],
-          $compid__59 = _genCompid2[1];
+          $prevCompid__64 = _genCompid2[0],
+          $compid__64 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__60"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__65"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__60 = _genCompid4[0],
-          $compid__60 = _genCompid4[1];
+          $prevCompid__65 = _genCompid4[0],
+          $compid__65 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__61"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__66"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__61 = _genCompid6[0],
-          $compid__61 = _genCompid6[1];
+          $prevCompid__66 = _genCompid6[0],
+          $compid__66 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__62"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__67"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__62 = _genCompid8[0],
-          $compid__62 = _genCompid8[1];
+          $prevCompid__67 = _genCompid8[0],
+          $compid__67 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__68"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__63 = _genCompid10[0],
-          $compid__63 = _genCompid10[1];
+          $prevCompid__68 = _genCompid10[0],
+          $compid__68 = _genCompid10[1];
 
       var tabLists = [{ title: '待处理' }, { title: '待付款' }, { title: '待评价' }, { title: '已完成' }];
 
@@ -248,29 +248,29 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
         "current": this.__state.current,
         "tabList": tabLists,
         "onClick": this.handleTab
-      }, $compid__59, $prevCompid__59);
+      }, $compid__64, $prevCompid__64);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 0
-      }, $compid__60, $prevCompid__60);
+      }, $compid__65, $prevCompid__65);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 1
-      }, $compid__61, $prevCompid__61);
+      }, $compid__66, $prevCompid__66);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 2
-      }, $compid__62, $prevCompid__62);
+      }, $compid__67, $prevCompid__67);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 3
-      }, $compid__63, $prevCompid__63);
+      }, $compid__68, $prevCompid__68);
       Object.assign(this.__state, {
-        $compid__59: $compid__59,
-        $compid__60: $compid__60,
-        $compid__61: $compid__61,
-        $compid__62: $compid__62,
-        $compid__63: $compid__63,
+        $compid__64: $compid__64,
+        $compid__65: $compid__65,
+        $compid__66: $compid__66,
+        $compid__67: $compid__67,
+        $compid__68: $compid__68,
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
         anonymousState__temp3: anonymousState__temp3,
@@ -289,14 +289,14 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
 
           var _genCompid11 = (0, _taroWeapp.genCompid)(_$uid + 'gczzzzzzzz' + index, true),
               _genCompid12 = _slicedToArray(_genCompid11, 2),
-              $prevCompid__64 = _genCompid12[0],
-              $compid__64 = _genCompid12[1];
+              $prevCompid__69 = _genCompid12[0],
+              $compid__69 = _genCompid12[1];
 
           _taroWeapp.propsManager.set({
             "state": item.$original.orderStateName
-          }, $compid__64, $prevCompid__64);
+          }, $compid__69, $prevCompid__69);
           return {
-            $compid__64: $compid__64,
+            $compid__69: $compid__69,
             $original: item.$original
           };
         }) : [];

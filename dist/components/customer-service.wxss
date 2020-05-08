@@ -55,12 +55,22 @@
           -ms-flex: 45% 0 0;
               flex: 45% 0 0; }
 .customer-service.expand .expand-button:first-child {
-        border-right: 4rpx dashed #EA7744; }
+        border-right: 4rpx dashed #EA7744;
+        border-radius: 0; }
 .customer-service.expand .custom-ico {
       width: 24rpx;
       height: 24rpx;
       margin-right: 8rpx;
       position: relative;
-      top: 4rpx; }
+      top: 4rpx;
+      border-radius: 0; }
+.customer-service .customer-service-btn {
+    position: static;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 20rpx;
+    color: #EA7744;
+    line-height: 1em; }
 /* end: customer-service*/
 

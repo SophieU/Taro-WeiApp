@@ -60,7 +60,7 @@ var AtCheckbox = (_temp2 = _class = function (_AtComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtCheckbox.__proto__ || Object.getPrototypeOf(AtCheckbox)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "loopArray56", "rootCls", "options", "selectedList", "customStyle", "className"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtCheckbox.__proto__ || Object.getPrototypeOf(AtCheckbox)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "loopArray55", "rootCls", "options", "selectedList", "customStyle", "className"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AtCheckbox, [{
@@ -108,7 +108,7 @@ var AtCheckbox = (_temp2 = _class = function (_AtComponent) {
 
       var rootCls = (0, _classnames2.default)('at-checkbox', className);
       var anonymousState__temp = (0, _taroWeapp.internal_inline_style)(customStyle);
-      var loopArray56 = options.map(function (option, idx) {
+      var loopArray55 = options.map(function (option, idx) {
         option = {
           $original: (0, _taroWeapp.internal_get_original)(option)
         };
@@ -134,7 +134,7 @@ var AtCheckbox = (_temp2 = _class = function (_AtComponent) {
       });
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
-        loopArray56: loopArray56,
+        loopArray55: loopArray55,
         rootCls: rootCls,
         options: options
       });

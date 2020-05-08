@@ -52,7 +52,7 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__65", "$compid__66", "choosed", "orderId", "lists", "type", "stationName"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__70", "$compid__71", "choosed", "orderId", "lists", "type", "stationName"], _this.config = {
       navigationBarTitleText: '报修订单',
       navigationStyle: 'default'
     }, _this.getLists = function (orderId) {
@@ -147,29 +147,29 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__65"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__70"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__65 = _genCompid2[0],
-          $compid__65 = _genCompid2[1];
+          $prevCompid__70 = _genCompid2[0],
+          $compid__70 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__66"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__71"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__66 = _genCompid4[0],
-          $compid__66 = _genCompid4[1];
+          $prevCompid__71 = _genCompid4[0],
+          $compid__71 = _genCompid4[1];
 
       this.__state.lists.length > 0 && _taroWeapp.propsManager.set({
         "options": this.__state.lists,
         "value": this.__state.choosed,
         "onClick": this.handleChange
-      }, $compid__65, $prevCompid__65);
+      }, $compid__70, $prevCompid__70);
       _taroWeapp.propsManager.set({
         "onClick": this.dispatchOrderNow,
         "className": "foot-btn",
         "type": "primary"
-      }, $compid__66, $prevCompid__66);
+      }, $compid__71, $prevCompid__71);
       Object.assign(this.__state, {
-        $compid__65: $compid__65,
-        $compid__66: $compid__66
+        $compid__70: $compid__70,
+        $compid__71: $compid__71
       });
       return this.__state;
     }

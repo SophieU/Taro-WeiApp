@@ -1,65 +1,63 @@
 <block wx:if="{{$taroCompReady}}">
-    <view style="{{anonymousState__temp3}}" class="page">
-        <at-tabs-pane compid="{{$compid__89}}">
-            <view class="order-wrap">
-                <block wx:if="{{orderLists.length <= 0}}">
-                    <view class="nothing">这里空空如也~</view>
-                </block>
-                <view class="order-lists">
-                    <view class="order-item" wx:key="orderId" wx:for="{{loopArray61}}" wx:for-item="item" wx:for-index="__index0">
-                        <view class="item-header">
-                            <view class="header-time">{{item.$original.createTime}}</view>
-                            <block wx:if="{{item.$original.orderStateName === '异常'}}">
-                                <view class="header-type abnormal">{{item.$original.orderStateName}}</view>
-                            </block>
-                            <block wx:if="{{item.$original.orderStateName === '待上门'}}">
-                                <view class="header-type">{{item.$original.orderStateName}}</view>
-                            </block>
-                            <block wx:if="{{item.$original.orderStateName === '待接单'}}">
-                                <view class="header-type waiting">{{item.$original.orderStateName}}</view>
-                            </block>
+    <view class="page">
+        <view class="order-wrap">
+            <block wx:if="{{orderLists.length <= 0}}">
+                <view class="nothing">这里空空如也~</view>
+            </block>
+            <view class="order-lists">
+                <view class="order-item" wx:key="orderId" wx:for="{{loopArray61}}" wx:for-item="item" wx:for-index="__index0">
+                    <view class="item-header">
+                        <view class="header-time">{{item.$original.createTime}}</view>
+                        <block wx:if="{{item.$original.orderStateName === '异常'}}">
+                            <view class="header-type abnormal">{{item.$original.orderStateName}}</view>
+                        </block>
+                        <block wx:if="{{item.$original.orderStateName === '待上门'}}">
+                            <view class="header-type">{{item.$original.orderStateName}}</view>
+                        </block>
+                        <block wx:if="{{item.$original.orderStateName === '待接单'}}">
+                            <view class="header-type waiting">{{item.$original.orderStateName}}</view>
+                        </block>
+                    </view>
+                    <view class="order-number">订单编号：{{item.$original.orderSn}}</view>
+                    <view class="order-info">
+                        <view class="info-item"><text class="info-label">报修类型：</text><text class="info-inner">{{item.$original.repairCategoryName}} </text>
                         </view>
-                        <view class="order-number">订单编号：{{item.$original.orderSn}}</view>
-                        <view class="order-info">
-                            <view class="info-item"><text class="info-label">报修类型：</text><text class="info-inner">{{item.$original.repairCategoryName}} </text>
-                            </view>
-                            <view class="info-item"><text class="info-label">报修地址：</text><text class="info-inner">{{item.$original.address}}</text>
-                            </view>
-                            <view class="info-item"><text class="info-label">联系人姓名：</text><text class="info-inner">{{item.$original.username}}</text>
-                            </view>
-                            <view class="info-item"><text class="info-label">用户手机：</text><text class="info-inner phone" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">{{item.$original.userPhone}}</text>
-                            </view>
-                            <view class="divider"></view>
-                            <block wx:if="{{item.$original.orderStateName !== '待接单'}}">
-                                <block>
-                                    <view class="info-item"><text class="info-label">接单师傅：</text><text class="info-inner">{{item.$original.serviceUserName}}</text>
-                                    </view>
-                                    <view class="info-item"><text class="info-label">师傅电话：</text><text bindtap="anonymousFunc1" class="info-inner phone" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}">{{item.$original.serviceUserPhone}}</text>
-                                    </view>
-                                </block>
-                            </block>
-                            <view class="info-item"><text class="info-label">工单状态：</text><text class="info-inner">{{item.$original.orderStateName}}</text>
-                            </view>
-                            <block wx:if="{{item.$original.type === 'appeal'}}">
-                                <block>
-                                    <view class="info-item"><text class="info-label">申诉请求：</text><text class="info-inner">{{item.$original.statementRequestName}}</text>
-                                    </view>
-                                    <view class="info-item"><text class="info-label">申诉原因：</text><text class="info-inner">{{item.$original.statementReasonName}}</text>
-                                    </view>
-                                </block>
-                            </block>
+                        <view class="info-item"><text class="info-label">报修地址：</text><text class="info-inner">{{item.$original.address}}</text>
                         </view>
-                        <view class="order-foot">
-                            <template is="renderFootBtn" data="{{...item.$loopState__temp2}}"></template>
+                        <view class="info-item"><text class="info-label">联系人姓名：</text><text class="info-inner">{{item.$original.username}}</text>
                         </view>
+                        <view class="info-item"><text class="info-label">用户手机：</text><text class="info-inner phone" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">{{item.$original.userPhone}}</text>
+                        </view>
+                        <view class="divider"></view>
+                        <block wx:if="{{item.$original.orderStateName !== '待接单'}}">
+                            <block>
+                                <view class="info-item"><text class="info-label">接单师傅：</text><text class="info-inner">{{item.$original.serviceUserName}}</text>
+                                </view>
+                                <view class="info-item"><text class="info-label">师傅电话：</text><text bindtap="anonymousFunc1" class="info-inner phone" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}">{{item.$original.serviceUserPhone}}</text>
+                                </view>
+                            </block>
+                        </block>
+                        <view class="info-item"><text class="info-label">工单状态：</text><text class="info-inner">{{item.$original.orderStateName}}</text>
+                        </view>
+                        <block wx:if="{{item.$original.type === 'appeal'}}">
+                            <block>
+                                <view class="info-item"><text class="info-label">申诉请求：</text><text class="info-inner">{{item.$original.statementRequestName}}</text>
+                                </view>
+                                <view class="info-item"><text class="info-label">申诉原因：</text><text class="info-inner">{{item.$original.statementReasonName}}</text>
+                                </view>
+                            </block>
+                        </block>
+                    </view>
+                    <view class="order-foot">
+                        <template is="renderFootBtn" data="{{...item.$loopState__temp2}}"></template>
                     </view>
                 </view>
             </view>
-        </at-tabs-pane>
-        <at-modal compid="{{$compid__90}}">
+        </view>
+        <at-modal compid="{{$compid__94}}">
             <at-modal-header>取消原因</at-modal-header>
             <at-modal-content>
-                <at-radio compid="{{$compid__91}}"></at-radio>
+                <at-radio compid="{{$compid__95}}"></at-radio>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="handleCancelModal">取消</button>

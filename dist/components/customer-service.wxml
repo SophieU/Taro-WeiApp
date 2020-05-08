@@ -9,12 +9,12 @@
             <block wx:else>
                 <block>
                     <view class="expand-service">
-                        <view class="expand-button">
-                            <view bindtap="onlineService">
+                        <button class="expand-button customer-service-btn" open-type="contact" bindtap="onlineService">
+                            <view>
                                 <image class="custom-ico" src="{{anonymousState__temp2}}"></image>在线咨询</view><text>（8:30-20:00）</text>
-                        </view>
-                        <view class="expand-button">
-                            <view bindtap="callService">
+                        </button>
+                        <view class="expand-button" bindtap="callService">
+                            <view>
                                 <image class="custom-ico" src="{{anonymousState__temp3}}"></image>热线电话</view><text>（8:30-20:00）</text>
                         </view>
                         <icon bindtap="toggleService" size="18" type="clear" color="#EA7744"></icon>

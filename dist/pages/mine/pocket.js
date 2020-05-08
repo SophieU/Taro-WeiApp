@@ -54,7 +54,7 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "$compid__73", "$compid__74", "$compid__75", "$compid__76", "$compid__77", "$compid__78", "$compid__79", "$compid__80", "withdrawMoney", "withdrawPwdForm", "withdrawPwd", "showModal", "showModalPwd", "wallet", "pageSize", "pageNo", "current", "hasNextPage", "hasNextPageWith", "pageSizeWith", "pageNoWith", "flowLists", "withdrawLists"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "$compid__78", "$compid__79", "$compid__80", "$compid__81", "$compid__82", "$compid__83", "$compid__84", "$compid__85", "withdrawMoney", "withdrawPwdForm", "withdrawPwd", "showModal", "showModalPwd", "wallet", "pageSize", "pageNo", "current", "hasNextPage", "hasNextPageWith", "pageSizeWith", "pageNoWith", "flowLists", "withdrawLists"], _this.config = {
       navigationBarTitleText: '我的钱包',
       navigationStyle: 'default'
     }, _this.getInfo = function () {
@@ -296,45 +296,45 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__73"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__78"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__73 = _genCompid2[0],
-          $compid__73 = _genCompid2[1];
+          $prevCompid__78 = _genCompid2[0],
+          $compid__78 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__74"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__79"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__74 = _genCompid4[0],
-          $compid__74 = _genCompid4[1];
+          $prevCompid__79 = _genCompid4[0],
+          $compid__79 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__75"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__80"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__75 = _genCompid6[0],
-          $compid__75 = _genCompid6[1];
+          $prevCompid__80 = _genCompid6[0],
+          $compid__80 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__76"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__81"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__76 = _genCompid8[0],
-          $compid__76 = _genCompid8[1];
+          $prevCompid__81 = _genCompid8[0],
+          $compid__81 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__77"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__82"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__77 = _genCompid10[0],
-          $compid__77 = _genCompid10[1];
+          $prevCompid__82 = _genCompid10[0],
+          $compid__82 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__78"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__83"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__78 = _genCompid12[0],
-          $compid__78 = _genCompid12[1];
+          $prevCompid__83 = _genCompid12[0],
+          $compid__83 = _genCompid12[1];
 
-      var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__79"),
+      var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__84"),
           _genCompid14 = _slicedToArray(_genCompid13, 2),
-          $prevCompid__79 = _genCompid14[0],
-          $compid__79 = _genCompid14[1];
+          $prevCompid__84 = _genCompid14[0],
+          $compid__84 = _genCompid14[1];
 
-      var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__80"),
+      var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__85"),
           _genCompid16 = _slicedToArray(_genCompid15, 2),
-          $prevCompid__80 = _genCompid16[0],
-          $compid__80 = _genCompid16[1];
+          $prevCompid__85 = _genCompid16[0],
+          $compid__85 = _genCompid16[1];
 
       var anonymousState__temp = [{ title: '流水记录' }, { title: '提现记录' }];
 
@@ -358,31 +358,31 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
         "current": this.__state.current,
         "tabList": anonymousState__temp,
         "onClick": this.handleTabClick
-      }, $compid__73, $prevCompid__73);
+      }, $compid__78, $prevCompid__78);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 0
-      }, $compid__74, $prevCompid__74);
+      }, $compid__79, $prevCompid__79);
       _taroWeapp.propsManager.set({
         "current": this.__state.current,
         "index": 1
-      }, $compid__75, $prevCompid__75);
+      }, $compid__80, $prevCompid__80);
       _taroWeapp.propsManager.set({
         "closeOnClickOverlay": false,
         "className": "pwd-modal",
         "isOpened": this.__state.showModalPwd
-      }, $compid__76, $prevCompid__76);
+      }, $compid__81, $prevCompid__81);
       _taroWeapp.propsManager.set({
         "name": "withdrawPwd",
         "type": "password",
         "placeholder": '\u8BF7\u8BBE\u7F6E\u63D0\u73B0\u5BC6\u7801,\u6700\u5C116\u4F4D',
         "value": this.__state.withdrawPwd,
         "onChange": this.handleWithdrawPwdChange
-      }, $compid__77, $prevCompid__77);
+      }, $compid__82, $prevCompid__82);
       _taroWeapp.propsManager.set({
         "className": "withdraw-modal",
         "isOpened": this.__state.showModal
-      }, $compid__78, $prevCompid__78);
+      }, $compid__83, $prevCompid__83);
       _taroWeapp.propsManager.set({
         "name": "withdrawMoney",
         "title": '\u91D1\u989D',
@@ -390,7 +390,7 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
         "placeholder": '\u8BF7\u8F93\u5165\u91D1\u989D',
         "value": this.__state.withdrawMoney,
         "onChange": this.anonymousFunc1
-      }, $compid__79, $prevCompid__79);
+      }, $compid__84, $prevCompid__84);
       _taroWeapp.propsManager.set({
         "name": "withdrawMoney",
         "title": '\u63D0\u73B0\u5BC6\u7801',
@@ -398,17 +398,17 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
         "placeholder": '\u63D0\u73B0\u5BC6\u7801,\u5FD8\u8BB0\u8BF7\u6253\u5BA2\u670D',
         "value": this.__state.withdrawPwdForm,
         "onChange": this.anonymousFunc2
-      }, $compid__80, $prevCompid__80);
+      }, $compid__85, $prevCompid__85);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
-        $compid__73: $compid__73,
-        $compid__74: $compid__74,
-        $compid__75: $compid__75,
-        $compid__76: $compid__76,
-        $compid__77: $compid__77,
         $compid__78: $compid__78,
         $compid__79: $compid__79,
-        $compid__80: $compid__80
+        $compid__80: $compid__80,
+        $compid__81: $compid__81,
+        $compid__82: $compid__82,
+        $compid__83: $compid__83,
+        $compid__84: $compid__84,
+        $compid__85: $compid__85
       });
       return this.__state;
     }

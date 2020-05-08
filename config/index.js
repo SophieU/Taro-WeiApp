@@ -62,7 +62,17 @@ const config = {
           namingPattern: 'module', // 转换模式，取值为 global/module
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
-      }
+      },
+      uglify: {
+        enable: true,
+        config: {}
+      },
+      csso: {
+        enable: true,
+        config: {
+        }
+      },
+      commonChunks: ['runtime', 'vendors', 'taro', 'common']
     }
   },
   h5: {

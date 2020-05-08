@@ -57,12 +57,13 @@ margin-top: 10px;
     padding-left: 10px;
     position: relative;
     left: -10px;
+    width: 100%;
   }
   .control-item{
     height: 44px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #efefef;
+    border-bottom: 0.5px solid #f5f5f5;
     padding-left: 5px;
     padding-right: 40px;
     background-image:url(http://qiniu.kingdou.fun/right.png);
@@ -71,9 +72,7 @@ margin-top: 10px;
     background-position: right center;
     font-size: 14px;
     color: #333;
-    &.last-item{
-      border-bottom: none;
-    }
+
     .control-title{
       flex:1 0 0;
     }
@@ -89,7 +88,7 @@ margin-top: 10px;
     text-align: center;
   }
   .invite-input{
-    border: 1Px solid #efefef;
+    border: 0.5px solid #f5f5f5;
     margin-bottom: 10px;
     margin-left: 0;
   }

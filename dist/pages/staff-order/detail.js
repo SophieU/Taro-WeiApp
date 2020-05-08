@@ -52,7 +52,7 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp2", "$compid__92", "$compid__93", "$compid__94", "$compid__95", "stateText", "anonymousState__temp", "id", "cancelReasonId", "orderDetail", "reasonModal", "baseInfo", "repairOrderOfferPlanVoList", "dispatchInfo", "repairOrderAmountVos", "totalAmount", "showAction", "repairOrderDispatchId", "timer", "countDown", "waitPayToast", "commentInfo"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp2", "$compid__96", "$compid__97", "$compid__98", "$compid__99", "stateText", "anonymousState__temp", "id", "cancelReasonId", "orderDetail", "reasonModal", "baseInfo", "repairOrderOfferPlanVoList", "dispatchInfo", "repairOrderAmountVos", "totalAmount", "showAction", "repairOrderDispatchId", "timer", "countDown", "waitPayToast", "commentInfo"], _this.config = {
       navigationBarTitleText: '报修详情',
       navigationStyle: 'default'
     }, _this.getPayResult = function () {
@@ -244,25 +244,25 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__92"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__96"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__92 = _genCompid2[0],
-          $compid__92 = _genCompid2[1];
+          $prevCompid__96 = _genCompid2[0],
+          $compid__96 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__93"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__97"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__93 = _genCompid4[0],
-          $compid__93 = _genCompid4[1];
+          $prevCompid__97 = _genCompid4[0],
+          $compid__97 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__94"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__98"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__94 = _genCompid6[0],
-          $compid__94 = _genCompid6[1];
+          $prevCompid__98 = _genCompid6[0],
+          $compid__98 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__95"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__99"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__95 = _genCompid8[0],
-          $compid__95 = _genCompid8[1];
+          $prevCompid__99 = _genCompid8[0],
+          $compid__99 = _genCompid8[1];
 
       var stateText = this.__state.baseInfo.orderStateName;
 
@@ -289,26 +289,26 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
         "isOpened": this.__state.showAction,
         "cancelText": '\u53D6\u6D88',
         "title": '\u8BF7\u9009\u62E9\u6536\u6B3E\u65B9\u5F0F'
-      }, $compid__92, $prevCompid__92);
+      }, $compid__96, $prevCompid__96);
       _taroWeapp.propsManager.set({
         "onClick": this.anonymousFunc2
-      }, $compid__93, $prevCompid__93);
+      }, $compid__97, $prevCompid__97);
       _taroWeapp.propsManager.set({
         "onClick": this.anonymousFunc3
-      }, $compid__94, $prevCompid__94);
+      }, $compid__98, $prevCompid__98);
       _taroWeapp.propsManager.set({
         "status": "loading",
         "duration": 0,
         "isOpened": this.__state.waitPayToast,
         "text": anonymousState__temp2,
         "icon": "loading-3"
-      }, $compid__95, $prevCompid__95);
+      }, $compid__99, $prevCompid__99);
       Object.assign(this.__state, {
         anonymousState__temp2: anonymousState__temp2,
-        $compid__92: $compid__92,
-        $compid__93: $compid__93,
-        $compid__94: $compid__94,
-        $compid__95: $compid__95,
+        $compid__96: $compid__96,
+        $compid__97: $compid__97,
+        $compid__98: $compid__98,
+        $compid__99: $compid__99,
         stateText: stateText,
         anonymousState__temp: anonymousState__temp
       });

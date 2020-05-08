@@ -15,7 +15,7 @@
                     <view class="info-item">
                         <view class="item-label">工单状态</view>
                         <view class="item-info">
-                            <state-text compid="{{$compid__105}}"></state-text>
+                            <state-text compid="{{$compid__113}}"></state-text>
                         </view>
                     </view>
                     <view class="info-item">
@@ -95,23 +95,23 @@
             </block>
         </view>
         <template is="renderFoot" data="{{...anonymousState__temp}}"></template>
-        <at-modal compid="{{$compid__106}}">
+        <at-modal compid="{{$compid__114}}">
             <at-modal-header>取消原因</at-modal-header>
             <at-modal-content>
-                <at-radio compid="{{$compid__107}}"></at-radio>
+                <at-radio compid="{{$compid__115}}"></at-radio>
             </at-modal-content>
             <at-modal-action>
                 <button bindtap="handleCancelModal">取消</button>
                 <button bindtap="handleConfirmModal">确定</button>
             </at-modal-action>
         </at-modal>
-        <at-modal compid="{{$compid__108}}">
+        <at-modal compid="{{$compid__116}}">
             <at-modal-header>评价订单</at-modal-header>
             <at-modal-content>
-                <at-tabs compid="{{$compid__109}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray68}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__102}}">
+                <at-tabs compid="{{$compid__117}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray68}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__110}}">
                         <view class="comment-tag">
-                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__101}}">{{child.$original.name}}</at-tag>
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__109}}">{{child.$original.name}}</at-tag>
                         </view>
                     </at-tabs-pane>
                 </at-tabs>
@@ -121,13 +121,13 @@
                 <button bindtap="confirmComment">确定</button>
             </at-modal-action>
         </at-modal>
-        <at-modal compid="{{$compid__110}}">
+        <at-modal compid="{{$compid__118}}">
             <at-modal-header>评价详情</at-modal-header>
             <at-modal-content>
-                <at-tabs compid="{{$compid__111}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray69}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__104}}">
+                <at-tabs compid="{{$compid__119}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray69}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__112}}">
                         <view class="comment-tag">
-                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__103}}">{{child.$original.name}}</at-tag>
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__111}}">{{child.$original.name}}</at-tag>
                         </view>
                     </at-tabs-pane>
                 </at-tabs>

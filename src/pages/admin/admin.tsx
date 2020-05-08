@@ -338,17 +338,12 @@ class Admin extends Component{
       }
     })
     return (
-
-      <View
-          style={{height:'100vh'}}
-          className='page'
-      >
-      <AtTabsPane current={this.state.currentTab} index={0} >
+      <View className='page'>
         <View className='order-wrap'>
           {this.state.orderLists.length<=0?( <View className='nothing'>这里空空如也~</View>):null}
           <View className='order-lists'>
-          {this.state.orderLists.map(item=>{
-            return  <View className='order-item'  key={item.orderId}>
+            {this.state.orderLists.map(item=>{
+              return  <View className='order-item'  key={item.orderId}>
                 <View className='item-header'>
                   <View className='header-time'>{item.createTime}</View>
                   {item.orderStateName==='异常'? <View className='header-type abnormal'>{item.orderStateName}</View>:null}
@@ -405,10 +400,9 @@ class Admin extends Component{
                   {this.renderFootBtn(item)}
                 </View>
               </View>
-          })}
+            })}
           </View>
         </View>
-      </AtTabsPane>
       {/*  取消弹窗*/}
       <AtModal isOpened={this.state.reasonModal} >
         <AtModalHeader>取消原因</AtModalHeader>

@@ -60,7 +60,7 @@ var AtActionSheet = (_temp2 = _class = function (_AtComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtActionSheet.__proto__ || Object.getPrototypeOf(AtActionSheet)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__69", "rootClass", "title", "cancelText", "_isOpened", "className", "isOpened", "children"], _this.handleClose = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtActionSheet.__proto__ || Object.getPrototypeOf(AtActionSheet)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__74", "rootClass", "title", "cancelText", "_isOpened", "className", "isOpened", "children"], _this.handleClose = function () {
       if (typeof _this.props.onClose === 'function') {
         _this.props.onClose();
       }
@@ -112,10 +112,10 @@ var AtActionSheet = (_temp2 = _class = function (_AtComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__69"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__74"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__69 = _genCompid2[0],
-          $compid__69 = _genCompid2[1];
+          $prevCompid__74 = _genCompid2[0],
+          $compid__74 = _genCompid2[1];
 
       var _props = this.__props,
           title = _props.title,
@@ -128,9 +128,9 @@ var AtActionSheet = (_temp2 = _class = function (_AtComponent) {
       }, className);
       cancelText && _taroWeapp.propsManager.set({
         "onClick": this.handleCancel
-      }, $compid__69, $prevCompid__69);
+      }, $compid__74, $prevCompid__74);
       Object.assign(this.__state, {
-        $compid__69: $compid__69,
+        $compid__74: $compid__74,
         rootClass: rootClass,
         title: title,
         cancelText: cancelText

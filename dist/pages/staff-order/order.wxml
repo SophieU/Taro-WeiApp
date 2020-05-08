@@ -1,6 +1,6 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="staff-order-page">
-        <at-tabs compid="{{$compid__65}}"></at-tabs>
+        <at-tabs compid="{{$compid__67}}"></at-tabs>
         <view class="order-lists">
             <view wx:key="id" class="order-item" wx:for="{{lists}}" wx:for-item="item" wx:for-index="_anonIdx2">
                 <view bindtap="navigateTo" data-url="{{'/pages/staff-order/detail?id=' + item.id}}">

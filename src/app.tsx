@@ -2,7 +2,6 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
-import counterStore from './store/counter'
 import userStore from './store/user'
 import appStore from './store/app'
 import './styles/custom-taro.scss'
@@ -15,7 +14,6 @@ import './styles/base.scss'
 // }
 
 const store = {
-  counterStore,
   userStore,
   appStore
 }

@@ -66,10 +66,10 @@
                 </block>
             </view>
         </view>
-        <at-modal compid="{{$compid__74}}">
+        <at-modal compid="{{$compid__71}}">
             <at-modal-header>设置邀请人</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__75}}"></at-input>
+                <at-input compid="{{$compid__72}}"></at-input>
                 <view class="tips">新用户注册成功7天内，可填写邀请人信息</view>
             </at-modal-content>
             <at-modal-action>

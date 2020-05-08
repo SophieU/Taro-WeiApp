@@ -5,6 +5,7 @@ import { AtModal,AtRadio , AtModalHeader, AtModalContent, AtModalAction ,AtTag,A
 import { getDetail, cancelOrder , cancelReason, getCommentOption, submitComment} from './order-apis'
 import {getWxPay} from "../order/order-api";
 import {simpleClone} from '../../utils/common'
+import StateText from '../../components/state-text-colorful'
 import './detail.scss'
 
 
@@ -87,7 +88,9 @@ class Lists extends Component<{},State>{
   // 获取订单详情
   getOrderDetail = ()=>{
     const id = this.state.id
+    Taro.showLoading({title:'加载中'})
     getDetail(id).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let data = res.data.data
         let waitPay = 0
@@ -261,13 +264,19 @@ class Lists extends Component<{},State>{
       repairOrderId:this.state.id,
       cancelReasonId:this.state.cancelReasonId
     }
+    Taro.showLoading({title:'系统处理中'})
     cancelOrder(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         Taro.showToast({
           title:'订单取消成功',
           icon:'none'
+        }).then(res=>{
+          this.handleCancelModal()
+          this.getOrderDetail()
         })
-        Taro.navigateBack({delta:-1})
+
+        // Taro.navigateBack({delta:-1})
       }else{
         Taro.showToast({
           title:'订单取消失败：'+res.data.msg,
@@ -356,7 +365,9 @@ class Lists extends Component<{},State>{
             </View>
             <View className='info-item'>
               <View className='item-label'>工单状态</View>
-              <View className='item-info'>{this.state.baseInfo.orderStateName}</View>
+              <View className='item-info'>
+                <StateText state={this.state.baseInfo.orderStateName}></StateText>
+              </View>
             </View>
             <View className='info-item'>
               <View className='item-label'>服务网点</View>
@@ -406,7 +417,7 @@ class Lists extends Component<{},State>{
             </View>
           </View>
         </View>
-        <View className='detail-block price-block'>
+        {this.state.repairOrderAmountVos.length>0?(<View className='detail-block price-block'>
           <View className='detail-title'>费用清单</View>
           <View className='detail-info'>
             {
@@ -415,27 +426,29 @@ class Lists extends Component<{},State>{
                   <View className='price-label'>
                     <View className='item-label'>{item.name}</View>
                   </View>
-                  <View className='item-info'>￥{item.amount}</View>
+                  <View className='item-info'><Text className='text-warm'>￥{item.amount}</Text></View>
                 </View>)
               })
             }
           </View>
-        </View>
-        <View className='detail-block price-block'>
-          <View className='detail-title'>费用明细</View>
-          <View className='detail-info'>
-            {
-              this.state.repairOrderOfferPlanVoList.map(item=>{
-                return (<View key={item.id} className='info-item'>
-                  <View className='price-label'>
-                    <View className='item-label'>{item.planName}</View>
-                  </View>
-                  <View className='item-info'>￥{item.amount}</View>
-                </View>)
-              })
-            }
-          </View>
-        </View>
+        </View>):null}
+        {
+          this.state.repairOrderOfferPlanVoList.length>0?(<View className='detail-block price-block'>
+              <View className='detail-title'>费用明细</View>
+              <View className='detail-info'>
+                {
+                  this.state.repairOrderOfferPlanVoList.map(item=>{
+                    return (<View key={item.id} className='info-item'>
+                      <View className='price-label'>
+                        <View className='item-label'>{item.planName}</View>
+                      </View>
+                      <View className='item-info'><Text className='text-warm'>￥{item.amount}</Text></View>
+                    </View>)
+                  })
+                }
+              </View>
+          </View>):null
+        }
 
       </View>
       {/*底部操作区*/}
@@ -494,7 +507,7 @@ class Lists extends Component<{},State>{
           <Button onClick={ this.confirmComment }>确定</Button>
         </AtModalAction>
       </AtModal>
-      {/*  取消弹窗*/}
+      {/*  评价详情*/}
       <AtModal isOpened={this.state.commentDetailModal} >
         <AtModalHeader>评价详情</AtModalHeader>
         <AtModalContent>

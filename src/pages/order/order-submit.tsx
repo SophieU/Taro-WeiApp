@@ -253,7 +253,7 @@ submitForm=()=>{
       repairAddressId:this.state.repairUserAddressId,
       address:this.state.address,
       tllPhone:this.state.userMobile,
-      username:this.state.repairUserAddressObj.userName,
+      username:this.state.userName,
       repairCategoryId:this.state.repairCategoryId,
       faultReason:this.state.faultReason,
       hopeDoorTime:this.state.nightFee.hopeDoorTime,

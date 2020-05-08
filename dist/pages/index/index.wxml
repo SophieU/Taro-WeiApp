@@ -11,7 +11,7 @@
                 <image class="item-icon" src="{{item.$original.iconName}}"></image><text class="item-text">{{item.$original.title}}</text>
             </view>
         </scroll-view>
-        <recommend-ad wx:key="id" wx:for="{{loopArray39}}" wx:for-item="item" wx:for-index="_anonIdx2" compid="{{item.$compid__54}}"></recommend-ad>
+        <recommend-ad wx:key="id" wx:for="{{loopArray39}}" wx:for-item="item" wx:for-index="_anonIdx2" compid="{{item.$compid__56}}"></recommend-ad>
         <view class="function-block" wx:key="id" wx:for="{{loopArray40}}" wx:for-item="item" wx:for-index="index">
             <navigator class="left-block" url="{{'/pages/index/more-service?id=' + item.$original.id}}">
                 <image class="left-bg" src="{{item.$original.iconUrlOne}}"></image>

@@ -40,6 +40,7 @@ class Quote extends Component<{},State>{
       timer:'',
       timeOutTimer:'',
       type:'', // book-预约支付，staff-报修支付
+      bookOrderDetail:null
     }
   }
   componentWillUnmount(){
@@ -56,19 +57,24 @@ class Quote extends Component<{},State>{
         this.getPayInfo(id)
         this.getPayDetail(id)
       }else{
+        this.getPayInfo(id)
         this.getBookInfo()
       }
     })
 
   }
-  // 预约订单
+  // 预约订单-费用明细
   getBookInfo= ()=>{
-    console.log(this.props)
+    let {bookOrderDetail} = this.props.appStore
+    this.setState({
+      bookOrderDetail
+    })
   }
+  // 获取支付二维码
   getPayInfo = (id)=>{
     let params = {
       orderIds:[id],
-      payBusinessType:'W_REPAIR_ORDER',
+      payBusinessType:this.state.type==='staff'?'W_REPAIR_ORDER':'BOOKING_ORDER',
       payCode:'WX_QR'
     }
     QrPay(params).then(res=>{
@@ -104,6 +110,7 @@ class Quote extends Component<{},State>{
       }
     })
   }
+  // 获取订单详情-费用明细（报修订单）
   getPayDetail = (id)=>{
     orderDetail(id).then(res=>{
       if(res.data.code===0){
@@ -124,6 +131,7 @@ class Quote extends Component<{},State>{
       }
     })
   }
+  // 获取支付结果
   getPayResult = ()=>{
     payRes(this.state.paySn).then(res=>{
       if(res.data.code===0){
@@ -155,7 +163,7 @@ class Quote extends Component<{},State>{
        </View>
        <Image className='qr-code' src={'data:image/png;base64,'+this.state.qrContent}></Image>
      </View>
-      <View className='price-lists'>
+      {this.state.type==='staff'?( <View className='price-lists'>
         <View className='price-divider'>费用明细</View>
         {
           this.state.detailLists.map(item=>{
@@ -165,7 +173,19 @@ class Quote extends Component<{},State>{
             </View>)
           })
         }
-      </View>
+      </View>):null}
+      {
+        this.state.type==='book'?(<View className='price-lists'>
+          {this.state.bookOrderDetail.productAmount>0?(<View className='price-item' >
+            <View className='item-left'>商品金额：</View>
+            <View className='item-right'><Text className='text-warm'>￥{this.state.bookOrderDetail.productAmount}</Text></View>
+          </View>):null}
+          {this.state.bookOrderDetail.serviceAmount>0?(<View className='price-item' >
+            <View className='item-left'>服务费：</View>
+            <View className='item-right'><Text className='text-warm'>￥{this.state.bookOrderDetail.serviceAmount}</Text></View>
+          </View>):null}
+        </View>):null
+      }
     </View>)
   }
 }

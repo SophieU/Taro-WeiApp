@@ -15,6 +15,18 @@
                 </view>
             </view>
             <view class="form-item">
+                <view class="form-label">联系人：</view>
+                <view class="form-control ">
+                    <input class="input-control" type="text" placeholder="请输入联系人" value="{{addressObj.userName}}" bindchange="anonymousFunc0" />
+                </view>
+            </view>
+            <view class="form-item">
+                <view class="form-label">联系电话：</view>
+                <view class="form-control ">
+                    <input class="input-control" type="text" placeholder="请输入联系电话" value="{{addressObj.userMobile}}" bindchange="anonymousFunc1" />
+                </view>
+            </view>
+            <view class="form-item">
                 <view class="form-label">预约安装日期：</view>
                 <view class="form-control">
                     <picker mode="date" bindchange="onDateChange" start="{{today}}">

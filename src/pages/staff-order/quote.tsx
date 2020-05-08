@@ -17,6 +17,7 @@ interface State {
   totalAmount:number
   repairOrderOfferPlanVoList:Array<object>
   dispatchId:string
+  finalAmount:number
 }
 class Quote extends Component<{},State>{
   config:Config = {
@@ -37,11 +38,11 @@ class Quote extends Component<{},State>{
       totalAmount:0,
       repairOrderOfferPlanVoList:[],
       dispatchId:'',
+      finalAmount:0,
     }
   }
   componentWillMount(){
     let {id, type, dispatchId} = this.$router.params
-    console.log(dispatchId)
     this.setState({
       id,
       type,
@@ -102,7 +103,21 @@ class Quote extends Component<{},State>{
   }
   handlePriceChange=(e,prop)=>{
     var value = e.detail.value
-    this.setState({[prop]:parseFloat(value)})
+    let totalAmount = this.state.totalAmount
+    let finalAmount = totalAmount
+    this.setState(prevState=>{
+      if(prop==='materialsPrice'&&!prevState.servicePrice){
+        finalAmount = totalAmount+parseFloat(value?value:0)
+      }else if(prop==='materialsPrice'&&prevState.servicePrice){
+        finalAmount = totalAmount+ parseFloat(value?value:0)+parseFloat(prevState.servicePrice?prevState.servicePrice:0)
+      }else{
+        finalAmount = totalAmount+ parseFloat(value?value:0)+parseFloat(prevState.materialsPrice?prevState.materialsPrice:0)
+      }
+     return {
+       [prop]:parseFloat(value),
+       finalAmount:finalAmount
+     }
+    })
   }
   filterInput=(e)=>{
     var value = e.detail.value
@@ -156,7 +171,7 @@ class Quote extends Component<{},State>{
       <View className='page-foot'>
         <View className='price-total'>
           <Text>总计：</Text>
-          <Text className='text-warm'>￥{this.state.totalAmount+this.state.servicePrice+this.state.materialsPrice}</Text>
+          <Text className='text-warm'>￥{this.state.finalAmount}</Text>
         </View>
         <Button onClick={this.submitPlan} className='btn submit-btn' >确认</Button>
       </View>

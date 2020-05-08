@@ -88,7 +88,6 @@ class OrderAdd extends Component<AddProp,AddState>{
 
               </View>
               <Image className='edit-btn' src={require('../../assets/imgs/tmp/edit.png')} onClick={()=>this.goEdit(item.id)}></Image>
-              {/*<Image className='edit-btn' src={require('../../assets/imgs/tmp/delete.png')} onClick={()=>this.deleteHandler(item.id)}></Image>*/}
             </View>)
           })}
         </View>

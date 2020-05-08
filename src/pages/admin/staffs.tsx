@@ -87,13 +87,6 @@ class Lists extends Component<{},State>{
   }
   render(){
     return (<View className='page'>
-      {/*<View className='top-search'>*/}
-      {/*  <View className='search-bar'>*/}
-      {/*    <Image className='search-img' src={require('../../assets/imgs/tmp/img_search.png')}></Image>*/}
-      {/*    <Input className='search-input'/>*/}
-      {/*    <Text className='search-text'>搜索</Text>*/}
-      {/*  </View>*/}
-      {/*</View>*/}
       <View className='content'>
         {this.state.lists.length>0? <AtRadio
             options={this.state.lists}

@@ -16,6 +16,19 @@ class OrderListsCustom extends  Component{
     hasNextPage:true,
     lists:[]
   }
+  onPullDownRefresh(){
+    this.setState({
+      pageNo:1,
+      pageSize:5,
+      hasNextPage:true,
+      lists:[]
+    },()=>{
+      this.getLists()
+    })
+  }
+  onReachBottom(){
+    this.getLists()
+  }
   componentWillMount(){
     this.getLists()
   }
@@ -33,12 +46,15 @@ class OrderListsCustom extends  Component{
       })
       return
     }
+    Taro.showLoading({title:'加载中'})
     customOrderLists(params,bodyParams).then(res=>{
+      Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(prevState=>{
           return {
-            pageNo:data.pageNo,
+            pageNo:data.hasNextPage?data.nextPage:data.pageNo,
             hasNextPage:data.hasNextPage,
             lists:prevState.lists.concat(data.list)
           }
@@ -73,6 +89,8 @@ class OrderListsCustom extends  Component{
             console.log('支付失败')
           },
         })
+      }else{
+        Taro.showToast({title:res.data.msg})
       }
     })
   }

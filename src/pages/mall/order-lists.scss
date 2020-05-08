@@ -123,13 +123,54 @@
       margin-top: 5px;
     }
   }
+  // 等待用户支付弹窗
+  .waiting-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: rgba(0,0,0,0.3);
+    .waiting-content{
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      background: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
+      .waiting-text{
+        color: #888;
+        font-size: 15px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        text-align: center;
+      }
+      .count-down{
+        color: #333;
+        .count-down-number{
+          font-size: 18px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }
 
 .price-modal .at-modal__content{
   min-height: 50px;
   padding: 15px;
   .price-input{
-    border-bottom: 1px solid #efefef;
+    //border-bottom: 1px solid #efefef;
   }
+
 }

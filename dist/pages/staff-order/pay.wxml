@@ -7,13 +7,33 @@
             </view>
             <image class="qr-code" src="{{'data:image/png;base64,' + qrContent}}"></image>
         </view>
-        <view class="price-lists">
-            <view class="price-divider">费用明细</view>
-            <view class="price-item" wx:key="id" wx:for="{{detailLists}}" wx:for-item="item" wx:for-index="_anonIdx2">
-                <view class="item-left">{{item.planName}}</view>
-                <view class="item-right"><text class="text-warm">￥{{item.serviceCost}}</text>
+        <block wx:if="{{type === 'staff'}}">
+            <view class="price-lists">
+                <view class="price-divider">费用明细</view>
+                <view class="price-item" wx:key="id" wx:for="{{detailLists}}" wx:for-item="item" wx:for-index="_anonIdx2">
+                    <view class="item-left">{{item.planName}}</view>
+                    <view class="item-right"><text class="text-warm">￥{{item.serviceCost}}</text>
+                    </view>
                 </view>
             </view>
-        </view>
+        </block>
+        <block wx:if="{{type === 'book'}}">
+            <view class="price-lists">
+                <block wx:if="{{bookOrderDetail.productAmount > 0}}">
+                    <view class="price-item">
+                        <view class="item-left">商品金额：</view>
+                        <view class="item-right"><text class="text-warm">￥{{bookOrderDetail.productAmount}}</text>
+                        </view>
+                    </view>
+                </block>
+                <block wx:if="{{bookOrderDetail.serviceAmount > 0}}">
+                    <view class="price-item">
+                        <view class="item-left">服务费：</view>
+                        <view class="item-right"><text class="text-warm">￥{{bookOrderDetail.serviceAmount}}</text>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </block>
     </view>
 </block>

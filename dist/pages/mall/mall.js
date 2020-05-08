@@ -1,1 +1,199 @@
-(wx.webpackJsonp=wx.webpackJsonp||[]).push([[38],{"139":function(t,e,n){t.exports=n.p+"pages/mall/mall.wxml"},"211":function(t,e,n){"use strict";n.r(e);n(212);var o=n(78);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r)},"212":function(t,e,n){"use strict";n(139)},"213":function(t,e,n){},"23":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{"value":!0});var o=function(t,e,n){return e&&defineProperties(t.prototype,e),n&&defineProperties(t,n),t};function defineProperties(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}var r,a,i=n(0),s=function _interopRequireDefault(t){return t&&t.__esModule?t:{"default":t}}(i),u=n(9);function _possibleConstructorReturn(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}n(213);var l=(function _inherits(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{"constructor":{"value":t,"enumerable":!1,"writable":!0,"configurable":!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(Mall,i.Component),o(Mall,[{"key":"_constructor","value":function _constructor(){(function get(t,e,n){null===t&&(t=Function.prototype);var o=Object.getOwnPropertyDescriptor(t,e);if(void 0===o){var r=Object.getPrototypeOf(t);return null===r?void 0:get(r,e,n)}if("value"in o)return o.value;var a=o.get;return void 0!==a?a.call(n):void 0})(Mall.prototype.__proto__||Object.getPrototypeOf(Mall.prototype),"_constructor",this).apply(this,arguments),this.state={"pageNo":1,"pageSize":6,"hasNextPage":!0,"lists":[]},this.$$refs=new s.default.RefsArray}},{"key":"componentWillMount","value":function componentWillMount(){this.getSubscribeLists()}},{"key":"_createData","value":function _createData(t,e,n){return this.__state=t||this.state||{},this.__props=e||this.props||{},this.$prefix,Object.assign(this.__state,{}),this.__state}}]),a=r=Mall,r.$$events=["getSubscribeLists"],r.$$componentPath="pages/mall/mall",a);function Mall(){var t,e,r;!function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,Mall);for(var n=arguments.length,o=Array(n),a=0;a<n;a++)o[a]=arguments[a];return(e=r=_possibleConstructorReturn(this,(t=Mall.__proto__||Object.getPrototypeOf(Mall)).call.apply(t,[this].concat(o)))).$usedState=["pageNo","pageSize","hasNextPage","lists"],r.config={"navigationBarTitleText":"预约商城","navigationStyle":"default"},r.getSubscribeLists=function(){var t=r.state,e=t.pageNo,n=t.pageSize;if(t.hasNextPage){var o={"pageNo":e,"pageSize":n};(0,u.subscribeLists)(o).then(function(t){if(0===t.data.code){var e=t.data.data;r.setState(function(t){return{"lists":t.lists.concat(e.list),"hasNextPage":e.hasNextPage,"pageNo":e.hasNextPage?e.nextPage:e.pageNo}})}})}else s.default.showToast({"title":"没有更多了~","icon":"none"})},r.customComponents=[],_possibleConstructorReturn(r,e)}e.default=l,Component(n(0).default.createComponent(l,!0))},"78":function(t,e,n){"use strict";n.r(e);var o=n(23),r=n.n(o);for(var a in o)"default"!==a&&function(t){n.d(e,t,function(){return o[t]})}(a);e.default=r.a}},[[211,0,1,2]]]);
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["pages/mall/mall"],{
+
+/***/ "./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/mall/mall.tsx?taro&type=script&parse=PAGE&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./src/pages/mall/mall.tsx?taro&type=script&parse=PAGE& ***!
+  \**************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _class, _temp2;
+
+var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
+
+var _taroWeapp2 = _interopRequireDefault(_taroWeapp);
+
+var _mallApis = __webpack_require__(/*! ./mall-apis */ "./src/pages/mall/mall-apis.ts");
+
+__webpack_require__(/*! ./mall.scss */ "./src/pages/mall/mall.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Mall = (_temp2 = _class = function (_BaseComponent) {
+  _inherits(Mall, _BaseComponent);
+
+  function Mall() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Mall);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mall.__proto__ || Object.getPrototypeOf(Mall)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["pageNo", "pageSize", "hasNextPage", "lists"], _this.config = {
+      navigationBarTitleText: '预约商城',
+      navigationStyle: 'default'
+    }, _this.getSubscribeLists = function () {
+      var _this$state = _this.state,
+          pageNo = _this$state.pageNo,
+          pageSize = _this$state.pageSize,
+          hasNextPage = _this$state.hasNextPage;
+
+      if (!hasNextPage) {
+        _taroWeapp2.default.showToast({
+          title: '没有更多了~',
+          icon: 'none'
+        });
+        return;
+      }
+      var params = {
+        pageNo: pageNo,
+        pageSize: pageSize
+      };
+      (0, _mallApis.subscribeLists)(params).then(function (res) {
+        if (res.data.code === 0) {
+          var data = res.data.data;
+          _this.setState(function (preState) {
+            return {
+              lists: preState.lists.concat(data.list),
+              hasNextPage: data.hasNextPage,
+              pageNo: data.hasNextPage ? data.nextPage : data.pageNo
+            };
+          });
+        }
+      });
+    }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Mall, [{
+    key: '_constructor',
+    value: function _constructor() {
+      _get(Mall.prototype.__proto__ || Object.getPrototypeOf(Mall.prototype), '_constructor', this).apply(this, arguments);
+
+      this.state = {
+        pageNo: 1,
+        pageSize: 6,
+        hasNextPage: true,
+        lists: []
+      };
+      this.$$refs = new _taroWeapp2.default.RefsArray();
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.getSubscribeLists();
+    }
+  }, {
+    key: '_createData',
+    value: function _createData() {
+      this.__state = arguments[0] || this.state || {};
+      this.__props = arguments[1] || this.props || {};
+      var __isRunloopRef = arguments[2];
+      var __prefix = this.$prefix;
+      ;
+      Object.assign(this.__state, {});
+      return this.__state;
+    }
+  }]);
+
+  return Mall;
+}(_taroWeapp.Component), _class.$$events = ["getSubscribeLists"], _class.$$componentPath = "pages/mall/mall", _temp2);
+exports.default = Mall;
+
+Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(Mall, true));
+
+/***/ }),
+
+/***/ "./node_modules/_file-loader@4.3.0@file-loader/dist/cjs.js?name=[path][name].wxml&context=E:\\myGitHub\\Taro-WeiApp\\src!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/mall/mall.tsx?taro&type=template&parse=PAGE&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/_file-loader@4.3.0@file-loader/dist/cjs.js?name=[path][name].wxml&context=E:/myGitHub/Taro-WeiApp/src!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./src/pages/mall/mall.tsx?taro&type=template&parse=PAGE& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "pages/mall/mall.wxml";
+
+/***/ }),
+
+/***/ "./src/pages/mall/mall.scss":
+/*!**********************************!*\
+  !*** ./src/pages/mall/mall.scss ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/pages/mall/mall.tsx":
+/*!*********************************!*\
+  !*** ./src/pages/mall/mall.tsx ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mall_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mall.tsx?taro&type=template&parse=PAGE& */ "./src/pages/mall/mall.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mall.tsx?taro&type=script&parse=PAGE& */ "./src/pages/mall/mall.tsx?taro&type=script&parse=PAGE&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+
+
+/***/ }),
+
+/***/ "./src/pages/mall/mall.tsx?taro&type=script&parse=PAGE&":
+/*!**************************************************************!*\
+  !*** ./src/pages/mall/mall.tsx?taro&type=script&parse=PAGE& ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./mall.tsx?taro&type=script&parse=PAGE& */ "./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/mall/mall.tsx?taro&type=script&parse=PAGE&");
+/* harmony import */ var _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/pages/mall/mall.tsx?taro&type=template&parse=PAGE&":
+/*!****************************************************************!*\
+  !*** ./src/pages/mall/mall.tsx?taro&type=template&parse=PAGE& ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!file-loader?name=[path][name].wxml&context=E:/myGitHub/Taro-WeiApp/src!../../../node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!../../../node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--6-0!./mall.tsx?taro&type=template&parse=PAGE& */ "./node_modules/_file-loader@4.3.0@file-loader/dist/cjs.js?name=[path][name].wxml&context=E:\\myGitHub\\Taro-WeiApp\\src!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/mall/mall.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _file_loader_name_path_name_wxml_context_E_myGitHub_Taro_WeiApp_src_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_2_0_6_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_6_0_mall_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ })
+
+},[["./src/pages/mall/mall.tsx","runtime","vendors","common"]]]);

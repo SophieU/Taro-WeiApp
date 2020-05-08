@@ -12,8 +12,7 @@ const appStore = observable({
       this.orderForm[key] = data[key]
     }
   },
-  setBookOrderDetail(data){
-    console.log(data)
+  setBookItem(data){
     this.bookOrderDetail=data
   }
 })

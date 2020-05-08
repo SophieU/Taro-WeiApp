@@ -1,6 +1,6 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Image, Button, Input, Picker, Navigator} from '@tarojs/components'
+import {View, Image, Button, Input, Picker, Navigator,Input} from '@tarojs/components'
 import {inject, observer} from '@tarojs/mobx'
 import {getSubscribeDetail, submitOrder} from './mall-apis'
 import './order-now.scss'
@@ -52,6 +52,7 @@ class GoodsDetail extends  Component<{},State>{
     let currentTime = new Date()
     let today = `${currentTime.getFullYear()}-${currentTime.getMonth()+1}-${currentTime.getDate()}`
     let nowTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`
+    console.log(orderForm.addressObj)
     this.setState({
       address:orderForm.address,
       addressObj:orderForm.addressObj,
@@ -60,6 +61,15 @@ class GoodsDetail extends  Component<{},State>{
       nowTime:nowTime
     })
   }
+  handleInputChange= (e,propName)=>{
+    let value = e.detail.value
+    this.setState(prevState=>{
+      let addressObj = prevState.addressObj
+      addressObj[propName] = value
+      return {addressObj}
+    })
+  }
+  // 获取商品详情
   getDetail=(id)=>{
     getSubscribeDetail(id).then(res=>{
       if(res.data.code===0){
@@ -145,6 +155,19 @@ class GoodsDetail extends  Component<{},State>{
               <Navigator className='add-input' url='/pages/address/order-add?from=bookOrder' >{this.state.address?this.state.address:'请选择地址'}</Navigator>
             </View>
           </View>
+          <View className='form-item'>
+            <View className='form-label'>联系人：</View>
+            <View className='form-control '>
+              <Input className='input-control' type='text' placeholder='请输入联系人' value={this.state.addressObj.userName} onChange={(e)=>this.handleInputChange(e,'userName')}/>
+            </View>
+          </View>
+          <View className='form-item'>
+            <View className='form-label'>联系电话：</View>
+            <View className='form-control '>
+              <Input className='input-control' type='text' placeholder='请输入联系电话' value={this.state.addressObj.userMobile} onChange={(e)=>this.handleInputChange(e,'userMobile')}/>
+            </View>
+          </View>
+
           <View className='form-item'>
             <View className='form-label'>预约安装日期：</View>
             <View className='form-control'>

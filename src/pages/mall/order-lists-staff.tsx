@@ -1,8 +1,8 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image, Button, Text} from '@tarojs/components'
-import { AtTabs,AtActionSheet, AtActionSheetItem,AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction  } from 'taro-ui'
-import {customOrderLists,grabOrder,setPriceNow} from './mall-apis'
+import { AtTabs,AtActionSheet, AtActionSheetItem,AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction,AtIcon   } from 'taro-ui'
+import {customOrderLists,grabOrder,setPriceNow,searchPayRes} from './mall-apis'
 import {observer,inject} from '@tarojs/mobx'
 import FootBtn from './lists-foot-btn'
 import './order-lists.scss'
@@ -26,24 +26,32 @@ class OrderListsStaff extends  Component{
       id:'',
       showPriceModal:false,
       itemPrice:0,
-      currentItem:null
+      currentItem:null,
+      countDownPay:120,
+      showCountDown:false
     }
   }
-  componentWillMount(){
+  componentDidShow(){
     this.getLists()
   }
   onPullDownRefresh(){
+   this.refreshPageData()
+  }
+  onReachBottom(){
+    this.getLists()
+  }
+  // 页面新加载
+  refreshPageData = ()=>{
     this.setState({
       pageNo:1,
       pageSize:5,
       lists:[],
-      hasNextPage:true
+      hasNextPage:true,
+      countDownPay:120,
+      showCountDown:false
     },()=>{
       this.getLists()
     })
-  }
-  onReachBottom(){
-    this.getLists()
   }
   // 抢单
   getGrag=(id)=>{
@@ -134,28 +142,68 @@ class OrderListsStaff extends  Component{
 
   // 打开收款操作
   setPay=(item)=>{
-    console.log(item)
     this.setState({
       id:item.id,
       showAction:true,
       controlOrder:item
     })
   }
+  // 轮询获取支付结果
+  getPayResult= ()=>{
+    let id = this.state.controlOrder.id
+    searchPayRes(id).then(res=>{
+      if(res.data.code===0){
+        this.setState({
+          payRes:res.data.data
+        })
+        if(res.data.data==='Y'){
+          Taro.showToast({
+            title:'收款成功'
+          }).then(()=>setTimeout(()=>{
+            let { payTimer} = this.state
+            clearInterval(payTimer)
+            this.refreshPageData()
+          },1000))
+        }
+      }
+    })
+  }
   // 等待用户端支付
   waitPay=(type)=>{
-    let {setBookOrderDetail}  = this.props.appStore
 
     this.setState({
       showAction:false
     },()=>{
       if(type==='user'){
-        Taro.showToast({
-          title:'等待用户支付中',
-          icon:'loading',
-          duration:120000
+        this.setState({
+          showCountDown:true,
+          countDownPay:120,
+        },()=>{
+          let payTimer = setInterval(()=>{
+            let count = this.state.countDownPay
+            // 间隔3秒轮询
+            --count
+            if(count%3===0){
+              this.getPayResult()
+            }
+            if(count<=0){
+              this.setState({
+                payTimer:null,
+                showCountDown:false
+              })
+              clearInterval(this.state.payTimer)
+            }else{
+              let setData = {countDownPay:count}
+              if(!this.state.payTimer){
+                setData.payTimer = payTimer
+              }
+              this.setState(setData)
+            }
+          },1000)
         })
+
       }else if(type==='qr-code'){
-        setBookOrderDetail(this.state.controlOrder)
+        this.props.appStore.setBookItem(this.state.controlOrder)
         Taro.navigateTo({
           url:'/pages/staff-order/pay?type=book&id='+this.state.id
         })
@@ -186,10 +234,12 @@ class OrderListsStaff extends  Component{
       "serviceUserId":Taro.getStorageSync('masterInfo').masterId,
       "serviceAmount":this.state.itemPrice//可为0
     }
-
+    Taro.showLoading({title:'处理中'})
     setPriceNow(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         Taro.showToast({title:'设置成功'})
+        this.refreshPageData()
       }else{
         Taro.showToast({title:res.data.msg,icon:'none'})
       }
@@ -257,7 +307,7 @@ class OrderListsStaff extends  Component{
           <AtModalContent>
             <AtInput
               className='price-input'
-              title='服务费'
+              title='服务费：'
               name='itemPrice'
               border={false}
               type='number'
@@ -271,6 +321,14 @@ class OrderListsStaff extends  Component{
             <Button onClick={this.setPrice}>确定</Button>
           </AtModalAction>
         </AtModal>
+      {/*  等待用户支付 */}
+        {this.state.showCountDown?(<View className='waiting-modal'>
+          <View className='waiting-content'>
+            <AtIcon value='loading-3' size='30' color='#02BB00'></AtIcon>
+            <View className='waiting-text'>等待用户支付中</View>
+            <View className='count-down'><Text className='count-down-number'>{this.state.countDownPay}</Text>s</View>
+          </View>
+        </View>):null}
       </View>
     )
   }

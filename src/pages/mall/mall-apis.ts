@@ -52,3 +52,8 @@ export const grabOrder = (params)=>{
 export const setPriceNow = (params)=>{
   return request.post(`/api/v1/order/submitOtherAmountForOrder?userId=${userId}`,params)
 }
+
+// 用户端支付结果查询
+export const searchPayRes = (id)=>{
+  return request.get(`/pay/query/payState/byId?businessId=${id}&type=BOOKING_ORDER`)
+}

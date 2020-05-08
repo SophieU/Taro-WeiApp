@@ -16,8 +16,8 @@ function FootBtn(props){
       </View>
     }
     return <View  className='btn-group'>
-      <Button className='btn primary-btn' onClick={()=>setPay(item)}>收款</Button>
       <Button className='btn orange-btn' onClick={()=>setPrice(item)}>{orderState==='STAY_PAY'?'重新报价':'报价'}</Button>
+      <Button className='btn primary-btn' onClick={()=>setPay(item)}>收款</Button>
     </View>
   }else if(current===2){
     return null

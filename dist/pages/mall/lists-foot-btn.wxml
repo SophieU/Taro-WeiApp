@@ -11,8 +11,8 @@
     </block>
     <block wx:elif="{{current === 1}}">
         <view class="btn-group">
-            <button class="btn primary-btn" bindtap="anonymousFunc2">收款</button>
-            <button class="btn orange-btn" bindtap="anonymousFunc3">{{_$orderState === 'STAY_PAY' ? '重新报价' : '报价'}}</button>
+            <button class="btn orange-btn" bindtap="anonymousFunc2">{{_$orderState === 'STAY_PAY' ? '重新报价' : '报价'}}</button>
+            <button class="btn primary-btn" bindtap="anonymousFunc3">收款</button>
         </view>
     </block>
     <block wx:elif="{{current === 2}}">

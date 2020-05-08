@@ -73,7 +73,7 @@ class Refuse extends Component{
     submitRefuse(params).then(res=>{
       Taro.hideLoading()
       if(res.data.code===0){
-        Taro.showToast({title:'申述提交成功',icon:'none'}).then(()=>setTimeout(()=>Taro.reLaunch({url:'/pages/mine/mine'}),1000))
+        Taro.showToast({title:'申述提交成功',icon:'none'}).then(()=>setTimeout(()=>Taro.navigateBack({delta:-1}),1000))
       }else{
         Taro.showToast({title:'申述提交失败'+res.data.msg,icon:'none'})
       }

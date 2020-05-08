@@ -1,6 +1,6 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="page quote-page">
-        <block wx:if="{{$taroCompReady}}" wx:for="{{loopArray50}}" wx:for-item="item" wx:for-index="_anonIdx2" wx:key="id">
+        <block wx:if="{{$taroCompReady}}" wx:for="{{loopArray52}}" wx:for-item="item" wx:for-index="_anonIdx2" wx:key="id">
             <block wx:if="{{item.$original.isPay === 'N'}}">
                 <view class="top-price">
                     <view class="price-left">{{item.$original.planName}}</view>
@@ -22,7 +22,7 @@
             </view>
         </view>
         <view class="page-foot">
-            <view class="price-total"><text>总计：</text><text class="text-warm">￥{{totalAmount + servicePrice + materialsPrice}}</text>
+            <view class="price-total"><text>总计：</text><text class="text-warm">￥{{finalAmount}}</text>
             </view>
             <button bindtap="submitPlan" class="btn submit-btn">确认</button>
         </view>

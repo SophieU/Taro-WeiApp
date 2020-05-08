@@ -5,7 +5,7 @@
             <block wx:if="{{title}}">
                 <label class="{{'at-input__title ' + (required && 'at-input__title--required')}}" for="{{name}}">{{title}}</label>
             </block>
-            <input class="at-input__input" id="{{name}}" name="{{name}}" type="{{type}}" password="{{password}}" placeholder-style="{{placeholderStyle}}" placeholder-class="{{placeholderCls}}" placeholder="{{placeholder}}" cursor-spacing="{{cursorSpacing}}" maxlength="{{maxLength}}" auto-focus="{{autoFocus}}" focus="{{focus}}" value="{{value}}" confirm-type="{{confirmType}}" cursor="{{cursor}}" selection-start="{{selectionStart}}" selection-end="{{selectionEnd}}" adjust-position="{{adjustPosition}}" bindinput="onInput" bindfocus="onFocus" bindblur="onBlur" bindconfirm="onConfirm" bindkeyboardheightchange="funPrivategjzzz" />
+            <input class="at-input__input" id="{{name}}" name="{{name}}" type="{{type}}" password="{{password}}" placeholder-style="{{placeholderStyle}}" placeholder-class="{{placeholderCls}}" placeholder="{{placeholder}}" cursor-spacing="{{cursorSpacing}}" maxlength="{{maxLength}}" auto-focus="{{autoFocus}}" focus="{{focus}}" value="{{value}}" confirm-type="{{confirmType}}" cursor="{{cursor}}" selection-start="{{selectionStart}}" selection-end="{{selectionEnd}}" adjust-position="{{adjustPosition}}" bindinput="onInput" bindfocus="onFocus" bindblur="onBlur" bindconfirm="onConfirm" bindkeyboardheightchange="funPrivategdzzz" />
             <block wx:if="{{clear && value}}">
                 <view class="at-input__icon" bindtouchend="clearValue"><text class="at-icon at-icon-close-circle at-input__icon-close"></text>
                 </view>

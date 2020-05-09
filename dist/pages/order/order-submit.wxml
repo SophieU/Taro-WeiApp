@@ -2,7 +2,7 @@
     <view class="page order-submit-page">
         <block wx:if="{{bannerLists.length > 0}}">
             <swiper class="order-banner" circular="{{true}}" autoplay="{{true}}">
-                <swiper-item wx:key="id" wx:for="{{loopArray65}}" wx:for-item="item" wx:for-index="__index0">
+                <swiper-item wx:key="id" wx:for="{{loopArray66}}" wx:for-item="item" wx:for-index="__index0">
                     <image bindtap="anonymousFunc0" class="order-banner" src="{{item.$original.imgName}}" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
                 </swiper-item>
             </swiper>

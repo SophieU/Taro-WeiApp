@@ -2,17 +2,17 @@
     <view class="{{adBannerList.length > 0 ? 'index' : 'index no-banner'}}">
         <view class="header-index">速达优服</view>
         <swiper class="banner-wrap" indicator-color="#fff" indicator-active-color="#EA7744" indicator-dots="{{true}}" autoplay="{{true}}">
-            <swiper-item wx:key="index" wx:for="{{loopArray37}}" wx:for-item="item" wx:for-index="index">
+            <swiper-item wx:key="index" wx:for="{{loopArray38}}" wx:for-item="item" wx:for-index="index">
                 <image bindtap="anonymousFunc0" class="banner-img" style="width:100%" src="{{item.$original.imgName}}" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
             </swiper-item>
         </swiper>
         <scroll-view scroll-x="{{true}}" class="service-type">
-            <view class="service-type-item" wx:key="serviceId" bindtap="anonymousFunc1" wx:for="{{loopArray38}}" wx:for-item="item" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}">
+            <view class="service-type-item" wx:key="serviceId" bindtap="anonymousFunc1" wx:for="{{loopArray39}}" wx:for-item="item" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey2}}">
                 <image class="item-icon" src="{{item.$original.iconName}}"></image><text class="item-text">{{item.$original.title}}</text>
             </view>
         </scroll-view>
-        <recommend-ad wx:key="id" wx:for="{{loopArray39}}" wx:for-item="item" wx:for-index="_anonIdx2" compid="{{item.$compid__60}}"></recommend-ad>
-        <view class="function-block" wx:key="id" wx:for="{{loopArray40}}" wx:for-item="item" wx:for-index="index">
+        <recommend-ad wx:key="id" wx:for="{{loopArray40}}" wx:for-item="item" wx:for-index="_anonIdx2" compid="{{item.$compid__60}}"></recommend-ad>
+        <view class="function-block" wx:key="id" wx:for="{{loopArray41}}" wx:for-item="item" wx:for-index="index">
             <navigator class="left-block" url="{{'/pages/index/more-service?id=' + item.$original.id}}">
                 <image class="left-bg" src="{{item.$original.iconUrlOne}}"></image>
             </navigator>

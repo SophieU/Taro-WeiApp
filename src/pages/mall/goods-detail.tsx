@@ -57,7 +57,7 @@ class GoodsDetail extends  Component{
           <View className='desc-left'>
             <View className='goods-price'>
               ￥ {this.state.detail.productPrice}
-              <Text className='price-tips'>市场价：123{this.state.detail.productMarketPrice}</Text>
+              <Text className='price-tips'>市场价：{this.state.detail.productMarketPrice}</Text>
             </View>
             <View className='descript'>{this.state.detail.productJingle}</View>
           </View>

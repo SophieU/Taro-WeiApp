@@ -1,7 +1,7 @@
 import {ComponentType} from 'react'
 import Taro, {Component, Config} from '@tarojs/taro'
-import {View, Text, Button, Block,ScrollView} from '@tarojs/components'
-import {AtTabs, AtTabsPane  , AtModalHeader, AtModalContent, AtModalAction  ,AtModal,AtRadio} from 'taro-ui'
+import {View, Text, Button, Block} from '@tarojs/components'
+import { AtModalHeader, AtModalContent, AtModalAction  ,AtModal,AtRadio} from 'taro-ui'
 import {lists,conflictAppeal,cancelLists,cancel,cancelConf,closeAppeal} from './admin-apis'
 import './admin.scss'
 

@@ -11,14 +11,19 @@ class Mall extends  Component{
   }
   state={
     pageNo:1,
-    pageSize:6,
+    pageSize:10,
     hasNextPage:true,
     lists:[]
   }
   componentWillMount(){
     this.getSubscribeLists()
   }
-
+  onPullDownRefresh(){
+    this.getSubscribeLists()
+  }
+  onReachBottom(){
+    this.getSubscribeLists()
+  }
   getSubscribeLists = ()=>{
     let {pageNo,pageSize,hasNextPage} = this.state
     if(!hasNextPage){
@@ -32,7 +37,10 @@ class Mall extends  Component{
       pageNo:pageNo,
       pageSize:pageSize
     }
+    Taro.showLoading({title:'加载中'})
     subscribeLists(params).then(res=>{
+      Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       if(res.data.code===0){
         let data = res.data.data
         this.setState(preState=>{
@@ -47,11 +55,7 @@ class Mall extends  Component{
   }
   render(){
     return (
-      <ScrollView
-        className='page'
-        scrollY
-        onScrollToLower={this.getSubscribeLists}
-      >
+      <View className='page'>
           <View className='mall-lists'>
             {
               this.state.lists.map(item=>{
@@ -68,7 +72,7 @@ class Mall extends  Component{
               })
             }
           </View>
-      </ScrollView>
+      </View>
     )
   }
 }

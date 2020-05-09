@@ -83,14 +83,26 @@ class Mine extends  Component<{}, State>{
       Taro.showToast({title:'填写的手机号格式不正确',icon:'none'})
       return
     }
+    Taro.showLoading({title:'处理中'})
     setInvitePhone({phone:this.state.inviteUserPhone}).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
-        Taro.showModal({title:'提交成功',content:`邀请人电话：${this.state.inviteUserPhone}`})
+        // 关闭弹窗
+        this.toggleInvitePhoneModal()
+        Taro.showModal({
+          title:'提交成功',
+          content:`邀请人电话：${this.state.inviteUserPhone}`,
+          showCancel:false,
+          success:function(res){
+            if(res.confirm){
+              Taro.startPullDownRefresh()
+            }
+          }
+        })
       }else{
         Taro.showToast({title: res.data.msg,icon:'none', duration:2000})
       }
-      // 关闭弹窗
-      this.toggleInvitePhoneModal()
+
     })
   }
   handleInviteUserPhoneChange = (val) => {
@@ -149,10 +161,10 @@ class Mine extends  Component<{}, State>{
                 <View className='control-title'>我的地址</View>
                 <View className='control-desc'></View>
               </View>
-              <View className='control-item'>
+              <Button openType='contact' className='control-item control-item-btn' >
                 <View className='control-title'>在线客服</View>
                 <View className='control-desc'></View>
-              </View>
+              </Button>
               {
                 ['ADMIN','SERVICE_USER','MERCHANT'].indexOf(userType)>-1?(<View onClick={()=>{this.handleNavigate('/pages/mine/qr-code')}} className='control-item '>
                 <View className='control-title'>我的邀请码</View>

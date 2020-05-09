@@ -3,7 +3,7 @@
         <view class="content">
             <block>
                 <block wx:if="{{lists.length > 0}}">
-                    <at-radio compid="{{$compid__71}}"></at-radio>
+                    <at-radio compid="{{$compid__70}}"></at-radio>
                 </block>
                 <block wx:else>
                     <view class="no-tips">暂无可派单师傅</view>
@@ -11,7 +11,7 @@
             </block>
         </view>
         <view class="foot">
-            <at-button compid="{{$compid__72}}">分配工单</at-button>
+            <at-button compid="{{$compid__71}}">分配工单</at-button>
         </view>
     </view>
 </block>

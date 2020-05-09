@@ -15,8 +15,8 @@ interface State {
   detailLists:Array<object>
   paySn:string
   payRes:string
-  timer:string,
-  timeOutTimer:string,
+  timer:string|undefined,
+  timeOutTimer:string|undefined,
   type:string,
 }
 @inject('appStore')
@@ -37,8 +37,8 @@ class Quote extends Component<{},State>{
       detailLists:[],
       paySn:'',
       payRes:'N',
-      timer:'',
-      timeOutTimer:'',
+      timer:null,
+      timeOutTimer:null,
       type:'', // book-预约支付，staff-报修支付
       bookOrderDetail:null
     }
@@ -84,20 +84,15 @@ class Quote extends Component<{},State>{
           qrContent:data.qrContent,
           paySn:data.paySn
         },()=>{
-          // 轮询
-          let timer = setInterval(()=>{
-            if(this.state.payRes==='Y'){
-              clearInterval(timer)
-            }
+          let intervalTimer = setInterval(()=>{
             this.getPayResult()
           },3000)
-          // 3分钟未支付清除
           let timeOutTimer = setTimeout(()=>{
-            clearTimeout(timeOutTimer)
-            clearInterval(timer)
+            clearTimeout(this.state.timeOutTimer)
+            clearInterval(this.state.timer)
           },180000)
           this.setState({
-            timer,
+            timer:intervalTimer,
             timeOutTimer
           })
         })
@@ -135,10 +130,12 @@ class Quote extends Component<{},State>{
   getPayResult = ()=>{
     payRes(this.state.paySn).then(res=>{
       if(res.data.code===0){
-        this.setState({
-          payRes:res.data.data
-        })
-        if(res.data.data==='Y'){
+        let payRes = res.data.data
+        // 轮询
+        if(payRes==='Y'){
+          console.log('支付成功--------')
+          clearInterval(this.state.timer)
+          clearInterval(this.state.timeOutTimer)
           Taro.showToast({
             title:'用户支付成功'
           }).then(()=>setTimeout(()=>{
@@ -146,7 +143,7 @@ class Quote extends Component<{},State>{
             if(type==='staff'){
               Taro.navigateTo({url:'/pages/staff-order/detail?id='+id})
             }else{
-              Taro.navigateTo({url:'/pages/mall/order-lists-staff'})
+              Taro.navigateTo({url:'/pages/mall/order-lists-staff?from=pay'})
             }
           },1000))
         }
@@ -167,10 +164,12 @@ class Quote extends Component<{},State>{
         <View className='price-divider'>费用明细</View>
         {
           this.state.detailLists.map(item=>{
-            return (<View className='price-item' key={item.id}>
-              <View className='item-left'>{item.planName}</View>
-              <View className='item-right'><Text className='text-warm'>￥{item.serviceCost}</Text></View>
-            </View>)
+            if(item.isPay==='N'){
+              return (<View className='price-item' key={item.id}>
+                <View className='item-left'>{item.planName}</View>
+                <View className='item-right'><Text className='text-warm'>￥{item.serviceCost}</Text></View>
+              </View>)
+            }
           })
         }
       </View>):null}

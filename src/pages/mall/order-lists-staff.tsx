@@ -32,7 +32,11 @@ class OrderListsStaff extends  Component{
     }
   }
   componentDidShow(){
-    this.getLists()
+    if(this.$router.params.from&&this.$router.params.from==='pay'){
+      this.refreshPageData(1)
+    }else{
+      this.getLists()
+    }
   }
   onPullDownRefresh(){
    this.refreshPageData()
@@ -41,14 +45,19 @@ class OrderListsStaff extends  Component{
     this.getLists()
   }
   // 页面新加载
-  refreshPageData = ()=>{
+  refreshPageData = (currentTab)=>{
     this.setState({
+      current:currentTab?currentTab:0,
       pageNo:1,
       pageSize:5,
       lists:[],
       hasNextPage:true,
+      showPriceModal:false,
+      showAction:false,
+      itemPrice:0,
+      currentItem:null,
       countDownPay:120,
-      showCountDown:false
+      showCountDown:false,
     },()=>{
       this.getLists()
     })
@@ -61,22 +70,18 @@ class OrderListsStaff extends  Component{
     }
     grabOrder(params).then(res=>{
       if(res.data.code===0){
-        Taro.showToast({title:'抢单成功'}).then(()=>{
-          this.setState({
-            pageNo:1,
-            current:0,
-            lists:[],
-            hasNextPage:true
-          },()=>{
-            this.getLists()
-          })
-        })
+        Taro.showToast({title:'抢单成功'}).then(()=>
+          setTimeout(()=>{
+            this.refreshPageData(0)
+          },1000)
+        )
 
       }else{
         Taro.showToast({title:'抢单失败：'+res.data.msg,icon:'none'})
       }
     })
   }
+  // 获取列表
   getLists=()=>{
     let {current,pageNo,pageSize,hasNextPage} = this.state
     const masterInfo = Taro.getStorageSync('masterInfo')
@@ -129,6 +134,7 @@ class OrderListsStaff extends  Component{
       }
     })
   }
+  // 切换tab
   handleClick=(index)=>{
     this.setState({
       current: index,
@@ -162,7 +168,7 @@ class OrderListsStaff extends  Component{
           }).then(()=>setTimeout(()=>{
             let { payTimer} = this.state
             clearInterval(payTimer)
-            this.refreshPageData()
+            this.refreshPageData(1)
           },1000))
         }
       }
@@ -239,7 +245,7 @@ class OrderListsStaff extends  Component{
       Taro.hideLoading()
       if(res.data.code===0){
         Taro.showToast({title:'设置成功'})
-        this.refreshPageData()
+        this.refreshPageData(1)
       }else{
         Taro.showToast({title:res.data.msg,icon:'none'})
       }

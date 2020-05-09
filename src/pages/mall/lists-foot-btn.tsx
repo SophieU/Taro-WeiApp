@@ -2,10 +2,10 @@ import {ComponentType} from 'react'
 import {View,Button, Block} from '@tarojs/components'
 import './lists-foot-btn.scss'
 function FootBtn(props){
-  let {current,item,setPrice,setPay} = props
+  let {current,item,setPrice,setPay,getGrag} = props
   if(current===0){
     return  <View className='btn-group'>
-      <Button onClick={()=>this.getGrag(item.id)} className='btn orange-btn'>抢单</Button>
+      <Button onClick={()=>getGrag(item.id)} className='btn orange-btn'>抢单</Button>
     </View>
   }else if (current===1){
     let orderState = item.orderState

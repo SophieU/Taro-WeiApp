@@ -4,7 +4,7 @@
         <view class="order-lists">
             <block>
                 <block wx:if="{{lists.length > 0}}">
-                    <view class="order-item" wx:key="id" wx:for="{{loopArray60}}" wx:for-item="item" wx:for-index="__index0">
+                    <view class="order-item" wx:key="id" wx:for="{{loopArray61}}" wx:for-item="item" wx:for-index="__index0">
                         <view class="order-top">
                             <view class="order-title">{{item.$original.orderSn}}</view>
                             <block wx:if="{{item.$original.orderStateName}}">

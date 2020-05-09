@@ -25,10 +25,10 @@
                         <view class="control-title">我的地址</view>
                         <view class="control-desc"></view>
                     </view>
-                    <view class="control-item">
+                    <button open-type="contact" class="control-item control-item-btn">
                         <view class="control-title">在线客服</view>
                         <view class="control-desc"></view>
-                    </view>
+                    </button>
                     <block wx:if="{{anonymousState__temp2}}">
                         <view bindtap="anonymousFunc3" class="control-item ">
                             <view class="control-title">我的邀请码</view>

@@ -107,8 +107,9 @@ class GoodsDetail extends  Component<{},State>{
       "username":this.state.addressObj.userName,
       "hopeDoorTime":`${installDate} ${installTime}:00`
     }
-    console.log(params)
+    Taro.showLoading({title:'提交中'})
     submitOrder(params).then(res=>{
+      Taro.hideLoading()
       if(res.data.code===0){
         let orderId = res.data.data
         Taro.showModal({

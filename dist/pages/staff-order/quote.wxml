@@ -1,14 +1,9 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="page quote-page">
-        <block wx:if="{{$taroCompReady}}" wx:for="{{loopArray52}}" wx:for-item="item" wx:for-index="_anonIdx2" wx:key="id">
-            <block wx:if="{{item.$original.isPay === 'N'}}">
-                <view class="top-price">
-                    <view class="price-left">{{item.$original.planName}}</view>
-                    <view class="price-right">￥ {{item.$original.amount}}</view>
-                </view>
-            </block>
-            <block wx:else></block>
-        </block>
+        <view class="top-price" wx:key="id" wx:for="{{repairOrderOfferPlanVoList}}" wx:for-item="item" wx:for-index="_anonIdx2">
+            <view class="price-left">{{item.planName}}</view>
+            <view class="price-right">￥ {{item.amount}}</view>
+        </view>
         <view class="other-price">
             <view class="other-title">人工服务费</view>
             <view class="other-row">

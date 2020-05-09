@@ -168,8 +168,16 @@ class OrderSubmit extends Component<{},State>{
             if(res.confirm){
               this.setState((prevState:State)=>{
                 let repairOrderOfferPlanDtoList = prevState.repairOrderOfferPlanDtoList
-                if(typeof feePro === 'object'){
+                // 防重复
+                if(repairOrderOfferPlanDtoList.indexOf('NIGHT_FEE')===-1){
                   repairOrderOfferPlanDtoList.push(feePro)
+                }else{
+                  repairOrderOfferPlanDtoList = repairOrderOfferPlanDtoList.map(item=>{
+                    if(item.planType==='NIGHT_FEE'){
+                      item=feePro
+                    }
+                    return item
+                  })
                 }
                 return {
                   nightFee:{

@@ -21,7 +21,7 @@
         <view class="order-lists">
             <block>
                 <block wx:if="{{lists.length > 0}}">
-                    <navigator class="order-lists-item" wx:key="index" url="{{'/pages/custom-order/detail?id=' + item.$original.id}}" wx:for="{{loopArray48}}" wx:for-item="item" wx:for-index="index">
+                    <navigator class="order-lists-item" wx:key="index" url="{{'/pages/custom-order/detail?id=' + item.$original.id}}" wx:for="{{loopArray49}}" wx:for-item="item" wx:for-index="index">
                         <view class="order-top">
                             <view class="order-date">{{item.$original.createTime}}</view>
                             <view class="order-state">

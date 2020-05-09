@@ -19,13 +19,7 @@
             </view>
         </block>
         <block wx:elif="{{baseInfo.orderStateName === '异常'}}">
-            <view class="page-foot">
-                <view class="foot-item">￥{{total}}</view>
-                <view class="btn-group">
-                    <button class="primary-btn btn" bindtap="resetPrice">重新报价</button>
-                    <button class="submit-btn btn" bindtap="sureOrder">收款</button>
-                </view>
-            </view>
+            <view></view>
         </block>
     </block>
 </template>

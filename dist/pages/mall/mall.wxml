@@ -1,5 +1,5 @@
 <block wx:if="{{$taroCompReady}}">
-    <scroll-view class="page" scroll-y="{{true}}" bindscrolltolower="getSubscribeLists">
+    <view class="page">
         <view class="mall-lists">
             <view class="mall-item" wx:key="productId" wx:for="{{lists}}" wx:for-item="item" wx:for-index="_anonIdx2">
                 <navigator class="goods-img-nav" url="{{'/pages/mall/goods-detail?id=' + item.productId}}">
@@ -12,5 +12,5 @@
                 </view>
             </view>
         </view>
-    </scroll-view>
+    </view>
 </block>

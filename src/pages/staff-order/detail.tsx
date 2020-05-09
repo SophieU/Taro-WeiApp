@@ -207,13 +207,7 @@ class Lists extends Component{
         break;
     case '异常':
       {
-        return ( <View  className='page-foot'>
-          <View className='foot-item'>￥{total}</View>
-          <View className="btn-group">
-            <Button className='primary-btn btn' onClick={this.resetPrice}>重新报价</Button>
-            <Button className='submit-btn btn' onClick={this.sureOrder}>收款</Button>
-          </View>
-        </View>)
+        return null
       }
         break;
 

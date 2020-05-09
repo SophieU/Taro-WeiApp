@@ -5,11 +5,11 @@
                 <view class="detail-title">工单信息</view>
                 <view class="detail-info">
                     <view class="info-item">
-                        <view class="item-label">报修时间</view>
-                        <view class="item-info">{{baseInfo.createTime}}</view>
+                        <view class="item-label">报修信息</view>
+                        <view class="item-info">{{baseInfo.repairCategoryName}}</view>
                     </view>
                     <view class="info-item">
-                        <view class="item-label">工单单号</view>
+                        <view class="item-label">工单编号</view>
                         <view class="item-info">{{baseInfo.orderSn}}</view>
                     </view>
                     <view class="info-item">
@@ -19,12 +19,8 @@
                         </view>
                     </view>
                     <view class="info-item">
-                        <view class="item-label">服务网点</view>
-                        <view class="item-info">{{baseInfo.stationName}}</view>
-                    </view>
-                    <view class="info-item">
-                        <view class="item-label">网点电话</view>
-                        <view class="item-info">{{baseInfo.stationPhone}}</view>
+                        <view class="item-label">下单时间</view>
+                        <view class="item-info">{{baseInfo.createTime}}</view>
                     </view>
                 </view>
             </view>
@@ -45,23 +41,19 @@
                 </view>
             </block>
             <view class="detail-block">
-                <view class="detail-title">基础信息</view>
+                <view class="detail-title">用户信息</view>
                 <view class="detail-info">
                     <view class="info-item">
-                        <view class="item-label">维修区域</view>
-                        <view class="item-info">{{baseInfo.repairRegionName}}</view>
-                    </view>
-                    <view class="info-item">
-                        <view class="item-label">详细地址</view>
-                        <view class="item-info">{{baseInfo.address}}</view>
+                        <view class="item-label">联系人</view>
+                        <view class="item-info">{{baseInfo.username}}</view>
                     </view>
                     <view class="info-item">
                         <view class="item-label">联系电话</view>
                         <view class="item-info">{{baseInfo.userPhone}}</view>
                     </view>
                     <view class="info-item">
-                        <view class="item-label">报修类别</view>
-                        <view class="item-info">{{baseInfo.repairCategoryName}}</view>
+                        <view class="item-label">报修地址</view>
+                        <view class="item-info">{{baseInfo.address}}</view>
                     </view>
                 </view>
             </view>
@@ -93,6 +85,37 @@
                     </view>
                 </view>
             </block>
+            <block wx:if="{{baseInfo.statementReasonName}}">
+                <view class="detail-block">
+                    <view class="detail-title">申述信息</view>
+                    <view class="detail-info">
+                        <view class="info-item">
+                            <view class="item-label">申述原因</view>
+                            <view class="item-info">{{baseInfo.statementReasonName}}</view>
+                        </view>
+                        <view class="info-item">
+                            <view class="item-label">申述请求</view>
+                            <view class="item-info">{{baseInfo.statementRequestName}}</view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <block wx:if="{{commentInfo.comment}}">
+                <view class="detail-block">
+                    <view class="detail-title">评价信息</view>
+                    <view class="detail-info">
+                        <view class="info-item">
+                            <view class="item-label">评价结果</view>
+                            <view class="item-info">{{commentInfo.comment.comment.name}}</view>
+                        </view>
+                        <view class="info-item">
+                            <view class="item-label">评价详情</view>
+                            <view class="item-info"><text wx:key="id" wx:for="{{commentInfo.comment.comment.children}}" wx:for-item="item" wx:for-index="_anonIdx6">{{item.name}}、</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </block>
         </view>
         <template is="renderFoot" data="{{...anonymousState__temp}}"></template>
         <at-modal compid="{{$compid__114}}">
@@ -109,9 +132,9 @@
             <at-modal-header>评价订单</at-modal-header>
             <at-modal-content>
                 <at-tabs compid="{{$compid__117}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray68}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__110}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray70}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__110}}">
                         <view class="comment-tag">
-                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx6" compid="{{child.$compid__109}}">{{child.$original.name}}</at-tag>
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__109}}">{{child.$original.name}}</at-tag>
                         </view>
                     </at-tabs-pane>
                 </at-tabs>
@@ -125,9 +148,9 @@
             <at-modal-header>评价详情</at-modal-header>
             <at-modal-content>
                 <at-tabs compid="{{$compid__119}}">
-                    <at-tabs-pane wx:key="index" wx:for="{{loopArray69}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__112}}">
+                    <at-tabs-pane wx:key="index" wx:for="{{loopArray71}}" wx:for-item="item" wx:for-index="index" compid="{{item.$compid__112}}">
                         <view class="comment-tag">
-                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx8" compid="{{child.$compid__111}}">{{child.$original.name}}</at-tag>
+                            <at-tag wx:key="id" wx:for="{{item.$anonymousCallee__9}}" wx:for-item="child" wx:for-index="_anonIdx10" compid="{{child.$compid__111}}">{{child.$original.name}}</at-tag>
                         </view>
                     </at-tabs-pane>
                 </at-tabs>

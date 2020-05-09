@@ -15,9 +15,13 @@ class CustomerService extends Component{
     })
   }
   callService= ()=>{
-    Taro.makePhoneCall({
-      phoneNumber: '10086'
+    Taro.showToast({
+      title:'功能暂未开通，请使用在线咨询',
+      icon:'none'
     })
+    // Taro.makePhoneCall({
+    //   phoneNumber: '10086'
+    // })
   }
   onlineService = ()=>{
     Taro.showToast({

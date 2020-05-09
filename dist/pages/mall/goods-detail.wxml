@@ -7,7 +7,7 @@
         </swiper>
         <view class="goods-desc">
             <view class="desc-left">
-                <view class="goods-price">￥ {{detail.productPrice}}<text class="price-tips">市场价：123{{detail.productMarketPrice}}</text>
+                <view class="goods-price">￥ {{detail.productPrice}}<text class="price-tips">市场价：{{detail.productMarketPrice}}</text>
                 </view>
                 <view class="descript">{{detail.productJingle}}</view>
             </view>

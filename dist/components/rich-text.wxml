@@ -1,0 +1,3 @@
+<block wx:if="{{$taroCompReady}}">
+    <rich-text nodes="{{node}}"></rich-text>
+</block>

@@ -56,16 +56,20 @@ class Quote extends Component<{},State>{
       if(res.data.code===0){
         let totalAmount=0
         let data = res.data.data.repairOrderOfferPlanVoList.filter(item=>{
+          // 材料费-人工费（输入清零）
           if(item.planType==='MATERIAL_PROJECT'||item.planType==='SERVICE_PROJECT'){
             return false
           }else{
-            totalAmount+=item.amount
-            return true
+            if(item.isPay==='N'){
+              totalAmount+=item.amount
+              return true
+            }
           }
         })
         this.setState({
           repairOrderOfferPlanVoList:data,
-          totalAmount:totalAmount
+          totalAmount:totalAmount,
+          finalAmount:totalAmount
         })
       }
     })
@@ -133,12 +137,10 @@ class Quote extends Component<{},State>{
     return (<View className='page quote-page'>
       {
         this.state.repairOrderOfferPlanVoList.map(item=>{
-          if(item.isPay==='N'){
-            return (<View className='top-price' key={item.id}>
-              <View className='price-left'>{item.planName}</View>
-              <View className='price-right'>￥ {item.amount}</View>
-            </View>)
-          }
+          return (<View className='top-price' key={item.id}>
+            <View className='price-left'>{item.planName}</View>
+            <View className='price-right'>￥ {item.amount}</View>
+          </View>)
         })
       }
       <View className='other-price'>

@@ -335,8 +335,15 @@ class Lists extends Component<{},State>{
           title:'评价成功',
           icon:'none'
         })
-        this.getOrderDetail()
-        
+        this.setState({
+          commentNowModal:false,
+          currentComment:0,
+          commentActiveTags:[],
+        },()=>{
+          this.getOrderDetail()
+        })
+
+
       }
     })
   }
@@ -357,11 +364,12 @@ class Lists extends Component<{},State>{
           <View className='detail-title'>工单信息</View>
           <View className='detail-info'>
             <View className='info-item'>
-              <View className='item-label'>报修时间</View>
-              <View className='item-info'>{this.state.baseInfo.createTime}</View>
+              <View className='item-label'>报修信息</View>
+              <View className='item-info'>{this.state.baseInfo.repairCategoryName}</View>
             </View>
+
             <View className='info-item'>
-              <View className='item-label'>工单单号</View>
+              <View className='item-label'>工单编号</View>
               <View className='item-info'>{this.state.baseInfo.orderSn}</View>
             </View>
             <View className='info-item'>
@@ -371,13 +379,17 @@ class Lists extends Component<{},State>{
               </View>
             </View>
             <View className='info-item'>
-              <View className='item-label'>服务网点</View>
-              <View className='item-info'>{this.state.baseInfo.stationName}</View>
+              <View className='item-label'>下单时间</View>
+              <View className='item-info'>{this.state.baseInfo.createTime}</View>
             </View>
-            <View className='info-item'>
-              <View className='item-label'>网点电话</View>
-              <View className='item-info'>{this.state.baseInfo.stationPhone}</View>
-            </View>
+            {/*<View className='info-item'>*/}
+            {/*  <View className='item-label'>服务网点</View>*/}
+            {/*  <View className='item-info'>{this.state.baseInfo.stationName}</View>*/}
+            {/*</View>*/}
+            {/*<View className='info-item'>*/}
+            {/*  <View className='item-label'>网点电话</View>*/}
+            {/*  <View className='item-info'>{this.state.baseInfo.stationPhone}</View>*/}
+            {/*</View>*/}
           </View>
         </View>
         {
@@ -398,24 +410,24 @@ class Lists extends Component<{},State>{
           ):null
         }
         <View className='detail-block'>
-          <View className='detail-title'>基础信息</View>
+          <View className='detail-title'>用户信息</View>
           <View className='detail-info'>
             <View className='info-item'>
-              <View className='item-label'>维修区域</View>
-              <View className='item-info'>{this.state.baseInfo.repairRegionName}</View>
-            </View>
-            <View className='info-item'>
-              <View className='item-label'>详细地址</View>
-              <View className='item-info'>{this.state.baseInfo.address}</View>
+              <View className='item-label'>联系人</View>
+              <View className='item-info'>{this.state.baseInfo.username}</View>
             </View>
             <View className='info-item'>
               <View className='item-label'>联系电话</View>
               <View className='item-info'>{this.state.baseInfo.userPhone}</View>
             </View>
             <View className='info-item'>
-              <View className='item-label'>报修类别</View>
-              <View className='item-info'>{this.state.baseInfo.repairCategoryName}</View>
+              <View className='item-label'>报修地址</View>
+              <View className='item-info'>{this.state.baseInfo.address}</View>
             </View>
+            {/*<View className='info-item'>*/}
+            {/*  <View className='item-label'>维修区域</View>*/}
+            {/*  <View className='item-info'>{this.state.baseInfo.repairRegionName}</View>*/}
+            {/*</View>*/}
           </View>
         </View>
         {this.state.repairOrderAmountVos.length>0?(<View className='detail-block price-block'>
@@ -449,6 +461,44 @@ class Lists extends Component<{},State>{
                 }
               </View>
           </View>):null
+        }
+        {
+          this.state.baseInfo.statementReasonName?(
+            <View className='detail-block'>
+              <View className='detail-title'>申述信息</View>
+              <View className='detail-info'>
+                <View className='info-item'>
+                  <View className='item-label'>申述原因</View>
+                  <View className='item-info'>{this.state.baseInfo.statementReasonName}</View>
+                </View>
+                <View className='info-item'>
+                  <View className='item-label'>申述请求</View>
+                  <View className='item-info'>{this.state.baseInfo.statementRequestName}</View>
+                </View>
+              </View>
+            </View>
+          ):null
+        }
+        {
+          this.state.commentInfo.comment?(
+            <View className='detail-block'>
+              <View className='detail-title'>评价信息</View>
+              <View className='detail-info'>
+                <View className='info-item'>
+                  <View className='item-label'>评价结果</View>
+                  <View className='item-info'>{this.state.commentInfo.comment.comment.name}</View>
+                </View>
+                <View className='info-item'>
+                  <View className='item-label'>评价详情</View>
+                  <View className='item-info'>
+                    {this.state.commentInfo.comment.comment.children.map(item=>{
+                      return <Text key={item.id}>{item.name}、</Text>
+                    })}
+                  </View>
+                </View>
+              </View>
+            </View>
+          ):null
         }
 
       </View>

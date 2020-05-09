@@ -68,7 +68,9 @@ class OrderListsCustom extends  Component{
       payBusinessType:'BOOKING_ORDER',
       payCode:'WX_XCX'
     }
+    Taro.showLoading({title:'提交中'})
     getWxPay(params).then(res=>{
+      Taro.hideLoading()
       const _this = this
       if(res.data.code===0){
         let data = res.data.data
@@ -90,7 +92,7 @@ class OrderListsCustom extends  Component{
           },
         })
       }else{
-        Taro.showToast({title:res.data.msg})
+        Taro.showToast({title:res.data.msg,icon:'none'})
       }
     })
   }

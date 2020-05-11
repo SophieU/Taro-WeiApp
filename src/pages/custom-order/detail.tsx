@@ -424,10 +424,13 @@ class Lists extends Component<{},State>{
               <View className='item-label'>报修地址</View>
               <View className='item-info'>{this.state.baseInfo.address}</View>
             </View>
-            {/*<View className='info-item'>*/}
-            {/*  <View className='item-label'>维修区域</View>*/}
-            {/*  <View className='item-info'>{this.state.baseInfo.repairRegionName}</View>*/}
-            {/*</View>*/}
+            {
+              this.state.baseInfo.faultReason?( <View className='info-item'>
+                <View className='item-label'>故障原因</View>
+                <View className='item-info'>{this.state.baseInfo.faultReason}</View>
+              </View>):null
+            }
+
           </View>
         </View>
         {this.state.repairOrderAmountVos.length>0?(<View className='detail-block price-block'>
@@ -453,7 +456,9 @@ class Lists extends Component<{},State>{
                   this.state.repairOrderOfferPlanVoList.map(item=>{
                     return (<View key={item.id} className='info-item'>
                       <View className='price-label'>
-                        <View className='item-label'>{item.planName}</View>
+                        <View className='item-label'>{item.planName}
+                          {item.isPay==='Y'?<Text className='text-grey' style={{fontSize:'10px'}}>（已支付）</Text>:null}
+                        </View>
                       </View>
                       <View className='item-info'><Text className='text-warm'>￥{item.amount}</Text></View>
                     </View>)

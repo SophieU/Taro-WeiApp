@@ -65,7 +65,7 @@ class Mall extends  Component{
                   </Navigator>
                   <View className='goods-title'>{item.productName}</View>
                   <View className='goods-foot'>
-                    <View className='goods-price'>￥ {item.productMarketPrice}</View>
+                    <View className='goods-price'>￥ {item.productPrice}</View>
                     <Navigator className='buy-now' url={'/pages/mall/order-now?id='+item.productId}>立即预约</Navigator>
                   </View>
                 </View>)

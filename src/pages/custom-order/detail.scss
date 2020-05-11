@@ -96,10 +96,11 @@
   }
   .price-label{
     flex: 1 0 0;
-    .item-info{}
+
     .item-label,.label-title{
       color: #555;
       font-size: 14px;
+      width: auto;
     }
     .label-tips{
       color: #999;

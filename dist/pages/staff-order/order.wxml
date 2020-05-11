@@ -1,9 +1,13 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="staff-order-page">
-        <at-tabs compid="{{$compid__72}}"></at-tabs>
+        <at-tabs compid="{{$compid__70}}"></at-tabs>
         <view class="order-lists">
             <view wx:key="id" class="order-item" wx:for="{{lists}}" wx:for-item="item" wx:for-index="_anonIdx2">
                 <view bindtap="navigateTo" data-url="{{'/pages/staff-order/detail?id=' + item.id}}">
+                    <view class="order-row">
+                        <view class="row-title">报修信息</view>
+                        <view class="row-info">{{item.repairCategoryName}}</view>
+                    </view>
                     <view class="order-row">
                         <view class="row-title">工单编号</view>
                         <view class="row-info">{{item.orderSn}}</view>
@@ -39,10 +43,6 @@
                         <view class="row-title">联系电话</view>
                         <view class="row-info"><text catchtap="call" class="text-warm" data-e-tap-so="this" data-e-tap-a-a="{{item.userPhone}}">{{item.userPhone}}</text>
                         </view>
-                    </view>
-                    <view class="order-row">
-                        <view class="row-title">报修内容</view>
-                        <view class="row-info">{{item.repairCategoryName}}</view>
                     </view>
                     <view class="order-row">
                         <view class="row-title">报修地址</view>

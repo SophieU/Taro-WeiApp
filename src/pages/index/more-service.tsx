@@ -25,8 +25,7 @@ class More extends Component<{}, State>{
     this.getAll()
     let id = this.$router.params.id;
     this.setState({
-      scrollNavIntoView:'nav'+id,
-      scrollIntoView:'content' + id,
+      id:id
     })
   }
   constructor(){
@@ -40,7 +39,6 @@ class More extends Component<{}, State>{
       scrollNavIntoView:''
     }
     this.toggleTab = this.toggleTab.bind(this)
-
   }
   config: Config = {
     navigationBarTitleText: '服务分类',
@@ -49,8 +47,13 @@ class More extends Component<{}, State>{
   getAll = ()=>{
     getServiceAll().then(res=>{
       if(res.data.code===0){
-        this.setState({
-          serviceLists:res.data.data
+        this.setState(prevState=>{
+          return {
+            serviceLists:res.data.data,
+            currentTab:prevState.id,
+            scrollNavIntoView:'nav'+prevState.id,
+            scrollIntoView:'content' + prevState.id,
+          }
         })
       }
     })

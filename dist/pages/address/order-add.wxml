@@ -4,7 +4,7 @@
             <block wx:if="{{addressLists.length > 0}}">
                 <view class="add-lists-wrap">
                     <view class="add-lists">
-                        <view class="add-item" wx:key="index" wx:for="{{loopArray44}}" wx:for-item="item" wx:for-index="index">
+                        <view class="add-item" wx:key="index" wx:for="{{loopArray40}}" wx:for-item="item" wx:for-index="index">
                             <view class="item-info">
                                 <view class="item-text" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">{{item.$original.areaInfo}} {{item.$original.address}}
                                     <block wx:if="{{item.$original.isDefault === 'Y'}}"><text class="item-tag">默认</text>

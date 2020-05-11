@@ -275,7 +275,12 @@ class Lists extends Component{
               <View className='item-label'>详细地址</View>
               <View className='item-info'>{this.state.baseInfo.address}</View>
             </View>
-
+            {
+              this.state.baseInfo.faultReason?(<View className='info-item'>
+                <View className='item-label'>故障原因</View>
+                <View className='item-info'>{this.state.baseInfo.faultReason}</View>
+              </View>):null
+            }
           </View>
         </View>
         {

@@ -2,12 +2,12 @@
     <scroll-view class="scroll-wrapper" scroll-y="{{true}}" scroll-into-view="{{scrollIntoView}}" bindscroll="anonymousFunc0" style="{{anonymousState__temp}}">
         <block wx:if="{{scrollPadding === '40px'}}">
             <scroll-view class="top-slider" scroll-x="{{true}}" enable-flex="{{true}}" scroll-into-view="{{scrollIntoNavView}}">
-                <view id="{{'nav' + item.$original.id}}" bindtap="anonymousFunc1" class="{{item.$original.id === currentTab ? 'top-nav active' : 'top-nav'}}" wx:key="id" wx:for="{{loopArray42}}" wx:for-item="item" wx:for-index="index" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">{{item.$original.name}}</view>
+                <view id="{{'nav' + item.$original.id}}" bindtap="anonymousFunc1" class="{{item.$original.id === currentTab ? 'top-nav active' : 'top-nav'}}" wx:key="id" wx:for="{{loopArray38}}" wx:for-item="item" wx:for-index="index" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}">{{item.$original.name}}</view>
                 <view></view>
             </scroll-view>
         </block>
         <view class="service-lists">
-            <view class="icon-lists-wrap" id="{{'content' + item.$original.id}}" wx:key="id" wx:for="{{loopArray43}}" wx:for-item="item" wx:for-index="index">
+            <view class="icon-lists-wrap" id="{{'content' + item.$original.id}}" wx:key="id" wx:for="{{loopArray39}}" wx:for-item="item" wx:for-index="index">
                 <view class="icon-lists-top">
                     <view class="wrap-title">{{item.$original.name}}</view>
                 </view>

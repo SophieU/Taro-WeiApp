@@ -10,7 +10,7 @@
         <block wx:if="{{type === 'staff'}}">
             <view class="price-lists">
                 <view class="price-divider">费用明细</view>
-                <block wx:if="{{$taroCompReady}}" wx:for="{{loopArray56}}" wx:for-item="item" wx:for-index="_anonIdx2" wx:key="id">
+                <block wx:if="{{$taroCompReady}}" wx:for="{{loopArray55}}" wx:for-item="item" wx:for-index="_anonIdx2" wx:key="id">
                     <block wx:if="{{item.$original.isPay === 'N'}}">
                         <view class="price-item">
                             <view class="item-left">{{item.$original.planName}}</view>

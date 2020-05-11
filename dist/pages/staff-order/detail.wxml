@@ -89,6 +89,12 @@
                         <view class="item-label">详细地址</view>
                         <view class="item-info">{{baseInfo.address}}</view>
                     </view>
+                    <block wx:if="{{baseInfo.faultReason}}">
+                        <view class="info-item">
+                            <view class="item-label">故障原因</view>
+                            <view class="item-info">{{baseInfo.faultReason}}</view>
+                        </view>
+                    </block>
                 </view>
             </view>
             <block wx:if="{{repairOrderAmountVos.length > 0}}">

@@ -68,6 +68,7 @@ class OrderListsStaff extends  Component{
       "orderId":id,
       "serviceUserId":Taro.getStorageSync('masterInfo').masterId
     }
+    Taro.showLoading({title:'处理中'})
     grabOrder(params).then(res=>{
       if(res.data.code===0){
         Taro.showToast({title:'抢单成功'}).then(()=>

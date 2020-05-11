@@ -4,6 +4,7 @@ import {View, Image, Button, Input, Picker, Navigator,Input} from '@tarojs/compo
 import {inject, observer} from '@tarojs/mobx'
 import {getSubscribeDetail, submitOrder} from './mall-apis'
 import './order-now.scss'
+import {getDefaultAdd} from "../address/service";
 
 
 type addressObjType = {
@@ -42,8 +43,8 @@ class GoodsDetail extends  Component<{},State>{
       nowTime:''
     }
   }
-  componentWillShow(){
-
+  componentWillMount(){
+    this.getDefault()
   }
   componentDidShow(){
     let id = this.$router.params.id
@@ -52,14 +53,13 @@ class GoodsDetail extends  Component<{},State>{
     let currentTime = new Date()
     let today = `${currentTime.getFullYear()}-${currentTime.getMonth()+1}-${currentTime.getDate()}`
     let nowTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`
-    console.log(orderForm.addressObj)
-    this.setState({
-      address:orderForm.address,
-      addressObj:orderForm.addressObj,
-      productId:id,
-      today:today,
-      nowTime:nowTime
-    })
+      this.setState({
+        address:orderForm.address,
+        addressObj:orderForm.addressObj,
+        productId:id,
+        today:today,
+        nowTime:nowTime
+      })
   }
   handleInputChange= (e,propName)=>{
     let value = e.detail.value
@@ -89,6 +89,37 @@ class GoodsDetail extends  Component<{},State>{
     let value = e.detail.value
     this.setState({
       installTime:value
+    })
+  }
+  getDefault=()=>{
+    getDefaultAdd().then(res=>{
+      if(res.data.code===0){
+        let data = res.data.data
+        if(data){
+          this.setState(()=>{
+            return {
+              address:data.areaInfo + data.address,
+              addressObj:{
+                id:data.id,
+                userName:data.userName,
+                userMobile:data.userMobile,
+              },
+            }
+          },()=>{
+            this.props.appStore.setOrderForm({
+              address:data.areaInfo + data.address,
+              addressObj:data
+            })
+            this.getOrderContentWithAdd()
+          })
+
+        }else{
+          this.getOrderContentNone()
+        }
+
+      }else{
+        console.log('默认地址获取失败：' + res.data.msg)
+      }
     })
   }
   submitBook=()=>{

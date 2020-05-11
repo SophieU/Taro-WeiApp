@@ -115,6 +115,10 @@ class Lists extends Component<{},State>{
             return ( <View key={item.id} className='order-item'>
               <View onClick={this.navigateTo} data-url={'/pages/staff-order/detail?id='+item.id}>
                 <View className='order-row'>
+                  <View className='row-title'>报修信息</View>
+                  <View className='row-info'>{item.repairCategoryName}</View>
+                </View>
+                <View className='order-row'>
                   <View className='row-title'>工单编号</View>
                   <View className='row-info'>{item.orderSn}</View>
                 </View>
@@ -137,10 +141,7 @@ class Lists extends Component<{},State>{
                   <View className='row-title'>联系电话</View>
                   <View className='row-info'><Text onClick={this.call.bind(this,item.userPhone)} className='text-warm'>{item.userPhone}</Text></View>
                 </View>
-                <View className='order-row'>
-                  <View className='row-title'>报修内容</View>
-                  <View className='row-info'>{item.repairCategoryName}</View>
-                </View>
+
                 <View className='order-row'>
                   <View className='row-title'>报修地址</View>
                   <View className='row-info'>{item.address||'无'}</View>

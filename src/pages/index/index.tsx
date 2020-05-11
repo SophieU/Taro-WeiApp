@@ -117,10 +117,15 @@ class Index extends Component<{}, PageState> {
     getBannerLists().then(res=>{
       if(res.data.code===0){
         let data = res.data.data
+        let serviceList = []
+        for(let i=0;i<data.serviceList.length;i=i+5){
+          serviceList.push(data.serviceList.slice(i,i+5))
+        }
+        console.log(serviceList)
           this.setState({
             adBannerList:data.adBannerList,
             configApiVoList:data.configApiVoList,
-            serviceList:data.serviceList
+            serviceList:serviceList
           })
       }
     })
@@ -181,14 +186,31 @@ class Index extends Component<{}, PageState> {
           })}
         </Swiper>
         {/*icon列表*/}
-        <ScrollView scrollX={true} className='service-type'>
-          {this.state.serviceList.map(item=>{
-            return (<View className='service-type-item' key={item.serviceId} onClick={()=>this.jumpTo(item)}>
-              <Image className='item-icon' src={item.iconName}/>
-              <Text className='item-text'>{item.title}</Text>
-            </View>)
+        <Swiper
+          className='service-type'
+          indicatorColor='#f5f5f5'
+          indicatorActiveColor='#EA7744'
+          indicatorDots
+        >
+          {this.state.serviceList.map((item,index)=>{
+            return <SwiperItem key={item.serviceId} >
+              {item.map(child=>{
+                return <View className='service-type-item' onClick={()=>this.jumpTo(child)}>
+                  <Image className='item-icon' src={child.iconName}/>
+                  <Text className='item-text'>{child.title}</Text>
+                </View>
+              })}
+            </SwiperItem>
           })}
-        </ScrollView>
+        </Swiper>
+        {/*<ScrollView scrollX={true} className='service-type'>*/}
+        {/*  {this.state.serviceList.map(item=>{*/}
+        {/*    return (<View className='service-type-item' key={item.serviceId} onClick={()=>this.jumpTo(item)}>*/}
+        {/*      <Image className='item-icon' src={item.iconName}/>*/}
+        {/*      <Text className='item-text'>{item.title}</Text>*/}
+        {/*    </View>)*/}
+        {/*  })}*/}
+        {/*</ScrollView>*/}
         {/* 广告区 */}
         {
           this.state.configApiVoList.map(item=>{

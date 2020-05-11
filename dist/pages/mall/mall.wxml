@@ -7,7 +7,7 @@
                 </navigator>
                 <view class="goods-title">{{item.productName}}</view>
                 <view class="goods-foot">
-                    <view class="goods-price">￥ {{item.productMarketPrice}}</view>
+                    <view class="goods-price">￥ {{item.productPrice}}</view>
                     <navigator class="buy-now" url="{{'/pages/mall/order-now?id=' + item.productId}}">立即预约</navigator>
                 </view>
             </view>

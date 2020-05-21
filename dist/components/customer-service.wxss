@@ -1,1 +1,76 @@
-.customer-service,.customer-service.expand{position:fixed;background:#fff;border:2rpx solid #ea7744;bottom:200rpx;height:80rpx;width:500rpx;font-size:20rpx;color:#ea7744;border-radius:80rpx}.customer-service{right:-380rpx;text-align:left;padding-left:40rpx;-webkit-box-sizing:border-box;box-sizing:border-box}.customer-service .cus-ser{display:block;width:48rpx;height:48rpx}.customer-service.expand{right:20rpx;text-align:center;z-index:10;padding-left:0;-webkit-transition:right linear .5s;-o-transition:right linear .5s;transition:right linear .5s}.customer-service.expand .expand-service{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-align-items:center;-ms-flex-align:center;align-items:center;height:100%;width:100%;padding:0 30rpx;-webkit-box-sizing:border-box;box-sizing:border-box}.customer-service.expand .expand-button{-webkit-flex:45% 0 0;-ms-flex:45% 0 0;flex:45% 0 0}.customer-service.expand .expand-button:first-child{border-right:4rpx dashed #ea7744;border-radius:0}.customer-service.expand .custom-ico{width:24rpx;height:24rpx;margin-right:8rpx;position:relative;top:4rpx;border-radius:0}.customer-service .customer-service-btn{position:static;padding:0;border:0;background:0 0;font-size:20rpx;color:#ea7744;line-height:1em}
+/* start: customer-service*/
+.customer-service {
+  position: fixed;
+  background: #fff;
+  border: 2rpx solid #EA7744;
+  right: -380rpx;
+  bottom: 200rpx;
+  height: 80rpx;
+  width: 500rpx;
+  font-size: 20rpx;
+  color: #EA7744;
+  text-align: left;
+  border-radius: 80rpx;
+  padding-left: 40rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+.customer-service .cus-ser {
+    display: block;
+    width: 48rpx;
+    height: 48rpx; }
+.customer-service.expand {
+    position: fixed;
+    background: #fff;
+    border: 2rpx solid #EA7744;
+    right: 20rpx;
+    bottom: 200rpx;
+    height: 80rpx;
+    width: 500rpx;
+    font-size: 20rpx;
+    color: #EA7744;
+    text-align: center;
+    border-radius: 80rpx;
+    z-index: 10;
+    padding-left: 0;
+    -webkit-transition: right linear 0.5s;
+    -o-transition: right linear 0.5s;
+    transition: right linear 0.5s; }
+.customer-service.expand .expand-service {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
+      height: 100%;
+      width: 100%;
+      padding: 0 30rpx;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+.customer-service.expand .expand-button {
+      -webkit-flex: 45% 0 0;
+          -ms-flex: 45% 0 0;
+              flex: 45% 0 0; }
+.customer-service.expand .expand-button:first-child {
+        border-right: 4rpx dashed #EA7744;
+        border-radius: 0; }
+.customer-service.expand .custom-ico {
+      width: 24rpx;
+      height: 24rpx;
+      margin-right: 8rpx;
+      position: relative;
+      top: 4rpx;
+      border-radius: 0; }
+.customer-service .customer-service-btn {
+    position: static;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 20rpx;
+    color: #EA7744;
+    line-height: 1em; }
+/* end: customer-service*/
+

@@ -23,13 +23,13 @@
             <block wx:if="{{serviceContent.serviceFee !== 0}}">
                 <view class="info-item">
                     <image class="info-ico" src="{{anonymousState__temp4}}"></image><text class="info-title">服务收费</text>
-                    <view class="info-content"><text class="text-warm strong">{{serviceContent.serviceFee}}</text> /次起</view>
+                    <view class="info-content"><text class="text-warm strong">{{serviceContent.serviceFee}}</text>元/次起</view>
                 </view>
             </block>
             <block wx:if="{{!(serviceContent.hasDtdServiceFee !== 'Y')}}">
                 <view class="info-item">
                     <image class="info-ico" src="{{anonymousState__temp5}}"></image><text class="info-title">上门费</text>
-                    <view class="info-content"><text class="text-warm strong">{{serviceContent.dtdServiceFee}}</text>/次
+                    <view class="info-content"><text class="text-warm strong">{{serviceContent.dtdServiceFee}}</text>元/次
                         <block wx:if="{{serviceContent.isPrepayDtd === 'Y'}}"><text class="little-tips">(需要预付)</text>
                         </block>
                     </view>
@@ -81,7 +81,7 @@
         <view class="submit-bar">
             <view class="protocal">
                 <radio color="#216EC6" value="1" checked="{{true}}">已同意
-                    <navigator url="/pages/index/web-view?target=http://ttfwap.yishengyue.cn/arg/E-arg.html" class="outlink">用户协议</navigator>
+                    <navigator url="{{'/pages/index/web-view?target=' + h5url + '/literature/con_Eservice.html'}}" class="outlink">服务协议</navigator>
                 </radio>
             </view>
             <view class="btn-wrap">

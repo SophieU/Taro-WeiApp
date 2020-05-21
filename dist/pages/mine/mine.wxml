@@ -6,22 +6,29 @@
                 <open-data class="name" type="userNickName"></open-data>
                 <view class="tel">{{apiUserInfo.username}}</view>
             </view>
-            <navigator url="/pages/mine/pocket" class="my-pocket">
-                <image class="pocket-ico" src="{{anonymousState__temp}}"></image><text>钱包</text>
-            </navigator>
+            <block>
+                <block wx:if="{{anonymousState__temp2}}">
+                    <navigator url="/pages/mine/pocket" class="my-pocket">
+                        <image class="pocket-ico" src="{{anonymousState__temp}}"></image><text>钱包</text>
+                    </navigator>
+                </block>
+                <block wx:else>
+                    <button type="default" size="mini" class="head-btn" bindtap="anonymousFunc0">立即登录</button>
+                </block>
+            </block>
         </view>
         <view class="control-wrap">
             <view class="control-lists">
                 <view class="control-block">
-                    <view bindtap="anonymousFunc0" class="control-item">
+                    <view bindtap="anonymousFunc1" class="control-item">
                         <view class="control-title">报修订单</view>
                         <view class="control-desc"></view>
                     </view>
-                    <view bindtap="anonymousFunc1" class="control-item">
+                    <view bindtap="anonymousFunc2" class="control-item">
                         <view class="control-title">预约订单</view>
                         <view class="control-desc"></view>
                     </view>
-                    <view bindtap="anonymousFunc2" class="control-item">
+                    <view bindtap="anonymousFunc3" class="control-item">
                         <view class="control-title">我的地址</view>
                         <view class="control-desc"></view>
                     </view>
@@ -29,8 +36,8 @@
                         <view class="control-title">在线客服</view>
                         <view class="control-desc"></view>
                     </button>
-                    <block wx:if="{{anonymousState__temp2}}">
-                        <view bindtap="anonymousFunc3" class="control-item ">
+                    <block wx:if="{{anonymousState__temp3}}">
+                        <view bindtap="anonymousFunc4" class="control-item ">
                             <view class="control-title">我的邀请码</view>
                             <view class="control-desc"></view>
                         </view>
@@ -46,10 +53,10 @@
                     <view class="control-block">
                         <view class="control-divider">接单管理</view>
                         <view class="control-item">
-                            <view bindtap="anonymousFunc4" class="control-title">报修接单管理</view>
+                            <view bindtap="anonymousFunc5" class="control-title">报修接单管理</view>
                             <view class="control-desc"></view>
                         </view>
-                        <view bindtap="anonymousFunc5" class="control-item last-item">
+                        <view bindtap="anonymousFunc6" class="control-item last-item">
                             <view class="control-title">预约接单管理</view>
                             <view class="control-desc"></view>
                         </view>
@@ -58,7 +65,7 @@
                 <block wx:if="{{userType === 'ADMIN' && apiUserInfo.isServiceUser === 'Y'}}">
                     <view class="control-block">
                         <view class="control-divider">派单管理</view>
-                        <view bindtap="anonymousFunc6" class="control-item">
+                        <view bindtap="anonymousFunc7" class="control-item">
                             <view class="control-title">处理工单</view>
                             <view class="control-desc"></view>
                         </view>
@@ -66,10 +73,10 @@
                 </block>
             </view>
         </view>
-        <at-modal compid="{{$compid__76}}">
+        <at-modal compid="{{$compid__84}}">
             <at-modal-header>设置邀请人</at-modal-header>
             <at-modal-content>
-                <at-input compid="{{$compid__77}}"></at-input>
+                <at-input compid="{{$compid__85}}"></at-input>
                 <view class="tips">新用户注册成功7天内，可填写邀请人信息</view>
             </at-modal-content>
             <at-modal-action>

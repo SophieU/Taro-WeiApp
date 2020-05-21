@@ -3,6 +3,7 @@ import Taro, {Component, Config} from '@tarojs/taro'
 import {View, Image,Button, Navigator} from '@tarojs/components'
 import {registerPhone} from './login-apis'
 import './toggleLogin.scss'
+import {h5url} from '../../config/index'
 
 interface State {
   openId:string,
@@ -39,9 +40,9 @@ class Login extends Component{
     })
     console.log(params)
     registerPhone(params).then(res=>{
-      Taro.hideLoading()
+      Taro.hideLoading();
       if(res.data.code===0){
-        Taro.showToast({title:'欢迎新用户'})
+        Taro.showToast({title:'欢迎新用户'});
         Taro.reLaunch({
           url: '/pages/index/index'
         })
@@ -62,7 +63,7 @@ class Login extends Component{
         <View className="icon-title">欢迎，速达优服</View>
       </View>
         <View className='btn-wrap'>
-          <Button open-type="getPhoneNumber" className='wx-login' onGetPhoneNumber={this.wxAutoLogin}>微信用户一键登录</Button>
+          <Button open-type="getPhoneNumber" disabled={!this.state.readed?true:false} className={!this.state.readed?'wx-login .disabled':'wx-login'} onGetPhoneNumber={this.wxAutoLogin}>微信用户一键登录</Button>
           {/*<Navigator className='to-login' url='/pages/login/login'>手机号验证注册/登录</Navigator>*/}
         </View>
         <View className='protocal-wrap'>
@@ -76,7 +77,8 @@ class Login extends Component{
           </View>
           <View className="login-protocal">
             我已阅读并同意
-            <Navigator className="out-link" url="/pages/login/protocal?type=service">《服务协议》</Navigator>
+            <Navigator className="out-link" url={`/pages/index/web-view?target=${h5url}/literature/con_service.html`}>《服务协议》</Navigator>和
+            <Navigator className="out-link" url={`/pages/index/web-view?target=${h5url}/literature/con_privation.html`}>《隐私政策》</Navigator>
           </View>
         </View>
     </View>)

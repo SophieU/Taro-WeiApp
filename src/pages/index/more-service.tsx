@@ -22,6 +22,7 @@ interface serviceListsItem {
 
 class More extends Component<{}, State>{
   componentWillMount(){
+    Taro.showLoading({title:'加载服务中'})
     this.getAll()
     let id = this.$router.params.id;
     this.setState({
@@ -55,6 +56,7 @@ class More extends Component<{}, State>{
             scrollIntoView:'content' + prevState.id,
           }
         })
+        Taro.hideLoading()
       }
     })
   }

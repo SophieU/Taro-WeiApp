@@ -27,11 +27,11 @@
       font-size: 14px;
       justify-content: space-between;
       padding: 10px 0;
-      color:#999;
+      //color:#999;
     }
     .order-info-lists{
       font-size: 13px;
-      color: #999;
+      //color: #999;
       line-height: 25px;
       padding-bottom: 10px;
     }
@@ -50,12 +50,13 @@
     }
   }
   .no-data{
-    color: #999;
+    //color: #999;
     text-align: center;
   }
 }
 
 .at-tabs{
+  margin-top: 10px;
   height: auto;
 }
 .at-tabs__header{

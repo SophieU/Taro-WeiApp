@@ -46,14 +46,15 @@ class OrderAdd extends Component<AddProp,AddState>{
   }
 
   getOrderLists = ()=>{
-    Taro.showLoading({title:'加载地址列表中'})
+    Taro.showLoading({title:'加载地址中...'})
     getAddLists().then(res=>{
       Taro.hideLoading()
       if(res.data.code===0){
         this.setState({
           addressLists:res.data.data
         })
-        Taro.setStorageSync('addressLists',res.data.data)
+        Taro.setStorageSync('addressLists',res.data.data);
+        Taro.hideLoading()
       }
     })
   }

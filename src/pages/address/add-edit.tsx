@@ -95,19 +95,22 @@ class AddEdit extends Component<{},State>{
     // Taro.authorize({scope: "scope.userLocation"})
     Taro.getSetting({
       success:res=>{
+        console.log(res,'taro.getSetting')
         if(!res.authSetting['scope.userLocation']){
           Taro.showModal({
             title:'',
             content:'您还未授权访问地理信息，请先同意授权',
             success:(res)=>{
               if(res.confirm){
-                Taro.openSetting({
-                  success: (res) => { console.log(res)}
+                Taro.getLocation({
+                  type: 'wgs84',
+                  success: function (res) {
+                   console.log(res)
+                  }
                 })
               }
             }
           })
-
         }else{
           const key = 'E4EBZ-Z7QRF-BREJT-JZGXD-2DDE6-6XB6T';  //使用在腾讯位置服务申请的key
           const referer = '天富一生约'; //调用插件的app的名称

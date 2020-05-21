@@ -9,6 +9,7 @@ import {jumpTo as jumpToUtil} from "../../utils/common";
 import {validateTel} from '../../utils/regexpValidate'
 import RichCustom from '../../components/rich-text'
 import './order-submit.scss'
+import {h5url} from "../../config";
 
 type Service = {
   "id": string,
@@ -215,13 +216,9 @@ class OrderSubmit extends Component<{},State>{
       }else{
         Taro.showToast({
           title:res.data.msg,
-          icon:'none',
-          duration:3000
+          icon:'none'
         }).then(()=>{
-          let timer = setTimeout(()=>{Taro.navigateBack({delta:-1})},3000)
-          this.setState({
-            timer
-          })
+            //do nothding
         })
       }
     })
@@ -431,7 +428,7 @@ submitForm=()=>{
           this.state.serviceContent.serviceFee!==0?(<View className='info-item'>
             <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
             <Text className='info-title'>服务收费</Text>
-            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text> /次起</View>
+            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text>元/次起</View>
           </View>):null
         }
 
@@ -441,7 +438,7 @@ submitForm=()=>{
             :( <View className='info-item'>
               <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
               <Text className='info-title'>上门费</Text>
-              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>/次
+              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>元/次
                 {this.state.serviceContent.isPrepayDtd==='Y'?<Text className='little-tips'>(需要预付)</Text>:null}
               </View>
             </View>)
@@ -498,7 +495,7 @@ submitForm=()=>{
 
       <View className="submit-bar">
         <View className='protocal'>
-          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url='/pages/index/web-view?target=http://ttfwap.yishengyue.cn/arg/E-arg.html' className='outlink'>用户协议</Navigator></Radio>
+          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url={`/pages/index/web-view?target=${h5url}/literature/con_Eservice.html`} className='outlink'>服务协议</Navigator></Radio>
         </View>
         <View className='btn-wrap'>
           <Button onClick={this.isNeedNightFee} className='btn-form'>提交订单</Button>

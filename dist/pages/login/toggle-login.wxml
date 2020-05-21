@@ -4,7 +4,7 @@
             <view class="icon-title">欢迎，速达优服</view>
         </view>
         <view class="btn-wrap">
-            <button open-type="getPhoneNumber" class="wx-login" bindgetphonenumber="wxAutoLogin">微信用户一键登录</button>
+            <button open-type="getPhoneNumber" disabled="{{!readed ? true : false}}" class="{{!readed ? 'wx-login .disabled' : 'wx-login'}}" bindgetphonenumber="wxAutoLogin">微信用户一键登录</button>
         </view>
         <view class="protocal-wrap">
             <view class="read-proto" bindtap="toggleReaded">
@@ -18,7 +18,8 @@
                 </block>
             </view>
             <view class="login-protocal">我已阅读并同意
-                <navigator class="out-link" url="/pages/login/protocal?type=service">《服务协议》</navigator>
+                <navigator class="out-link" url="{{'/pages/index/web-view?target=' + h5url + '/literature/con_service.html'}}">《服务协议》</navigator>和
+                <navigator class="out-link" url="{{'/pages/index/web-view?target=' + h5url + '/literature/con_privation.html'}}">《隐私政策》</navigator>
             </view>
         </view>
     </view>

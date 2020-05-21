@@ -1,1 +1,1 @@
-{"usingComponents":{"at-tabs":"../../npm/_taro-ui@2.3.2@taro-ui/dist/weapp/components/tabs/index","at-tabs-pane":"../../npm/_taro-ui@2.3.2@taro-ui/dist/weapp/components/tabs-pane/index","rich-custom":"../../components/rich-text"},"navigationBarTitleText":"订单确认","navigationStyle":"default"}
+{"usingComponents":{"at-tabs":"../../npm/_taro-ui@2.3.4@taro-ui/dist/weapp/components/tabs/index","at-tabs-pane":"../../npm/_taro-ui@2.3.4@taro-ui/dist/weapp/components/tabs-pane/index","rich-custom":"../../components/rich-text"},"navigationBarTitleText":"订单确认","navigationStyle":"default"}

@@ -1,1 +1,1 @@
-{"usingComponents":{"at-radio":"../../npm/_taro-ui@2.3.2@taro-ui/dist/weapp/components/radio/index","at-button":"../../npm/_taro-ui@2.3.2@taro-ui/dist/weapp/components/button/index"},"navigationBarTitleText":"报修订单","navigationStyle":"default"}
+{"usingComponents":{"at-radio":"../../npm/_taro-ui@2.3.4@taro-ui/dist/weapp/components/radio/index","at-button":"../../npm/_taro-ui@2.3.4@taro-ui/dist/weapp/components/button/index"},"navigationBarTitleText":"报修订单","navigationStyle":"default"}

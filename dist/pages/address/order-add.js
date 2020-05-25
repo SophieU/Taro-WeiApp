@@ -18,9 +18,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _class, _temp2;
-
-var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.11.1@tslib/tslib.es6.js");
+var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.13.0@tslib/tslib.es6.js");
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
 
@@ -40,163 +38,171 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var OrderAdd = (_temp2 = _class = function (_BaseComponent) {
-  _inherits(OrderAdd, _BaseComponent);
+var OrderAdd = /** @class */function () {
+  var _class, _temp2;
 
-  function OrderAdd() {
-    var _ref;
+  var OrderAdd = (_temp2 = _class = function (_BaseComponent) {
+    _inherits(OrderAdd, _BaseComponent);
 
-    var _temp, _this, _ret;
+    function OrderAdd() {
+      var _ref;
 
-    _classCallCheck(this, OrderAdd);
+      var _temp, _this, _ret;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      _classCallCheck(this, OrderAdd);
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp3", "loopArray44", "addressLists", "fromPage", "appStore"], _this.config = {
-      navigationBarTitleText: '地址列表',
-      navigationStyle: 'default'
-    }, _this.goEdit = function (id) {
-      _taroWeapp2.default.navigateTo({
-        url: "/pages/address/add-edit?id=" + id
-      });
-    }, _this.getOrderLists = function () {
-      _taroWeapp2.default.showLoading({ title: '加载地址列表中' });
-      (0, _service.getAddLists)().then(function (res) {
-        _taroWeapp2.default.hideLoading();
-        if (res.data.code === 0) {
-          _this.setState({
-            addressLists: res.data.data
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp3", "loopArray38", "addressLists", "fromPage", "appStore"], _this.config = {
+        navigationBarTitleText: '地址列表',
+        navigationStyle: 'default'
+      }, _this.goEdit = function (id) {
+        _taroWeapp2.default.navigateTo({
+          url: "/pages/address/add-edit?id=" + id
+        });
+      }, _this.getOrderLists = function () {
+        _taroWeapp2.default.showLoading({ title: '加载地址中...' });
+        (0, _service.getAddLists)().then(function (res) {
+          _taroWeapp2.default.hideLoading();
+          if (res.data.code === 0) {
+            _this.setState({
+              addressLists: res.data.data
+            });
+            _taroWeapp2.default.setStorageSync('addressLists', res.data.data);
+            _taroWeapp2.default.hideLoading();
+          }
+        });
+      }, _this.handleClickAdd = function (data) {
+        console.log('data', data);
+        var appStore = _this.props.appStore;
+        // 来自订单跳转
+
+        if (_this.state.fromPage === 'orderSubmit') {
+          appStore.setOrderForm({
+            address: data.areaInfo + data.address,
+            addressObj: data
           });
-          _taroWeapp2.default.setStorageSync('addressLists', res.data.data);
+          _taroWeapp2.default.navigateBack({ delta: -1 });
+          // Taro.navigateTo({url:'/pages/order/order-submit'});
+        } else if (_this.state.fromPage === 'bookOrder') {
+          appStore.setOrderForm({
+            address: data.areaInfo + data.address,
+            addressObj: data
+          });
+          _taroWeapp2.default.navigateBack({ delta: -1 });
         }
-      });
-    }, _this.handleClickAdd = function (data) {
-      var appStore = _this.props.appStore;
-      // 来自订单跳转
+      }, _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    }
 
-      if (_this.state.fromPage === 'orderSubmit') {
-        appStore.setOrderForm({
-          address: data.areaInfo + data.address,
-          addressObj: data
+    _createClass(OrderAdd, [{
+      key: "_constructor",
+      value: function _constructor(props) {
+        _get(OrderAdd.prototype.__proto__ || Object.getPrototypeOf(OrderAdd.prototype), "_constructor", this).call(this, props);
+
+        this.state = {
+          addressLists: [],
+          fromPage: ''
+        };
+        this.$$refs = new _taroWeapp2.default.RefsArray();
+      }
+    }, {
+      key: "componentDidShow",
+      value: function componentDidShow() {
+        var from = this.$router.params.from;
+        this.setState({
+          fromPage: from
         });
-        _taroWeapp2.default.navigateBack({ delta: -1 });
-      } else if (_this.state.fromPage === 'bookOrder') {
-        appStore.setOrderForm({
-          address: data.areaInfo + data.address,
-          addressObj: data
+        this.getOrderLists();
+      }
+    }, {
+      key: "_createData",
+      value: function _createData() {
+        var _this2 = this;
+
+        this.__state = arguments[0] || this.state || {};
+        this.__props = arguments[1] || this.props || {};
+        var __isRunloopRef = arguments[2];
+        var __prefix = this.$prefix;
+        ;
+
+        var anonymousState__temp3 = __webpack_require__(/*! ../../assets/imgs/tmp/img_blank_location.png */ "./src/assets/imgs/tmp/img_blank_location.png");
+
+        this.anonymousFunc2 = function () {
+          return _this2.goEdit();
+        };
+
+        var loopArray38 = this.__state.addressLists.length > 0 ? this.__state.addressLists.map(function (item, index) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
+          };
+
+          var _$indexKey = "efzzz" + index;
+
+          _this2.anonymousFunc0Map[_$indexKey] = function () {
+            return _this2.handleClickAdd(item.$original);
+          };
+
+          var $loopState__temp2 = _this2.__state.addressLists.length > 0 ? __webpack_require__(/*! ../../assets/imgs/tmp/edit.png */ "./src/assets/imgs/tmp/edit.png") : null;
+
+          var _$indexKey2 = "egzzz" + index;
+
+          _this2.anonymousFunc1Map[_$indexKey2] = function () {
+            return _this2.goEdit(item.$original.id);
+          };
+
+          return {
+            _$indexKey: _$indexKey,
+            $loopState__temp2: $loopState__temp2,
+            _$indexKey2: _$indexKey2,
+            $original: item.$original
+          };
+        }) : [];
+        Object.assign(this.__state, {
+          anonymousState__temp3: anonymousState__temp3,
+          loopArray38: loopArray38
         });
-        _taroWeapp2.default.navigateBack({ delta: -1 });
+        return this.__state;
       }
-    }, _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
-  }
+    }, {
+      key: "anonymousFunc0",
+      value: function anonymousFunc0(_$indexKey) {
+        var _anonymousFunc0Map;
 
-  _createClass(OrderAdd, [{
-    key: "_constructor",
-    value: function _constructor(props) {
-      _get(OrderAdd.prototype.__proto__ || Object.getPrototypeOf(OrderAdd.prototype), "_constructor", this).call(this, props);
+        ;
 
-      this.state = {
-        addressLists: [],
-        fromPage: ''
-      };
-      this.$$refs = new _taroWeapp2.default.RefsArray();
-    }
-  }, {
-    key: "componentDidShow",
-    value: function componentDidShow() {
-      var from = this.$router.params.from;
-      this.setState({
-        fromPage: from
-      });
-      this.getOrderLists();
-    }
-  }, {
-    key: "_createData",
-    value: function _createData() {
-      var _this2 = this;
+        for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+          e[_key2 - 1] = arguments[_key2];
+        }
 
-      this.__state = arguments[0] || this.state || {};
-      this.__props = arguments[1] || this.props || {};
-      var __isRunloopRef = arguments[2];
-      var __prefix = this.$prefix;
-      ;
-
-      var anonymousState__temp3 = __webpack_require__(/*! ../../assets/imgs/tmp/img_blank_location.png */ "./src/assets/imgs/tmp/img_blank_location.png");
-
-      this.anonymousFunc2 = function () {
-        return _this2.goEdit();
-      };
-
-      var loopArray44 = this.__state.addressLists.length > 0 ? this.__state.addressLists.map(function (item, index) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
-        };
-
-        var _$indexKey = "fbzzz" + index;
-
-        _this2.anonymousFunc0Map[_$indexKey] = function () {
-          return _this2.handleClickAdd(item.$original);
-        };
-
-        var $loopState__temp2 = _this2.__state.addressLists.length > 0 ? __webpack_require__(/*! ../../assets/imgs/tmp/edit.png */ "./src/assets/imgs/tmp/edit.png") : null;
-
-        var _$indexKey2 = "fczzz" + index;
-
-        _this2.anonymousFunc1Map[_$indexKey2] = function () {
-          return _this2.goEdit(item.$original.id);
-        };
-
-        return {
-          _$indexKey: _$indexKey,
-          $loopState__temp2: $loopState__temp2,
-          _$indexKey2: _$indexKey2,
-          $original: item.$original
-        };
-      }) : [];
-      Object.assign(this.__state, {
-        anonymousState__temp3: anonymousState__temp3,
-        loopArray44: loopArray44
-      });
-      return this.__state;
-    }
-  }, {
-    key: "anonymousFunc0",
-    value: function anonymousFunc0(_$indexKey) {
-      var _anonymousFunc0Map;
-
-      ;
-
-      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        e[_key2 - 1] = arguments[_key2];
+        return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
       }
+    }, {
+      key: "anonymousFunc1",
+      value: function anonymousFunc1(_$indexKey2) {
+        var _anonymousFunc1Map;
 
-      return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
-    }
-  }, {
-    key: "anonymousFunc1",
-    value: function anonymousFunc1(_$indexKey2) {
-      var _anonymousFunc1Map;
+        ;
 
-      ;
+        for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+          e[_key3 - 1] = arguments[_key3];
+        }
 
-      for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        e[_key3 - 1] = arguments[_key3];
+        return this.anonymousFunc1Map[_$indexKey2] && (_anonymousFunc1Map = this.anonymousFunc1Map)[_$indexKey2].apply(_anonymousFunc1Map, e);
       }
+    }, {
+      key: "anonymousFunc2",
+      value: function anonymousFunc2(e) {
+        ;
+      }
+    }]);
 
-      return this.anonymousFunc1Map[_$indexKey2] && (_anonymousFunc1Map = this.anonymousFunc1Map)[_$indexKey2].apply(_anonymousFunc1Map, e);
-    }
-  }, {
-    key: "anonymousFunc2",
-    value: function anonymousFunc2(e) {
-      ;
-    }
-  }]);
-
+    return OrderAdd;
+  }(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/address/order-add", _temp2);
+  OrderAdd = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], OrderAdd);
   return OrderAdd;
-}(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/address/order-add", _temp2);
-OrderAdd = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], OrderAdd);
+}();
 exports.default = OrderAdd;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(OrderAdd, true));

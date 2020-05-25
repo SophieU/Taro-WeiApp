@@ -20,9 +20,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _class, _temp2;
-
-var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.11.1@tslib/tslib.es6.js");
+var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.13.0@tslib/tslib.es6.js");
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
 
@@ -46,299 +44,304 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Index = (_temp2 = _class = function (_BaseComponent) {
-  _inherits(Index, _BaseComponent);
+var Index = /** @class */function () {
+  var _class, _temp2;
 
-  function Index() {
-    var _ref;
+  var Index = (_temp2 = _class = function (_BaseComponent) {
+    _inherits(Index, _BaseComponent);
 
-    var _temp, _this, _ret;
+    function Index() {
+      var _ref;
 
-    _classCallCheck(this, Index);
+      var _temp, _this, _ret;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      _classCallCheck(this, Index);
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray38", "loopArray39", "loopArray40", "loopArray41", "hideService", "configApiVoList", "serviceList", "adBannerList", "serviceBlockLists", "pageNo", "pageSize", "hasNextPage"], _this.config = {
-      navigationBarTitleText: '首页',
-      navigationStyle: 'custom'
-    }, _this.getBanner = function () {
-      (0, _servics.getBannerLists)().then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          var serviceList = [];
-          for (var i = 0; i < data.serviceList.length; i = i + 5) {
-            serviceList.push(data.serviceList.slice(i, i + 5));
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray44", "loopArray45", "loopArray46", "loopArray47", "hideService", "configApiVoList", "serviceList", "adBannerList", "serviceBlockLists", "pageNo", "pageSize", "hasNextPage"], _this.config = {
+        navigationBarTitleText: '首页',
+        navigationStyle: 'custom'
+      }, _this.getBanner = function () {
+        (0, _servics.getBannerLists)().then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            var serviceList = [];
+            for (var i = 0; i < data.serviceList.length; i = i + 5) {
+              serviceList.push(data.serviceList.slice(i, i + 5));
+            }
+            console.log(serviceList);
+            _this.setState({
+              adBannerList: data.adBannerList,
+              configApiVoList: data.configApiVoList,
+              serviceList: serviceList
+            });
           }
-          console.log(serviceList);
-          _this.setState({
-            adBannerList: data.adBannerList,
-            configApiVoList: data.configApiVoList,
-            serviceList: serviceList
-          });
+        });
+      }, _this.getService = function () {
+        _taroWeapp2.default.showLoading({ title: '加载中' });
+        if (!_this.state.hasNextPage) {
+          _taroWeapp2.default.hideNavigationBarLoading();
+          _taroWeapp2.default.stopPullDownRefresh();
+          _taroWeapp2.default.hideLoading();
+          return;
         }
-      });
-    }, _this.getService = function () {
-      _taroWeapp2.default.showLoading({ title: '加载中' });
-      if (!_this.state.hasNextPage) {
-        _taroWeapp2.default.hideNavigationBarLoading();
-        _taroWeapp2.default.stopPullDownRefresh();
-        _taroWeapp2.default.hideLoading();
-        return;
-      }
-      var params = {
-        pageNo: _this.state.pageNo,
-        pageSize: _this.state.pageSize
-      };
-      (0, _servics.getServiceLists)(params).then(function (res) {
-        _taroWeapp2.default.hideNavigationBarLoading();
-        _taroWeapp2.default.stopPullDownRefresh();
-        _taroWeapp2.default.hideLoading();
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          _this.setState({
-            serviceBlockLists: data.list,
-            hasNextPage: data.hasNextPage,
-            pageNo: data.hasNextPage ? data.nextPage : data.pageNo
-          });
-        }
-      });
-    }, _this.jumpTo = function (info, otherType) {
-      (0, _common.jumpTo)(info, otherType);
-    }, _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.customComponents = ["RecommendAd", "CustomerService"], _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(Index, [{
-    key: "_constructor",
-    value: function _constructor(props) {
-      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), "_constructor", this).call(this, props);
-      /**
-       * 指定config的类型声明为: Taro.Config
-       *
-       * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-       * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-       * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-       */
-
-      this.state = {
-        hideService: true,
-        configApiVoList: [],
-        serviceList: [],
-        adBannerList: [],
-        serviceBlockLists: [],
-        pageNo: 1,
-        pageSize: 10,
-        hasNextPage: true
-      };
-      this.$$refs = new _taroWeapp2.default.RefsArray();
+        var params = {
+          pageNo: _this.state.pageNo,
+          pageSize: _this.state.pageSize
+        };
+        (0, _servics.getServiceLists)(params).then(function (res) {
+          _taroWeapp2.default.hideNavigationBarLoading();
+          _taroWeapp2.default.stopPullDownRefresh();
+          _taroWeapp2.default.hideLoading();
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            _this.setState({
+              serviceBlockLists: data.list,
+              hasNextPage: data.hasNextPage,
+              pageNo: data.hasNextPage ? data.nextPage : data.pageNo
+            });
+          }
+        });
+      }, _this.jumpTo = function (info, otherType) {
+        (0, _common.jumpTo)(info, otherType);
+      }, _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.customComponents = ["RecommendAd", "CustomerService"], _temp), _possibleConstructorReturn(_this, _ret);
     }
-    // 对应小程序 onLoad
 
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      /*
-      *   判断用户进入小程序场景，如是邀请进入，则存入邀请人电话
-      * */
-      var sceneFrom = _taroWeapp2.default.getLaunchOptionsSync().scene;
-      var pageParams = this.$router.params;
-      if (sceneFrom === 1011) {
-        // 扫描二维码进入
-        var sence = decodeURIComponent(pageParams.scene);
-        var parseSence = (0, _common.decodeQueryString)(sence, ';');
-        if (parseSence.ivphone) {
-          _taroWeapp2.default.setStorageSync('invitePhone', parseSence.ivphone);
-        }
+    _createClass(Index, [{
+      key: "_constructor",
+      value: function _constructor(props) {
+        _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), "_constructor", this).call(this, props);
+        /**
+         * 指定config的类型声明为: Taro.Config
+         *
+         * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
+         * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
+         * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
+         */
+
+        this.state = {
+          hideService: true,
+          configApiVoList: [],
+          serviceList: [],
+          adBannerList: [],
+          serviceBlockLists: [],
+          pageNo: 1,
+          pageSize: 10,
+          hasNextPage: true
+        };
+        this.$$refs = new _taroWeapp2.default.RefsArray();
       }
-      /*登录小程序*/
-      (0, _loginApis.loginApp)();
-      /*界面信息数据*/
-      this.getBanner();
-      this.getService();
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
-  }, {
-    key: "onPullDownRefresh",
-    value: function onPullDownRefresh() {
-      var _this2 = this;
+      // 对应小程序 onLoad
 
-      _taroWeapp2.default.showNavigationBarLoading();
-      this.setState({
-        hideService: true,
-        configApiVoList: [],
-        serviceList: [],
-        adBannerList: [],
-        serviceBlockLists: [],
-        pageNo: 1,
-        pageSize: 10,
-        hasNextPage: true
-      }, function () {
+    }, {
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        /*
+        *   判断用户进入小程序场景，如是邀请进入，则存入邀请人电话
+        * */
+        var sceneFrom = _taroWeapp2.default.getLaunchOptionsSync().scene;
+        var pageParams = this.$router.params;
+        if (sceneFrom === 1011) {
+          // 扫描二维码进入
+          var sence = decodeURIComponent(pageParams.scene);
+          var parseSence = (0, _common.decodeQueryString)(sence, ';');
+          if (parseSence.ivphone) {
+            _taroWeapp2.default.setStorageSync('invitePhone', parseSence.ivphone);
+          }
+        }
         /*登录小程序*/
         (0, _loginApis.loginApp)();
         /*界面信息数据*/
-        _this2.getBanner();
-        _this2.getService();
-      });
-    }
-  }, {
-    key: "onReachBottom",
-    value: function onReachBottom() {
-      this.getService();
-    }
-  }, {
-    key: "_createData",
-    value: function _createData() {
-      var _this3 = this;
+        this.getBanner();
+        this.getService();
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {}
+    }, {
+      key: "onPullDownRefresh",
+      value: function onPullDownRefresh() {
+        var _this2 = this;
 
-      this.__state = arguments[0] || this.state || {};
-      this.__props = arguments[1] || this.props || {};
-      var __isRunloopRef = arguments[2];
-      var __prefix = this.$prefix;
-      ;
+        _taroWeapp2.default.showNavigationBarLoading();
+        this.setState({
+          hideService: true,
+          configApiVoList: [],
+          serviceList: [],
+          adBannerList: [],
+          serviceBlockLists: [],
+          pageNo: 1,
+          pageSize: 10,
+          hasNextPage: true
+        }, function () {
+          /*登录小程序*/
+          (0, _loginApis.loginApp)();
+          /*界面信息数据*/
+          _this2.getBanner();
+          _this2.getService();
+        });
+      }
+    }, {
+      key: "onReachBottom",
+      value: function onReachBottom() {
+        this.getService();
+      }
+    }, {
+      key: "_createData",
+      value: function _createData() {
+        var _this3 = this;
 
-      var loopArray38 = this.__state.adBannerList.map(function (item, index) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
-        };
+        this.__state = arguments[0] || this.state || {};
+        this.__props = arguments[1] || this.props || {};
+        var __isRunloopRef = arguments[2];
+        var __prefix = this.$prefix;
+        ;
 
-        var _$indexKey = "efzzz" + index;
-
-        _this3.anonymousFunc0Map[_$indexKey] = function () {
-          return _this3.jumpTo(item.$original);
-        };
-
-        return {
-          _$indexKey: _$indexKey,
-          $original: item.$original
-        };
-      });
-      // const { counterStore: { counter } } = this.props
-
-
-      var loopArray39 = this.__state.serviceList.map(function (item, index) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
-        };
-        var $anonymousCallee__6 = item.$original.map(function (child, __index1) {
-          child = {
-            $original: (0, _taroWeapp.internal_get_original)(child)
+        var loopArray44 = this.__state.adBannerList.map(function (item, index) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
           };
-          var _$indexKey2 = "egzzz" + index + "-" + __index1;
 
-          _this3.anonymousFunc1Map[_$indexKey2] = function () {
-            return _this3.jumpTo(child.$original);
+          var _$indexKey = "fazzz" + index;
+
+          _this3.anonymousFunc0Map[_$indexKey] = function () {
+            return _this3.jumpTo(item.$original);
           };
 
           return {
-            _$indexKey2: _$indexKey2,
-            $original: child.$original
+            _$indexKey: _$indexKey,
+            $original: item.$original
           };
         });
-        return {
-          $anonymousCallee__6: $anonymousCallee__6,
-          $original: item.$original
-        };
-      });
+        // const { counterStore: { counter } } = this.props
 
-      var loopArray40 = this.__state.configApiVoList.map(function (item, _anonIdx) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
-        };
 
-        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "eizzzzzzzz" + _anonIdx, true),
-            _genCompid2 = _slicedToArray(_genCompid, 2),
-            $prevCompid__60 = _genCompid2[0],
-            $compid__60 = _genCompid2[1];
-
-        _taroWeapp.propsManager.set({
-          "source": item.$original
-        }, $compid__60, $prevCompid__60);
-        return {
-          $compid__60: $compid__60,
-          $original: item.$original
-        };
-      });
-
-      var loopArray41 = this.__state.serviceBlockLists.map(function (item, index) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
-        };
-        var $anonymousCallee__7 = item.$original.categoryList.map(function (child, __index2) {
-          child = {
-            $original: (0, _taroWeapp.internal_get_original)(child)
+        var loopArray45 = this.__state.serviceList.map(function (item, index) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
           };
-          var _$indexKey3 = "ehzzz" + index + "-" + __index2;
+          var $anonymousCallee__7 = item.$original.map(function (child, __index1) {
+            child = {
+              $original: (0, _taroWeapp.internal_get_original)(child)
+            };
+            var _$indexKey2 = "fbzzz" + index + "-" + __index1;
 
-          _this3.anonymousFunc2Map[_$indexKey3] = function () {
-            _this3.jumpTo(child.$original, 'E_PROJECT');
-          };
+            _this3.anonymousFunc1Map[_$indexKey2] = function () {
+              return _this3.jumpTo(child.$original);
+            };
 
+            return {
+              _$indexKey2: _$indexKey2,
+              $original: child.$original
+            };
+          });
           return {
-            _$indexKey3: _$indexKey3,
-            $original: child.$original
+            $anonymousCallee__7: $anonymousCallee__7,
+            $original: item.$original
           };
         });
-        return {
-          $anonymousCallee__7: $anonymousCallee__7,
-          $original: item.$original
-        };
-      });
 
-      Object.assign(this.__state, {
-        loopArray38: loopArray38,
-        loopArray39: loopArray39,
-        loopArray40: loopArray40,
-        loopArray41: loopArray41
-      });
-      return this.__state;
-    }
-  }, {
-    key: "anonymousFunc0",
-    value: function anonymousFunc0(_$indexKey) {
-      var _anonymousFunc0Map;
+        var loopArray46 = this.__state.configApiVoList.map(function (item, _anonIdx) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
+          };
 
-      ;
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "fdzzzzzzzz" + _anonIdx, true),
+              _genCompid2 = _slicedToArray(_genCompid, 2),
+              $prevCompid__63 = _genCompid2[0],
+              $compid__63 = _genCompid2[1];
 
-      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        e[_key2 - 1] = arguments[_key2];
+          _taroWeapp.propsManager.set({
+            "source": item.$original
+          }, $compid__63, $prevCompid__63);
+          return {
+            $compid__63: $compid__63,
+            $original: item.$original
+          };
+        });
+
+        var loopArray47 = this.__state.serviceBlockLists.map(function (item, index) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
+          };
+          var $anonymousCallee__8 = item.$original.categoryList.map(function (child, __index2) {
+            child = {
+              $original: (0, _taroWeapp.internal_get_original)(child)
+            };
+            var _$indexKey3 = "fczzz" + index + "-" + __index2;
+
+            _this3.anonymousFunc2Map[_$indexKey3] = function () {
+              _this3.jumpTo(child.$original, 'E_PROJECT');
+            };
+
+            return {
+              _$indexKey3: _$indexKey3,
+              $original: child.$original
+            };
+          });
+          return {
+            $anonymousCallee__8: $anonymousCallee__8,
+            $original: item.$original
+          };
+        });
+
+        Object.assign(this.__state, {
+          loopArray44: loopArray44,
+          loopArray45: loopArray45,
+          loopArray46: loopArray46,
+          loopArray47: loopArray47
+        });
+        return this.__state;
       }
+    }, {
+      key: "anonymousFunc0",
+      value: function anonymousFunc0(_$indexKey) {
+        var _anonymousFunc0Map;
 
-      return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
-    }
-  }, {
-    key: "anonymousFunc1",
-    value: function anonymousFunc1(_$indexKey2) {
-      var _anonymousFunc1Map;
+        ;
 
-      ;
+        for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+          e[_key2 - 1] = arguments[_key2];
+        }
 
-      for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-        e[_key3 - 1] = arguments[_key3];
+        return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
       }
+    }, {
+      key: "anonymousFunc1",
+      value: function anonymousFunc1(_$indexKey2) {
+        var _anonymousFunc1Map;
 
-      return this.anonymousFunc1Map[_$indexKey2] && (_anonymousFunc1Map = this.anonymousFunc1Map)[_$indexKey2].apply(_anonymousFunc1Map, e);
-    }
-  }, {
-    key: "anonymousFunc2",
-    value: function anonymousFunc2(_$indexKey3) {
-      var _anonymousFunc2Map;
+        ;
 
-      ;
+        for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+          e[_key3 - 1] = arguments[_key3];
+        }
 
-      for (var _len4 = arguments.length, e = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-        e[_key4 - 1] = arguments[_key4];
+        return this.anonymousFunc1Map[_$indexKey2] && (_anonymousFunc1Map = this.anonymousFunc1Map)[_$indexKey2].apply(_anonymousFunc1Map, e);
       }
+    }, {
+      key: "anonymousFunc2",
+      value: function anonymousFunc2(_$indexKey3) {
+        var _anonymousFunc2Map;
 
-      return this.anonymousFunc2Map[_$indexKey3] && (_anonymousFunc2Map = this.anonymousFunc2Map)[_$indexKey3].apply(_anonymousFunc2Map, e);
-    }
-  }]);
+        ;
 
+        for (var _len4 = arguments.length, e = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+          e[_key4 - 1] = arguments[_key4];
+        }
+
+        return this.anonymousFunc2Map[_$indexKey3] && (_anonymousFunc2Map = this.anonymousFunc2Map)[_$indexKey3].apply(_anonymousFunc2Map, e);
+      }
+    }]);
+
+    return Index;
+  }(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/index/index", _temp2);
+  Index = (0, _tslib.__decorate)([(0, _mobx.inject)('userStore'), _mobx.observer], Index);
   return Index;
-}(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/index/index", _temp2);
-Index = (0, _tslib.__decorate)([(0, _mobx.inject)('userStore'), _mobx.observer], Index);
+}();
 exports.default = Index;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(Index, true));

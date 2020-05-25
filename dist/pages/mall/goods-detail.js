@@ -52,7 +52,7 @@ var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GoodsDetail.__proto__ || Object.getPrototypeOf(GoodsDetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "$compid__63", "id", "detail"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GoodsDetail.__proto__ || Object.getPrototypeOf(GoodsDetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "$compid__62", "id", "detail"], _this.config = {
       navigationBarTitleText: '预约服务详情',
       navigationStyle: 'default'
     }, _this.getDetail = function (id) {
@@ -96,19 +96,19 @@ var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__62"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__63 = _genCompid2[0],
-          $compid__63 = _genCompid2[1];
+          $prevCompid__62 = _genCompid2[0],
+          $compid__62 = _genCompid2[1];
 
       var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/share.png */ "./src/assets/imgs/tmp/share.png");
 
       _taroWeapp.propsManager.set({
         "nodes": this.__state.detail.productBody
-      }, $compid__63, $prevCompid__63);
+      }, $compid__62, $prevCompid__62);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
-        $compid__63: $compid__63
+        $compid__62: $compid__62
       });
       return this.__state;
     }

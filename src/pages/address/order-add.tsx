@@ -59,6 +59,7 @@ class OrderAdd extends Component<AddProp,AddState>{
     })
   }
   handleClickAdd=(data)=>{
+    console.log('data',data)
     const { appStore } = this.props
     // 来自订单跳转
     if(this.state.fromPage==='orderSubmit'){
@@ -67,6 +68,7 @@ class OrderAdd extends Component<AddProp,AddState>{
         addressObj:data
       })
       Taro.navigateBack({delta:-1})
+      // Taro.navigateTo({url:'/pages/order/order-submit'});
     }else if(this.state.fromPage==='bookOrder'){
       appStore.setOrderForm({
         address:data.areaInfo+data.address,

@@ -36,9 +36,9 @@
   padding-top: 20rpx; }
 
 .at-checkbox__icon-cnt {
-  height: auto;
-  width: 40rpx;
-  min-width: 40rpx; }
+  height: auto !important;
+  width: 40rpx !important;
+  min-width: 40rpx !important; }
 
 .add-item {
   display: -webkit-flex;

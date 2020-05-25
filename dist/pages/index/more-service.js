@@ -50,7 +50,7 @@ var More = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = More.__proto__ || Object.getPrototypeOf(More)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "loopArray42", "loopArray43", "serviceLists", "currentTab", "scrollTop", "scrollIntoView", "scrollPadding", "scrollNavIntoView", "scrollIntoNavView"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = More.__proto__ || Object.getPrototypeOf(More)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "loopArray39", "loopArray40", "serviceLists", "currentTab", "scrollTop", "scrollIntoView", "scrollPadding", "scrollNavIntoView", "scrollIntoNavView"], _this.config = {
       navigationBarTitleText: '服务分类',
       navigationStyle: 'default'
     }, _this.getAll = function () {
@@ -130,12 +130,12 @@ var More = (_temp2 = _class = function (_BaseComponent) {
       };
 
       var anonymousState__temp = (0, _taroWeapp.internal_inline_style)({ paddingTop: this.__state.scrollPadding });
-      var loopArray42 = this.__state.scrollPadding === '40px' ? this.__state.serviceLists.map(function (item, index) {
+      var loopArray39 = this.__state.scrollPadding === '40px' ? this.__state.serviceLists.map(function (item, index) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
 
-        var _$indexKey = "ejzzz" + index;
+        var _$indexKey = "ehzzz" + index;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return _this2.toggleTab(item.$original.id);
@@ -147,15 +147,15 @@ var More = (_temp2 = _class = function (_BaseComponent) {
         };
       }) : [];
 
-      var loopArray43 = this.__state.serviceLists.map(function (item, index) {
+      var loopArray40 = this.__state.serviceLists.map(function (item, index) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
-        var $anonymousCallee__8 = item.$original.categoryList.map(function (child, __index2) {
+        var $anonymousCallee__6 = item.$original.categoryList.map(function (child, __index2) {
           child = {
             $original: (0, _taroWeapp.internal_get_original)(child)
           };
-          var _$indexKey2 = 'fazzz' + index + '-' + __index2;
+          var _$indexKey2 = 'eizzz' + index + '-' + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function () {
             return _this2.jumpToControl(child.$original);
@@ -167,15 +167,15 @@ var More = (_temp2 = _class = function (_BaseComponent) {
           };
         });
         return {
-          $anonymousCallee__8: $anonymousCallee__8,
+          $anonymousCallee__6: $anonymousCallee__6,
           $original: item.$original
         };
       });
 
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
-        loopArray42: loopArray42,
-        loopArray43: loopArray43
+        loopArray39: loopArray39,
+        loopArray40: loopArray40
       });
       return this.__state;
     }

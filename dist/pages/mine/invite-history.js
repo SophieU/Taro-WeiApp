@@ -52,7 +52,7 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray45", "lists", "hasNextPage", "pageNo", "totalCount"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray41", "lists", "hasNextPage", "pageNo", "totalCount"], _this.config = {
       navigationBarTitleText: '邀请记录',
       navigationStyle: 'default'
     }, _this.getLists = function () {
@@ -113,20 +113,20 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       var _this2 = this;
 
       return function (blockInfo) {
-        var _genCompid = (0, _taroWeapp.genCompid)(_$uid + "$compid__62"),
+        var _genCompid = (0, _taroWeapp.genCompid)(_$uid + "$compid__61"),
             _genCompid2 = _slicedToArray(_genCompid, 2),
-            $prevCompid__62 = _genCompid2[0],
-            $compid__62 = _genCompid2[1];
+            $prevCompid__61 = _genCompid2[0],
+            $compid__61 = _genCompid2[1];
 
         var anonymousState__temp = _this2.formatTimeLineData(blockInfo.list);
         _taroWeapp.propsManager.set({
           "className": "at-timeline-custom",
           "pending": true,
           "items": anonymousState__temp
-        }, $compid__62, $prevCompid__62);
+        }, $compid__61, $prevCompid__61);
         return {
           anonymousState__temp: anonymousState__temp,
-          $compid__62: $compid__62,
+          $compid__61: $compid__61,
           blockInfo: blockInfo
         };
       };
@@ -142,12 +142,12 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var loopArray45 = this.__state.lists.map(function (item, index) {
+      var loopArray41 = this.__state.lists.map(function (item, index) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
 
-        var $loopState__temp3 = _this3._createListsBlockData(__prefix + "fdzzzzzzzz" + ('' + index))(item.$original);
+        var $loopState__temp3 = _this3._createListsBlockData(__prefix + "ejzzzzzzzz" + ('' + index))(item.$original);
 
         return {
           $loopState__temp3: $loopState__temp3,
@@ -156,7 +156,7 @@ var Mine = (_temp2 = _class = function (_BaseComponent) {
       });
 
       Object.assign(this.__state, {
-        loopArray45: loopArray45
+        loopArray41: loopArray41
       });
       return this.__state;
     }

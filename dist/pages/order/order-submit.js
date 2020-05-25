@@ -22,9 +22,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _class, _temp2;
-
-var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.11.1@tslib/tslib.es6.js");
+var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.13.0@tslib/tslib.es6.js");
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
 
@@ -54,217 +52,158 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
-  _inherits(OrderSubmit, _BaseComponent);
+var OrderSubmit = /** @class */function () {
+  var _class, _temp2;
 
-  function OrderSubmit() {
-    var _ref;
+  var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
+    _inherits(OrderSubmit, _BaseComponent);
 
-    var _temp, _this, _ret;
+    function OrderSubmit() {
+      var _ref;
 
-    _classCallCheck(this, OrderSubmit);
+      var _temp, _this, _ret;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      _classCallCheck(this, OrderSubmit);
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = OrderSubmit.__proto__ || Object.getPrototypeOf(OrderSubmit)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "anonymousState__temp10", "loopArray66", "$compid__100", "$compid__101", "$compid__102", "$compid__103", "$compid__104", "$compid__105", "$compid__106", "$compid__107", "$compid__108", "h5url", "bannerLists", "current", "repairCategoryId", "repairUserAddressId", "repairUserAddressObj", "address", "userName", "userMobile", "faultReason", "otherTips", "serviceFeeTips", "serviceTimeTips", "nightFee", "repairOrderOfferPlanDtoList", "timer", "serviceContent", "appStore"], _this.config = {
-      navigationBarTitleText: '订单确认',
-      navigationStyle: 'default'
-    }, _this.topBanner = function () {
-      (0, _orderApi.getTopBanner)().then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          if (data) {
-            _this.setState({
-              bannerLists: data
-            });
-          }
-        }
-      });
-    }, _this.getDefaultAddress = function () {
-      (0, _service.getDefaultAdd)().then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          if (data) {
-            _this.setState(function () {
-              return {
-                repairUserAddressId: data.id,
-                address: data.areaInfo + data.address,
-                userName: data.userName,
-                userMobile: data.userMobile,
-                repairUserAddressObj: data
-              };
-            }, function () {
-              _this.props.appStore.setOrderForm({
-                address: data.areaInfo + data.address,
-                addressObj: data
-              });
-              _this.getOrderContentWithAdd();
-            });
-          } else {
-            _this.getOrderContentNone();
-          }
-        } else {
-          console.log('默认地址获取失败：' + res.data.msg);
-        }
-      });
-    }, _this.isNeedNightFee = function () {
-      (0, _orderApi.needNightFee)().then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          var feePro = void 0;
-          if (data.serviceAmount > 0) {
-            feePro = {
-              planType: 'NIGHT_FEE',
-              serviceCost: data.serviceAmount
-            };
-            _taroWeapp2.default.showModal({
-              title: '温馨提示',
-              content: data.tipsMeg,
-              confirmText: '确认',
-              cancelText: '取消'
-            }).then(function (res) {
-              if (res.confirm) {
-                _this.setState(function (prevState) {
-                  var repairOrderOfferPlanDtoList = prevState.repairOrderOfferPlanDtoList;
-                  // 防重复
-                  if (repairOrderOfferPlanDtoList.indexOf('NIGHT_FEE') === -1) {
-                    repairOrderOfferPlanDtoList.push(feePro);
-                  } else {
-                    repairOrderOfferPlanDtoList = repairOrderOfferPlanDtoList.map(function (item) {
-                      if (item.planType === 'NIGHT_FEE') {
-                        item = feePro;
-                      }
-                      return item;
-                    });
-                  }
-                  return {
-                    nightFee: {
-                      serviceAmount: data.serviceAmount,
-                      hopeDoorTime: data.hopeDoorTime
-                    },
-                    repairOrderOfferPlanDtoList: repairOrderOfferPlanDtoList
-                  };
-                }, function () {
-                  _this.submitForm();
-                });
-              } else {
-                console.log('取消下单');
-              }
-            });
-          }
-        }
-      });
-    }, _this.getOrderContentWithAdd = function () {
-      var params = {
-        repairUserAddressId: _this.state.repairUserAddressId,
-        repairCategoryId: _this.state.repairCategoryId
-      };
-      _taroWeapp2.default.showLoading({ title: '加载服务中' });
-      (0, _orderApi.getOrderContent)(params).then(function (res) {
-        _taroWeapp2.default.hideLoading();
-        if (res.data.code === 0) {
-          _this.setState({
-            serviceContent: res.data.data
-          });
-        } else {
-          _taroWeapp2.default.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          }).then(function () {
-            //do nothding
-          });
-        }
-      });
-    }, _this.getOrderContentNone = function () {
-      (0, _orderApi.getOrderContenNo)(_this.state.repairCategoryId).then(function (res) {
-        if (res.data.code === 0) {
-          _this.setState({
-            serviceContent: res.data.data
-          });
-        }
-      });
-    }, _this.getTips = function () {
-      (0, _orderApi.getTipsOther)().then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          _this.setState({
-            otherTips: data.other,
-            serviceFeeTips: data.serviceFee,
-            serviceTimeTips: data.serviceTime
-          });
-        } else {
-          _taroWeapp2.default.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          });
-        }
-      });
-    }, _this.submitForm = function () {
-      var serviceContent = _this.state.serviceContent;
-      var params = {
-        repairRegionId: _this.state.serviceContent.repairRegionId,
-        repairAddressId: _this.state.repairUserAddressId,
-        address: _this.state.address,
-        tllPhone: _this.state.userMobile,
-        username: _this.state.userName,
-        repairCategoryId: _this.state.repairCategoryId,
-        faultReason: _this.state.faultReason,
-        hopeDoorTime: _this.state.nightFee.hopeDoorTime,
-        repairStationId: _this.state.serviceContent.repairStationId,
-        repairOrderOfferPlanDtoList: _this.state.repairOrderOfferPlanDtoList
-      };
-      if (!params.tllPhone || !params.address || !(0, _regexpValidate.validateTel)(params.tllPhone)) {
-        _taroWeapp2.default.showToast({
-          title: '请完整并正确填写地址和地址',
-          icon: 'none'
-        });
-        return;
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
       }
-      // const needNightFee = await this.isNeedNightFee()
-      // 预收上门费
-      if (serviceContent.isPrepayDtd === 'Y') {
-        _taroWeapp2.default.showModal({
-          title: '温馨提示',
-          content: "\u5F53\u524D\u670D\u52A1\u9700\u8981\u9884\u4ED8\u4E0A\u95E8\u8D39" + serviceContent.dtdServiceFee + "\u5143",
-          confirmText: '我同意',
-          cancelText: '算了吧'
-        }).then(function (res) {
-          if (res.confirm) {
-            //发起预付上门费支付
-            _taroWeapp2.default.showLoading({ title: '获取支付信息中' });
-            (0, _orderApi.getPrePayOrder)(params).then(function (res) {
-              _taroWeapp2.default.hideLoading();
-              if (res.data.code === 0) {
-                var _params = {
-                  "orderIds": [res.data.data.orderSn],
-                  "payBusinessType": "W_REPAIR_DOOR_FEE",
-                  "payCode": "WX_XCX"
-                };
-                _this.startPay(_params);
-              } else {
-                _taroWeapp2.default.showToast({
-                  title: res.data.msg,
-                  icon: 'none'
-                });
-              }
-            });
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = OrderSubmit.__proto__ || Object.getPrototypeOf(OrderSubmit)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "anonymousState__temp4", "anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "anonymousState__temp8", "anonymousState__temp9", "anonymousState__temp10", "loopArray66", "$compid__100", "$compid__101", "$compid__102", "$compid__103", "$compid__104", "$compid__105", "$compid__106", "$compid__107", "$compid__108", "h5url", "isFirstPage", "bannerLists", "current", "repairCategoryId", "repairUserAddressId", "repairUserAddressObj", "address", "userName", "userMobile", "faultReason", "otherTips", "serviceFeeTips", "serviceTimeTips", "nightFee", "repairOrderOfferPlanDtoList", "timer", "serviceContent", "appStore"], _this.config = {
+        navigationBarTitleText: '订单确认',
+        navigationStyle: 'default'
+      }, _this.topBanner = function () {
+        (0, _orderApi.getTopBanner)().then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            if (data) {
+              _this.setState({
+                bannerLists: data
+              });
+            }
           }
         });
-      } else {
-        // 直接提交
-        if (_this.state.serviceContent.dtdServiceFee > 0) {
-          params.repairOrderOfferPlanDtoList.push({
-            planType: 'WAITING_DOOR_ING_FEE',
-            serviceCost: _this.state.serviceContent.dtdServiceFee
-          });
+      }, _this.getDefaultAddress = function () {
+        (0, _service.getDefaultAdd)().then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            if (data) {
+              _this.setState(function () {
+                return {
+                  repairUserAddressId: data.id,
+                  address: data.areaInfo + data.address,
+                  userName: data.userName,
+                  userMobile: data.userMobile,
+                  repairUserAddressObj: data
+                };
+              }, function () {
+                _this.props.appStore.setOrderForm({
+                  address: data.areaInfo + data.address,
+                  addressObj: data
+                });
+                _this.getOrderContentWithAdd();
+              });
+            } else {
+              _this.getOrderContentNone();
+            }
+          } else {
+            console.log('默认地址获取失败：' + res.data.msg);
+          }
+        });
+      }, _this.isNeedNightFee = function () {
+        if (!_this.state.repairUserAddressId) {
+          _taroWeapp2.default.showToast({ title: '请选择报修地址！', icon: 'none' });
+          return;
         }
-        _taroWeapp2.default.showLoading({ title: '处理中' });
-        (0, _orderApi.submitOrder)(params).then(function (res) {
+        (0, _orderApi.needNightFee)().then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            var feePro = void 0;
+            if (data.serviceAmount > 0) {
+              feePro = {
+                planType: 'NIGHT_FEE',
+                serviceCost: data.serviceAmount
+              };
+              _taroWeapp2.default.showModal({
+                title: '温馨提示',
+                content: data.tipsMeg,
+                confirmText: '确认',
+                cancelText: '取消'
+              }).then(function (res) {
+                if (res.confirm) {
+                  _this.setState(function (prevState) {
+                    var repairOrderOfferPlanDtoList = prevState.repairOrderOfferPlanDtoList;
+                    // 防重复
+                    if (repairOrderOfferPlanDtoList.indexOf('NIGHT_FEE') === -1) {
+                      repairOrderOfferPlanDtoList.push(feePro);
+                    } else {
+                      repairOrderOfferPlanDtoList = repairOrderOfferPlanDtoList.map(function (item) {
+                        if (item.planType === 'NIGHT_FEE') {
+                          item = feePro;
+                        }
+                        return item;
+                      });
+                    }
+                    return {
+                      nightFee: {
+                        serviceAmount: data.serviceAmount,
+                        hopeDoorTime: data.hopeDoorTime
+                      },
+                      repairOrderOfferPlanDtoList: repairOrderOfferPlanDtoList
+                    };
+                  }, function () {
+                    _this.submitForm();
+                  });
+                } else {
+                  console.log('取消下单');
+                }
+              });
+            }
+          }
+        });
+      }, _this.getOrderContentWithAdd = function () {
+        var params = {
+          repairUserAddressId: _this.state.repairUserAddressId,
+          repairCategoryId: _this.state.repairCategoryId
+        };
+        _taroWeapp2.default.showLoading({ title: '加载服务中' });
+        (0, _orderApi.getOrderContent)(params).then(function (res) {
           _taroWeapp2.default.hideLoading();
           if (res.data.code === 0) {
-            _this.orderSuccess();
+            _this.setState({
+              serviceContent: res.data.data
+            });
+          } else {
+            _taroWeapp2.default.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            }).then(function () {
+              _this.setState({
+                address: '',
+                userMobile: '',
+                userName: '',
+                repairUserAddressId: ''
+              });
+            });
+          }
+        });
+      }, _this.getOrderContentNone = function () {
+        (0, _orderApi.getOrderContenNo)(_this.state.repairCategoryId).then(function (res) {
+          if (res.data.code === 0) {
+            _this.setState({
+              serviceContent: res.data.data
+            });
+          }
+        });
+      }, _this.getTips = function () {
+        (0, _orderApi.getTipsOther)().then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            _this.setState({
+              otherTips: data.other,
+              serviceFeeTips: data.serviceFee,
+              serviceTimeTips: data.serviceTime
+            });
           } else {
             _taroWeapp2.default.showToast({
               title: res.data.msg,
@@ -272,314 +211,409 @@ var OrderSubmit = (_temp2 = _class = function (_BaseComponent) {
             });
           }
         });
-      }
-    }, _this.startPay = function (params) {
-      _taroWeapp2.default.showLoading({ title: '处理中' });
-      (0, _orderApi.getWxPay)(params).then(function (res) {
-        _taroWeapp2.default.hideLoading();
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          _taroWeapp2.default.requestPayment(_extends({
-            success: function success() {
-              _this.orderSuccess();
-              console.log('接口调用成功');
-            },
-            fail: function fail(res) {
-              console.log('接口调用失败');
-              console.log('支付失败');
-            }
-          }, data));
+      }, _this.submitForm = function () {
+        var serviceContent = _this.state.serviceContent;
+        var params = {
+          repairRegionId: _this.state.serviceContent.repairRegionId,
+          repairAddressId: _this.state.repairUserAddressId,
+          address: _this.state.address,
+          tllPhone: _this.state.userMobile,
+          username: _this.state.userName,
+          repairCategoryId: _this.state.repairCategoryId,
+          faultReason: _this.state.faultReason,
+          hopeDoorTime: _this.state.nightFee.hopeDoorTime,
+          repairStationId: _this.state.serviceContent.repairStationId,
+          repairOrderOfferPlanDtoList: _this.state.repairOrderOfferPlanDtoList
+        };
+        if (!params.tllPhone || !params.address || !(0, _regexpValidate.validateTel)(params.tllPhone)) {
+          _taroWeapp2.default.showToast({
+            title: '请完整并正确填写地址和地址',
+            icon: 'none'
+          });
+          return;
         }
-      });
-    }, _this.orderSuccess = function () {
-      _taroWeapp2.default.showModal({
-        title: '操作提示',
-        content: '订单提交成功,您可以在【我的】-【报修订单】中查看',
-        confirmText: '报修订单',
-        cancelText: '返回首页'
-      }).then(function (resInner) {
-        if (resInner.confirm) {
-          _taroWeapp2.default.redirectTo({
-            url: '/pages/custom-order/lists'
+        // const needNightFee = await this.isNeedNightFee()
+        // 预收上门费
+        if (serviceContent.isPrepayDtd === 'Y') {
+          _taroWeapp2.default.showModal({
+            title: '温馨提示',
+            content: "\u5F53\u524D\u670D\u52A1\u9700\u8981\u9884\u4ED8\u4E0A\u95E8\u8D39" + serviceContent.dtdServiceFee + "\u5143",
+            confirmText: '我同意',
+            cancelText: '算了吧'
+          }).then(function (res) {
+            if (res.confirm) {
+              //发起预付上门费支付
+              _taroWeapp2.default.showLoading({ title: '获取支付信息中' });
+              (0, _orderApi.getPrePayOrder)(params).then(function (res) {
+                _taroWeapp2.default.hideLoading();
+                if (res.data.code === 0) {
+                  var _params = {
+                    "orderIds": [res.data.data.orderSn],
+                    "payBusinessType": "W_REPAIR_DOOR_FEE",
+                    "payCode": "WX_XCX"
+                  };
+                  _this.startPay(_params);
+                } else {
+                  _taroWeapp2.default.showToast({
+                    title: res.data.msg,
+                    icon: 'none'
+                  });
+                }
+              });
+            }
+          });
+        } else {
+          // 直接提交
+          if (_this.state.serviceContent.dtdServiceFee > 0) {
+            params.repairOrderOfferPlanDtoList.push({
+              planType: 'WAITING_DOOR_ING_FEE',
+              serviceCost: _this.state.serviceContent.dtdServiceFee
+            });
+          }
+          _taroWeapp2.default.showLoading({ title: '处理中' });
+          (0, _orderApi.submitOrder)(params).then(function (res) {
+            _taroWeapp2.default.hideLoading();
+            if (res.data.code === 0) {
+              _this.orderSuccess();
+            } else {
+              _taroWeapp2.default.showToast({
+                title: res.data.msg,
+                icon: 'none'
+              });
+            }
           });
         }
-        if (resInner.cancel) {
-          _taroWeapp2.default.reLaunch({ url: '/pages/index/index' });
-        }
-      });
-    }, _this.jumpTo = function (info, otherType) {
-      (0, _common.jumpTo)(info, otherType);
-    }, _this.toggleTab = function (value) {
-      _this.setState({
-        current: value
-      });
-    }, _this.handleInput = function (e, propName) {
-      var value = e.detail.value;
-      _this.setState(_defineProperty({}, propName, value));
-      _this.props.appStore.setOrderForm({ userMobile: value });
-    }, _this.handleInputReason = function (e) {
-      var value = e.detail.value;
-      _this.setState({
-        faultReason: value
-      });
-    }, _this.anonymousFunc0Map = {}, _this.customComponents = ["AtTabs", "AtTabsPane", "RichCustom"], _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(OrderSubmit, [{
-    key: "_constructor",
-    value: function _constructor() {
-      _get(OrderSubmit.prototype.__proto__ || Object.getPrototypeOf(OrderSubmit.prototype), "_constructor", this).apply(this, arguments);
-
-      this.state = {
-        bannerLists: [],
-        current: 0,
-        repairCategoryId: '',
-        repairUserAddressId: '',
-        repairUserAddressObj: {},
-        address: '',
-        userName: '',
-        userMobile: '',
-        faultReason: '',
-        otherTips: '',
-        serviceFeeTips: '',
-        serviceTimeTips: '',
-        nightFee: {
-          serviceAmount: 0,
-          hopeDoorTime: ''
-        },
-        repairOrderOfferPlanDtoList: [],
-        timer: null,
-        serviceContent: {
-          "id": "",
-          "name": "",
-          "parentId": "",
-          "parentName": "",
-          "serviceFee": 0,
-          "dtdServiceFee": 0,
-          "hasDtdServiceFee": "N",
-          "isPrepayDtd": "N",
-          "description": "服务说明",
-          "serviceDescription": "服务说明",
-          "repairRegionId": "",
-          "repairStationId": ""
-        }
-      };
-      this.$$refs = new _taroWeapp2.default.RefsArray();
+      }, _this.startPay = function (params) {
+        _taroWeapp2.default.showLoading({ title: '处理中' });
+        (0, _orderApi.getWxPay)(params).then(function (res) {
+          _taroWeapp2.default.hideLoading();
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            _taroWeapp2.default.requestPayment(_extends({
+              success: function success() {
+                _this.orderSuccess();
+                console.log('接口调用成功');
+              },
+              fail: function fail(res) {
+                console.log('接口调用失败');
+                console.log('支付失败');
+              }
+            }, data));
+          }
+        });
+      }, _this.orderSuccess = function () {
+        _taroWeapp2.default.showModal({
+          title: '操作提示',
+          content: '订单提交成功,您可以在【我的】-【报修订单】中查看',
+          confirmText: '报修订单',
+          cancelText: '返回首页'
+        }).then(function (resInner) {
+          if (resInner.confirm) {
+            _taroWeapp2.default.redirectTo({
+              url: '/pages/custom-order/lists'
+            });
+          }
+          if (resInner.cancel) {
+            _taroWeapp2.default.reLaunch({ url: '/pages/index/index' });
+          }
+        });
+      }, _this.jumpTo = function (info, otherType) {
+        (0, _common.jumpTo)(info, otherType);
+      }, _this.toggleTab = function (value) {
+        _this.setState({
+          current: value
+        });
+      }, _this.handleInput = function (e, propName) {
+        var value = e.detail.value;
+        _this.setState(_defineProperty({}, propName, value));
+        _this.props.appStore.setOrderForm({ userMobile: value });
+      }, _this.handleInputReason = function (e) {
+        var value = e.detail.value;
+        _this.setState({
+          faultReason: value
+        });
+      }, _this.anonymousFunc0Map = {}, _this.customComponents = ["AtTabs", "AtTabsPane", "RichCustom"], _temp), _possibleConstructorReturn(_this, _ret);
     }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      var id = this.$router.params.id;
-      this.setState({
-        repairCategoryId: id
-      });
-      this.topBanner();
-      this.getDefaultAddress();
-      this.getTips();
-    }
-  }, {
-    key: "componentDidShow",
-    value: function componentDidShow() {
-      var orderForm = this.props.appStore.orderForm;
-      this.setState({
-        address: orderForm.address,
-        userMobile: orderForm.addressObj.userMobile,
-        userName: orderForm.addressObj.userName,
-        repairUserAddressId: orderForm.addressObj.id,
-        repairUserAddressObj: orderForm.addressObj
-      });
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      clearTimeout(this.state.timer);
-    }
-  }, {
-    key: "_createData",
-    value: function _createData() {
-      var _this2 = this;
 
-      this.__state = arguments[0] || this.state || {};
-      this.__props = arguments[1] || this.props || {};
-      var __isRunloopRef = arguments[2];
-      var __prefix = this.$prefix;
-      ;
+    _createClass(OrderSubmit, [{
+      key: "_constructor",
+      value: function _constructor() {
+        _get(OrderSubmit.prototype.__proto__ || Object.getPrototypeOf(OrderSubmit.prototype), "_constructor", this).apply(this, arguments);
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__100"),
-          _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__100 = _genCompid2[0],
-          $compid__100 = _genCompid2[1];
-
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__101"),
-          _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__101 = _genCompid4[0],
-          $compid__101 = _genCompid4[1];
-
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__102"),
-          _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__102 = _genCompid6[0],
-          $compid__102 = _genCompid6[1];
-
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__103"),
-          _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__103 = _genCompid8[0],
-          $compid__103 = _genCompid8[1];
-
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__104"),
-          _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__104 = _genCompid10[0],
-          $compid__104 = _genCompid10[1];
-
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__105"),
-          _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__105 = _genCompid12[0],
-          $compid__105 = _genCompid12[1];
-
-      var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__106"),
-          _genCompid14 = _slicedToArray(_genCompid13, 2),
-          $prevCompid__106 = _genCompid14[0],
-          $compid__106 = _genCompid14[1];
-
-      var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__107"),
-          _genCompid16 = _slicedToArray(_genCompid15, 2),
-          $prevCompid__107 = _genCompid16[0],
-          $compid__107 = _genCompid16[1];
-
-      var _genCompid17 = (0, _taroWeapp.genCompid)(__prefix + "$compid__108"),
-          _genCompid18 = _slicedToArray(_genCompid17, 2),
-          $prevCompid__108 = _genCompid18[0],
-          $compid__108 = _genCompid18[1];
-
-      var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/img_project.png */ "./src/assets/imgs/tmp/img_project.png");
-
-      var anonymousState__temp2 = __webpack_require__(/*! ../../assets/imgs/tmp/img_type.png */ "./src/assets/imgs/tmp/img_type.png");
-
-      var anonymousState__temp3 = __webpack_require__(/*! ../../assets/imgs/tmp/img_explain.png */ "./src/assets/imgs/tmp/img_explain.png");
-
-      var anonymousState__temp4 = this.__state.serviceContent.serviceFee !== 0 ? __webpack_require__(/*! ../../assets/imgs/tmp/img_cash.png */ "./src/assets/imgs/tmp/img_cash.png") : null;
-
-      var anonymousState__temp5 = __webpack_require__(/*! ../../assets/imgs/tmp/img_cash.png */ "./src/assets/imgs/tmp/img_cash.png");
-
-      var anonymousState__temp6 = __webpack_require__(/*! ../../assets/imgs/tmp/img_location.png */ "./src/assets/imgs/tmp/img_location.png");
-
-      var anonymousState__temp7 = __webpack_require__(/*! ../../assets/imgs/tmp/img_call.png */ "./src/assets/imgs/tmp/img_call.png");
-
-      this.anonymousFunc1 = function (e) {
-        return _this2.handleInput(e, 'userName');
-      };
-
-      var anonymousState__temp8 = __webpack_require__(/*! ../../assets/imgs/tmp/img_call.png */ "./src/assets/imgs/tmp/img_call.png");
-
-      this.anonymousFunc2 = function (e) {
-        return _this2.handleInput(e, 'userMobile');
-      };
-
-      var anonymousState__temp9 = __webpack_require__(/*! ../../assets/imgs/tmp/img_call.png */ "./src/assets/imgs/tmp/img_call.png");
-
-      var anonymousState__temp10 = [{ title: '服务说明' }, { title: '服务时间' }, { title: '服务费用' }, { title: '其他' }];
-      var loopArray66 = this.__state.bannerLists.length > 0 ? this.__state.bannerLists.map(function (item, __index0) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
+        this.state = {
+          isFirstPage: true,
+          bannerLists: [],
+          current: 0,
+          repairCategoryId: '',
+          repairUserAddressId: '',
+          repairUserAddressObj: {},
+          address: '',
+          userName: '',
+          userMobile: '',
+          faultReason: '',
+          otherTips: '',
+          serviceFeeTips: '',
+          serviceTimeTips: '',
+          nightFee: {
+            serviceAmount: 0,
+            hopeDoorTime: ''
+          },
+          repairOrderOfferPlanDtoList: [],
+          timer: null,
+          serviceContent: {
+            "id": "",
+            "name": "",
+            "parentId": "",
+            "parentName": "",
+            "serviceFee": 0,
+            "dtdServiceFee": 0,
+            "hasDtdServiceFee": "N",
+            "isPrepayDtd": "N",
+            "description": "服务说明",
+            "serviceDescription": "服务说明",
+            "repairRegionId": "",
+            "repairStationId": ""
+          }
         };
-
-        var _$indexKey = "gizzz" + __index0;
-
-        _this2.anonymousFunc0Map[_$indexKey] = function () {
-          return _this2.jumpTo(item.$original);
-        };
-
-        return {
-          _$indexKey: _$indexKey,
-          $original: item.$original
-        };
-      }) : [];
-      _taroWeapp.propsManager.set({
-        "className": "other-tips-tab",
-        "current": this.__state.current,
-        "tabList": anonymousState__temp10,
-        "onClick": this.toggleTab
-      }, $compid__100, $prevCompid__100);
-      _taroWeapp.propsManager.set({
-        "current": this.__state.current,
-        "index": 0
-      }, $compid__101, $prevCompid__101);
-      _taroWeapp.propsManager.set({
-        "nodes": this.__state.serviceContent.serviceDescription
-      }, $compid__102, $prevCompid__102);
-      _taroWeapp.propsManager.set({
-        "current": this.__state.current,
-        "index": 1
-      }, $compid__103, $prevCompid__103);
-      _taroWeapp.propsManager.set({
-        "nodes": this.__state.serviceTimeTips
-      }, $compid__104, $prevCompid__104);
-      _taroWeapp.propsManager.set({
-        "current": this.__state.current,
-        "index": 2
-      }, $compid__105, $prevCompid__105);
-      _taroWeapp.propsManager.set({
-        "nodes": this.__state.serviceFeeTips
-      }, $compid__106, $prevCompid__106);
-      _taroWeapp.propsManager.set({
-        "current": this.__state.current,
-        "index": 3
-      }, $compid__107, $prevCompid__107);
-      _taroWeapp.propsManager.set({
-        "nodes": this.__state.otherTips
-      }, $compid__108, $prevCompid__108);
-      Object.assign(this.__state, {
-        anonymousState__temp: anonymousState__temp,
-        anonymousState__temp2: anonymousState__temp2,
-        anonymousState__temp3: anonymousState__temp3,
-        anonymousState__temp4: anonymousState__temp4,
-        anonymousState__temp5: anonymousState__temp5,
-        anonymousState__temp6: anonymousState__temp6,
-        anonymousState__temp7: anonymousState__temp7,
-        anonymousState__temp8: anonymousState__temp8,
-        anonymousState__temp9: anonymousState__temp9,
-        anonymousState__temp10: anonymousState__temp10,
-        loopArray66: loopArray66,
-        $compid__100: $compid__100,
-        $compid__101: $compid__101,
-        $compid__102: $compid__102,
-        $compid__103: $compid__103,
-        $compid__104: $compid__104,
-        $compid__105: $compid__105,
-        $compid__106: $compid__106,
-        $compid__107: $compid__107,
-        $compid__108: $compid__108,
-        h5url: _index.h5url
-      });
-      return this.__state;
-    }
-  }, {
-    key: "anonymousFunc0",
-    value: function anonymousFunc0(_$indexKey) {
-      var _anonymousFunc0Map;
-
-      ;
-
-      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        e[_key2 - 1] = arguments[_key2];
+        this.$$refs = new _taroWeapp2.default.RefsArray();
       }
+      /**
+       * 进入页面后，调用该函数
+       * 1、加载顶部banner
+       * 2、获取默认地址（如果默认地址存在时，需要调用getOrderContent接口获取价格等信息）
+       * 3、获取提示信息
+       * */
 
-      return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
-    }
-  }, {
-    key: "anonymousFunc1",
-    value: function anonymousFunc1(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc2",
-    value: function anonymousFunc2(e) {
-      ;
-    }
-  }]);
+    }, {
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        var id = this.$router.params.id;
+        this.setState({
+          repairCategoryId: id
+        });
+        this.topBanner();
+        this.getDefaultAddress();
+        this.getTips();
+      }
+      //页面展现时调用
 
+    }, {
+      key: "componentDidShow",
+      value: function componentDidShow() {
+        var _this2 = this;
+
+        var orderForm = this.props.appStore.orderForm;
+        this.setState({
+          address: orderForm.address,
+          userMobile: orderForm.addressObj.userMobile,
+          userName: orderForm.addressObj.userName,
+          repairUserAddressId: orderForm.addressObj.id,
+          repairUserAddressObj: orderForm.addressObj
+        }, function () {
+          //只有当选择了地址后，重新调用
+          if (!_this2.state.isFirstPage) {
+            _this2.getOrderContentWithAdd();
+          }
+        });
+      }
+    }, {
+      key: "componentDidHide",
+      value: function componentDidHide() {
+        this.state.isFirstPage = false;
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        clearTimeout(this.state.timer);
+      }
+    }, {
+      key: "_createData",
+      value: function _createData() {
+        var _this3 = this;
+
+        this.__state = arguments[0] || this.state || {};
+        this.__props = arguments[1] || this.props || {};
+        var __isRunloopRef = arguments[2];
+        var __prefix = this.$prefix;
+        ;
+
+        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__100"),
+            _genCompid2 = _slicedToArray(_genCompid, 2),
+            $prevCompid__100 = _genCompid2[0],
+            $compid__100 = _genCompid2[1];
+
+        var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__101"),
+            _genCompid4 = _slicedToArray(_genCompid3, 2),
+            $prevCompid__101 = _genCompid4[0],
+            $compid__101 = _genCompid4[1];
+
+        var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__102"),
+            _genCompid6 = _slicedToArray(_genCompid5, 2),
+            $prevCompid__102 = _genCompid6[0],
+            $compid__102 = _genCompid6[1];
+
+        var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__103"),
+            _genCompid8 = _slicedToArray(_genCompid7, 2),
+            $prevCompid__103 = _genCompid8[0],
+            $compid__103 = _genCompid8[1];
+
+        var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__104"),
+            _genCompid10 = _slicedToArray(_genCompid9, 2),
+            $prevCompid__104 = _genCompid10[0],
+            $compid__104 = _genCompid10[1];
+
+        var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__105"),
+            _genCompid12 = _slicedToArray(_genCompid11, 2),
+            $prevCompid__105 = _genCompid12[0],
+            $compid__105 = _genCompid12[1];
+
+        var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__106"),
+            _genCompid14 = _slicedToArray(_genCompid13, 2),
+            $prevCompid__106 = _genCompid14[0],
+            $compid__106 = _genCompid14[1];
+
+        var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__107"),
+            _genCompid16 = _slicedToArray(_genCompid15, 2),
+            $prevCompid__107 = _genCompid16[0],
+            $compid__107 = _genCompid16[1];
+
+        var _genCompid17 = (0, _taroWeapp.genCompid)(__prefix + "$compid__108"),
+            _genCompid18 = _slicedToArray(_genCompid17, 2),
+            $prevCompid__108 = _genCompid18[0],
+            $compid__108 = _genCompid18[1];
+
+        var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/img_project.png */ "./src/assets/imgs/tmp/img_project.png");
+
+        var anonymousState__temp2 = __webpack_require__(/*! ../../assets/imgs/tmp/img_type.png */ "./src/assets/imgs/tmp/img_type.png");
+
+        var anonymousState__temp3 = __webpack_require__(/*! ../../assets/imgs/tmp/img_explain.png */ "./src/assets/imgs/tmp/img_explain.png");
+
+        var anonymousState__temp4 = this.__state.serviceContent.serviceFee !== 0 ? __webpack_require__(/*! ../../assets/imgs/tmp/img_cash.png */ "./src/assets/imgs/tmp/img_cash.png") : null;
+
+        var anonymousState__temp5 = __webpack_require__(/*! ../../assets/imgs/tmp/img_cash.png */ "./src/assets/imgs/tmp/img_cash.png");
+
+        var anonymousState__temp6 = __webpack_require__(/*! ../../assets/imgs/tmp/img_location.png */ "./src/assets/imgs/tmp/img_location.png");
+
+        var anonymousState__temp7 = __webpack_require__(/*! ../../assets/imgs/tmp/img_call.png */ "./src/assets/imgs/tmp/img_call.png");
+
+        this.anonymousFunc1 = function (e) {
+          return _this3.handleInput(e, 'userName');
+        };
+
+        var anonymousState__temp8 = __webpack_require__(/*! ../../assets/imgs/tmp/img_call.png */ "./src/assets/imgs/tmp/img_call.png");
+
+        this.anonymousFunc2 = function (e) {
+          return _this3.handleInput(e, 'userMobile');
+        };
+
+        var anonymousState__temp9 = __webpack_require__(/*! ../../assets/imgs/tmp/img_call.png */ "./src/assets/imgs/tmp/img_call.png");
+
+        var anonymousState__temp10 = [{ title: '服务说明' }, { title: '服务时间' }, { title: '服务费用' }, { title: '其他' }];
+        var loopArray66 = this.__state.bannerLists.length > 0 ? this.__state.bannerLists.map(function (item, __index0) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
+          };
+
+          var _$indexKey = "gizzz" + __index0;
+
+          _this3.anonymousFunc0Map[_$indexKey] = function () {
+            return _this3.jumpTo(item.$original);
+          };
+
+          return {
+            _$indexKey: _$indexKey,
+            $original: item.$original
+          };
+        }) : [];
+        _taroWeapp.propsManager.set({
+          "className": "other-tips-tab",
+          "current": this.__state.current,
+          "tabList": anonymousState__temp10,
+          "onClick": this.toggleTab
+        }, $compid__100, $prevCompid__100);
+        _taroWeapp.propsManager.set({
+          "current": this.__state.current,
+          "index": 0
+        }, $compid__101, $prevCompid__101);
+        _taroWeapp.propsManager.set({
+          "nodes": this.__state.serviceContent.serviceDescription
+        }, $compid__102, $prevCompid__102);
+        _taroWeapp.propsManager.set({
+          "current": this.__state.current,
+          "index": 1
+        }, $compid__103, $prevCompid__103);
+        _taroWeapp.propsManager.set({
+          "nodes": this.__state.serviceTimeTips
+        }, $compid__104, $prevCompid__104);
+        _taroWeapp.propsManager.set({
+          "current": this.__state.current,
+          "index": 2
+        }, $compid__105, $prevCompid__105);
+        _taroWeapp.propsManager.set({
+          "nodes": this.__state.serviceFeeTips
+        }, $compid__106, $prevCompid__106);
+        _taroWeapp.propsManager.set({
+          "current": this.__state.current,
+          "index": 3
+        }, $compid__107, $prevCompid__107);
+        _taroWeapp.propsManager.set({
+          "nodes": this.__state.otherTips
+        }, $compid__108, $prevCompid__108);
+        Object.assign(this.__state, {
+          anonymousState__temp: anonymousState__temp,
+          anonymousState__temp2: anonymousState__temp2,
+          anonymousState__temp3: anonymousState__temp3,
+          anonymousState__temp4: anonymousState__temp4,
+          anonymousState__temp5: anonymousState__temp5,
+          anonymousState__temp6: anonymousState__temp6,
+          anonymousState__temp7: anonymousState__temp7,
+          anonymousState__temp8: anonymousState__temp8,
+          anonymousState__temp9: anonymousState__temp9,
+          anonymousState__temp10: anonymousState__temp10,
+          loopArray66: loopArray66,
+          $compid__100: $compid__100,
+          $compid__101: $compid__101,
+          $compid__102: $compid__102,
+          $compid__103: $compid__103,
+          $compid__104: $compid__104,
+          $compid__105: $compid__105,
+          $compid__106: $compid__106,
+          $compid__107: $compid__107,
+          $compid__108: $compid__108,
+          h5url: _index.h5url
+        });
+        return this.__state;
+      }
+    }, {
+      key: "anonymousFunc0",
+      value: function anonymousFunc0(_$indexKey) {
+        var _anonymousFunc0Map;
+
+        ;
+
+        for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+          e[_key2 - 1] = arguments[_key2];
+        }
+
+        return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
+      }
+    }, {
+      key: "anonymousFunc1",
+      value: function anonymousFunc1(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc2",
+      value: function anonymousFunc2(e) {
+        ;
+      }
+    }]);
+
+    return OrderSubmit;
+  }(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "handleInputReason", "isNeedNightFee"], _class.$$componentPath = "pages/order/order-submit", _temp2);
+  OrderSubmit = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], OrderSubmit);
   return OrderSubmit;
-}(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "handleInputReason", "isNeedNightFee"], _class.$$componentPath = "pages/order/order-submit", _temp2);
-OrderSubmit = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], OrderSubmit);
+}();
 exports.default = OrderSubmit;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(OrderSubmit, true));

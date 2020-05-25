@@ -18,7 +18,7 @@
         <view class="detail">
             <view class="detail-title">商品介绍</view>
             <view class="detail-content">
-                <rich-custom compid="{{$compid__63}}"></rich-custom>
+                <rich-custom compid="{{$compid__62}}"></rich-custom>
             </view>
         </view>
         <view class="foot">

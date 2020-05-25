@@ -2,10 +2,6 @@ require("./runtime");
 require("./common");
 require("./vendors");
 
-require("./runtime");
-require("./common");
-require("./vendors");
-
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["app"],{
 
 /***/ "./node_modules/_@tarojs_mini-runner@2.0.6@@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/app.tsx?taro&type=script&parse=ENTRY&":
@@ -238,4 +234,4 @@ exports.default = appStore;
 
 /***/ })
 
-},[["./src/app.tsx","runtime","vendors","common"]]]);;;
+},[["./src/app.tsx","runtime","vendors","common"]]]);;

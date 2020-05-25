@@ -40,7 +40,8 @@ interface State {
   nightFee:object
   repairOrderOfferPlanDtoList:Array<object>
   repairUserAddressObj:object
-  faultReason:string
+  faultReason:string,
+  isFirstPage:boolean
 }
 
 @inject('appStore')
@@ -51,6 +52,7 @@ class OrderSubmit extends Component<{},State>{
     navigationStyle:'default'
   }
   state={
+    isFirstPage:true,
     bannerLists:[],
     current:0,
     repairCategoryId:'',
@@ -84,6 +86,12 @@ class OrderSubmit extends Component<{},State>{
       "repairStationId": "",
     }
   }
+  /**
+   * 进入页面后，调用该函数
+   * 1、加载顶部banner
+   * 2、获取默认地址（如果默认地址存在时，需要调用getOrderContent接口获取价格等信息）
+   * 3、获取提示信息
+   * */
   componentWillMount(){
     let id = this.$router.params.id
     this.setState({
@@ -93,15 +101,24 @@ class OrderSubmit extends Component<{},State>{
     this.getDefaultAddress()
     this.getTips()
   }
+  //页面展现时调用
   componentDidShow(){
-    const orderForm = this.props.appStore.orderForm
+    const orderForm = this.props.appStore.orderForm;
     this.setState({
       address:orderForm.address,
       userMobile:orderForm.addressObj.userMobile,
       userName:orderForm.addressObj.userName,
       repairUserAddressId:orderForm.addressObj.id,
       repairUserAddressObj:orderForm.addressObj
-    })
+    },()=>{
+      //只有当选择了地址后，重新调用
+      if(!this.state.isFirstPage){
+        this.getOrderContentWithAdd()
+      }
+    });
+  }
+  componentDidHide () {
+    this.state.isFirstPage = false;
   }
   componentWillUnmount(){
     clearTimeout(this.state.timer)
@@ -151,6 +168,10 @@ class OrderSubmit extends Component<{},State>{
   }
   // 判断是否需要夜间费
   isNeedNightFee = ()=>{
+    if(!this.state.repairUserAddressId){
+      Taro.showToast({title:'请选择报修地址！',icon:'none'})
+      return
+    }
     needNightFee().then(res=>{
       if(res.data.code===0){
         let data = res.data.data;
@@ -218,7 +239,12 @@ class OrderSubmit extends Component<{},State>{
           title:res.data.msg,
           icon:'none'
         }).then(()=>{
-            //do nothding
+          this.setState({
+            address:'',
+            userMobile:'',
+            userName:'',
+            repairUserAddressId:''
+          })
         })
       }
     })

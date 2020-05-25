@@ -20,11 +20,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _class, _temp2;
-// import { getUserBaseInfo } from './services'
-
-
-var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.11.1@tslib/tslib.es6.js");
+var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.13.0@tslib/tslib.es6.js");
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
 
@@ -45,266 +41,273 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import { getUserBaseInfo } from './services'
 
-var Mine = (_temp2 = _class = function (_BaseComponent) {
-  _inherits(Mine, _BaseComponent);
 
-  function Mine() {
-    var _ref;
+var Mine = /** @class */function () {
+  var _class, _temp2;
 
-    var _temp, _this, _ret;
+  var Mine = (_temp2 = _class = function (_BaseComponent) {
+    _inherits(Mine, _BaseComponent);
 
-    _classCallCheck(this, Mine);
+    function Mine() {
+      var _ref;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      var _temp, _this, _ret;
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "$compid__84", "$compid__85", "userType", "userInfo", "apiUserInfo", "inviteUserPhone", "showInvitePhoneModal", "userStore"], _this.config = {
-      navigationBarTitleText: '我的',
-      navigationStyle: 'default'
-    }, _this.getBaseInfo = function () {
-      (0, _services.getUserBaseInfo)().then(function (res) {
-        if (res.data.code === 0) {
-          _taroWeapp2.default.stopPullDownRefresh();
-          var data = res.data.data;
-          _taroWeapp2.default.setStorageSync('inviteImg', data.inviteQrImgUrl);
-          _this.props.userStore.setAPIUserInfo(data);
-          _this.setState({
-            apiUserInfo: data
-          });
-        }
-      });
-    }, _this.toggleInvitePhoneModal = function () {
-      _this.setState(function (prevState) {
-        var showStatus = !prevState.showInvitePhoneModal;
-        return {
-          showInvitePhoneModal: showStatus,
-          inviteUserPhone: ''
-        };
-      });
-    }, _this.setInviteUser = function () {
-      if (!(0, _regexpValidate.validateTel)(_this.state.inviteUserPhone)) {
-        _taroWeapp2.default.showToast({ title: '填写的手机号格式不正确', icon: 'none' });
-        return;
+      _classCallCheck(this, Mine);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
       }
-      _taroWeapp2.default.showLoading({ title: '处理中' });
-      (0, _services.setInvitePhone)({ phone: _this.state.inviteUserPhone }).then(function (res) {
-        _taroWeapp2.default.hideLoading();
-        if (res.data.code === 0) {
-          // 关闭弹窗
-          _this.toggleInvitePhoneModal();
-          _taroWeapp2.default.showModal({
-            title: '提交成功',
-            content: "\u9080\u8BF7\u4EBA\u7535\u8BDD\uFF1A" + _this.state.inviteUserPhone,
-            showCancel: false,
-            success: function success(res) {
-              if (res.confirm) {
-                _taroWeapp2.default.startPullDownRefresh();
-              }
-            }
-          });
-        } else {
-          _taroWeapp2.default.showToast({ title: res.data.msg, icon: 'none', duration: 2000 });
-        }
-      });
-    }, _this.handleInviteUserPhoneChange = function (val) {
-      _this.setState({
-        inviteUserPhone: val
-      });
-    }, _this.customComponents = ["AtModal", "AtModalHeader", "AtModalContent", "AtInput", "AtModalAction"], _temp), _possibleConstructorReturn(_this, _ret);
-  }
 
-  _createClass(Mine, [{
-    key: "_constructor",
-    value: function _constructor() {
-      _get(Mine.prototype.__proto__ || Object.getPrototypeOf(Mine.prototype), "_constructor", this).apply(this, arguments);
-
-      this.state = {
-        userInfo: {},
-        apiUserInfo: {},
-        inviteUserPhone: '',
-        showInvitePhoneModal: false
-      };
-      this.$$refs = new _taroWeapp2.default.RefsArray();
-    }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      var userStore = this.props.userStore;
-
-      this.setState({
-        userInfo: userStore.wxUserInfo,
-        apiUserInfo: userStore.apiUserInfo
-      });
-    }
-    // 真没必要，but...
-
-  }, {
-    key: "onPullDownRefresh",
-    value: function onPullDownRefresh() {
-      var _this2 = this;
-
-      var userStore = this.props.userStore;
-
-      this.setState({
-        userInfo: userStore.wxUserInfo,
-        apiUserInfo: userStore.apiUserInfo
-      }, function () {
-        _this2.getBaseInfo();
-      });
-    }
-  }, {
-    key: "toLogin",
-    value: function toLogin(url) {
-      _taroWeapp2.default.navigateTo({ url: url });
-    }
-  }, {
-    key: "handleNavigate",
-    value: function handleNavigate(url) {
-      var userId = _taroWeapp2.default.getStorageSync('userId');
-      if (!userId) {
-        _taroWeapp2.default.showModal({
-          title: '温馨提示',
-          content: '您还未登录，请先登录',
-          confirmText: '去登录'
-        }).then(function (res) {
-          if (res.confirm) {
-            _taroWeapp2.default.redirectTo({
-              url: '/pages/login/toggle-login'
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Mine.__proto__ || Object.getPrototypeOf(Mine)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp3", "$compid__84", "$compid__85", "userType", "userInfo", "apiUserInfo", "inviteUserPhone", "showInvitePhoneModal", "userStore"], _this.config = {
+        navigationBarTitleText: '我的',
+        navigationStyle: 'default'
+      }, _this.getBaseInfo = function () {
+        (0, _services.getUserBaseInfo)().then(function (res) {
+          if (res.data.code === 0) {
+            _taroWeapp2.default.stopPullDownRefresh();
+            var data = res.data.data;
+            _taroWeapp2.default.setStorageSync('inviteImg', data.inviteQrImgUrl);
+            _this.props.userStore.setAPIUserInfo(data);
+            _this.setState({
+              apiUserInfo: data
             });
           }
         });
-      } else {
+      }, _this.toggleInvitePhoneModal = function () {
+        _this.setState(function (prevState) {
+          var showStatus = !prevState.showInvitePhoneModal;
+          return {
+            showInvitePhoneModal: showStatus,
+            inviteUserPhone: ''
+          };
+        });
+      }, _this.setInviteUser = function () {
+        if (!(0, _regexpValidate.validateTel)(_this.state.inviteUserPhone)) {
+          _taroWeapp2.default.showToast({ title: '填写的手机号格式不正确', icon: 'none' });
+          return;
+        }
+        _taroWeapp2.default.showLoading({ title: '处理中' });
+        (0, _services.setInvitePhone)({ phone: _this.state.inviteUserPhone }).then(function (res) {
+          _taroWeapp2.default.hideLoading();
+          if (res.data.code === 0) {
+            // 关闭弹窗
+            _this.toggleInvitePhoneModal();
+            _taroWeapp2.default.showModal({
+              title: '提交成功',
+              content: "\u9080\u8BF7\u4EBA\u7535\u8BDD\uFF1A" + _this.state.inviteUserPhone,
+              showCancel: false,
+              success: function success(res) {
+                if (res.confirm) {
+                  _taroWeapp2.default.startPullDownRefresh();
+                }
+              }
+            });
+          } else {
+            _taroWeapp2.default.showToast({ title: res.data.msg, icon: 'none', duration: 2000 });
+          }
+        });
+      }, _this.handleInviteUserPhoneChange = function (val) {
+        _this.setState({
+          inviteUserPhone: val
+        });
+      }, _this.customComponents = ["AtModal", "AtModalHeader", "AtModalContent", "AtInput", "AtModalAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Mine, [{
+      key: "_constructor",
+      value: function _constructor() {
+        _get(Mine.prototype.__proto__ || Object.getPrototypeOf(Mine.prototype), "_constructor", this).apply(this, arguments);
+
+        this.state = {
+          userInfo: {},
+          apiUserInfo: {},
+          inviteUserPhone: '',
+          showInvitePhoneModal: false
+        };
+        this.$$refs = new _taroWeapp2.default.RefsArray();
+      }
+    }, {
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        var userStore = this.props.userStore;
+
+        this.setState({
+          userInfo: userStore.wxUserInfo,
+          apiUserInfo: userStore.apiUserInfo
+        });
+      }
+      // 真没必要，but...
+
+    }, {
+      key: "onPullDownRefresh",
+      value: function onPullDownRefresh() {
+        var _this2 = this;
+
+        var userStore = this.props.userStore;
+
+        this.setState({
+          userInfo: userStore.wxUserInfo,
+          apiUserInfo: userStore.apiUserInfo
+        }, function () {
+          _this2.getBaseInfo();
+        });
+      }
+    }, {
+      key: "toLogin",
+      value: function toLogin(url) {
         _taroWeapp2.default.navigateTo({ url: url });
       }
-    }
-  }, {
-    key: "_createData",
-    value: function _createData() {
-      var _this3 = this;
+    }, {
+      key: "handleNavigate",
+      value: function handleNavigate(url) {
+        var userId = _taroWeapp2.default.getStorageSync('userId');
+        if (!userId) {
+          _taroWeapp2.default.showModal({
+            title: '温馨提示',
+            content: '您还未登录，请先登录',
+            confirmText: '去登录'
+          }).then(function (res) {
+            if (res.confirm) {
+              _taroWeapp2.default.redirectTo({
+                url: '/pages/login/toggle-login'
+              });
+            }
+          });
+        } else {
+          _taroWeapp2.default.navigateTo({ url: url });
+        }
+      }
+    }, {
+      key: "_createData",
+      value: function _createData() {
+        var _this3 = this;
 
-      this.__state = arguments[0] || this.state || {};
-      this.__props = arguments[1] || this.props || {};
-      var __isRunloopRef = arguments[2];
-      var __prefix = this.$prefix;
-      ;
+        this.__state = arguments[0] || this.state || {};
+        this.__props = arguments[1] || this.props || {};
+        var __isRunloopRef = arguments[2];
+        var __prefix = this.$prefix;
+        ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__84"),
-          _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__84 = _genCompid2[0],
-          $compid__84 = _genCompid2[1];
+        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__84"),
+            _genCompid2 = _slicedToArray(_genCompid, 2),
+            $prevCompid__84 = _genCompid2[0],
+            $compid__84 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__85"),
-          _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__85 = _genCompid4[0],
-          $compid__85 = _genCompid4[1];
+        var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__85"),
+            _genCompid4 = _slicedToArray(_genCompid3, 2),
+            $prevCompid__85 = _genCompid4[0],
+            $compid__85 = _genCompid4[1];
 
-      var userType = this.__state.apiUserInfo.userType;
-      var anonymousState__temp = ['ADMIN', 'SERVICE_USER', 'MERCHANT', 'USER'].indexOf(userType) > -1 ? __webpack_require__(/*! ../../assets/imgs/tmp/pocket.png */ "./src/assets/imgs/tmp/pocket.png") : null;
+        var userType = this.__state.apiUserInfo.userType;
+        var anonymousState__temp = ['ADMIN', 'SERVICE_USER', 'MERCHANT', 'USER'].indexOf(userType) > -1 ? __webpack_require__(/*! ../../assets/imgs/tmp/pocket.png */ "./src/assets/imgs/tmp/pocket.png") : null;
 
-      this.anonymousFunc0 = function () {
-        _this3.toLogin('/pages/login/toggle-login');
-      };
+        this.anonymousFunc0 = function () {
+          _this3.toLogin('/pages/login/toggle-login');
+        };
 
-      this.anonymousFunc1 = function () {
-        _this3.handleNavigate('/pages/custom-order/lists');
-      };
+        this.anonymousFunc1 = function () {
+          _this3.handleNavigate('/pages/custom-order/lists');
+        };
 
-      this.anonymousFunc2 = function () {
-        _this3.handleNavigate('/pages/mall/order-lists-custom');
-      };
+        this.anonymousFunc2 = function () {
+          _this3.handleNavigate('/pages/mall/order-lists-custom');
+        };
 
-      this.anonymousFunc3 = function () {
-        _this3.handleNavigate('/pages/address/order-add');
-      };
+        this.anonymousFunc3 = function () {
+          _this3.handleNavigate('/pages/address/order-add');
+        };
 
-      this.anonymousFunc4 = function () {
-        _this3.handleNavigate('/pages/mine/qr-code');
-      };
+        this.anonymousFunc4 = function () {
+          _this3.handleNavigate('/pages/mine/qr-code');
+        };
 
-      this.anonymousFunc5 = function () {
-        _this3.handleNavigate('/pages/staff-order/order');
-      };
+        this.anonymousFunc5 = function () {
+          _this3.handleNavigate('/pages/staff-order/order');
+        };
 
-      this.anonymousFunc6 = function () {
-        _this3.handleNavigate('/pages/mall/order-lists-staff');
-      };
+        this.anonymousFunc6 = function () {
+          _this3.handleNavigate('/pages/mall/order-lists-staff');
+        };
 
-      this.anonymousFunc7 = function () {
-        _this3.handleNavigate('/pages/admin/admin');
-      };
+        this.anonymousFunc7 = function () {
+          _this3.handleNavigate('/pages/admin/admin');
+        };
 
-      var anonymousState__temp2 = ['ADMIN', 'SERVICE_USER', 'MERCHANT', 'USER'].indexOf(userType) > -1;
-      var anonymousState__temp3 = ['ADMIN', 'SERVICE_USER', 'MERCHANT'].indexOf(userType) > -1;
-      _taroWeapp.propsManager.set({
-        "className": "invite-modal",
-        "isOpened": this.__state.showInvitePhoneModal
-      }, $compid__84, $prevCompid__84);
-      _taroWeapp.propsManager.set({
-        "className": "invite-input",
-        "name": "inviteUserPhone",
-        "border": false,
-        "type": "phone",
-        "placeholder": "\u8BF7\u586B\u5199\u624B\u673A\u53F7\u7801",
-        "value": this.__state.inviteUserPhone,
-        "onChange": this.handleInviteUserPhoneChange
-      }, $compid__85, $prevCompid__85);
-      Object.assign(this.__state, {
-        anonymousState__temp: anonymousState__temp,
-        anonymousState__temp2: anonymousState__temp2,
-        anonymousState__temp3: anonymousState__temp3,
-        $compid__84: $compid__84,
-        $compid__85: $compid__85,
-        userType: userType
-      });
-      return this.__state;
-    }
-  }, {
-    key: "anonymousFunc0",
-    value: function anonymousFunc0(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc1",
-    value: function anonymousFunc1(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc2",
-    value: function anonymousFunc2(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc3",
-    value: function anonymousFunc3(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc4",
-    value: function anonymousFunc4(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc5",
-    value: function anonymousFunc5(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc6",
-    value: function anonymousFunc6(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc7",
-    value: function anonymousFunc7(e) {
-      ;
-    }
-  }]);
+        var anonymousState__temp2 = ['ADMIN', 'SERVICE_USER', 'MERCHANT', 'USER'].indexOf(userType) > -1;
+        var anonymousState__temp3 = ['ADMIN', 'SERVICE_USER', 'MERCHANT'].indexOf(userType) > -1;
+        _taroWeapp.propsManager.set({
+          "className": "invite-modal",
+          "isOpened": this.__state.showInvitePhoneModal
+        }, $compid__84, $prevCompid__84);
+        _taroWeapp.propsManager.set({
+          "className": "invite-input",
+          "name": "inviteUserPhone",
+          "border": false,
+          "type": "phone",
+          "placeholder": "\u8BF7\u586B\u5199\u624B\u673A\u53F7\u7801",
+          "value": this.__state.inviteUserPhone,
+          "onChange": this.handleInviteUserPhoneChange
+        }, $compid__85, $prevCompid__85);
+        Object.assign(this.__state, {
+          anonymousState__temp: anonymousState__temp,
+          anonymousState__temp2: anonymousState__temp2,
+          anonymousState__temp3: anonymousState__temp3,
+          $compid__84: $compid__84,
+          $compid__85: $compid__85,
+          userType: userType
+        });
+        return this.__state;
+      }
+    }, {
+      key: "anonymousFunc0",
+      value: function anonymousFunc0(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc1",
+      value: function anonymousFunc1(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc2",
+      value: function anonymousFunc2(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc3",
+      value: function anonymousFunc3(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc4",
+      value: function anonymousFunc4(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc5",
+      value: function anonymousFunc5(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc6",
+      value: function anonymousFunc6(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc7",
+      value: function anonymousFunc7(e) {
+        ;
+      }
+    }]);
 
+    return Mine;
+  }(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "toggleInvitePhoneModal", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "setInviteUser"], _class.$$componentPath = "pages/mine/mine", _temp2);
+  Mine = (0, _tslib.__decorate)([(0, _mobx.inject)('userStore'), _mobx.observer], Mine);
   return Mine;
-}(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "toggleInvitePhoneModal", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "setInviteUser"], _class.$$componentPath = "pages/mine/mine", _temp2);
-Mine = (0, _tslib.__decorate)([(0, _mobx.inject)('userStore'), _mobx.observer], Mine);
+}();
 exports.default = Mine;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(Mine, true));

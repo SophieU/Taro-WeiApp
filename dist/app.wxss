@@ -1,5 +1,4 @@
 @import "./common.wxss";
-@import "./common.wxss";
 @charset "UTF-8";
 /**
  * Default variables

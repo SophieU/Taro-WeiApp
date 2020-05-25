@@ -52,7 +52,7 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__72", "current", "pageNo", "pageSize", "hasNextPage", "repairOrderState", "lists", "orderStateOptions"], _this.config = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Lists.__proto__ || Object.getPrototypeOf(Lists)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__70", "current", "pageNo", "pageSize", "hasNextPage", "repairOrderState", "lists", "orderStateOptions"], _this.config = {
       navigationBarTitleText: '报修订单',
       navigationStyle: 'default'
     }, _this.getLists = function () {
@@ -168,10 +168,10 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__72"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__70"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__72 = _genCompid2[0],
-          $compid__72 = _genCompid2[1];
+          $prevCompid__70 = _genCompid2[0],
+          $compid__70 = _genCompid2[1];
 
       var tabList = [{ title: '待处理' }, { title: '处理中' }, { title: '已完成' }, { title: '申述中' }];
       _taroWeapp.propsManager.set({
@@ -179,9 +179,9 @@ var Lists = (_temp2 = _class = function (_BaseComponent) {
         "current": this.__state.current,
         "tabList": tabList,
         "onClick": this.handleClick
-      }, $compid__72, $prevCompid__72);
+      }, $compid__70, $prevCompid__70);
       Object.assign(this.__state, {
-        $compid__72: $compid__72
+        $compid__70: $compid__70
       });
       return this.__state;
     }

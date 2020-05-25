@@ -189,7 +189,6 @@ class AddEdit extends Component<{},State>{
       if(res.data.code===0){
         Taro.showToast({title:'保存成功'})
         Taro.navigateBack()
-        console.log(res)
       }else{
         Taro.showToast({title:'提交失败：'+res.data.msg})
       }

@@ -2,24 +2,24 @@
     <view class="{{adBannerList.length > 0 ? 'index' : 'index no-banner'}}">
         <view class="header-index">速达优服</view>
         <swiper class="banner-wrap" indicator-color="#fff" indicator-active-color="#EA7744" indicator-dots="{{true}}" autoplay="{{true}}">
-            <swiper-item wx:key="index" wx:for="{{loopArray38}}" wx:for-item="item" wx:for-index="index">
+            <swiper-item wx:key="index" wx:for="{{loopArray44}}" wx:for-item="item" wx:for-index="index">
                 <image bindtap="anonymousFunc0" class="banner-img" style="width:100%" src="{{item.$original.imgName}}" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"></image>
             </swiper-item>
         </swiper>
         <swiper class="service-type" indicator-color="#f5f5f5" indicator-active-color="#EA7744" indicator-dots="{{true}}">
-            <swiper-item wx:key="serviceId" wx:for="{{loopArray39}}" wx:for-item="item" wx:for-index="index">
-                <view class="service-type-item" bindtap="anonymousFunc1" wx:for="{{item.$anonymousCallee__6}}" wx:for-item="child" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{child._$indexKey2}}">
+            <swiper-item wx:key="serviceId" wx:for="{{loopArray45}}" wx:for-item="item" wx:for-index="index">
+                <view class="service-type-item" bindtap="anonymousFunc1" wx:for="{{item.$anonymousCallee__7}}" wx:for-item="child" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{child._$indexKey2}}">
                     <image class="item-icon" src="{{child.$original.iconName}}"></image><text class="item-text">{{child.$original.title}}</text>
                 </view>
             </swiper-item>
         </swiper>
-        <recommend-ad wx:key="id" wx:for="{{loopArray40}}" wx:for-item="item" wx:for-index="_anonIdx2" compid="{{item.$compid__60}}"></recommend-ad>
-        <view class="function-block" wx:key="id" wx:for="{{loopArray41}}" wx:for-item="item" wx:for-index="index">
+        <recommend-ad wx:key="id" wx:for="{{loopArray46}}" wx:for-item="item" wx:for-index="_anonIdx2" compid="{{item.$compid__63}}"></recommend-ad>
+        <view class="function-block" wx:key="id" wx:for="{{loopArray47}}" wx:for-item="item" wx:for-index="index">
             <navigator class="left-block" url="{{'/pages/index/more-service?id=' + item.$original.id}}">
                 <image class="left-bg" src="{{item.$original.iconUrlOne}}"></image>
             </navigator>
             <view class="right-block">
-                <view class="func-item" wx:key="id" bindtap="anonymousFunc2" wx:for="{{item.$anonymousCallee__7}}" wx:for-item="child" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{child._$indexKey3}}">
+                <view class="func-item" wx:key="id" bindtap="anonymousFunc2" wx:for="{{item.$anonymousCallee__8}}" wx:for-item="child" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{child._$indexKey3}}">
                     <image class="item-img" src="{{child.$original.iconUrlOne}}"></image><text class="item-text">{{child.$original.name}}</text>
                 </view>
             </view>

@@ -18,9 +18,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _class, _temp2;
-
-var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.11.1@tslib/tslib.es6.js");
+var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.13.0@tslib/tslib.es6.js");
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
 
@@ -42,203 +40,208 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
-  _inherits(GoodsDetail, _BaseComponent);
+var GoodsDetail = /** @class */function () {
+  var _class, _temp2;
 
-  function GoodsDetail() {
-    var _ref;
+  var GoodsDetail = (_temp2 = _class = function (_BaseComponent) {
+    _inherits(GoodsDetail, _BaseComponent);
 
-    var _temp, _this, _ret;
+    function GoodsDetail() {
+      var _ref;
 
-    _classCallCheck(this, GoodsDetail);
+      var _temp, _this, _ret;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      _classCallCheck(this, GoodsDetail);
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GoodsDetail.__proto__ || Object.getPrototypeOf(GoodsDetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["installDate", "installTime", "address", "productId", "detail", "addressObj", "today", "nowTime", "appStore"], _this.config = {
-      navigationBarTitleText: '预约提交',
-      navigationStyle: 'default'
-    }, _this.handleInputChange = function (e, propName) {
-      var value = e.detail.value;
-      _this.setState(function (prevState) {
-        var addressObj = prevState.addressObj;
-        addressObj[propName] = value;
-        return { addressObj: addressObj };
-      });
-    }, _this.getDetail = function (id) {
-      (0, _mallApis.getSubscribeDetail)(id).then(function (res) {
-        if (res.data.code === 0) {
-          _this.setState({
-            detail: res.data.data
-          });
-        }
-      });
-    }, _this.onDateChange = function (e) {
-      var value = e.detail.value;
-      _this.setState({
-        installDate: value
-      });
-    }, _this.onTimeChange = function (e) {
-      var value = e.detail.value;
-      _this.setState({
-        installTime: value
-      });
-    }, _this.getDefault = function () {
-      (0, _service.getDefaultAdd)().then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          if (data) {
-            _this.setState(function () {
-              return {
-                address: data.areaInfo + data.address,
-                addressObj: {
-                  id: data.id,
-                  userName: data.userName,
-                  userMobile: data.userMobile
-                }
-              };
-            }, function () {
-              _this.props.appStore.setOrderForm({
-                address: data.areaInfo + data.address,
-                addressObj: data
-              });
-              _this.getOrderContentWithAdd();
-            });
-          } else {
-            _this.getOrderContentNone();
-          }
-        } else {
-          console.log('默认地址获取失败：' + res.data.msg);
-        }
-      });
-    }, _this.submitBook = function () {
-      var _this$state = _this.state,
-          installDate = _this$state.installDate,
-          installTime = _this$state.installTime,
-          productId = _this$state.productId;
-
-      if (installDate.length <= 0 || installTime.length <= 0) {
-        _taroWeapp2.default.showToast({
-          title: '请选择上门日期和时间',
-          icon: 'none'
-        });
-        return;
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
       }
-      var params = {
-        "repairAddressId": _this.state.addressObj.id,
-        "productId": productId,
-        "userPhone": _this.state.addressObj.userMobile,
-        "username": _this.state.addressObj.userName,
-        "hopeDoorTime": installDate + " " + installTime + ":00"
-      };
-      _taroWeapp2.default.showLoading({ title: '提交中' });
-      (0, _mallApis.submitOrder)(params).then(function (res) {
-        _taroWeapp2.default.hideLoading();
-        if (res.data.code === 0) {
-          var orderId = res.data.data;
-          _taroWeapp2.default.showModal({
-            title: '温馨提示',
-            content: '您的预约订单已提交，可在【我的】-【预约订单】中查看',
-            confirmText: '查看订单',
-            cancelText: '回到首页'
-          }).then(function (res) {
-            if (res.confirm) {
-              _taroWeapp2.default.redirectTo({
-                url: '/pages/mall/order-lists-custom'
+
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GoodsDetail.__proto__ || Object.getPrototypeOf(GoodsDetail)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["installDate", "installTime", "address", "productId", "detail", "addressObj", "today", "nowTime", "appStore"], _this.config = {
+        navigationBarTitleText: '预约提交',
+        navigationStyle: 'default'
+      }, _this.handleInputChange = function (e, propName) {
+        var value = e.detail.value;
+        _this.setState(function (prevState) {
+          var addressObj = prevState.addressObj;
+          addressObj[propName] = value;
+          return { addressObj: addressObj };
+        });
+      }, _this.getDetail = function (id) {
+        (0, _mallApis.getSubscribeDetail)(id).then(function (res) {
+          if (res.data.code === 0) {
+            _this.setState({
+              detail: res.data.data
+            });
+          }
+        });
+      }, _this.onDateChange = function (e) {
+        var value = e.detail.value;
+        _this.setState({
+          installDate: value
+        });
+      }, _this.onTimeChange = function (e) {
+        var value = e.detail.value;
+        _this.setState({
+          installTime: value
+        });
+      }, _this.getDefault = function () {
+        (0, _service.getDefaultAdd)().then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            if (data) {
+              _this.setState(function () {
+                return {
+                  address: data.areaInfo + data.address,
+                  addressObj: {
+                    id: data.id,
+                    userName: data.userName,
+                    userMobile: data.userMobile
+                  }
+                };
+              }, function () {
+                _this.props.appStore.setOrderForm({
+                  address: data.areaInfo + data.address,
+                  addressObj: data
+                });
+                _this.getOrderContentWithAdd();
               });
             } else {
-              _taroWeapp2.default.reLaunch({
-                url: '/pages/index/index'
-              });
+              _this.getOrderContentNone();
             }
-          });
-        } else {
+          } else {
+            console.log('默认地址获取失败：' + res.data.msg);
+          }
+        });
+      }, _this.submitBook = function () {
+        var _this$state = _this.state,
+            installDate = _this$state.installDate,
+            installTime = _this$state.installTime,
+            productId = _this$state.productId;
+
+        if (installDate.length <= 0 || installTime.length <= 0) {
           _taroWeapp2.default.showToast({
-            title: res.data.msg,
+            title: '请选择上门日期和时间',
             icon: 'none'
           });
+          return;
         }
-      });
-    }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(GoodsDetail, [{
-    key: "_constructor",
-    value: function _constructor(props) {
-      _get(GoodsDetail.prototype.__proto__ || Object.getPrototypeOf(GoodsDetail.prototype), "_constructor", this).call(this, props);
-
-      this.state = {
-        installDate: '',
-        installTime: '',
-        address: '',
-        productId: '',
-        detail: {},
-        addressObj: { id: '', userMobile: '', userName: '' },
-        today: '',
-        nowTime: ''
-      };
-      this.$$refs = new _taroWeapp2.default.RefsArray();
+        var params = {
+          "repairAddressId": _this.state.addressObj.id,
+          "productId": productId,
+          "userPhone": _this.state.addressObj.userMobile,
+          "username": _this.state.addressObj.userName,
+          "hopeDoorTime": installDate + " " + installTime + ":00"
+        };
+        _taroWeapp2.default.showLoading({ title: '提交中' });
+        (0, _mallApis.submitOrder)(params).then(function (res) {
+          _taroWeapp2.default.hideLoading();
+          if (res.data.code === 0) {
+            var orderId = res.data.data;
+            _taroWeapp2.default.showModal({
+              title: '温馨提示',
+              content: '您的预约订单已提交，可在【我的】-【预约订单】中查看',
+              confirmText: '查看订单',
+              cancelText: '回到首页'
+            }).then(function (res) {
+              if (res.confirm) {
+                _taroWeapp2.default.redirectTo({
+                  url: '/pages/mall/order-lists-custom'
+                });
+              } else {
+                _taroWeapp2.default.reLaunch({
+                  url: '/pages/index/index'
+                });
+              }
+            });
+          } else {
+            _taroWeapp2.default.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            });
+          }
+        });
+      }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
     }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.getDefault();
-    }
-  }, {
-    key: "componentDidShow",
-    value: function componentDidShow() {
-      var id = this.$router.params.id;
-      this.getDetail(id);
-      var orderForm = this.props.appStore.orderForm;
-      var currentTime = new Date();
-      var today = currentTime.getFullYear() + "-" + (currentTime.getMonth() + 1) + "-" + currentTime.getDate();
-      var nowTime = currentTime.getHours() + ":" + currentTime.getMinutes();
-      this.setState({
-        address: orderForm.address,
-        addressObj: orderForm.addressObj,
-        productId: id,
-        today: today,
-        nowTime: nowTime
-      });
-    }
-  }, {
-    key: "_createData",
-    value: function _createData() {
-      var _this2 = this;
 
-      this.__state = arguments[0] || this.state || {};
-      this.__props = arguments[1] || this.props || {};
-      var __isRunloopRef = arguments[2];
-      var __prefix = this.$prefix;
-      ;
+    _createClass(GoodsDetail, [{
+      key: "_constructor",
+      value: function _constructor(props) {
+        _get(GoodsDetail.prototype.__proto__ || Object.getPrototypeOf(GoodsDetail.prototype), "_constructor", this).call(this, props);
 
-      this.anonymousFunc0 = function (e) {
-        return _this2.handleInputChange(e, 'userName');
-      };
+        this.state = {
+          installDate: '',
+          installTime: '',
+          address: '',
+          productId: '',
+          detail: {},
+          addressObj: { id: '', userMobile: '', userName: '' },
+          today: '',
+          nowTime: ''
+        };
+        this.$$refs = new _taroWeapp2.default.RefsArray();
+      }
+    }, {
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        this.getDefault();
+      }
+    }, {
+      key: "componentDidShow",
+      value: function componentDidShow() {
+        var id = this.$router.params.id;
+        this.getDetail(id);
+        var orderForm = this.props.appStore.orderForm;
+        var currentTime = new Date();
+        var today = currentTime.getFullYear() + "-" + (currentTime.getMonth() + 1) + "-" + currentTime.getDate();
+        var nowTime = currentTime.getHours() + ":" + currentTime.getMinutes();
+        this.setState({
+          address: orderForm.address,
+          addressObj: orderForm.addressObj,
+          productId: id,
+          today: today,
+          nowTime: nowTime
+        });
+      }
+    }, {
+      key: "_createData",
+      value: function _createData() {
+        var _this2 = this;
 
-      this.anonymousFunc1 = function (e) {
-        return _this2.handleInputChange(e, 'userMobile');
-      };
+        this.__state = arguments[0] || this.state || {};
+        this.__props = arguments[1] || this.props || {};
+        var __isRunloopRef = arguments[2];
+        var __prefix = this.$prefix;
+        ;
 
-      Object.assign(this.__state, {});
-      return this.__state;
-    }
-  }, {
-    key: "anonymousFunc0",
-    value: function anonymousFunc0(e) {
-      ;
-    }
-  }, {
-    key: "anonymousFunc1",
-    value: function anonymousFunc1(e) {
-      ;
-    }
-  }]);
+        this.anonymousFunc0 = function (e) {
+          return _this2.handleInputChange(e, 'userName');
+        };
 
+        this.anonymousFunc1 = function (e) {
+          return _this2.handleInputChange(e, 'userMobile');
+        };
+
+        Object.assign(this.__state, {});
+        return this.__state;
+      }
+    }, {
+      key: "anonymousFunc0",
+      value: function anonymousFunc0(e) {
+        ;
+      }
+    }, {
+      key: "anonymousFunc1",
+      value: function anonymousFunc1(e) {
+        ;
+      }
+    }]);
+
+    return GoodsDetail;
+  }(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "onDateChange", "onTimeChange", "submitBook"], _class.$$componentPath = "pages/mall/order-now", _temp2);
+  GoodsDetail = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], GoodsDetail);
   return GoodsDetail;
-}(_taroWeapp.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "onDateChange", "onTimeChange", "submitBook"], _class.$$componentPath = "pages/mall/order-now", _temp2);
-GoodsDetail = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], GoodsDetail);
+}();
 exports.default = GoodsDetail;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(GoodsDetail, true));

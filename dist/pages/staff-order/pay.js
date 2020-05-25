@@ -18,9 +18,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _class, _temp2;
-
-var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.11.1@tslib/tslib.es6.js");
+var _tslib = __webpack_require__(/*! tslib */ "./node_modules/_tslib@1.13.0@tslib/tslib.es6.js");
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js");
 
@@ -40,191 +38,196 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Quote = (_temp2 = _class = function (_BaseComponent) {
-  _inherits(Quote, _BaseComponent);
+var Quote = /** @class */function () {
+  var _class, _temp2;
 
-  function Quote() {
-    var _ref;
+  var Quote = (_temp2 = _class = function (_BaseComponent) {
+    _inherits(Quote, _BaseComponent);
 
-    var _temp, _this, _ret;
+    function Quote() {
+      var _ref;
 
-    _classCallCheck(this, Quote);
+      var _temp, _this, _ret;
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      _classCallCheck(this, Quote);
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Quote.__proto__ || Object.getPrototypeOf(Quote)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "loopArray54", "staffPrice", "id", "qrContent", "payInfo", "totalAmount", "detailLists", "paySn", "payRes", "timer", "timeOutTimer", "type", "bookOrderDetail", "appStore"], _this.config = {
-      navigationBarTitleText: '收款',
-      navigationStyle: 'default'
-    }, _this.getBookInfo = function () {
-      var bookOrderDetail = _this.props.appStore.bookOrderDetail;
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-      _this.setState({
-        bookOrderDetail: bookOrderDetail
-      });
-    }, _this.getPayInfo = function (id) {
-      var params = {
-        orderIds: [id],
-        payBusinessType: _this.state.type === 'staff' ? 'W_REPAIR_ORDER' : 'BOOKING_ORDER',
-        payCode: 'WX_QR'
-      };
-      (0, _staffApis.QrPay)(params).then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          _this.setState({
-            qrContent: data.qrContent,
-            paySn: data.paySn
-          }, function () {
-            var intervalTimer = setInterval(function () {
-              _this.getPayResult();
-            }, 3000);
-            var timeOutTimer = setTimeout(function () {
-              clearTimeout(_this.state.timeOutTimer);
-              clearInterval(_this.state.timer);
-            }, 180000);
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Quote.__proto__ || Object.getPrototypeOf(Quote)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "loopArray52", "staffPrice", "id", "qrContent", "payInfo", "totalAmount", "detailLists", "paySn", "payRes", "timer", "timeOutTimer", "type", "bookOrderDetail", "appStore"], _this.config = {
+        navigationBarTitleText: '收款',
+        navigationStyle: 'default'
+      }, _this.getBookInfo = function () {
+        var bookOrderDetail = _this.props.appStore.bookOrderDetail;
+
+        _this.setState({
+          bookOrderDetail: bookOrderDetail
+        });
+      }, _this.getPayInfo = function (id) {
+        var params = {
+          orderIds: [id],
+          payBusinessType: _this.state.type === 'staff' ? 'W_REPAIR_ORDER' : 'BOOKING_ORDER',
+          payCode: 'WX_QR'
+        };
+        (0, _staffApis.QrPay)(params).then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
             _this.setState({
-              timer: intervalTimer,
-              timeOutTimer: timeOutTimer
+              qrContent: data.qrContent,
+              paySn: data.paySn
+            }, function () {
+              var intervalTimer = setInterval(function () {
+                _this.getPayResult();
+              }, 3000);
+              var timeOutTimer = setTimeout(function () {
+                clearTimeout(_this.state.timeOutTimer);
+                clearInterval(_this.state.timer);
+              }, 180000);
+              _this.setState({
+                timer: intervalTimer,
+                timeOutTimer: timeOutTimer
+              });
             });
-          });
-        } else {
-          _taroWeapp2.default.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          });
-        }
-      });
-    }, _this.getPayDetail = function (id) {
-      (0, _staffApis.orderDetail)(id).then(function (res) {
-        if (res.data.code === 0) {
-          var data = res.data.data;
-          var totalAmount = 0;
-          data.repairOrderAmountVos.forEach(function (item) {
-            if (item.type === 'ALL_AMOUNT') {
-              totalAmount = item.amount;
-            }
-          });
-          _this.setState({
-            totalAmount: totalAmount,
-            payInfo: data.repairOrderAmountVos,
-            detailLists: data.repairOrderOfferPlanVoList
-          });
-        } else {
-          _taroWeapp2.default.showToast({ title: res.data.msg, icon: 'none' });
-        }
-      });
-    }, _this.getPayResult = function () {
-      (0, _staffApis.payRes)(_this.state.paySn).then(function (res) {
-        if (res.data.code === 0) {
-          var _payRes = res.data.data;
-          // 轮询
-          if (_payRes === 'Y') {
-            console.log('支付成功--------');
-            clearInterval(_this.state.timer);
-            clearInterval(_this.state.timeOutTimer);
+          } else {
             _taroWeapp2.default.showToast({
-              title: '用户支付成功'
-            }).then(function () {
-              return setTimeout(function () {
-                var _this$state = _this.state,
-                    id = _this$state.id,
-                    type = _this$state.type;
-
-                if (type === 'staff') {
-                  _taroWeapp2.default.navigateTo({ url: '/pages/staff-order/detail?id=' + id });
-                } else {
-                  _taroWeapp2.default.navigateTo({ url: '/pages/mall/order-lists-staff?from=pay' });
-                }
-              }, 1000);
+              title: res.data.msg,
+              icon: 'none'
             });
           }
-        }
-      });
-    }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
-  }
+        });
+      }, _this.getPayDetail = function (id) {
+        (0, _staffApis.orderDetail)(id).then(function (res) {
+          if (res.data.code === 0) {
+            var data = res.data.data;
+            var totalAmount = 0;
+            data.repairOrderAmountVos.forEach(function (item) {
+              if (item.type === 'ALL_AMOUNT') {
+                totalAmount = item.amount;
+              }
+            });
+            _this.setState({
+              totalAmount: totalAmount,
+              payInfo: data.repairOrderAmountVos,
+              detailLists: data.repairOrderOfferPlanVoList
+            });
+          } else {
+            _taroWeapp2.default.showToast({ title: res.data.msg, icon: 'none' });
+          }
+        });
+      }, _this.getPayResult = function () {
+        (0, _staffApis.payRes)(_this.state.paySn).then(function (res) {
+          if (res.data.code === 0) {
+            var _payRes = res.data.data;
+            // 轮询
+            if (_payRes === 'Y') {
+              console.log('支付成功--------');
+              clearInterval(_this.state.timer);
+              clearInterval(_this.state.timeOutTimer);
+              _taroWeapp2.default.showToast({
+                title: '用户支付成功'
+              }).then(function () {
+                return setTimeout(function () {
+                  var _this$state = _this.state,
+                      id = _this$state.id,
+                      type = _this$state.type;
 
-  _createClass(Quote, [{
-    key: "_constructor",
-    value: function _constructor(props) {
-      _get(Quote.prototype.__proto__ || Object.getPrototypeOf(Quote.prototype), "_constructor", this).call(this, props);
-
-      this.state = {
-        staffPrice: 0,
-        id: '',
-        qrContent: '',
-        payInfo: [],
-        totalAmount: 0,
-        detailLists: [],
-        paySn: '',
-        payRes: 'N',
-        timer: null,
-        timeOutTimer: null,
-        type: '',
-        bookOrderDetail: null
-      };
-      this.$$refs = new _taroWeapp2.default.RefsArray();
+                  if (type === 'staff') {
+                    _taroWeapp2.default.navigateTo({ url: '/pages/staff-order/detail?id=' + id });
+                  } else {
+                    _taroWeapp2.default.navigateTo({ url: '/pages/mall/order-lists-staff?from=pay' });
+                  }
+                }, 1000);
+              });
+            }
+          }
+        });
+      }, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
     }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      clearTimeout(this.state.timeOutTimer);
-      clearInterval(this.state.timer);
-    }
-  }, {
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      var _this2 = this;
 
-      var _$router$params = this.$router.params,
-          id = _$router$params.id,
-          type = _$router$params.type;
+    _createClass(Quote, [{
+      key: "_constructor",
+      value: function _constructor(props) {
+        _get(Quote.prototype.__proto__ || Object.getPrototypeOf(Quote.prototype), "_constructor", this).call(this, props);
 
-      this.setState({
-        id: id,
-        type: type
-      }, function () {
-        if (type === 'staff') {
-          _this2.getPayInfo(id);
-          _this2.getPayDetail(id);
-        } else {
-          _this2.getPayInfo(id);
-          _this2.getBookInfo();
-        }
-      });
-    }
-  }, {
-    key: "_createData",
-    value: function _createData() {
-      this.__state = arguments[0] || this.state || {};
-      this.__props = arguments[1] || this.props || {};
-      var __isRunloopRef = arguments[2];
-      var __prefix = this.$prefix;
-      ;
-
-      var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/weixin-pay.png */ "./src/assets/imgs/tmp/weixin-pay.png");
-
-      var loopArray54 = this.__state.type === 'staff' ? this.__state.detailLists.map(function (item, _anonIdx) {
-        item = {
-          $original: (0, _taroWeapp.internal_get_original)(item)
+        this.state = {
+          staffPrice: 0,
+          id: '',
+          qrContent: '',
+          payInfo: [],
+          totalAmount: 0,
+          detailLists: [],
+          paySn: '',
+          payRes: 'N',
+          timer: null,
+          timeOutTimer: null,
+          type: '',
+          bookOrderDetail: null
         };
+        this.$$refs = new _taroWeapp2.default.RefsArray();
+      }
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        clearTimeout(this.state.timeOutTimer);
+        clearInterval(this.state.timer);
+      }
+    }, {
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        var _this2 = this;
 
-        if (item.$original.isPay === 'N') {}
-        return {
-          $original: item.$original
-        };
-      }) : [];
-      Object.assign(this.__state, {
-        anonymousState__temp: anonymousState__temp,
-        loopArray54: loopArray54
-      });
-      return this.__state;
-    }
-  }]);
+        var _$router$params = this.$router.params,
+            id = _$router$params.id,
+            type = _$router$params.type;
 
+        this.setState({
+          id: id,
+          type: type
+        }, function () {
+          if (type === 'staff') {
+            _this2.getPayInfo(id);
+            _this2.getPayDetail(id);
+          } else {
+            _this2.getPayInfo(id);
+            _this2.getBookInfo();
+          }
+        });
+      }
+    }, {
+      key: "_createData",
+      value: function _createData() {
+        this.__state = arguments[0] || this.state || {};
+        this.__props = arguments[1] || this.props || {};
+        var __isRunloopRef = arguments[2];
+        var __prefix = this.$prefix;
+        ;
+
+        var anonymousState__temp = __webpack_require__(/*! ../../assets/imgs/tmp/weixin-pay.png */ "./src/assets/imgs/tmp/weixin-pay.png");
+
+        var loopArray52 = this.__state.type === 'staff' ? this.__state.detailLists.map(function (item, _anonIdx) {
+          item = {
+            $original: (0, _taroWeapp.internal_get_original)(item)
+          };
+
+          if (item.$original.isPay === 'N') {}
+          return {
+            $original: item.$original
+          };
+        }) : [];
+        Object.assign(this.__state, {
+          anonymousState__temp: anonymousState__temp,
+          loopArray52: loopArray52
+        });
+        return this.__state;
+      }
+    }]);
+
+    return Quote;
+  }(_taroWeapp.Component), _class.$$events = [], _class.$$componentPath = "pages/staff-order/pay", _temp2);
+  Quote = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], Quote);
   return Quote;
-}(_taroWeapp.Component), _class.$$events = [], _class.$$componentPath = "pages/staff-order/pay", _temp2);
-Quote = (0, _tslib.__decorate)([(0, _mobx.inject)('appStore'), _mobx.observer], Quote);
+}();
 exports.default = Quote;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/_@tarojs_taro-weapp@2.0.6@@tarojs/taro-weapp/index.js").default.createComponent(Quote, true));

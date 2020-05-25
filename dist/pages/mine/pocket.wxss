@@ -90,7 +90,8 @@
     color: #999;
     margin-top: 8rpx; }
 .history .history-item .right {
-    text-align: right; }
+    text-align: right;
+    width: 20%; }
 .history .history-item .right .add, .history .history-item .right.add {
       color: #8ccea3; }
 .history .history-item .right .decrement, .history .history-item .right.decrement {

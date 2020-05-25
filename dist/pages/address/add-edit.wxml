@@ -27,7 +27,7 @@
         </view>
         <view class="form-item">
             <view class="form-control ">
-                <at-checkbox compid="{{$compid__61}}"></at-checkbox>
+                <at-checkbox compid="{{$compid__60}}"></at-checkbox>
             </view>
         </view>
         <view class="btn-wrap">

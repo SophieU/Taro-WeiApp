@@ -129,13 +129,20 @@ export const jumpTo = (info,otherType?:string)=>{
     })
     return
   }
-  if(type==='E_SERVICE_CATEGORY'||type==='E_SERVICE'||otherType==='E_SERVICE_CATEGORY'){
-    // 跳转订单确认
+  /**
+   * serviceCategoryCode类型有以下几种情况
+   * 1、E_SERVICE_CATEGORY  报修项目分类【到更多服务】
+   * 2、E_PROJECT 报修项目【到订单确认页面】
+   * 3、H5 打开某个H5页面 【打开某个H5页面】
+   * 4、APP_JUMP 跳转到小程序某个页面 【跳转到某个小程序页面】
+   */
+  if(type==='E_PROJECT'||otherType==='E_PROJECT'){
+    // 跳转订单确认#报修项目#
     Taro.navigateTo({
       url:`/pages/order/order-submit?id=${info.target||info.id}`
     })
-  }else if(type==='E_PROJECT'){
-    // 跳转更多服务
+  }else if(type==='E_SERVICE_CATEGORY'){
+    // 跳转更多服务#报修项目分类#
     Taro.navigateTo({
       url:`/pages/index/more-service?id=${info.target}`
     })

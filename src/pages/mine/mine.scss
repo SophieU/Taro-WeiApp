@@ -25,6 +25,9 @@
   .user-block{
     flex:1 0 0;
   }
+  .head-btn{
+    border: 1px solid #3385ff;
+  }
   .my-pocket{
     flex: 40px 0 0;
     font-size: 10px;
@@ -88,6 +91,16 @@ margin-top: 10px;
       border-bottom: none;
     }
   }
+}
+.at-modal__container{
+  width:auto;
+}
+.at-modal__footer .at-modal__action > button{
+  height: 50px;
+  line-height: 50px;
+}
+.at-modal__content{
+  min-height: auto;
 }
 .invite-modal{
   .tips{

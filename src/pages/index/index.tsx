@@ -52,7 +52,6 @@ class Index extends Component<{}, PageState> {
   }
   // 对应小程序 onLoad
   componentWillMount () {
-
     /*
     *   判断用户进入小程序场景，如是邀请进入，则存入邀请人电话
     * */
@@ -220,14 +219,15 @@ class Index extends Component<{}, PageState> {
         {/*报修分类*/}
         {
           this.state.serviceBlockLists.map((item,index)=>{
-            return (<View className='function-block' key={item.id}>
+            return (
+              <View className='function-block' key={item.id}>
               <Navigator className="left-block" url={'/pages/index/more-service?id='+item.id}>
                 <Image className='left-bg' src={item.iconUrlOne}></Image>
               </Navigator>
               <View className="right-block">
                 {
                   item.categoryList.map(child=>{
-                    return ( <View className='func-item' key={child.id} onClick={()=>{this.jumpTo(child,'E_SERVICE_CATEGORY')}}>
+                    return ( <View className='func-item' key={child.id} onClick={()=>{this.jumpTo(child,'E_PROJECT')}}>
                       <Image className='item-img' src={child.iconUrlOne}></Image>
                       <Text className='item-text'>{child.name}</Text>
                     </View>)

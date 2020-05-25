@@ -9,6 +9,7 @@ import {jumpTo as jumpToUtil} from "../../utils/common";
 import {validateTel} from '../../utils/regexpValidate'
 import RichCustom from '../../components/rich-text'
 import './order-submit.scss'
+import {h5url} from "../../config";
 
 type Service = {
   "id": string,
@@ -39,7 +40,8 @@ interface State {
   nightFee:object
   repairOrderOfferPlanDtoList:Array<object>
   repairUserAddressObj:object
-  faultReason:string
+  faultReason:string,
+  isFirstPage:boolean
 }
 
 @inject('appStore')
@@ -50,6 +52,7 @@ class OrderSubmit extends Component<{},State>{
     navigationStyle:'default'
   }
   state={
+    isFirstPage:true,
     bannerLists:[],
     current:0,
     repairCategoryId:'',
@@ -83,6 +86,12 @@ class OrderSubmit extends Component<{},State>{
       "repairStationId": "",
     }
   }
+  /**
+   * 进入页面后，调用该函数
+   * 1、加载顶部banner
+   * 2、获取默认地址（如果默认地址存在时，需要调用getOrderContent接口获取价格等信息）
+   * 3、获取提示信息
+   * */
   componentWillMount(){
     let id = this.$router.params.id
     this.setState({
@@ -92,15 +101,24 @@ class OrderSubmit extends Component<{},State>{
     this.getDefaultAddress()
     this.getTips()
   }
+  //页面展现时调用
   componentDidShow(){
-    const orderForm = this.props.appStore.orderForm
+    const orderForm = this.props.appStore.orderForm;
     this.setState({
       address:orderForm.address,
       userMobile:orderForm.addressObj.userMobile,
       userName:orderForm.addressObj.userName,
       repairUserAddressId:orderForm.addressObj.id,
       repairUserAddressObj:orderForm.addressObj
-    })
+    },()=>{
+      //只有当选择了地址后，重新调用
+      if(!this.state.isFirstPage){
+        this.getOrderContentWithAdd()
+      }
+    });
+  }
+  componentDidHide () {
+    this.state.isFirstPage = false;
   }
   componentWillUnmount(){
     clearTimeout(this.state.timer)
@@ -150,6 +168,10 @@ class OrderSubmit extends Component<{},State>{
   }
   // 判断是否需要夜间费
   isNeedNightFee = ()=>{
+    if(!this.state.repairUserAddressId){
+      Taro.showToast({title:'请选择报修地址！',icon:'none'})
+      return
+    }
     needNightFee().then(res=>{
       if(res.data.code===0){
         let data = res.data.data;
@@ -215,12 +237,13 @@ class OrderSubmit extends Component<{},State>{
       }else{
         Taro.showToast({
           title:res.data.msg,
-          icon:'none',
-          duration:3000
+          icon:'none'
         }).then(()=>{
-          let timer = setTimeout(()=>{Taro.navigateBack({delta:-1})},3000)
           this.setState({
-            timer
+            address:'',
+            userMobile:'',
+            userName:'',
+            repairUserAddressId:''
           })
         })
       }
@@ -431,7 +454,7 @@ submitForm=()=>{
           this.state.serviceContent.serviceFee!==0?(<View className='info-item'>
             <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
             <Text className='info-title'>服务收费</Text>
-            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text> /次起</View>
+            <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.serviceFee}</Text>元/次起</View>
           </View>):null
         }
 
@@ -441,7 +464,7 @@ submitForm=()=>{
             :( <View className='info-item'>
               <Image className='info-ico' src={require('../../assets/imgs/tmp/img_cash.png')}></Image>
               <Text className='info-title'>上门费</Text>
-              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>/次
+              <View className='info-content'><Text className='text-warm strong'>{this.state.serviceContent.dtdServiceFee}</Text>元/次
                 {this.state.serviceContent.isPrepayDtd==='Y'?<Text className='little-tips'>(需要预付)</Text>:null}
               </View>
             </View>)
@@ -498,7 +521,7 @@ submitForm=()=>{
 
       <View className="submit-bar">
         <View className='protocal'>
-          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url='/pages/index/web-view?target=http://ttfwap.yishengyue.cn/arg/E-arg.html' className='outlink'>用户协议</Navigator></Radio>
+          <Radio color='#216EC6' value='1' checked>已同意 <Navigator url={`/pages/index/web-view?target=${h5url}/literature/con_Eservice.html`} className='outlink'>服务协议</Navigator></Radio>
         </View>
         <View className='btn-wrap'>
           <Button onClick={this.isNeedNightFee} className='btn-form'>提交订单</Button>

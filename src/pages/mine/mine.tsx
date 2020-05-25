@@ -55,7 +55,7 @@ class Mine extends  Component<{}, State>{
       this.getBaseInfo()
     })
   }
-  getBaseInfo = ()=>{
+  getBaseInfo = ()=>{       //获取用户登录信息
     getUserBaseInfo().then(res=>{
       if(res.data.code===0){
         Taro.stopPullDownRefresh()
@@ -75,7 +75,6 @@ class Mine extends  Component<{}, State>{
        showInvitePhoneModal: showStatus,
        inviteUserPhone: ''
      }
-
     })
   }
   setInviteUser= ()=>{
@@ -110,6 +109,9 @@ class Mine extends  Component<{}, State>{
       inviteUserPhone:val
     })
   }
+  toLogin(url:string){
+    Taro.navigateTo({url})
+  }
   handleNavigate(url){
     let userId = Taro.getStorageSync('userId')
     if(!userId){
@@ -140,10 +142,14 @@ class Mine extends  Component<{}, State>{
             <OpenData className='name' type="userNickName"></OpenData>
             <View className='tel'>{this.state.apiUserInfo.username}</View>
           </View>
-          <Navigator url='/pages/mine/pocket' className='my-pocket'>
-            <Image className='pocket-ico' src={require('../../assets/imgs/tmp/pocket.png')}></Image>
-            <Text>钱包</Text>
-          </Navigator>
+          {
+            ['ADMIN','SERVICE_USER','MERCHANT','USER'].indexOf(userType)>-1?(<Navigator url='/pages/mine/pocket' className='my-pocket'>
+              <Image className='pocket-ico' src={require('../../assets/imgs/tmp/pocket.png')}></Image>
+              <Text>钱包</Text>
+            </Navigator>):(
+              <Button type='default' size='mini' className='head-btn' onClick={()=>{this.toLogin('/pages/login/toggle-login')}}>立即登录</Button>
+            )
+          }
         </View>
         <View className='control-wrap'>
           <View className='control-lists'>

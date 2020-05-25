@@ -2,6 +2,7 @@ import request from "../../utils/request";
 import Taro from '@tarojs/taro'
 
 let userId = Taro.getStorageSync('userId')
+console.log(userId,'userId')
 // 获取用户基本信息 -- 暂未用到（首页登录成功后即返回相同信息）
 export const getUserBaseInfo = ()=>{
   return request.get(`/api/v1/user/info?userId=${userId}`)
